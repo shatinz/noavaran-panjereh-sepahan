@@ -43,12 +43,45 @@ export interface VideoItem {
   id: string;
   title: string;
   category: string;
-  platform: 'aparat' | 'youtube';
+  platform: 'aparat' | 'youtube' | 'direct';
   videoUrl: string;
   videoId?: string;
   duration?: string;
   thumbnail?: string;
   description: string;
+  qrUrl?: string;
+  qrImage?: string;
+}
+
+export interface MaterialItem {
+  id: string;
+  code: string;
+  title: string;
+  titleEn: string;
+  category: string;
+  categoryKey: 'thermal_hinged' | 'thermal_sliding' | 'normal_systems' | 'additional_systems';
+  isThermalBreak: boolean;
+  summary: string;
+  image: string;
+  qrImage: string;
+  qrUrl: string;
+  videoUrl: string;
+  videoTitle: string;
+  videoDuration: string;
+  specs: {
+    frameWidth: string;
+    sashWidth: string;
+    wallThickness: string;
+    polyamideSize: string;
+    glassThickness: string;
+    thermalUf: string;
+    appearance: string;
+    cornerFixture: string;
+    gaskets: string;
+    hardware: string;
+    openings: string;
+  };
+  features: string[];
 }
 
 export interface CompanySettings {
@@ -58,11 +91,17 @@ export interface CompanySettings {
   brandSubtitleEn: string;
   establishedYear: number;
   factoryArea: string;
+  nationalId?: string;
+  registrationNumber?: string;
+  postalCode?: string;
+  officialCompanyAddress?: string;
+  officialCompanyAddressEn?: string;
   phone: string;
   phoneLabel: string;
   directPhones: string[];
   factoryPhones: string[];
   mobile: string;
+  secondaryMobile?: string;
   whatsapp: string;
   telegram: string;
   email: string;
@@ -290,3 +329,19 @@ export async function updateSettings(updates: Partial<CompanySettings>): Promise
   writeJsonFile('settings.json', updated);
   return updated;
 }
+
+// MATERIALS
+let memoryMaterials: MaterialItem[] | null = null;
+
+export async function getMaterials(): Promise<MaterialItem[]> {
+  if (memoryMaterials) return memoryMaterials;
+  const data = readJsonFile<MaterialItem[]>('materials.json', []);
+  memoryMaterials = data;
+  return data;
+}
+
+export async function getMaterialById(id: string): Promise<MaterialItem | null> {
+  const list = await getMaterials();
+  return list.find(m => m.id === id || m.code.toLowerCase() === id.toLowerCase()) || null;
+}
+

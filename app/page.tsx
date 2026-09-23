@@ -16,9 +16,11 @@ import {
   Grid,
   Maximize,
   Box,
-  TreePine
+  TreePine,
+  ExternalLink,
+  QrCode
 } from 'lucide-react';
-import { getServices, getProjects, getArticles, getVideos, getSettings } from '@/lib/db';
+import { getServices, getProjects, getArticles, getVideos, getSettings, getMaterials } from '@/lib/db';
 
 export default async function HomePage() {
   const services = await getServices();
@@ -29,6 +31,8 @@ export default async function HomePage() {
   const videos = await getVideos();
   const featuredVideos = videos.slice(0, 2);
   const settings = await getSettings();
+  const materials = await getMaterials();
+  const featuredMaterials = materials.slice(0, 6);
 
   const iconMap: Record<string, any> = {
     Grid: Grid,
@@ -61,35 +65,34 @@ export default async function HomePage() {
             </span>
           </h1>
 
-          {/* Description */}
           <p className="mt-6 text-base sm:text-lg text-titanium-300 max-w-2xl mx-auto leading-relaxed">
-            طراحی محاسباتی، تولید صنعتی در کارخانه مجهز ۱۵۰۰ متری و اجرای سیستم‌های کرتین‌وال (لامل)، فریم‌لس، لیفت‌اند‌اسلاید و کامپوزیت با استانداردها و یراق‌آلات اصیل اروپایی در سراسر ایران.
+            طراحی محاسباتی، ساخت کارخانه‌ای و اجرای تخصصی کرتین‌وال لامل، فریم‌لس، پنجره‌های کشویی لیفت‌اند‌اسلاید، کامپوزیت و هندریل با بالاترین استانداردهای هوابندی و آب‌بندی.
           </p>
 
-          {/* CTA Buttons */}
+          {/* CTAs */}
           <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
             <Link
-              href="/calculator"
+              href="/materials"
               className="px-6 py-3.5 rounded-xl bg-gradient-to-r from-bronze-500 to-bronze-600 hover:from-bronze-400 hover:to-bronze-500 text-charcoal-950 font-bold shadow-lg shadow-bronze-500/25 flex items-center gap-2 transition-all hover:scale-105 active:scale-95"
             >
-              <Calculator className="w-5 h-5 text-charcoal-950" />
-              <span>محاسبه‌گر آنلاین پیش‌فاکتور</span>
+              <Layers className="w-5 h-5 text-charcoal-950" />
+              <span>کاتالوگ متریال‌ها و سیستم‌ها</span>
             </Link>
 
             <Link
-              href="/projects"
+              href="/calculator"
               className="px-6 py-3.5 rounded-xl bg-charcoal-850 hover:bg-charcoal-800 text-titanium-100 border border-charcoal-700 hover:border-bronze-500/40 flex items-center gap-2 transition-all"
             >
-              <span>مشاهده ۵۰+ پروژه اجرا شده</span>
-              <ArrowLeft className="w-4 h-4 text-bronze-400" />
+              <Calculator className="w-5 h-5 text-bronze-400" />
+              <span>محاسبه‌گر پیش‌فاکتور آنلاین</span>
             </Link>
 
             <a
-              href="tel:0314144"
+              href={`tel:${settings.phone.replace(/[^0-9]/g, '')}`}
               className="px-5 py-3.5 rounded-xl bg-charcoal-900/80 hover:bg-charcoal-850 text-bronze-400 border border-charcoal-700 font-mono text-sm flex items-center gap-2 transition-colors"
             >
               <Phone className="w-4 h-4" />
-              <span>۰۳۱-۴۱۴۴</span>
+              <span>{settings.phone}</span>
             </a>
           </div>
 
@@ -186,7 +189,100 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* 3. FEATURED PROJECTS SHOWCASE */}
+      {/* 3. MATERIAL & PROFILE CATALOGUE SPOTLIGHT (NEW) */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="rounded-3xl bg-gradient-to-b from-charcoal-900 via-charcoal-900/90 to-charcoal-950 border border-charcoal-800 p-8 sm:p-12 space-y-10">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-charcoal-800 pb-6">
+            <div className="space-y-2">
+              <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-bronze-500/10 border border-bronze-500/30 text-bronze-400 text-xs font-medium font-mono">
+                ENGINEERING PROFILE CATALOGUE
+              </span>
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-white">
+                کاتالوگ مقاطع و متریال‌های تخصصی مصرفی شرکت
+              </h2>
+              <p className="text-xs sm:text-sm text-titanium-300 max-w-2xl leading-relaxed">
+                سیستم‌های لولایی ترمال‌بریک (TH68, TH60)، کشویی لیفت‌اند‌اسلاید (TS143, TS115, TS77)، نرمال و جان‌پناه‌های شیشه‌ای با تصاویر سه‌بعدی CAD، مشخصات مهندسی و انیمیشن‌های آموزشی مونتاژ.
+              </p>
+            </div>
+
+            <Link
+              href="/materials"
+              className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-bronze-500 hover:bg-bronze-400 text-charcoal-950 font-bold text-xs shadow-lg shadow-bronze-500/20 transition-all shrink-0"
+            >
+              <span>مشاهده کامل ۱۲ سیستم و مقایسه فنی</span>
+              <ArrowLeft className="w-4 h-4 text-charcoal-950" />
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {featuredMaterials.map((m) => (
+              <div
+                key={m.id}
+                className="group rounded-2xl bg-charcoal-950/70 border border-charcoal-800/90 hover:border-bronze-500/50 p-5 flex flex-col justify-between transition-all duration-300"
+              >
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <span className="px-2.5 py-0.5 rounded bg-charcoal-900 border border-charcoal-700 text-bronze-400 font-mono font-bold text-xs">
+                      {m.code}
+                    </span>
+                    <span className="text-[11px] font-semibold text-emerald-400 font-mono">
+                      {m.specs.thermalUf}
+                    </span>
+                  </div>
+
+                  <div className="relative h-44 w-full rounded-xl bg-charcoal-900/60 overflow-hidden flex items-center justify-center p-2">
+                    <img
+                      src={m.image}
+                      alt={m.title}
+                      className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500"
+                      loading="lazy"
+                    />
+                  </div>
+
+                  <div>
+                    <span className="text-[10px] font-bold text-bronze-400 block">{m.category}</span>
+                    <h3 className="text-sm font-bold text-white mt-0.5 group-hover:text-bronze-300 transition-colors line-clamp-1">
+                      {m.title}
+                    </h3>
+                    <p className="text-xs text-titanium-400 mt-1 line-clamp-2 leading-relaxed">
+                      {m.summary}
+                    </p>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-2 bg-charcoal-900/60 p-2.5 rounded-lg text-[10px] font-mono text-titanium-300 border border-charcoal-800">
+                    <div>فریم: {m.specs.frameWidth}</div>
+                    <div>شیشه: {m.specs.glassThickness}</div>
+                  </div>
+                </div>
+
+                <div className="pt-4 border-t border-charcoal-800/80 mt-3 flex items-center justify-between">
+                  <Link
+                    href="/materials"
+                    className="text-xs font-bold text-bronze-400 hover:text-bronze-300 flex items-center gap-1"
+                  >
+                    <span>بررسی مشخصات و ویدیو</span>
+                    <ArrowLeft className="w-3.5 h-3.5" />
+                  </Link>
+
+                  {m.qrUrl && (
+                    <a
+                      href={m.qrUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      title="مشاهده صفحه کاتالوگ"
+                      className="text-titanium-400 hover:text-white"
+                    >
+                      <ExternalLink className="w-3.5 h-3.5" />
+                    </a>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 4. FEATURED PROJECTS SHOWCASE */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-10 pb-4 border-b border-charcoal-800 gap-4">
           <div>
@@ -208,36 +304,48 @@ export default async function HomePage() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {featuredProjects.map((p) => (
-            <div
+            <Link
               key={p.id}
-              className="group rounded-xl bg-charcoal-900 border border-charcoal-800 overflow-hidden hover:border-bronze-500/40 transition-all shadow-md"
+              href="/projects"
+              className="group rounded-xl bg-charcoal-900 border border-charcoal-800 overflow-hidden hover:border-bronze-500/40 transition-all shadow-md min-w-0 block"
             >
               <div className="relative h-64 w-full bg-charcoal-850 overflow-hidden">
                 <img
                   src={p.image}
                   alt={p.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 block"
                   loading="lazy"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-charcoal-950 via-transparent to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-charcoal-950 via-transparent to-transparent opacity-80 group-hover:opacity-60 transition-opacity" />
+                
+                {/* HD Quality Badge */}
+                <span className="absolute top-3 left-3 px-2 py-0.5 rounded bg-bronze-500/90 text-charcoal-950 font-black text-[9px] tracking-wider shadow-sm flex items-center gap-1 backdrop-blur-sm">
+                  <Sparkles className="w-2.5 h-2.5" />
+                  HD
+                </span>
+
                 <span className="absolute top-3 right-3 px-2.5 py-1 rounded-md bg-charcoal-950/80 backdrop-blur-md text-[11px] font-medium text-bronze-300 border border-charcoal-700">
                   {p.category}
                 </span>
               </div>
-              <div className="p-4">
+              <div className="p-4 min-w-0">
                 <h3 className="text-sm font-bold text-white group-hover:text-bronze-400 transition-colors line-clamp-1">
                   {p.title}
                 </h3>
                 <p className="text-xs text-titanium-400 mt-1 line-clamp-2 leading-relaxed">
                   {p.description}
                 </p>
+                <div className="mt-3 pt-2 flex items-center justify-between text-[11px] text-bronze-400 font-medium border-t border-charcoal-800/80">
+                  <span>مشاهده پروژه در گالری</span>
+                  <ArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-1 transition-transform" />
+                </div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </section>
 
-      {/* 4. EDUCATIONAL VIDEO SECTION SPOTLIGHT */}
+      {/* 5. EDUCATIONAL VIDEO SECTION SPOTLIGHT */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="rounded-3xl bg-gradient-to-b from-charcoal-900 to-charcoal-950 border border-charcoal-800 p-8 sm:p-12 relative overflow-hidden">
           <div className="max-w-3xl mb-10">
@@ -246,10 +354,10 @@ export default async function HomePage() {
               کتابخانه ویدیوهای آموزشی و مهندسی
             </span>
             <h2 className="text-2xl sm:text-3xl font-extrabold text-white">
-              آموزش‌های تصویری، تست‌های آزمایشگاهی و ریگلاژ (آپارات و یوتیوب)
+              آموزش‌های تصویری، انیمیشن مقاطع و تست‌های آزمایشگاهی
             </h2>
             <p className="mt-3 text-sm text-titanium-300 leading-relaxed">
-              مشاهده عملکرد قطعات، نحوه نصب پنجره‌های لیفت‌اند‌اسلاید، تست دسی‌بل و آزمایش‌های نفوذ آب با فیلم‌های کاربردی برای مهندسان و خریداران.
+              مشاهده انیمیشن‌های سه‌بعدی نحوه مونتاژ قطعات، عملکرد بوژی‌های لیفت‌اند‌اسلاید، گسکت‌های درزبند، تست دسی‌بل و آزمایش‌های نفوذ آب.
             </p>
           </div>
 
@@ -271,7 +379,7 @@ export default async function HomePage() {
                     </div>
                   </div>
                   <span className="absolute top-3 right-3 px-2.5 py-1 rounded bg-charcoal-950/80 text-[11px] text-bronze-300 font-mono">
-                    {v.platform === 'aparat' ? 'آپارات (Aparat)' : 'یوتیوب (YouTube)'}
+                    {v.platform === 'direct' ? 'انیمیشن مقاطع مهندسی' : v.platform === 'aparat' ? 'آپارات' : 'یوتیوب'}
                   </span>
                   {v.duration && (
                     <span className="absolute bottom-3 left-3 px-2 py-0.5 rounded bg-charcoal-950/90 text-[10px] font-mono text-titanium-300">
@@ -315,7 +423,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* 5. CALCULATOR CALLOUT BANNER */}
+      {/* 6. CALCULATOR CALLOUT BANNER */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="rounded-3xl bg-gradient-to-r from-bronze-600 via-bronze-500 to-amber-500 text-charcoal-950 p-8 sm:p-12 flex flex-col md:flex-row items-center justify-between gap-8 shadow-2xl">
           <div className="space-y-3 max-w-2xl text-center md:text-right">
@@ -340,7 +448,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* 6. ARTICLES & TECHNICAL GUIDES */}
+      {/* 7. ARTICLES & TECHNICAL GUIDES */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-10 pb-4 border-b border-charcoal-800 gap-4">
           <div>

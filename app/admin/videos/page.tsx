@@ -14,7 +14,7 @@ export default function AdminVideosPage() {
   const [form, setForm] = useState({
     title: '',
     category: 'آموزش نصب و دیتیل اجرایی',
-    platform: 'aparat' as 'aparat' | 'youtube',
+    platform: 'aparat' as 'aparat' | 'youtube' | 'direct',
     videoUrl: '',
     duration: '05:00',
     thumbnail: '',
@@ -22,6 +22,7 @@ export default function AdminVideosPage() {
   });
 
   const categories = [
+    'انیمیشن‌های تخصصی متریال و مقاطع',
     'آموزش نصب و دیتیل اجرایی',
     'مقایسه فنی سیستم‌ها',
     'تست‌های استاندارد و عایق‌بندی',
@@ -240,11 +241,12 @@ export default function AdminVideosPage() {
                   <label className="text-titanium-300 block mb-1 font-medium">پلتفرم میزبانی:</label>
                   <select
                     value={form.platform}
-                    onChange={(e) => setForm({ ...form, platform: e.target.value as 'aparat' | 'youtube' })}
+                    onChange={(e) => setForm({ ...form, platform: e.target.value as 'aparat' | 'youtube' | 'direct' })}
                     className="w-full p-2.5 rounded-xl bg-charcoal-850 border border-charcoal-700 text-white focus:border-bronze-500 focus:outline-none"
                   >
                     <option value="aparat">آپارات (Aparat)</option>
                     <option value="youtube">یوتیوب (YouTube)</option>
+                    <option value="direct">استریم مستقیم (انیمیشن کاتالوگ)</option>
                   </select>
                 </div>
                 <div>

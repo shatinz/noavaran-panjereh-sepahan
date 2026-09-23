@@ -2,16 +2,28 @@ export interface VideoItem {
   id: string;
   title: string;
   category: string;
-  platform: 'aparat' | 'youtube';
+  platform: 'aparat' | 'youtube' | 'direct';
   videoUrl: string;
   videoId?: string;
   duration?: string;
   thumbnail?: string;
   description: string;
   embedCode?: string;
+  qrUrl?: string;
+  qrImage?: string;
 }
 
-export function extractVideoInfo(url: string, platform: 'aparat' | 'youtube') {
+export function extractVideoInfo(url: string, platform: 'aparat' | 'youtube' | 'direct') {
+  if (platform === 'direct' || url.toLowerCase().endsWith('.m4v') || url.toLowerCase().endsWith('.mp4')) {
+    return {
+      videoId: '',
+      isDirect: true,
+      directUrl: url,
+      embedUrl: url,
+      thumbnail: '',
+    };
+  }
+
   if (platform === 'youtube') {
     let videoId = '';
     const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
@@ -21,6 +33,8 @@ export function extractVideoInfo(url: string, platform: 'aparat' | 'youtube') {
     }
     return {
       videoId,
+      isDirect: false,
+      directUrl: '',
       embedUrl: videoId ? `https://www.youtube-nocookie.com/embed/${videoId}` : url,
       thumbnail: videoId ? `https://img.youtube.com/vi/${videoId}/hqdefault.jpg` : '',
     };
@@ -31,11 +45,12 @@ export function extractVideoInfo(url: string, platform: 'aparat' | 'youtube') {
     if (match && match[1]) {
       videoId = match[1];
     } else {
-      // maybe direct ID was passed
       videoId = url.trim();
     }
     return {
       videoId,
+      isDirect: false,
+      directUrl: '',
       embedUrl: videoId ? `https://www.aparat.com/video/video/embed/videohash/${videoId}/vt/frame` : url,
       thumbnail: '',
     };

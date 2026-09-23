@@ -40,8 +40,9 @@ export default function Header() {
         { href: '/services/steel-glass-railings', label: 'حفاظ استیل و نرده شیشه‌ای' },
       ],
     },
+    { href: '/materials', label: 'کاتالوگ متریال‌ها', badge: 'جدید' },
     { href: '/projects', label: 'پروژه‌های شاخص' },
-    { href: '/videos', label: 'ویدیوهای آموزشی', badge: 'آپارات و یوتیوب' },
+    { href: '/videos', label: 'ویدیوهای آموزشی', badge: 'انیمیشن و تست' },
     { href: '/calculator', label: 'محاسبه‌گر پیش‌فاکتور' },
     { href: '/articles', label: 'دانشنامه و مقالات' },
     { href: '/about', label: 'درباره شرکت' },
@@ -133,21 +134,21 @@ export default function Header() {
           {/* Quick CTA Phone */}
           <div className="hidden sm:flex items-center gap-3">
             <a
-              href="tel:0314144"
+              href="tel:03133687755"
               className="flex items-center gap-2 px-4 py-2 rounded-lg bg-bronze-500/10 hover:bg-bronze-500/20 text-bronze-400 border border-bronze-500/30 transition-all font-mono text-sm tracking-wider group"
-              title="تماس فوری با کارشناسان فنی"
+              title="تلفن دفتر و کارخانه: ۰۳۱-۳۳۶۸۷۷۵۵"
             >
               <Phone className="w-4 h-4 text-bronze-400 group-hover:rotate-12 transition-transform" />
-              <span>۰۳۱-۴۱۴۴</span>
+              <span>۰۳۱-۳۳۶۸۷۷۵۵</span>
             </a>
           </div>
 
           {/* Mobile Menu Button */}
           <div className="lg:hidden flex items-center gap-2">
             <a
-              href="tel:0314144"
+              href="tel:03133687755"
               className="p-2 rounded-lg bg-bronze-500/20 text-bronze-400 border border-bronze-500/30"
-              title="تماس مستقیم"
+              title="تماس مستقیم با کارخانه"
             >
               <Phone className="w-5 h-5" />
             </a>

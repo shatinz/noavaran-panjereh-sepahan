@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { Building2, Phone, MapPin, Mail, Clock, Shield, ArrowUpLeft, Instagram, Send } from 'lucide-react';
+import { Building2, Phone, MapPin, Mail, Clock, Shield, ArrowUpLeft, Instagram, Send, FileCheck, Layers } from 'lucide-react';
 import { getSettings } from '@/lib/db';
 
 export default async function Footer() {
@@ -23,6 +23,23 @@ export default async function Footer() {
             <p className="text-xs leading-relaxed text-titanium-400 text-justify">
               تولیدکننده صنعتی و مجری تخصصی نماهای مدرن شیشه‌ای (کرتین‌وال و فریم‌لس)، درب و پنجره‌های اختصاصی دوجداره ترمال‌بریک، پنل‌های کامپوزیت آلومینیوم و ترموود با تکیه بر کارخانه مجهز ۱۵۰۰ متری و ماشین‌آلات مدرن اروپایی.
             </p>
+            
+            {/* Legal Badges */}
+            <div className="p-3 bg-charcoal-900 rounded-xl border border-charcoal-800 space-y-1.5 text-[11px] font-mono text-titanium-300">
+              <div className="flex justify-between">
+                <span className="text-titanium-500 font-sans">شناسه ملی:</span>
+                <span className="font-bold text-bronze-400">{settings.nationalId || '14015026230'}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-titanium-500 font-sans">شناسه ثبت:</span>
+                <span className="font-bold text-white">{settings.registrationNumber || '3892'}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-titanium-500 font-sans">کد پستی:</span>
+                <span className="text-titanium-400">{settings.postalCode || '8436185503'}</span>
+              </div>
+            </div>
+
             <div className="pt-2 flex items-center gap-3">
               <a
                 href={settings.socialLinks.instagram}
@@ -104,13 +121,19 @@ export default async function Footer() {
             </h3>
             <ul className="space-y-2.5 text-xs">
               <li>
+                <Link href="/materials" className="hover:text-bronze-400 transition-colors flex items-center justify-between text-bronze-300 font-bold bg-bronze-500/10 p-2 rounded-lg border border-bronze-500/20">
+                  <span>کاتالوگ متریال‌ها و پروفیل‌ها</span>
+                  <span className="text-[10px] bg-bronze-500 text-charcoal-950 px-1.5 py-0.2 rounded font-mono">جدید</span>
+                </Link>
+              </li>
+              <li>
                 <Link href="/projects" className="hover:text-bronze-400 transition-colors block">
                   آرشیو ۵۰+ پروژه اجرایی شاخص
                 </Link>
               </li>
               <li>
-                <Link href="/videos" className="hover:text-bronze-400 transition-colors block text-bronze-300 font-semibold">
-                  کتابخانه ویدیوهای آموزشی (آپارات و یوتیوب)
+                <Link href="/videos" className="hover:text-bronze-400 transition-colors block text-titanium-200">
+                  کتابخانه ویدیوهای آموزشی و انیمیشن‌ها
                 </Link>
               </li>
               <li>
@@ -146,10 +169,10 @@ export default async function Footer() {
                 <Phone className="w-4 h-4 text-bronze-400 shrink-0 mt-0.5" />
                 <div>
                   <a href={`tel:${settings.phone}`} className="font-mono text-sm font-bold text-white hover:text-bronze-400 block">
-                    {settings.phoneLabel}
+                    {settings.phone}
                   </a>
                   <span className="text-[11px] text-titanium-400 block font-mono mt-0.5">
-                    مستقیم: {settings.directPhones.join(' | ')}
+                    تلفن همراه و واتساپ: {settings.mobile}
                   </span>
                 </div>
               </div>
@@ -164,7 +187,7 @@ export default async function Footer() {
               <div className="flex items-start gap-2.5">
                 <Building2 className="w-4 h-4 text-bronze-400 shrink-0 mt-0.5" />
                 <span className="text-[11px] leading-relaxed text-titanium-400">
-                  <strong className="text-titanium-200">کارخانه:</strong> {settings.factoryAddress}
+                  <strong className="text-titanium-200">کارخانه و آدرس ثبتی:</strong> {settings.officialCompanyAddress || settings.factoryAddress}
                 </span>
               </div>
 
@@ -179,7 +202,7 @@ export default async function Footer() {
         </div>
 
         <div className="mt-12 pt-6 border-t border-charcoal-850 flex flex-col sm:flex-row items-center justify-between text-xs text-titanium-500 gap-4">
-          <p>© {new Date().getFullYear()} کلیه حقوق برای شرکت نوآوران پنجره سپاهان محفوظ است.</p>
+          <p>© {new Date().getFullYear()} کلیه حقوق برای شرکت نوآوران پنجره سپاهان (شماره ثبت: {settings.registrationNumber || '۳۸۹۲'}، شناسه ملی: {settings.nationalId || '۱۴۰۱۵۰۲۶۲۳۰'}) محفوظ است.</p>
           <p className="font-mono text-[11px] text-titanium-600">
             Noavaran Panjereh Sepahan · Precision Architectural Engineering
           </p>

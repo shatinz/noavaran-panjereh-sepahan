@@ -8,11 +8,11 @@ export default function FloatingContact() {
     <div className="fixed bottom-6 left-6 z-40 flex flex-col gap-3">
       {/* WhatsApp Button */}
       <a
-        href="https://wa.me/989139090673"
+        href="https://wa.me/989301545858?text=سلام،%20درخواست%20مشاوره%20مهندسی%20و%20استعلام%20پروژه%20دارم."
         target="_blank"
         rel="noreferrer"
         className="w-12 h-12 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white flex items-center justify-center shadow-lg shadow-emerald-600/30 transition-all hover:scale-110 active:scale-95"
-        title="ارسال نقشه و پیام در واتساپ"
+        title="ارسال نقشه و پیام در واتساپ مهندسی: ۰۹۳۰۱۵۴۵۸۵۸"
         aria-label="ارسال پیام واتساپ"
       >
         <MessageSquare className="w-6 h-6" />
@@ -20,9 +20,9 @@ export default function FloatingContact() {
 
       {/* Direct Call Button */}
       <a
-        href="tel:0314144"
-        className="w-12 h-12 rounded-full bg-gradient-to-br from-bronze-500 to-bronze-700 hover:from-bronze-400 hover:to-bronze-600 text-charcoal-950 flex items-center justify-center shadow-lg shadow-bronze-500/30 transition-all hover:scale-110 active:scale-95 animate-pulse"
-        title="تماس مستقیم: ۰۳۱-۴۱۴۴"
+        href="tel:03133687755"
+        className="w-12 h-12 rounded-full bg-gradient-to-br from-bronze-500 to-bronze-700 hover:from-bronze-400 hover:to-bronze-600 text-charcoal-950 flex items-center justify-center shadow-lg shadow-bronze-500/30 transition-all hover:scale-110 active:scale-95"
+        title="تماس مستقیم با کارخانه: ۰۳۱-۳۳۶۸۷۷۵۵"
         aria-label="تماس با شرکت"
       >
         <Phone className="w-5 h-5" />
