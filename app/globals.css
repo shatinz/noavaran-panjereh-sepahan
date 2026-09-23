@@ -2,20 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css');
+@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
 :root {
   --font-vazir: 'Vazirmatn', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --bg-primary: #F5F5F5;
-  --bg-aluminum: #cbcccb;
-  --border-aluminum: #b3b5b3;
-  --text-main: #18191a;
-  --text-muted: #55595e;
 }
 
+/* ══════════════════════════════════════
+   BASE: Body & HTML
+   ══════════════════════════════════════ */
 html, body {
-  background-color: #F5F5F5;
-  color: #18191a;
+  background-color: #d4d5d4;
+  color: #1a1a1a;
   font-family: var(--font-vazir);
   overflow-x: hidden;
   min-width: 0;
@@ -24,52 +22,70 @@ html, body {
   padding: 0;
 }
 
-/* Custom Scrollbar */
-::-webkit-scrollbar {
-  width: 7px;
-  height: 7px;
+/* Brushed aluminum page background grain */
+body {
+  background-image:
+    linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.05) 0%,
+      rgba(255, 255, 255, 0.12) 25%,
+      rgba(255, 255, 255, 0.05) 50%,
+      rgba(255, 255, 255, 0.12) 75%,
+      rgba(255, 255, 255, 0.05) 100%
+    ),
+    repeating-linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.018) 0px,
+      rgba(0, 0, 0, 0.018) 1px,
+      transparent 1px,
+      transparent 3px
+    );
 }
 
-::-webkit-scrollbar-track {
-  background: #F5F5F5;
-}
+/* ══════════════════════════════════════
+   SCROLLBAR
+   ══════════════════════════════════════ */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: #d4d5d4; }
+::-webkit-scrollbar-thumb { background: #adb0ad; border-radius: 0; }
+::-webkit-scrollbar-thumb:hover { background: #8a8d8a; }
 
-::-webkit-scrollbar-thumb {
-  background: #b5b8b5;
-  border-radius: 0px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #888c88;
-}
-
-/* Typography Defaults */
+/* ══════════════════════════════════════
+   TYPOGRAPHY
+   ══════════════════════════════════════ */
 h1, h2, h3, h4, h5, h6 {
   font-weight: 800;
   letter-spacing: -0.02em;
   font-style: normal !important;
 }
 
-/* Horizontal Brushed Aluminum Texture (#cbcccb) */
+/* ══════════════════════════════════════
+   BRUSHED ALUMINUM SURFACES
+   ══════════════════════════════════════ */
+
+/* Card / panel surface with horizontal brushed grain */
+.aluminum-surface,
 .aluminum-card {
   background-color: #cbcccb;
-  background-image: linear-gradient(
-    90deg,
-    rgba(255, 255, 255, 0.25) 0%,
-    rgba(240, 242, 240, 0.25) 25%,
-    rgba(203, 204, 203, 0.25) 50%,
-    rgba(240, 242, 240, 0.25) 75%,
-    rgba(255, 255, 255, 0.25) 100%
-  ), repeating-linear-gradient(
-    0deg,
-    rgba(255, 255, 255, 0.12),
-    rgba(255, 255, 255, 0.12) 1px,
-    transparent 1px,
-    transparent 2px
-  );
-  border: 1px solid #b5b8b5;
+  background-image:
+    linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.22) 0%,
+      rgba(240, 242, 240, 0.22) 25%,
+      rgba(203, 204, 203, 0.15) 50%,
+      rgba(240, 242, 240, 0.22) 75%,
+      rgba(255, 255, 255, 0.22) 100%
+    ),
+    repeating-linear-gradient(
+      0deg,
+      rgba(255, 255, 255, 0.09),
+      rgba(255, 255, 255, 0.09) 1px,
+      transparent 1px,
+      transparent 2px
+    );
 }
 
+/* Small label / tag surface */
 .aluminum-header {
   background-color: #cbcccb;
   background-image: repeating-linear-gradient(
@@ -79,32 +95,59 @@ h1, h2, h3, h4, h5, h6 {
     transparent 1px,
     transparent 3px
   );
-  border: 1px solid #b5b8b5;
 }
 
-/* Extremely Subtle Drop Shadow */
+/* ══════════════════════════════════════
+   SHADOWS
+   ══════════════════════════════════════ */
+.shadow-card {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07), 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+.shadow-card-hover {
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12), 0 2px 6px rgba(0, 0, 0, 0.07);
+}
 .subtle-soft-shadow {
-  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
 }
 
-.card-elevated-shadow {
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
-}
-
-/* Text Shadow Helpers for overlay on images */
+/* ══════════════════════════════════════
+   TEXT SHADOWS (for image overlays)
+   ══════════════════════════════════════ */
 .text-shadow-strong {
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.85);
 }
-
 .text-shadow-subtle {
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.7);
 }
 
-/* Guardrails for WebKit images in RTL */
+/* ══════════════════════════════════════
+   SECTION NUMBER CIRCLE
+   ══════════════════════════════════════ */
+.section-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border: 1.5px solid #aaa;
+  border-radius: 50%;
+  font-size: 12px;
+  font-weight: 300;
+  color: #888;
+  background: transparent;
+  font-family: system-ui, -apple-system, sans-serif;
+  line-height: 1;
+}
+
+/* ══════════════════════════════════════
+   UTILITIES
+   ══════════════════════════════════════ */
 .clean-img-container {
   display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transform: none !important;
+  position: relative;
+  overflow: hidden;
+}
+
+img {
+  -webkit-user-drag: none;
 }
