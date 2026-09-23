@@ -30,31 +30,31 @@ export default function VideoHub({ videos }: Props) {
   };
 
   return (
-    <div className="space-y-10">
+    <div className="space-y-6">
       {/* Search & Category Filter Bar */}
-      <div className="flex flex-col md:flex-row items-center justify-between gap-4 p-4 rounded-2xl bg-charcoal-900 border border-charcoal-800">
+      <div className="aluminum-card sharp frame-shadow p-3 sm:p-4 border border-[#b0b3b0] flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3">
         {/* Search */}
         <div className="relative w-full md:w-80">
-          <Search className="w-4 h-4 text-titanium-400 absolute right-3.5 top-1/2 -translate-y-1/2" />
+          <Search className="w-4 h-4 text-[#555] absolute right-3 top-1/2 -translate-y-1/2" />
           <input
             type="text"
             placeholder="جستجوی ویدیو یا موضوع..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-4 pr-10 py-2.5 rounded-xl bg-charcoal-950 border border-charcoal-700 text-xs text-white placeholder-titanium-500 focus:outline-none focus:border-bronze-500 transition-colors"
+            className="w-full pl-3 pr-9 py-2 sharp bg-white text-xs border border-[#888] focus:border-black outline-none frame-shadow text-right font-medium"
           />
         </div>
 
         {/* Category Clusters */}
-        <div className="flex flex-wrap items-center gap-2 w-full md:w-auto overflow-x-auto pb-1 md:pb-0">
+        <div className="flex flex-wrap items-center gap-1.5 overflow-x-auto pb-1 md:pb-0">
           {categories.map((cat) => (
             <button
               key={cat}
               onClick={() => setSelectedCategory(cat)}
-              className={`px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all ${
+              className={`sharp px-3 py-1.5 text-xs font-black whitespace-nowrap transition-all border ${
                 selectedCategory === cat
-                  ? 'bg-bronze-500 text-charcoal-950 shadow-md shadow-bronze-500/20'
-                  : 'bg-charcoal-800 text-titanium-300 hover:text-white hover:bg-charcoal-700'
+                  ? 'bg-[#18191a] text-white border-black shadow-sm'
+                  : 'bg-[#cbcccb] text-black border-[#888] hover:bg-[#b8bab8]'
               }`}
             >
               {cat}
@@ -65,48 +65,48 @@ export default function VideoHub({ videos }: Props) {
 
       {/* Grid of Videos */}
       {filtered.length === 0 ? (
-        <div className="p-16 text-center text-titanium-400 text-sm bg-charcoal-900/40 border border-charcoal-800 rounded-2xl">
+        <div className="p-12 text-center text-[#555] text-xs aluminum-card sharp frame-shadow border border-[#b0b3b0]">
           ویدیویی با این مشخصات یافت نشد.
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {filtered.map((v) => {
             const isDirect = v.platform === 'direct' || v.videoUrl?.toLowerCase().endsWith('.m4v') || v.videoUrl?.toLowerCase().endsWith('.mp4');
             return (
               <div
                 key={v.id}
                 onClick={() => setActiveVideo(v)}
-                className="rounded-2xl bg-charcoal-900 border border-charcoal-800 hover:border-bronze-500/50 overflow-hidden cursor-pointer flex flex-col justify-between group shadow-lg transition-all duration-300"
+                className="aluminum-card sharp frame-shadow p-3 border border-[#b0b3b0] flex flex-col justify-between group cursor-pointer text-right hover:border-black transition-colors"
               >
                 {/* Thumbnail Container */}
-                <div className="relative h-52 w-full bg-charcoal-950 overflow-hidden">
+                <div className="relative h-48 w-full bg-white sharp overflow-hidden border border-[#9ea19e] flex items-center justify-center frame-shadow">
                   <img
                     src={v.thumbnail || 'https://arvinpanjereh.com/upload/service/742b5647-017c-4a6e-b416-a184adf97dcc.webp'}
                     alt={v.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-85"
+                    className="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-300"
                     loading="lazy"
                   />
-                  <div className="absolute inset-0 bg-charcoal-950/30 flex items-center justify-center">
-                    <div className="w-12 h-12 rounded-full bg-bronze-500 text-charcoal-950 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
-                      <Play className="w-5 h-5 fill-current mr-0.5" />
+                  <div className="absolute inset-0 bg-black/20 flex items-center justify-center group-hover:bg-black/35 transition-colors">
+                    <div className="w-11 h-11 sharp bg-[#18191a] text-white flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform border border-black">
+                      <Play className="w-5 h-5 fill-current text-[#cbcccb] mr-0.5" />
                     </div>
                   </div>
 
                   {/* Badges */}
-                  <div className="absolute top-2.5 right-2.5 flex items-center gap-1.5">
-                    <span className="px-2 py-0.5 rounded bg-charcoal-950/80 backdrop-blur-md text-[10px] font-mono text-bronze-300 border border-charcoal-700">
+                  <div className="absolute top-2 right-2 flex items-center gap-1.5">
+                    <span className="px-2 py-0.5 sharp bg-black text-white text-[10px] font-mono font-bold">
                       {isDirect ? 'انیمیشن مقاطع مهندسی' : v.platform === 'aparat' ? 'آپارات' : 'یوتیوب'}
                     </span>
                   </div>
 
                   {v.qrImage && (
-                    <div className="absolute top-2.5 left-2.5 bg-white p-1 rounded-md shadow border border-charcoal-700">
+                    <div className="absolute top-2 left-2 bg-white p-1 sharp shadow border border-black">
                       <img src={v.qrImage} alt="QR Code" className="w-7 h-7 object-contain" />
                     </div>
                   )}
 
                   {v.duration && (
-                    <span className="absolute bottom-2.5 left-2.5 px-2 py-0.5 rounded bg-charcoal-950/90 text-[10px] font-mono text-titanium-300 flex items-center gap-1">
+                    <span className="absolute bottom-2 left-2 px-2 py-0.5 sharp bg-black/80 text-[10px] font-mono text-white flex items-center gap-1">
                       <Clock className="w-3 h-3" />
                       {v.duration}
                     </span>
@@ -114,18 +114,18 @@ export default function VideoHub({ videos }: Props) {
                 </div>
 
                 {/* Details */}
-                <div className="p-5 space-y-2.5 flex-grow flex flex-col justify-between">
+                <div className="pt-3 space-y-2 flex-grow flex flex-col justify-between">
                   <div>
-                    <span className="text-[10px] font-bold text-bronze-400">{v.category}</span>
-                    <h3 className="text-xs sm:text-sm font-bold text-white group-hover:text-bronze-400 transition-colors line-clamp-2 leading-relaxed mt-1">
+                    <span className="text-[10px] font-mono font-bold text-[#444] block">{v.category}</span>
+                    <h3 className="text-xs sm:text-sm font-black text-black group-hover:text-black transition-colors line-clamp-1 leading-snug mt-0.5">
                       {v.title}
                     </h3>
-                    <p className="text-[11px] text-titanium-400 line-clamp-3 leading-relaxed mt-2">
+                    <p className="text-[11px] text-[#333] line-clamp-2 leading-relaxed mt-1 font-medium">
                       {v.description}
                     </p>
                   </div>
 
-                  <div className="pt-3 border-t border-charcoal-800 flex items-center justify-between text-[11px] text-bronze-400 font-semibold">
+                  <div className="pt-2.5 border-t border-[#a8aba8] flex items-center justify-between text-[11px] text-black font-black">
                     <span>پخش انیمیشن و ویدیو</span>
                     <Play className="w-3.5 h-3.5 fill-current" />
                   </div>
@@ -143,35 +143,35 @@ export default function VideoHub({ videos }: Props) {
 
         return (
           <div
-            className="fixed inset-0 z-50 bg-charcoal-950/90 backdrop-blur-md flex items-center justify-center p-4"
+            className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-3 sm:p-6"
             onClick={() => setActiveVideo(null)}
           >
             <div
-              className="bg-charcoal-900 border border-charcoal-700 rounded-3xl max-w-3xl w-full overflow-hidden shadow-2xl animate-in fade-in zoom-in-95 duration-150"
+              className="aluminum-card sharp frame-shadow max-w-3xl w-full border border-black overflow-hidden flex flex-col text-right"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Modal Header */}
-              <div className="p-4 sm:p-5 border-b border-charcoal-800 flex items-center justify-between">
+              <div className="p-3 sm:p-4 border-b border-[#a8aba8] bg-[#cbcccb] flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <span className="px-2.5 py-0.5 rounded bg-bronze-500/20 text-bronze-400 text-xs font-medium">
+                  <span className="px-2 py-0.5 sharp bg-black text-white text-xs font-bold font-mono">
                     {activeVideo.category}
                   </span>
-                  <span className="text-xs text-titanium-400 font-mono">
-                    {isDirect ? 'پخش مستقیم ویدیوی فنی' : activeVideo.platform === 'aparat' ? 'Aparat Embed' : 'YouTube Embed'}
+                  <span className="text-xs sm:text-sm font-black text-black line-clamp-1">
+                    {activeVideo.title}
                   </span>
                 </div>
                 <button
                   onClick={() => setActiveVideo(null)}
-                  className="p-1.5 rounded-lg bg-charcoal-800 text-titanium-300 hover:text-white"
+                  className="p-1 text-black hover:bg-black/20 sharp transition-colors"
                   aria-label="بستن"
                 >
                   <X className="w-5 h-5" />
                 </button>
               </div>
 
-              {/* Responsive Video Frame */}
-              {isDirect ? (
-                <div className="relative w-full aspect-video bg-black flex items-center justify-center">
+              {/* Video Player */}
+              <div className="relative w-full aspect-video bg-black flex items-center justify-center">
+                {isDirect ? (
                   <video
                     controls
                     autoPlay
@@ -181,63 +181,50 @@ export default function VideoHub({ videos }: Props) {
                   >
                     مرورگر شما از پخش مستقیم ویدیو پشتیبانی نمی‌کند.
                   </video>
-                </div>
-              ) : (
-                <div className="relative w-full pb-[56.25%] bg-black">
+                ) : details.embedUrl ? (
                   <iframe
                     src={details.embedUrl}
                     title={activeVideo.title}
-                    className="absolute inset-0 w-full h-full border-0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowFullScreen
+                    className="w-full h-full border-0"
                   />
-                </div>
-              )}
+                ) : (
+                  <div className="text-white text-xs">پخش‌کننده ویدیو بارگذاری نشد.</div>
+                )}
+              </div>
 
-              {/* Modal Body */}
-              <div className="p-6 space-y-4">
-                <div className="flex items-start justify-between gap-4">
-                  <h2 className="text-base sm:text-lg font-bold text-white leading-snug">
-                    {activeVideo.title}
-                  </h2>
-                  {activeVideo.qrImage && (
-                    <div className="flex-shrink-0 text-center bg-white p-2 rounded-xl shadow-md border border-charcoal-600">
-                      <img src={activeVideo.qrImage} alt="QR Code" className="w-16 h-16 object-contain" />
-                      <span className="block text-[9px] text-charcoal-900 font-mono font-bold mt-1">اسکن QR کاتالوگ</span>
-                    </div>
-                  )}
-                </div>
+              {/* Footer */}
+              <div className="p-4 bg-[#cbcccb] border-t border-[#a8aba8] space-y-3">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                  <div>
+                    <h3 className="text-xs font-black text-black">
+                      {activeVideo.title}
+                    </h3>
+                    <p className="text-[11px] text-[#333] mt-1 font-medium leading-relaxed max-w-xl">
+                      {activeVideo.description}
+                    </p>
+                  </div>
 
-                <p className="text-xs sm:text-sm text-titanium-300 leading-relaxed text-justify">
-                  {activeVideo.description}
-                </p>
-
-                <div className="pt-3 flex flex-wrap items-center justify-between gap-3 text-xs text-titanium-400 border-t border-charcoal-800">
-                  <span className="font-mono">مدت زمان: {activeVideo.duration || '—'}</span>
-                  
-                  <div className="flex items-center gap-3">
-                    {activeVideo.qrUrl && (
+                  <div className="flex items-center gap-2 shrink-0">
+                    {isDirect && activeVideo.videoUrl && (
                       <a
-                        href={activeVideo.qrUrl}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="flex items-center gap-1.5 text-bronze-400 hover:text-bronze-300 font-semibold"
+                        href={activeVideo.videoUrl}
+                        download
+                        className="sharp px-3 py-1.5 bg-[#18191a] hover:bg-[#333] text-white text-xs font-bold flex items-center gap-1.5 border border-black shadow-sm"
                       >
-                        <ExternalLink className="w-3.5 h-3.5" />
-                        <span>مشاهده صفحه کاتالوگ سازنده</span>
+                        <Download className="w-3.5 h-3.5" />
+                        <span>دانلود فایل ویدیو</span>
                       </a>
                     )}
-
-                    {isDirect && activeVideo.videoUrl && (
+                    {activeVideo.videoUrl && !isDirect && (
                       <a
                         href={activeVideo.videoUrl}
                         target="_blank"
                         rel="noreferrer"
-                        download
-                        className="flex items-center gap-1 px-3 py-1 rounded-lg bg-charcoal-800 text-titanium-200 hover:text-white hover:bg-charcoal-700"
+                        className="sharp px-3 py-1.5 bg-white text-black hover:bg-gray-100 text-xs font-bold flex items-center gap-1.5 border border-black"
                       >
-                        <Download className="w-3.5 h-3.5" />
-                        <span>دانلود مستقیم ویدیو</span>
+                        <ExternalLink className="w-3.5 h-3.5" />
+                        <span>مشاهده در {activeVideo.platform}</span>
                       </a>
                     )}
                   </div>
