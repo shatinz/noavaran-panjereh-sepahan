@@ -14,75 +14,75 @@ export default async function AboutPage() {
     {
       year: '۱۳۸۵',
       title: 'تأسیس کارگاه تخصصی درب و پنجره',
-      description: 'شروع به کار مجموعه در قالب کارگاه صنعتی و تخصصی ساخت درب و پنجره‌های آلومینیومی در اصفهان.'
+      description: 'شروع به کار مجموعه در قالب کارگاه صنعتی ساخت درب و پنجره‌های آلومینیومی در اصفهان.'
     },
     {
       year: '۱۳۹۳',
       title: 'توسعه به کارخانه ۱۵۰۰ متری مدرن',
-      description: 'انتقال خطوط تولید به شهرک صنعتی و تجهیز کامل کارخانه به ماشین‌آلات پیشرفته اکستروژن، مونتاژ و فرز CNC اروپایی.'
+      description: 'تجهیز کامل کارخانه به ماشین‌آلات پیشرفته برش، لقمه‌کوب و فرز CNC اروپایی.'
     },
     {
       year: '۱۴۰۰',
       title: 'ورود به پروژه‌های کلان بانکی و سازمانی',
-      description: 'توسعه دپارتمان مهندسی محاسبات و اجرای نماهای مرتفع کرتین وال لامل در شعب بانک‌ها، شهرداری‌ها و مجتمع‌های تجاری بزرگ.'
+      description: 'توسعه مهندسی محاسبات و اجرای نماهای مرتفع کرتین وال لامل در شعب بانک‌ها و مجتمع‌های بزرگ.'
     },
     {
       year: 'امروز',
       title: 'نوآوران پنجره سپاهان؛ مرجع مهندسی نما',
-      description: 'ارائه سبد جامع مهندسی شامل نماهای مدرن شیشه‌ای، لیفت‌اند‌اسلاید، ترموود، کامپوزیت و خدمات پس از فروش هوشمند با گارانتی کتبی.'
+      description: 'ارائه سبد جامع مهندسی نماهای شیشه‌ای، لیفت‌اند‌اسلاید، ترموود و کامپوزیت با گارانتی ۱۰ ساله.'
     }
   ];
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-16">
-      {/* Header */}
-      <div className="text-center max-w-3xl mx-auto">
-        <span className="text-xs font-bold text-bronze-400 uppercase tracking-widest">
-          هویت و اصالت مهندسی
+    <div className="max-w-7xl mx-auto px-3 sm:px-6 py-12 space-y-12 bg-[#F5F5F5] text-[#18191a]">
+      {/* Page Title Header */}
+      <div className="text-right space-y-2 border-b border-[#b5b8b5] pb-6">
+        <span className="aluminum-header px-3 py-1 text-xs font-black text-[#18191a] inline-block shadow-sm">
+          هویت و اعتبارات شرکت
         </span>
-        <h1 className="text-3xl sm:text-4xl font-extrabold text-white mt-2">
-          درباره شرکت نوآوران پنجره سپاهان
+        <h1 className="text-2xl sm:text-4xl font-black text-[#18191a]">
+          درباره شرکت نوآوران پنجره سپاهان (تأسیس ۱۳۸۵)
         </h1>
-        <p className="mt-4 text-sm text-titanium-300 leading-relaxed">
-          بیش از یک دهه و نیم پیشگامی در طراحی محاسباتی، ساخت دقیق صنعتی و اجرای ماندگار در سراسر کشور.
+        <p className="text-xs sm:text-sm text-[#55595e] font-medium leading-relaxed max-w-3xl">
+          بیش از ۱۵ سال سابقه درخشان در طراحی محاسباتی ممان اینرسی، ساخت صنعتی در کارخانه ۱۵۰۰ متری و اجرای پروژه‌های ساختمانی در سراسر ایران.
         </p>
       </div>
 
-      {/* Overview Card */}
-      <div className="rounded-3xl bg-charcoal-900 border border-charcoal-800 p-8 sm:p-12">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
-          <div className="space-y-4">
-            <h2 className="text-xl sm:text-2xl font-bold text-white leading-snug">
-              تعهد به دقت میلی‌متری، هوابندی مطلق و شکوه بصری معماری
+      {/* Main Overview Section */}
+      <div className="aluminum-card border border-[#b5b8b5] subtle-soft-shadow p-6 sm:p-10 rounded-none">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+          <div className="space-y-4 text-right">
+            <h2 className="text-lg sm:text-xl font-black text-[#18191a] leading-snug">
+              تعهد به دقت میلی‌متری، هوابندی مطلق و کیفیت ماندگار آلومینیوم
             </h2>
-            <p className="text-xs sm:text-sm text-titanium-300 leading-relaxed text-justify">
-              شرکت نوآوران پنجره سپاهان با هدف ارتقای استانداردهای ساخت‌وساز و بهینه‌سازی انرژی در صنعت ساختمان پایه‌گذاری شده است. ما بر این باوریم که نما و پنجره ساختمان صرفاً یک حائل فیزیکی نیست؛ بلکه امضای معمار، سپر حرارتی سازه و تضمین‌کننده آرامش ساکنین است.
+            <p className="text-xs text-[#35383c] leading-relaxed text-justify font-medium">
+              شرکت نوآوران پنجره سپاهان با هدف ارتقای استانداردهای ساخت‌وساز و بهینه‌سازی انرژی در صنعت ساختمان پایه‌گذاری شده است. نما و پنجره ساختمان صرفاً یک حائل فیزیکی نیست؛ بلکه سپر حرارتی سازه و تضمین‌کننده آرامش ساکنین است.
             </p>
-            <p className="text-xs sm:text-sm text-titanium-400 leading-relaxed text-justify">
-              کارخانه اختصاصی مجموعه به مساحت ۱۵۰۰ مترمربع در قطب صنعتی اصفهان، مجهز به پیشرفته‌ترین اره‌های دوکله برش زاویه‌ای، دستگاه‌های لقمه‌کوب هیدرولیک، پانچ‌های چندمنظوره و ایستگاه‌های تست آب‌بندی تحت فشار است که امکان تحویل روزانه ده‌ها مترمربع پنجره ترمال‌بریک و یونیت‌های کرتین‌وال را با تلورانس خطای نزدیک به صفر فراهم می‌سازد.
+            <p className="text-xs text-[#55595e] leading-relaxed text-justify font-normal">
+              کارخانه اختصاصی مجموعه به مساحت ۱۵۰۰ مترمربع در قطب صنعتی اصفهان، مجهز به پیشرفته‌ترین اره‌های دوکله برش زاویه‌ای، دستگاه‌های لقمه‌کوب هیدرولیک و ایستگاه‌های تست آب‌بندی تحت فشار است که امکان تحویل روزانه ده‌ها مترمربع پنجره ترمال‌بریک و یونیت‌های کرتین‌وال را فراهم می‌سازد.
             </p>
 
-            <div className="grid grid-cols-2 gap-4 pt-4 border-t border-charcoal-800">
-              <div className="flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-bronze-400 shrink-0" />
-                <span className="text-xs text-titanium-200">آلیاژ ۶۰۶۳ سختی استاندارد</span>
+            <div className="grid grid-cols-2 gap-3 pt-4 border-t border-[#b5b8b5]">
+              <div className="flex items-center gap-2 text-xs font-bold text-[#18191a]">
+                <CheckCircle2 className="w-4 h-4 text-[#18191a] shrink-0" />
+                <span>آلیاژ ۶۰۶۳ سختی استاندارد</span>
               </div>
-              <div className="flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-bronze-400 shrink-0" />
-                <span className="text-xs text-titanium-200">پلی‌آمید اصل ضدحریق آلمانی</span>
+              <div className="flex items-center gap-2 text-xs font-bold text-[#18191a]">
+                <CheckCircle2 className="w-4 h-4 text-[#18191a] shrink-0" />
+                <span>پلی‌آمید اصل ضدحریق آلمانی</span>
               </div>
-              <div className="flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-bronze-400 shrink-0" />
-                <span className="text-xs text-titanium-200">تزریق گاز آرگون با خلوص ۹۰٪</span>
+              <div className="flex items-center gap-2 text-xs font-bold text-[#18191a]">
+                <CheckCircle2 className="w-4 h-4 text-[#18191a] shrink-0" />
+                <span>تزریق گاز آرگون با خلوص ۹۰٪</span>
               </div>
-              <div className="flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-bronze-400 shrink-0" />
-                <span className="text-xs text-titanium-200">۱۰ سال گارانتی کتبی شرکتی</span>
+              <div className="flex items-center gap-2 text-xs font-bold text-[#18191a]">
+                <CheckCircle2 className="w-4 h-4 text-[#18191a] shrink-0" />
+                <span>۱۰ سال گارانتی کتبی شرکتی</span>
               </div>
             </div>
           </div>
 
-          <div className="rounded-2xl overflow-hidden bg-charcoal-850 border border-charcoal-700 h-80 sm:h-96">
+          <div className="border border-[#b5b8b5] h-80 sm:h-96 overflow-hidden bg-[#18191a]">
             <img
               src="https://arvinpanjereh.com/upload/service/742b5647-017c-4a6e-b416-a184adf97dcc.webp"
               alt="کارخانه نوآوران پنجره سپاهان"
@@ -92,23 +92,23 @@ export default async function AboutPage() {
         </div>
       </div>
 
-      {/* History Timeline */}
-      <div className="space-y-8">
-        <h2 className="text-2xl font-bold text-white text-center">
-          مسیر تکامل و پیشرفت مجموعه
+      {/* History & Achievements Timeline */}
+      <div className="space-y-6">
+        <h2 className="text-xl font-black text-[#18191a] text-right">
+          مسیر تکامل و موفقیت‌های مجموعه
         </h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {timeline.map((item, idx) => (
             <div
               key={idx}
-              className="rounded-2xl bg-charcoal-900 border border-charcoal-800 p-6 space-y-3 relative hover:border-bronze-500/40 transition-all"
+              className="aluminum-card border border-[#b5b8b5] p-5 space-y-2 rounded-none text-right subtle-soft-shadow"
             >
-              <span className="text-2xl font-black text-bronze-400 font-mono block">
+              <span className="text-xl font-black text-[#18191a] font-mono block border-b border-[#b5b8b5] pb-2">
                 {item.year}
               </span>
-              <h3 className="text-sm font-bold text-white">{item.title}</h3>
-              <p className="text-xs text-titanium-400 leading-relaxed">
+              <h3 className="text-xs font-bold text-[#18191a]">{item.title}</h3>
+              <p className="text-[11px] text-[#55595e] leading-relaxed">
                 {item.description}
               </p>
             </div>

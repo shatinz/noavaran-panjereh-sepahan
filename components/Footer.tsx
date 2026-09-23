@@ -1,187 +1,121 @@
 import React from 'react';
 import Link from 'next/link';
-import { Building2, Phone, MapPin, Mail, Clock, Shield, ArrowUpLeft, Instagram, Send } from 'lucide-react';
+import { Building2, Phone, MapPin, Clock, Shield, ArrowUpLeft, Instagram, Send } from 'lucide-react';
 import { getSettings } from '@/lib/db';
 
 export default async function Footer() {
   const settings = await getSettings();
 
   return (
-    <footer className="bg-charcoal-950 border-t border-charcoal-800 text-titanium-300 pt-16 pb-12">
+    <footer className="aluminum-card border-t border-[#b5b8b5] text-[#18191a] pt-12 pb-10 mt-16 subtle-soft-shadow">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 text-right">
           {/* Col 1: Brand Info */}
-          <div className="space-y-4">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-lg bg-bronze-500 flex items-center justify-center text-charcoal-950 font-bold shadow-md shadow-bronze-500/20">
-                <Building2 className="w-5 h-5 text-charcoal-950" />
+          <div className="space-y-3">
+            <div className="flex items-center gap-2.5">
+              <div className="w-9 h-9 bg-[#18191a] text-white flex items-center justify-center font-bold">
+                <Building2 className="w-5 h-5 text-white" />
               </div>
-              <span className="text-xl font-bold text-white">
-                نوآوران پنجره <span className="text-bronze-400">سپاهان</span>
+              <span className="text-lg font-black text-[#18191a]">
+                نوآوران پنجره سپاهان
               </span>
             </div>
-            <p className="text-xs leading-relaxed text-titanium-400 text-justify">
-              تولیدکننده صنعتی و مجری تخصصی نماهای مدرن شیشه‌ای (کرتین‌وال و فریم‌لس)، درب و پنجره‌های اختصاصی دوجداره ترمال‌بریک، پنل‌های کامپوزیت آلومینیوم و ترموود با تکیه بر کارخانه مجهز ۱۵۰۰ متری و ماشین‌آلات مدرن اروپایی.
+            <p className="text-xs leading-relaxed text-[#484c50] font-medium text-justify">
+              تولیدکننده صنعتی و مجری تخصصی نماهای مدرن شیشه‌ای (کرتین‌وال و فریم‌لس)، درب و پنجره‌های اختصاصی دوجداره ترمال‌بریک و کامپوزیت با کارخانه مجهز ۱۵۰۰ متری در اصفهان.
             </p>
-            <div className="pt-2 flex items-center gap-3">
-              <a
-                href={settings.socialLinks.instagram}
-                target="_blank"
-                rel="noreferrer"
-                className="w-9 h-9 rounded-lg bg-charcoal-850 hover:bg-bronze-500/20 hover:text-bronze-400 border border-charcoal-700 flex items-center justify-center transition-colors"
-                title="اینستاگرام نوآوران پنجره"
-              >
-                <Instagram className="w-4 h-4" />
-              </a>
-              <a
-                href={settings.socialLinks.telegram}
-                target="_blank"
-                rel="noreferrer"
-                className="w-9 h-9 rounded-lg bg-charcoal-850 hover:bg-bronze-500/20 hover:text-bronze-400 border border-charcoal-700 flex items-center justify-center transition-colors"
-                title="تلگرام مهندسی نوآوران پنجره"
-              >
-                <Send className="w-4 h-4" />
-              </a>
-              <Link
-                href="/admin"
-                className="w-9 h-9 rounded-lg bg-charcoal-850 hover:bg-bronze-500/20 hover:text-bronze-400 border border-charcoal-700 flex items-center justify-center transition-colors"
-                title="پنل مدیریت"
-              >
-                <Shield className="w-4 h-4" />
-              </Link>
-            </div>
           </div>
 
-          {/* Col 2: Services Quick Links */}
+          {/* Col 2: Services Links */}
           <div>
-            <h3 className="text-sm font-bold text-white uppercase tracking-wider mb-4 border-r-2 border-bronze-500 pr-2">
-              سیستم‌های اجرایی و محصولات
+            <h3 className="text-xs font-black text-[#18191a] uppercase tracking-wider mb-3 border-r-2 border-[#18191a] pr-2">
+              سیستم‌های اجرایی
             </h3>
-            <ul className="space-y-2.5 text-xs">
+            <ul className="space-y-2 text-xs font-bold">
               <li>
-                <Link href="/services/curtain-wall-lamella" className="hover:text-bronze-400 flex items-center justify-between transition-colors">
+                <Link href="/services/curtain-wall-lamella" className="hover:underline flex items-center justify-between">
                   <span>نمای کرتین وال (لامل)</span>
-                  <ArrowUpLeft className="w-3.5 h-3.5 opacity-50" />
+                  <ArrowUpLeft className="w-3.5 h-3.5 opacity-60" />
                 </Link>
               </li>
               <li>
-                <Link href="/services/frameless-facade" className="hover:text-bronze-400 flex items-center justify-between transition-colors">
+                <Link href="/services/frameless-facade" className="hover:underline flex items-center justify-between">
                   <span>نمای شیشه‌ای فریم‌لس</span>
-                  <ArrowUpLeft className="w-3.5 h-3.5 opacity-50" />
+                  <ArrowUpLeft className="w-3.5 h-3.5 opacity-60" />
                 </Link>
               </li>
               <li>
-                <Link href="/services/aluminum-windows-doors" className="hover:text-bronze-400 flex items-center justify-between transition-colors">
-                  <span>پنجره ترمال‌بریک و لیفت اند اسلاید</span>
-                  <ArrowUpLeft className="w-3.5 h-3.5 opacity-50" />
+                <Link href="/services/aluminum-windows-doors" className="hover:underline flex items-center justify-between">
+                  <span>پنجره ترمال‌بریک و لیفت اسلاید</span>
+                  <ArrowUpLeft className="w-3.5 h-3.5 opacity-60" />
                 </Link>
               </li>
               <li>
-                <Link href="/services/composite-facade" className="hover:text-bronze-400 flex items-center justify-between transition-colors">
+                <Link href="/services/composite-facade" className="hover:underline flex items-center justify-between">
                   <span>نمای کامپوزیت آلومینیوم (ACP)</span>
-                  <ArrowUpLeft className="w-3.5 h-3.5 opacity-50" />
-                </Link>
-              </li>
-              <li>
-                <Link href="/services/thermowood-facade" className="hover:text-bronze-400 flex items-center justify-between transition-colors">
-                  <span>نمای چوب طبیعی ترموود</span>
-                  <ArrowUpLeft className="w-3.5 h-3.5 opacity-50" />
-                </Link>
-              </li>
-              <li>
-                <Link href="/services/steel-glass-railings" className="hover:text-bronze-400 flex items-center justify-between transition-colors">
-                  <span>حفاظ استیل و هندریل شیشه‌ای</span>
-                  <ArrowUpLeft className="w-3.5 h-3.5 opacity-50" />
+                  <ArrowUpLeft className="w-3.5 h-3.5 opacity-60" />
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* Col 3: Portal Links */}
+          {/* Col 3: Portal Sections */}
           <div>
-            <h3 className="text-sm font-bold text-white uppercase tracking-wider mb-4 border-r-2 border-bronze-500 pr-2">
-              بخش‌های پرتال و منابع
+            <h3 className="text-xs font-black text-[#18191a] uppercase tracking-wider mb-3 border-r-2 border-[#18191a] pr-2">
+              بخش‌های اصلی پرتال
             </h3>
-            <ul className="space-y-2.5 text-xs">
+            <ul className="space-y-2 text-xs font-bold">
               <li>
-                <Link href="/projects" className="hover:text-bronze-400 transition-colors block">
-                  آرشیو ۵۰+ پروژه اجرایی شاخص
+                <Link href="/projects" className="hover:underline block">
+                  آرشیو ۵۰+ پروژه اجرایی
                 </Link>
               </li>
               <li>
-                <Link href="/videos" className="hover:text-bronze-400 transition-colors block text-bronze-300 font-semibold">
-                  کتابخانه ویدیوهای آموزشی (آپارات و یوتیوب)
+                <Link href="/calculator" className="hover:underline block">
+                  محاسبه‌گر متراژ و پیش‌فاکتور
                 </Link>
               </li>
               <li>
-                <Link href="/calculator" className="hover:text-bronze-400 transition-colors block">
-                  محاسبه‌گر آنلاین متراژ و پیش‌فاکتور
+                <Link href="/articles" className="hover:underline block">
+                  دانشنامه و مقالات فنی
                 </Link>
               </li>
               <li>
-                <Link href="/articles" className="hover:text-bronze-400 transition-colors block">
-                  دانشنامه فنی و استانداردهای ساختمانی
-                </Link>
-              </li>
-              <li>
-                <Link href="/about" className="hover:text-bronze-400 transition-colors block">
-                  تاریخچه و ظرفیت کارخانه ۱۵۰۰ متری
-                </Link>
-              </li>
-              <li>
-                <Link href="/contact" className="hover:text-bronze-400 transition-colors block">
-                  دفترچه تماس و ارتباط با مهندسین محاسب
+                <Link href="/about" className="hover:underline block">
+                  درباره شرکت (تأسیس ۱۳۸۵)
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* Col 4: Contact & Factory Info */}
-          <div className="space-y-3">
-            <h3 className="text-sm font-bold text-white uppercase tracking-wider mb-4 border-r-2 border-bronze-500 pr-2">
-              دفتر مرکزی و خطوط ارتباط
+          {/* Col 4: Contact Line */}
+          <div className="space-y-2.5">
+            <h3 className="text-xs font-black text-[#18191a] uppercase tracking-wider mb-3 border-r-2 border-[#18191a] pr-2">
+              دفتر مرکزی و تماس
             </h3>
-            <div className="space-y-2.5 text-xs">
-              <div className="flex items-start gap-2.5">
-                <Phone className="w-4 h-4 text-bronze-400 shrink-0 mt-0.5" />
+            <div className="space-y-2 text-xs">
+              <div className="flex items-start gap-2">
+                <Phone className="w-4 h-4 text-[#18191a] shrink-0 mt-0.5" />
                 <div>
-                  <a href={`tel:${settings.phone}`} className="font-mono text-sm font-bold text-white hover:text-bronze-400 block">
+                  <a href={`tel:${settings.phone}`} className="font-mono text-sm font-black text-[#18191a] hover:underline block">
                     {settings.phoneLabel}
                   </a>
-                  <span className="text-[11px] text-titanium-400 block font-mono mt-0.5">
-                    مستقیم: {settings.directPhones.join(' | ')}
-                  </span>
                 </div>
               </div>
 
-              <div className="flex items-start gap-2.5">
-                <MapPin className="w-4 h-4 text-bronze-400 shrink-0 mt-0.5" />
-                <span className="text-[11px] leading-relaxed text-titanium-300">
+              <div className="flex items-start gap-2">
+                <MapPin className="w-4 h-4 text-[#18191a] shrink-0 mt-0.5" />
+                <span className="text-[11px] leading-relaxed text-[#35383c] font-medium">
                   {settings.officeAddress}
-                </span>
-              </div>
-
-              <div className="flex items-start gap-2.5">
-                <Building2 className="w-4 h-4 text-bronze-400 shrink-0 mt-0.5" />
-                <span className="text-[11px] leading-relaxed text-titanium-400">
-                  <strong className="text-titanium-200">کارخانه:</strong> {settings.factoryAddress}
-                </span>
-              </div>
-
-              <div className="flex items-center gap-2.5">
-                <Clock className="w-4 h-4 text-bronze-400 shrink-0" />
-                <span className="text-[11px] text-titanium-400">
-                  {settings.workingHours}
                 </span>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="mt-12 pt-6 border-t border-charcoal-850 flex flex-col sm:flex-row items-center justify-between text-xs text-titanium-500 gap-4">
+        <div className="mt-8 pt-4 border-t border-[#b5b8b5] flex flex-col sm:flex-row items-center justify-between text-[11px] text-[#55595e] font-bold gap-2">
           <p>© {new Date().getFullYear()} کلیه حقوق برای شرکت نوآوران پنجره سپاهان محفوظ است.</p>
-          <p className="font-mono text-[11px] text-titanium-600">
-            Noavaran Panjereh Sepahan · Precision Architectural Engineering
+          <p className="font-mono text-[10px]">
+            Noavaran Panjereh Sepahan · iPhone 17 Pro Gray Titanium Series
           </p>
         </div>
       </div>

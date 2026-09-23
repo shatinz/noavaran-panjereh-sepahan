@@ -6,51 +6,98 @@
 
 :root {
   --font-vazir: 'Vazirmatn', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --bg-primary: #14171d;
-  --bg-surface: #1b2028;
-  --bg-card: #222832;
-  --border-subtle: #2f3846;
-  --color-bronze: #c78d22;
-  --color-bronze-light: #e6ab41;
-  --text-main: #f8fafc;
-  --text-muted: #94a3b8;
+  --bg-primary: #F5F5F5;
+  --bg-aluminum: #cbcccb;
+  --border-aluminum: #b3b5b3;
+  --text-main: #18191a;
+  --text-muted: #55595e;
 }
 
 html, body {
-  background-color: #14171d;
-  color: #f8fafc;
+  background-color: #F5F5F5;
+  color: #18191a;
   font-family: var(--font-vazir);
-  overflow-x: clip;
+  overflow-x: hidden;
   min-width: 0;
   scroll-behavior: smooth;
   margin: 0;
   padding: 0;
 }
 
-/* Scrollbar styling */
+/* Custom Scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 7px;
+  height: 7px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #14171d;
+  background: #F5F5F5;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #2f3846;
-  border-radius: 4px;
+  background: #b5b8b5;
+  border-radius: 0px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #c78d22;
+  background: #888c88;
 }
 
-/* Architectural typography */
+/* Typography Defaults */
 h1, h2, h3, h4, h5, h6 {
-  font-weight: 700;
+  font-weight: 800;
   letter-spacing: -0.02em;
   font-style: normal !important;
+}
+
+/* Horizontal Brushed Aluminum Texture (#cbcccb) */
+.aluminum-card {
+  background-color: #cbcccb;
+  background-image: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.25) 0%,
+    rgba(240, 242, 240, 0.25) 25%,
+    rgba(203, 204, 203, 0.25) 50%,
+    rgba(240, 242, 240, 0.25) 75%,
+    rgba(255, 255, 255, 0.25) 100%
+  ), repeating-linear-gradient(
+    0deg,
+    rgba(255, 255, 255, 0.12),
+    rgba(255, 255, 255, 0.12) 1px,
+    transparent 1px,
+    transparent 2px
+  );
+  border: 1px solid #b5b8b5;
+}
+
+.aluminum-header {
+  background-color: #cbcccb;
+  background-image: repeating-linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.18) 0px,
+    rgba(255, 255, 255, 0.18) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  border: 1px solid #b5b8b5;
+}
+
+/* Extremely Subtle Drop Shadow */
+.subtle-soft-shadow {
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
+}
+
+.card-elevated-shadow {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+/* Text Shadow Helpers for overlay on images */
+.text-shadow-strong {
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.85);
+}
+
+.text-shadow-subtle {
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.7);
 }
 
 /* Guardrails for WebKit images in RTL */
