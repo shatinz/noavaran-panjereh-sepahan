@@ -5,9 +5,9 @@ import Footer from '@/components/Footer';
 import FloatingContact from '@/components/FloatingContact';
 
 export const metadata: Metadata = {
-  title: 'نوآوران پنجره سپاهان | تولید و اجرای نمای شیشه‌ای، کرتین وال و پنجره ترمال‌بریک',
-  description: 'شرکت نوآوران پنجره سپاهان، طراح و مجری تخصصی نماهای مدرن کرتین وال (لامل)، نمای شیشه‌ای فریم‌لس، درب و پنجره‌های دوجداره آلومینیوم ترمال بریک، کامپوزیت و ترموود در اصفهان و سراسر کشور.',
-  keywords: 'نوآوران پنجره سپاهان, کرتین وال, لامل, پنجره دوجداره, ترمال بریک, لیفت اند اسلاید, نمای کامپوزیت, فریم لس, اصفهان',
+  title: 'Noavaran Panjereh Sepahan | Modern Facade Solutions',
+  description: 'Luxury real architectural glass facade as an Iranian contemporary high-rise & facade specialist. Precision-engineered aluminum systems and curtain walls.',
+  keywords: 'Noavaran Panjereh Sepahan, modern facade solutions, curtain wall, thermal break aluminum, architectural glass, Isfahan',
 };
 
 export default function RootLayout({
@@ -16,14 +16,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="fa" dir="rtl">
+    <html lang="en" dir="ltr">
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
         <link rel="icon" href="/favicon.ico" sizes="any" />
       </head>
       <body className="min-h-screen flex flex-col selection:bg-gray-400/40 selection:text-black">
         <Header />
-        <main className="flex-grow pt-[60px]">
+        <main className="flex-grow">
           {children}
         </main>
         <Footer />
