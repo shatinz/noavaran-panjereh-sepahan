@@ -21,67 +21,70 @@ export default async function ServicesPage() {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-16">
+    <div className="w-full max-w-[1440px] mx-auto px-3 sm:px-6 py-4 space-y-5">
       {/* Header */}
-      <div className="text-center max-w-3xl mx-auto">
-        <span className="text-xs font-bold text-bronze-400 uppercase tracking-widest">
-          سیستم‌های مهندسی نما و پنجره
-        </span>
-        <h1 className="text-3xl sm:text-4xl font-extrabold text-white mt-2">
+      <section className="aluminum-card sharp frame-shadow p-6 sm:p-10 border border-[#b0b3b0] text-center space-y-3">
+        <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#18191a] text-white text-[11px] font-bold sharp border border-black shadow-sm">
+          <Layers className="w-4 h-4 text-[#cbcccb]" />
+          <span>سیستم‌های ۶ گانه مهندسی نما و پنجره</span>
+        </div>
+        <h1 className="text-2xl sm:text-4xl font-black text-black tracking-tight leading-tight">
           سبد کامل خدمات و محصولات نوآوران پنجره سپاهان
         </h1>
-        <p className="mt-4 text-sm text-titanium-300 leading-relaxed">
+        <p className="max-w-2xl mx-auto text-xs sm:text-sm text-[#333] leading-relaxed font-medium">
           طراحی محاسباتی، نقشه‌کشی فاز ۲، ساخت دقیق کارخانه‌ای و اجرای در محل با استفاده از مرغوب‌ترین بیلت‌های آلومینیوم ۶۰۶۳ و یراق‌آلات اصیل اروپایی.
         </p>
-      </div>
+      </section>
 
       {/* Services List */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {services.map((s) => {
           const IconComponent = iconMap[s.icon] || Building2;
           return (
             <div
               key={s.id}
-              className="rounded-2xl bg-charcoal-900 border border-charcoal-800 hover:border-bronze-500/50 transition-all duration-300 overflow-hidden flex flex-col group shadow-lg"
+              className="aluminum-card sharp frame-shadow p-3.5 border border-[#b0b3b0] overflow-hidden flex flex-col justify-between group text-right hover:border-black transition-colors"
             >
-              <div className="relative h-56 w-full bg-charcoal-850 overflow-hidden">
-                <img
-                  src={s.image}
-                  alt={s.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-charcoal-900 via-charcoal-900/30 to-transparent" />
-                <div className="absolute bottom-3 right-3 p-2.5 rounded-xl bg-charcoal-950/80 backdrop-blur-md text-bronze-400 border border-charcoal-700">
-                  <IconComponent className="w-5 h-5" />
+              <div>
+                <div className="relative h-52 w-full bg-black sharp overflow-hidden border border-black/20 frame-shadow">
+                  <img
+                    src={s.image}
+                    alt={s.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+                  <div className="absolute bottom-2.5 right-2.5 p-2 sharp bg-white text-black border border-black shadow-sm">
+                    <IconComponent className="w-4 h-4" />
+                  </div>
                 </div>
-              </div>
 
-              <div className="p-6 flex-grow flex flex-col justify-between space-y-4">
-                <div>
-                  <h2 className="text-lg font-bold text-white group-hover:text-bronze-400 transition-colors">
+                <div className="pt-3 space-y-2">
+                  <h2 className="text-sm font-black text-black group-hover:text-black transition-colors">
                     {s.title}
                   </h2>
-                  <p className="text-xs text-titanium-400 mt-2 line-clamp-3 leading-relaxed">
+                  <p className="text-[11.5px] text-[#333] line-clamp-3 leading-relaxed font-medium">
                     {s.summary}
                   </p>
                 </div>
 
-                <div className="space-y-2 pt-2 border-t border-charcoal-800">
-                  <div className="text-[11px] font-bold text-titanium-300">ویژگی‌های فنی برجسته:</div>
+                <div className="space-y-1.5 pt-3 mt-3 border-t border-[#a8aba8]">
+                  <div className="text-[10px] font-bold text-black">ویژگی‌های فنی برجسته:</div>
                   {s.features.slice(0, 3).map((f, i) => (
-                    <div key={i} className="flex items-start gap-2 text-xs text-titanium-300">
-                      <CheckCircle2 className="w-3.5 h-3.5 text-bronze-400 shrink-0 mt-0.5" />
+                    <div key={i} className="flex items-start gap-1.5 text-[11px] text-[#333] font-medium">
+                      <CheckCircle2 className="w-3.5 h-3.5 text-black shrink-0 mt-0.5" />
                       <span className="line-clamp-1">{f}</span>
                     </div>
                   ))}
                 </div>
+              </div>
 
+              <div className="pt-3 mt-3 border-t border-[#a8aba8]">
                 <Link
                   href={`/services/${s.slug}`}
-                  className="pt-3 inline-flex items-center justify-between text-xs font-bold text-bronze-400 hover:text-bronze-300 group/link"
+                  className="w-full py-2 px-3 sharp bg-[#18191a] hover:bg-[#333] text-white text-xs font-bold flex items-center justify-between border border-black transition-colors"
                 >
                   <span>مشاهده مشخصات کامل و مقاطع</span>
-                  <ArrowLeft className="w-4 h-4 group-hover/link:-translate-x-1 transition-transform" />
+                  <ArrowLeft className="w-4 h-4" />
                 </Link>
               </div>
             </div>

@@ -12,16 +12,16 @@ export default function CalculatorPage() {
   const [finishColor, setFinishColor] = useState('anodize-champagne');
 
   const systemRates: Record<string, { title: string; baseRate: number; unit: string }> = {
-    'thermal-break': { title: 'پنجره دوجداره آلومینیوم ترمال بریک', baseRate: 8500000, unit: 'مترمربع' },
-    'lift-slide': { title: 'پنجره فوق‌لوکس لیفت اند اسلاید (Lift & Slide)', baseRate: 14500000, unit: 'مترمربع' },
+    'thermal-break': { title: 'پنجره دوجداره آلومینیوم ترمال بریک (TH 68 / TH 60)', baseRate: 8500000, unit: 'مترمربع' },
+    'lift-slide': { title: 'پنجره فوق‌لوکس لیفت اند اسلاید (TS 143 / TS 115)', baseRate: 14500000, unit: 'مترمربع' },
     'curtain-wall': { title: 'نمای کرتین وال / لامل (Curtain Wall)', baseRate: 12500000, unit: 'مترمربع' },
-    'frameless': { title: 'نمای شیشه‌ای فریم‌لس (Frameless)', baseRate: 11000000, unit: 'مترمربع' },
+    'frameless': { title: 'نمای شیشه‌ای فریم‌لس استراکچرال', baseRate: 11000000, unit: 'مترمربع' },
     'composite': { title: 'نمای کامپوزیت آلومینیوم نسوز (ACP)', baseRate: 6800000, unit: 'مترمربع' },
-    'thermowood': { title: 'نمای چوب طبیعی ترموود فنلاندی', baseRate: 9200000, unit: 'مترمربع' },
+    'fence': { title: 'حفاظ و جان‌پناه شیشه‌ای تمام آلومینیوم', baseRate: 5900000, unit: 'مترطول' },
   };
 
   const glassMultipliers: Record<string, { title: string; priceAdd: number }> = {
-    'superclear-argon': { title: 'دوجداره ۶+۴ سوپرکلیر با تزریق گاز آرگون', priceAdd: 0 },
+    'superclear-argon': { title: 'دوجداره ۶+۱۲+۶ سوپرکلیر با تزریق گاز آرگون', priceAdd: 0 },
     'laminated-security': { title: 'شیشه سکوریت + لمینت ضدسرقت و نشکن', priceAdd: 1800000 },
     'low-e-sun': { title: 'شیشه Low-E سان‌انرژی ضدتابش و کنترل دما', priceAdd: 2200000 },
   };
@@ -56,55 +56,56 @@ export default function CalculatorPage() {
   };
 
   return (
-    <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-12">
+    <div className="w-full max-w-[1440px] mx-auto px-3 sm:px-6 py-4 space-y-5">
       {/* Header */}
-      <div className="text-center max-w-3xl mx-auto">
-        <span className="text-xs font-bold text-bronze-400 uppercase tracking-widest">
-          برآوردگر آنلاین مهندسی
-        </span>
-        <h1 className="text-3xl sm:text-4xl font-extrabold text-white mt-2">
-          محاسبه‌گر پیش‌فاکتور و متراژ نوآوران پنجره سپاهان
+      <section className="aluminum-card sharp frame-shadow p-6 sm:p-10 border border-[#b0b3b0] text-center space-y-3">
+        <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#18191a] text-white text-[11px] font-bold sharp border border-black shadow-sm">
+          <Calculator className="w-4 h-4 text-[#cbcccb]" />
+          <span>برآوردگر آنلاین متراژ و پیش‌فاکتور مهندسی</span>
+        </div>
+        <h1 className="text-2xl sm:text-4xl font-black text-black tracking-tight leading-tight">
+          محاسبه‌گر پیش‌فاکتور نوآوران پنجره سپاهان
         </h1>
-        <p className="mt-3 text-sm text-titanium-300 leading-relaxed">
+        <p className="max-w-2xl mx-auto text-xs sm:text-sm text-[#333] leading-relaxed font-medium">
           ابعاد و مشخصات دهانه یا نمای ساختمان را انتخاب کنید تا مشخصات متره و پیش‌فاکتور تخمینی فوراً محاسبه گردد.
         </p>
-      </div>
+      </section>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
         {/* Left 2 Cols: Form Inputs */}
-        <div className="lg:col-span-2 rounded-3xl bg-charcoal-900 border border-charcoal-800 p-6 sm:p-8 space-y-6">
+        <div className="lg:col-span-2 aluminum-card sharp frame-shadow p-6 sm:p-8 space-y-6 text-right border border-[#b0b3b0]">
           {/* Step 1: System Selection */}
           <div className="space-y-3">
-            <label className="text-xs font-bold text-white block">
+            <label className="text-xs font-black text-black block">
               ۱. نوع سیستم نما یا پنجره:
             </label>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
               {Object.entries(systemRates).map(([key, item]) => (
                 <button
                   key={key}
                   type="button"
                   onClick={() => setSystemType(key)}
-                  className={`p-3.5 rounded-xl text-right text-xs font-medium border transition-all ${
+                  className={`p-3 sharp text-right text-xs font-bold border transition-all ${
                     systemType === key
-                      ? 'bg-bronze-500/20 border-bronze-500 text-white shadow-sm'
-                      : 'bg-charcoal-850 border-charcoal-700/80 text-titanium-300 hover:border-charcoal-600'
+                      ? 'bg-[#18191a] border-black text-white shadow-sm'
+                      : 'bg-[#cbcccb] border-[#9ea19e] text-black hover:bg-[#b8bab8]'
                   }`}
                 >
-                  <div className="font-bold">{item.title}</div>
-                  <div className="text-[10px] text-titanium-400 mt-1">واحد محاسبه: {item.unit}</div>
+                  <div className="font-black">{item.title}</div>
+                  <div className="text-[10px] mt-0.5 opacity-80">واحد محاسبه: {item.unit}</div>
                 </button>
               ))}
             </div>
           </div>
 
           {/* Step 2: Dimensions */}
-          <div className="space-y-3 pt-4 border-t border-charcoal-800">
-            <label className="text-xs font-bold text-white block">
+          <div className="space-y-3 pt-4 border-t border-[#a8aba8]">
+            <label className="text-xs font-black text-black block">
               ۲. ابعاد دهانه یا سطح نما:
             </label>
-            <div className="grid grid-cols-3 gap-4">
+            <div className="grid grid-cols-3 gap-3">
               <div>
-                <label className="text-[11px] text-titanium-400 block mb-1">عرض (متر):</label>
+                <label className="text-[11px] text-black font-bold block mb-1">عرض (متر):</label>
                 <input
                   type="number"
                   step="0.1"
@@ -112,12 +113,12 @@ export default function CalculatorPage() {
                   max="50"
                   value={width}
                   onChange={(e) => setWidth(Math.max(0.5, parseFloat(e.target.value) || 0.5))}
-                  className="w-full p-2.5 rounded-xl bg-charcoal-850 border border-charcoal-700 text-white font-mono text-sm focus:border-bronze-500 focus:outline-none"
+                  className="w-full p-2.5 sharp bg-white border border-[#888] text-black font-mono text-sm focus:border-black outline-none frame-shadow text-left"
                 />
               </div>
 
               <div>
-                <label className="text-[11px] text-titanium-400 block mb-1">ارتفاع (متر):</label>
+                <label className="text-[11px] text-black font-bold block mb-1">ارتفاع (متر):</label>
                 <input
                   type="number"
                   step="0.1"
@@ -125,37 +126,37 @@ export default function CalculatorPage() {
                   max="50"
                   value={height}
                   onChange={(e) => setHeight(Math.max(0.5, parseFloat(e.target.value) || 0.5))}
-                  className="w-full p-2.5 rounded-xl bg-charcoal-850 border border-charcoal-700 text-white font-mono text-sm focus:border-bronze-500 focus:outline-none"
+                  className="w-full p-2.5 sharp bg-white border border-[#888] text-black font-mono text-sm focus:border-black outline-none frame-shadow text-left"
                 />
               </div>
 
               <div>
-                <label className="text-[11px] text-titanium-400 block mb-1">تعداد لنگه/دهانه:</label>
+                <label className="text-[11px] text-black font-bold block mb-1">تعداد لنگه/دهانه:</label>
                 <input
                   type="number"
                   min="1"
                   max="500"
                   value={quantity}
                   onChange={(e) => setQuantity(Math.max(1, parseInt(e.target.value) || 1))}
-                  className="w-full p-2.5 rounded-xl bg-charcoal-850 border border-charcoal-700 text-white font-mono text-sm focus:border-bronze-500 focus:outline-none"
+                  className="w-full p-2.5 sharp bg-white border border-[#888] text-black font-mono text-sm focus:border-black outline-none frame-shadow text-left"
                 />
               </div>
             </div>
           </div>
 
           {/* Step 3: Glass Type */}
-          <div className="space-y-3 pt-4 border-t border-charcoal-800">
-            <label className="text-xs font-bold text-white block">
+          <div className="space-y-3 pt-4 border-t border-[#a8aba8]">
+            <label className="text-xs font-black text-black block">
               ۳. مشخصات شیشه دوجداره:
             </label>
             <div className="space-y-2">
               {Object.entries(glassMultipliers).map(([key, item]) => (
                 <label
                   key={key}
-                  className={`flex items-center justify-between p-3 rounded-xl border text-xs cursor-pointer transition-all ${
+                  className={`flex items-center justify-between p-3 sharp border text-xs cursor-pointer transition-all ${
                     glassType === key
-                      ? 'bg-charcoal-800 border-bronze-500 text-white'
-                      : 'bg-charcoal-850 border-charcoal-700 text-titanium-300'
+                      ? 'bg-[#18191a] border-black text-white'
+                      : 'bg-[#cbcccb] border-[#9ea19e] text-black hover:bg-[#b8bab8]'
                   }`}
                 >
                   <div className="flex items-center gap-2">
@@ -164,12 +165,12 @@ export default function CalculatorPage() {
                       name="glass"
                       checked={glassType === key}
                       onChange={() => setGlassType(key)}
-                      className="accent-bronze-500"
+                      className="accent-black"
                     />
-                    <span>{item.title}</span>
+                    <span className="font-bold">{item.title}</span>
                   </div>
                   {item.priceAdd > 0 && (
-                    <span className="text-[10px] text-bronze-400 font-mono">
+                    <span className="text-[10px] font-mono font-bold">
                       +{formatPrice(item.priceAdd)} تومان/متر
                     </span>
                   )}
@@ -179,14 +180,14 @@ export default function CalculatorPage() {
           </div>
 
           {/* Step 4: Finish Color */}
-          <div className="space-y-3 pt-4 border-t border-charcoal-800">
-            <label className="text-xs font-bold text-white block">
+          <div className="space-y-3 pt-4 border-t border-[#a8aba8]">
+            <label className="text-xs font-black text-black block">
               ۴. نوع پوشش و رنگ پروفیل:
             </label>
             <select
               value={finishColor}
               onChange={(e) => setFinishColor(e.target.value)}
-              className="w-full p-3 rounded-xl bg-charcoal-850 border border-charcoal-700 text-white text-xs focus:border-bronze-500 focus:outline-none"
+              className="w-full p-2.5 sharp bg-white border border-[#888] text-black text-xs font-bold focus:border-black outline-none frame-shadow text-right"
             >
               {Object.entries(finishMultipliers).map(([key, title]) => (
                 <option key={key} value={key}>{title}</option>
@@ -196,65 +197,65 @@ export default function CalculatorPage() {
         </div>
 
         {/* Right 1 Col: Calculation Summary & Send to WhatsApp */}
-        <div className="space-y-6">
-          <div className="rounded-3xl bg-gradient-to-b from-charcoal-850 to-charcoal-900 border border-charcoal-700 p-6 sm:p-8 space-y-6 shadow-2xl">
-            <div className="flex items-center gap-2 text-bronze-400 text-xs font-bold uppercase tracking-wider">
-              <FileSpreadsheet className="w-4 h-4" />
+        <div className="space-y-4 text-right">
+          <div className="aluminum-card sharp frame-shadow border border-[#b0b3b0] p-6 space-y-4">
+            <div className="flex items-center gap-2 text-black text-xs font-black pb-2 border-b border-[#a8aba8]">
+              <FileSpreadsheet className="w-4 h-4 text-black" />
               <span>خلاصه محاسبات متره و برآورد</span>
             </div>
 
-            <div className="space-y-3 pb-4 border-b border-charcoal-700 text-xs">
-              <div className="flex justify-between text-titanium-400">
-                <span>مجموع متراژ محاسبه شده:</span>
-                <span className="font-mono text-white font-bold">{totalArea} مترمربع</span>
+            <div className="space-y-2.5 text-xs">
+              <div className="flex justify-between bg-[#b8bab8] p-2 sharp border border-[#9ea19e]">
+                <span className="text-[#333] font-bold">مجموع متراژ محاسبه شده:</span>
+                <span className="font-mono text-black font-black">{totalArea} مترمربع</span>
               </div>
-              <div className="flex justify-between text-titanium-400">
-                <span>نوع سیستم:</span>
-                <span className="text-white text-[11px] line-clamp-1">{systemRates[systemType].title}</span>
+              <div className="flex justify-between bg-[#b8bab8] p-2 sharp border border-[#9ea19e]">
+                <span className="text-[#333] font-bold">نوع سیستم:</span>
+                <span className="text-black text-[11px] font-bold line-clamp-1">{systemRates[systemType].title}</span>
               </div>
-              <div className="flex justify-between text-titanium-400">
-                <span>پوشش رنگ:</span>
-                <span className="text-white text-[11px]">{finishMultipliers[finishColor]}</span>
+              <div className="flex justify-between bg-[#b8bab8] p-2 sharp border border-[#9ea19e]">
+                <span className="text-[#333] font-bold">پوشش رنگ:</span>
+                <span className="text-black text-[11px] font-bold">{finishMultipliers[finishColor]}</span>
               </div>
             </div>
 
-            <div className="space-y-1">
-              <span className="text-[11px] text-titanium-400 block">برآورد تقریبی بودجه مورد نیاز:</span>
-              <div className="text-2xl font-black text-bronze-400 font-mono">
-                {formatPrice(totalEstimatedPrice)} <span className="text-xs font-normal text-titanium-300">تومان</span>
+            <div className="space-y-1 pt-2 border-t border-[#a8aba8]">
+              <span className="text-[11px] text-[#444] font-bold block">برآورد تقریبی بودجه مورد نیاز:</span>
+              <div className="text-2xl font-black text-black font-mono">
+                {formatPrice(totalEstimatedPrice)} <span className="text-xs font-normal text-[#333]">تومان</span>
               </div>
-              <span className="text-[10px] text-titanium-500 block pt-1">
+              <span className="text-[10px] text-[#555] block pt-1">
                 * قیمت نهایی پس از برداشت ابعاد دقیق کارگاهی و محاسبه ممان اینرسی پروفیل نهایی خواهد شد.
               </span>
             </div>
 
-            <div className="pt-2 space-y-3">
+            <div className="pt-2 space-y-2">
               <a
-                href={`https://wa.me/989139090673?text=${generateWhatsAppMessage()}`}
+                href={`https://wa.me/989301545858?text=${generateWhatsAppMessage()}`}
                 target="_blank"
                 rel="noreferrer"
-                className="w-full py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-lg shadow-emerald-600/20 transition-all hover:scale-[1.02]"
+                className="w-full py-3 sharp bg-emerald-700 hover:bg-emerald-600 text-white font-bold text-xs flex items-center justify-center gap-2 border border-emerald-800 shadow-md transition-all"
               >
                 <MessageSquare className="w-4 h-4" />
                 <span>ارسال ابعاد به واتساپ واحد مهندسی</span>
               </a>
 
               <a
-                href="tel:0314144"
-                className="w-full py-3 rounded-xl bg-charcoal-800 hover:bg-charcoal-700 text-titanium-200 font-bold text-xs flex items-center justify-center gap-2 border border-charcoal-700 transition-colors font-mono"
+                href="tel:03133687755"
+                className="w-full py-2.5 sharp bg-[#18191a] hover:bg-[#333] text-white font-bold text-xs flex items-center justify-center gap-2 border border-black transition-colors font-mono"
               >
-                <Phone className="w-4 h-4 text-bronze-400" />
-                <span>استعلام تلفنی: ۰۳۱-۴۱۴۴</span>
+                <Phone className="w-4 h-4 text-[#cbcccb]" />
+                <span>استعلام تلفنی: ۰۳۱-۳۳۶۸۷۷۵۵</span>
               </a>
             </div>
           </div>
 
-          <div className="p-4 rounded-2xl bg-charcoal-900/50 border border-charcoal-800 text-xs text-titanium-400 space-y-2">
-            <div className="flex items-center gap-2 text-bronze-400 font-bold">
+          <div className="aluminum-card sharp frame-shadow border border-[#b0b3b0] p-4 text-xs text-[#333] space-y-1.5">
+            <div className="flex items-center gap-2 text-black font-black">
               <ShieldCheck className="w-4 h-4" />
               <span>مزیت استعلام از نوآوران پنجره سپاهان</span>
             </div>
-            <p className="text-[11px] leading-relaxed">
+            <p className="text-[11px] leading-relaxed font-medium">
               ارسال پیش‌فاکتور رسمی شرکتی با جزئیات کامل متریال، برند یراق‌آلات، خلوص گاز آرگون، و ۱۰ سال گارانتی کتبی.
             </p>
           </div>
