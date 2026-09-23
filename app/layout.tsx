@@ -5,9 +5,9 @@ import Footer from '@/components/Footer';
 import FloatingContact from '@/components/FloatingContact';
 
 export const metadata: Metadata = {
-  title: 'نوآوران پنجره سپاهان | طراح و مجری نماهای مدرن کرتین‌وال و پنجره‌های ترمال‌بریک',
-  description: 'شرکت نوآوران پنجره سپاهان؛ طراحی، ساخت و اجرای تخصصی انواع نماهای شیشه‌ای کرتین‌وال (لامل)، فریم‌لس، پنجره‌های لوکس لیفت‌اند‌اسلاید و ترمال‌بریک در اصفهان و سراسر کشور.',
-  keywords: 'نوآوران پنجره سپاهان, کرتین وال, پنجره ترمال بریک, لیفت اند اسلاید, نمای شیشه ای, فریم لس, اصفهان',
+  title: 'نوآوران پنجره سپاهان | تولید و اجرای نمای شیشه‌ای، کرتین وال و پنجره ترمال‌بریک',
+  description: 'شرکت نوآوران پنجره سپاهان، طراح و مجری تخصصی نماهای مدرن کرتین وال (لامل)، نمای شیشه‌ای فریم‌لس، درب و پنجره‌های دوجداره آلومینیوم ترمال بریک، کامپوزیت و ترموود در اصفهان و سراسر کشور.',
+  keywords: 'نوآوران پنجره سپاهان, کرتین وال, لامل, پنجره دوجداره, ترمال بریک, لیفت اند اسلاید, نمای کامپوزیت, فریم لس, اصفهان',
 };
 
 export default function RootLayout({
@@ -21,9 +21,9 @@ export default function RootLayout({
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
         <link rel="icon" href="/favicon.ico" sizes="any" />
       </head>
-      <body className="min-h-screen flex flex-col sharp selection:bg-[#18191a] selection:text-white">
+      <body className="bg-charcoal-950 text-titanium-100 min-h-screen flex flex-col selection:bg-bronze-500 selection:text-charcoal-950">
         <Header />
-        <main className="flex-grow">
+        <main className="flex-grow pt-20">
           {children}
         </main>
         <Footer />
