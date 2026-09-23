@@ -25,73 +25,64 @@ export default async function ArticleDetailPage({ params }: Props) {
   }
 
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-10">
+    <div className="w-full max-w-[1440px] mx-auto px-3 sm:px-6 py-4 space-y-5">
       {/* Breadcrumb */}
-      <div className="flex items-center gap-2 text-xs text-titanium-400">
-        <Link href="/" className="hover:text-white">صفحه اصلی</Link>
+      <div className="flex items-center gap-1.5 text-xs text-[#555] font-bold">
+        <Link href="/" className="hover:text-black">صفحه اصلی</Link>
         <ChevronRight className="w-3.5 h-3.5 rotate-180" />
-        <Link href="/articles" className="hover:text-white">دانشنامه و مقالات</Link>
+        <Link href="/articles" className="hover:text-black">دانشنامه و مقالات</Link>
         <ChevronRight className="w-3.5 h-3.5 rotate-180" />
-        <span className="text-bronze-400 font-medium line-clamp-1">{article.title}</span>
+        <span className="text-black font-black line-clamp-1">{article.title}</span>
       </div>
 
-      {/* Header */}
-      <header className="space-y-4">
-        <span className="inline-block px-3 py-1 rounded-full bg-bronze-500/10 text-bronze-400 text-xs font-semibold border border-bronze-500/20">
-          {article.category}
-        </span>
-        <h1 className="text-2xl sm:text-4xl font-extrabold text-white leading-tight">
-          {article.title}
-        </h1>
-        <div className="flex flex-wrap items-center gap-4 text-xs text-titanium-400 font-mono pt-2 border-b border-charcoal-800 pb-4">
-          <div className="flex items-center gap-1.5">
-            <Calendar className="w-4 h-4 text-bronze-400" />
-            <span>تاریخ انتشار: {article.date}</span>
+      {/* Main Article Container */}
+      <div className="aluminum-card sharp frame-shadow p-6 sm:p-10 border border-[#b0b3b0] space-y-6 text-right">
+        {/* Header */}
+        <header className="space-y-3 pb-4 border-b border-[#a8aba8]">
+          <span className="inline-block px-2.5 py-0.5 sharp bg-[#18191a] text-white text-xs font-bold border border-black">
+            {article.category}
+          </span>
+          <h1 className="text-xl sm:text-3xl font-black text-black leading-tight">
+            {article.title}
+          </h1>
+          <div className="flex flex-wrap items-center gap-4 text-xs text-[#444] font-mono font-bold pt-1">
+            <div className="flex items-center gap-1.5">
+              <Calendar className="w-4 h-4 text-black" />
+              <span>تاریخ انتشار: {article.date}</span>
+            </div>
+            <span>•</span>
+            <div className="flex items-center gap-1.5">
+              <User className="w-4 h-4 text-black" />
+              <span>{article.author}</span>
+            </div>
           </div>
-          <span>•</span>
-          <div className="flex items-center gap-1.5">
-            <User className="w-4 h-4 text-bronze-400" />
-            <span>{article.author}</span>
-          </div>
-        </div>
-      </header>
+        </header>
 
-      {/* Cover Image */}
-      <div className="rounded-3xl overflow-hidden bg-charcoal-900 border border-charcoal-800 h-80 sm:h-96 w-full">
-        <img
-          src={article.image}
-          alt={article.title}
-          className="w-full h-full object-cover"
-        />
-      </div>
-
-      {/* Article Body */}
-      <div className="rounded-3xl bg-charcoal-900/60 border border-charcoal-800 p-6 sm:p-10 space-y-6 text-titanium-200 text-sm sm:text-base leading-relaxed">
-        {article.content.split('\n\n').map((para, idx) => (
-          <p key={idx} className="text-justify whitespace-pre-line leading-loose">
-            {para}
-          </p>
-        ))}
-      </div>
-
-      {/* Tags & Footer */}
-      <div className="pt-6 border-t border-charcoal-800 flex flex-wrap items-center justify-between gap-4">
-        <div className="flex items-center gap-2 flex-wrap">
-          <Tag className="w-4 h-4 text-bronze-400" />
-          {article.tags.map((t, idx) => (
-            <span key={idx} className="text-xs px-2.5 py-1 rounded-lg bg-charcoal-850 text-titanium-300 border border-charcoal-700">
-              #{t}
-            </span>
-          ))}
+        {/* Cover Image */}
+        <div className="sharp overflow-hidden bg-black border border-black/20 h-72 sm:h-96 w-full frame-shadow">
+          <img
+            src={article.image}
+            alt={article.title}
+            className="w-full h-full object-cover"
+          />
         </div>
 
-        <Link
-          href="/articles"
-          className="inline-flex items-center gap-1.5 text-xs font-bold text-bronze-400 hover:text-bronze-300"
-        >
-          <ArrowRight className="w-4 h-4" />
-          <span>بازگشت به فهرست مقالات</span>
-        </Link>
+        {/* Content */}
+        <div className="prose prose-neutral max-w-none text-[#222] text-xs sm:text-sm leading-relaxed space-y-4 font-medium">
+          <div dangerouslySetInnerHTML={{ __html: article.content }} />
+        </div>
+
+        {/* Back Link */}
+        <div className="pt-6 border-t border-[#a8aba8] flex justify-between items-center">
+          <Link
+            href="/articles"
+            className="sharp px-4 py-2 bg-[#18191a] hover:bg-[#333] text-white text-xs font-bold border border-black flex items-center gap-2 transition-colors"
+          >
+            <ArrowRight className="w-4 h-4" />
+            <span>بازگشت به مقالات</span>
+          </Link>
+          <span className="text-[11px] font-mono text-[#555] font-bold">نوآوران پنجره سپاهان</span>
+        </div>
       </div>
     </div>
   );

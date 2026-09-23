@@ -559,11 +559,11 @@ export default function HomePage() {
                     </div>
 
                     {/* 3D CAD Cutaway Image Box with frame-shadow */}
-                    <div className="relative h-48 bg-[#e0e2e0] sharp overflow-hidden border border-[#9ea19e] flex items-center justify-center p-2">
+                    <div className="relative h-48 bg-white sharp overflow-hidden border border-[#9ea19e] flex items-center justify-center p-2 frame-shadow">
                       <img
-                        src={m.profileCutawayImage}
+                        src={m.image}
                         alt={`مقطع سه‌بعدی ${m.title}`}
-                        className="max-h-full max-w-full object-contain block mx-auto"
+                        className="max-h-full max-w-full object-contain block mx-auto hover:scale-105 transition-transform"
                       />
                       {m.qrImage && (
                         <div className="absolute bottom-1.5 left-1.5 p-1 bg-white sharp border border-black shadow-sm" title="اسکن ویدیو">
@@ -584,17 +584,17 @@ export default function HomePage() {
 
                     {/* Quick Specs Snippet */}
                     <div className="grid grid-cols-2 gap-1.5 text-[10px] font-mono font-bold bg-[#b8bab8] p-2 sharp border border-[#9ea19e] text-[#111]">
-                      {m.specs.frameDepth && (
-                        <div>عمق فریم: {m.specs.frameDepth}</div>
+                      {m.specs.frameWidth && (
+                        <div>عرض فریم: {m.specs.frameWidth}</div>
                       )}
-                      {m.specs.maxGlassThickness && (
-                        <div>شیشه: {m.specs.maxGlassThickness}</div>
+                      {m.specs.glassThickness && (
+                        <div>شیشه‌خور: {m.specs.glassThickness}</div>
                       )}
-                      {m.specs.polyamideWidth && (
-                        <div>پلی‌آمید: {m.specs.polyamideWidth}</div>
+                      {m.specs.polyamideSize && (
+                        <div>پلی‌آمید: {m.specs.polyamideSize}</div>
                       )}
-                      {m.specs.airPermeability && (
-                        <div>هوابندی: {m.specs.airPermeability}</div>
+                      {m.specs.thermalUf && (
+                        <div>عایق‌بندی: {m.specs.thermalUf}</div>
                       )}
                     </div>
                   </div>
@@ -1284,7 +1284,7 @@ export default function HomePage() {
               <div className="grid grid-cols-1 sm:grid-cols-12 gap-3 items-center bg-[#b8bab8] p-3 sharp border border-[#9ea19e]">
                 <div className="sm:col-span-4 h-32 bg-white sharp border border-[#888] flex items-center justify-center p-1.5">
                   <img
-                    src={activeSpecsMaterial.profileCutawayImage}
+                    src={activeSpecsMaterial.image}
                     alt={activeSpecsMaterial.title}
                     className="max-h-full max-w-full object-contain"
                   />
@@ -1301,23 +1301,17 @@ export default function HomePage() {
                 <div className="grid grid-cols-2 gap-2 text-xs font-mono">
                   {Object.entries(activeSpecsMaterial.specs).map(([k, v]) => {
                     const labels: Record<string, string> = {
-                      frameDepth: 'عمق فریم (کلاف)',
-                      sashDepth: 'عمق لنگه بازشو',
-                      glassThicknessRange: 'بازه ضخامت شیشه',
-                      maxGlassThickness: 'حداکثر ضخامت شیشه',
-                      polyamideWidth: 'عرض تیغه پلی‌آمید',
-                      airPermeability: 'رده نفوذناپذیری هوا',
-                      waterTightness: 'رده آب‌بندی در برابر باران',
-                      windResistance: 'مقاومت در برابر فشار باد',
-                      acousticInsulation: 'عایق‌بندی صوتی',
-                      thermalTransmittance: 'ضریب انتقال حرارت (U-Value)',
-                      profileAlloy: 'آلیاژ شمش مصرفی',
-                      maxSashWeight: 'حداکثر وزن مجاز لنگه',
-                      maxHeight: 'حداکثر ارتفاع بازشو',
-                      maxWidth: 'حداکثر عرض بازشو',
-                      gasketType: 'نوع درزبند و لاستیک',
-                      openingOptions: 'انواع بازشو مجاز',
-                      applications: 'کاربردهای پیشنهادی'
+                      frameWidth: 'عرض فریم',
+                      sashWidth: 'عرض لنگه',
+                      wallThickness: 'ضخامت گوشت پروفیل',
+                      polyamideSize: 'عرض تیغه پلی‌آمید',
+                      glassThickness: 'ضخامت شیشه‌خور',
+                      thermalUf: 'ضریب انتقال حرارت Uf',
+                      appearance: 'طرح ظاهری مقطع',
+                      cornerFixture: 'نوع فیکسچر گوشه‌ها',
+                      gaskets: 'نوع لاستیک و هوابندی',
+                      hardware: 'سیستم یراق‌آلات',
+                      openings: 'انواع بازشو مجاز'
                     };
                     const label = labels[k] || k;
                     return (
@@ -1330,14 +1324,14 @@ export default function HomePage() {
                 </div>
               </div>
 
-              {/* Applications List */}
-              {activeSpecsMaterial.applications && activeSpecsMaterial.applications.length > 0 && (
+              {/* Features List */}
+              {activeSpecsMaterial.features && activeSpecsMaterial.features.length > 0 && (
                 <div className="space-y-1.5">
-                  <h4 className="text-xs font-black text-black">کاربردهای سازه‌ای:</h4>
+                  <h4 className="text-xs font-black text-black">ویژگی‌های مهندسی:</h4>
                   <div className="flex flex-wrap gap-1.5">
-                    {activeSpecsMaterial.applications.map((app, idx) => (
+                    {activeSpecsMaterial.features.map((feat, idx) => (
                       <span key={idx} className="sharp px-2 py-1 bg-white text-black text-[11px] font-bold border border-black">
-                        ✓ {app}
+                        ✓ {feat}
                       </span>
                     ))}
                   </div>

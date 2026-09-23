@@ -519,17 +519,17 @@ export default function MaterialsCatalogPage() {
                 </div>
               </div>
 
-              {/* Applications */}
-              {activeSpecsMaterial.applications && activeSpecsMaterial.applications.length > 0 && (
+              {/* Features List */}
+              {activeSpecsMaterial.features && activeSpecsMaterial.features.length > 0 && (
                 <div className="space-y-1.5">
-                  <h4 className="text-xs font-black text-black">کاربردهای استاندارد:</h4>
+                  <h4 className="text-xs font-black text-black">ویژگی‌ها و کاربردهای مهندسی:</h4>
                   <div className="flex flex-wrap gap-1.5">
-                    {activeSpecsMaterial.applications.map((app, idx) => (
+                    {activeSpecsMaterial.features.map((feat, idx) => (
                       <span
                         key={idx}
                         className="sharp px-2.5 py-1 bg-white text-black text-[11px] font-bold border border-black"
                       >
-                        ✓ {app}
+                        ✓ {feat}
                       </span>
                     ))}
                   </div>
