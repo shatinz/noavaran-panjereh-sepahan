@@ -5,7 +5,7 @@
     "category": "بانکی و دولتی",
     "client": "بانک مهر اقصاد",
     "location": "اصفهان و سایر استان‌ها",
-    "image": "https://arvinpanjereh.com/upload/portfolio/39eae76c-6fa6-4d89-9fb8-e55153f7528c.webp?w=270&h=380&mode=crop&scale=both",
+    "image": "/projects/proj-1.webp",
     "description": "طراحی، ساخت و اجرای نمای شیشه‌ای، درب و پنجره ترمال‌بریک پروژه ساختمان بانک مهر اقصاد توسط تیم مهندسی نوآوران پنجره سپاهان.",
     "year": "۱۴۰۰ - ۱۴۰۳",
     "systemsUsed": [
@@ -20,7 +20,7 @@
     "category": "مسکونی و ویلایی",
     "client": "مسکونی آقای مهندس دریابیگی",
     "location": "اصفهان و سایر استان‌ها",
-    "image": "https://arvinpanjereh.com/upload/portfolio/5ff362c0-1a0c-48b7-b42d-3bf0b6d66cf6.webp?w=270&h=380&mode=crop&scale=both",
+    "image": "/projects/proj-2.webp",
     "description": "طراحی، ساخت و اجرای نمای شیشه‌ای، درب و پنجره ترمال‌بریک پروژه ساختمان مسکونی آقای مهندس دریابیگی توسط تیم مهندسی نوآوران پنجره سپاهان.",
     "year": "۱۴۰۰ - ۱۴۰۳",
     "systemsUsed": [
@@ -35,7 +35,7 @@
     "category": "تجاری و اداری",
     "client": "کسب و فناوری علویجه",
     "location": "اصفهان و سایر استان‌ها",
-    "image": "https://arvinpanjereh.com/upload/portfolio/e82b5af2-6f6c-4eec-af38-0ca7b64e3245.webp?w=270&h=380&mode=crop&scale=both",
+    "image": "/projects/proj-3.webp",
     "description": "طراحی، ساخت و اجرای نمای شیشه‌ای، درب و پنجره ترمال‌بریک پروژه ساختمان کسب و فناوری علویجه توسط تیم مهندسی نوآوران پنجره سپاهان.",
     "year": "۱۴۰۰ - ۱۴۰۳",
     "systemsUsed": [
@@ -50,7 +50,7 @@
     "category": "بانکی و دولتی",
     "client": "شهرداری منطقه 13",
     "location": "اصفهان و سایر استان‌ها",
-    "image": "https://arvinpanjereh.com/upload/portfolio/d821abe4-a4c3-4f96-a08d-1ad90b8dead9.webp?w=270&h=380&mode=crop&scale=both",
+    "image": "/projects/proj-4.webp",
     "description": "طراحی، ساخت و اجرای نمای شیشه‌ای، درب و پنجره ترمال‌بریک پروژه شهرداری منطقه 13 توسط تیم مهندسی نوآوران پنجره سپاهان.",
     "year": "۱۴۰۰ - ۱۴۰۳",
     "systemsUsed": [
@@ -65,7 +65,7 @@
     "category": "تجاری و اداری",
     "client": "سیتی سنتر شاهین شهر",
     "location": "اصفهان و سایر استان‌ها",
-    "image": "https://arvinpanjereh.com/upload/portfolio/3a64fd3f-318c-4187-9ee1-944f6e57f546.webp?w=270&h=380&mode=crop&scale=both",
+    "image": "/projects/proj-5.webp",
     "description": "طراحی، ساخت و اجرای نمای شیشه‌ای، درب و پنجره ترمال‌بریک پروژه سیتی سنتر شاهین شهر توسط تیم مهندسی نوآوران پنجره سپاهان.",
     "year": "۱۴۰۰ - ۱۴۰۳",
     "systemsUsed": [
@@ -80,7 +80,7 @@
     "category": "مسکونی و ویلایی",
     "client": "تجاری مهندس طاووسی",
     "location": "اصفهان و سایر استان‌ها",
-    "image": "https://arvinpanjereh.com/upload/portfolio/5af1ba83-f1fe-49b5-a4bd-30fdeb62962e.webp?w=270&h=380&mode=crop&scale=both",
+    "image": "/projects/proj-6.webp",
     "description": "طراحی، ساخت و اجرای نمای شیشه‌ای، درب و پنجره ترمال‌بریک پروژه ساختمان تجاری مهندس طاووسی توسط تیم مهندسی نوآوران پنجره سپاهان.",
     "year": "۱۴۰۰ - ۱۴۰۳",
     "systemsUsed": [
@@ -95,7 +95,7 @@
     "category": "تجاری و اداری",
     "client": "تجاری آقای احمدیان",
     "location": "اصفهان و سایر استان‌ها",
-    "image": "https://arvinpanjereh.com/upload/portfolio/471d9d0f-ab7c-4882-9c49-7d6f5bf6009d.webp?w=270&h=380&mode=crop&scale=both",
+    "image": "/projects/proj-7.webp",
     "description": "طراحی، ساخت و اجرای نمای شیشه‌ای، درب و پنجره ترمال‌بریک پروژه ساختمان تجاری آقای احمدیان توسط تیم مهندسی نوآوران پنجره سپاهان.",
     "year": "۱۴۰۰ - ۱۴۰۳",
     "systemsUsed": [
@@ -110,7 +110,7 @@
     "category": "مسکونی و ویلایی",
     "client": "تجاری آقای مهندس علیرضایی",
     "location": "اصفهان و سایر استان‌ها",
-    "image": "https://arvinpanjereh.com/upload/portfolio/8df6bb0f-e84d-4f73-893c-dfa6f1b9c1f7.webp?w=270&h=380&mode=crop&scale=both",
+    "image": "/projects/proj-8.webp",
     "description": "طراحی، ساخت و اجرای نمای شیشه‌ای، درب و پنجره ترمال‌بریک پروژه ساختمان تجاری آقای مهندس علیرضایی توسط تیم مهندسی نوآوران پنجره سپاهان.",
     "year": "۱۴۰۰ - ۱۴۰۳",
     "systemsUsed": [
@@ -125,7 +125,7 @@
     "category": "مسکونی و ویلایی",
     "client": "مسکونی خانم دکتر بویری",
     "location": "اصفهان و سایر استان‌ها",
-    "image": "https://arvinpanjereh.com/upload/portfolio/9b1a4fda-f78d-4560-a3f1-59537437e5d2.webp?w=270&h=380&mode=crop&scale=both",
+    "image": "/projects/proj-9.webp",
     "description": "طراحی، ساخت و اجرای نمای شیشه‌ای، درب و پنجره ترمال‌بریک پروژه ساختمان مسکونی خانم دکتر بویری توسط تیم مهندسی نوآوران پنجره سپاهان.",
     "year": "۱۴۰۰ - ۱۴۰۳",
     "systemsUsed": [
@@ -140,7 +140,7 @@
     "category": "مسکونی و ویلایی",
     "client": "مسکونی آقای دکتر اعتصامی",
     "location": "اصفهان و سایر استان‌ها",
-    "image": "https://arvinpanjereh.com/upload/portfolio/cc559cb8-3e85-41e5-8adb-d5d822241037.webp?w=270&h=380&mode=crop&scale=both",
+    "image": "/projects/proj-10.webp",
     "description": "طراحی، ساخت و اجرای نمای شیشه‌ای، درب و پنجره ترمال‌بریک پروژه ساختمان مسکونی آقای دکتر اعتصامی توسط تیم مهندسی نوآوران پنجره سپاهان.",
     "year": "۱۴۰۰ - ۱۴۰۳",
     "systemsUsed": [
@@ -155,7 +155,7 @@
     "category": "مسکونی و ویلایی",
     "client": "تجاری آقای مهندس محمدی",
     "location": "اصفهان و سایر استان‌ها",
-    "image": "https://arvinpanjereh.com/upload/portfolio/8019643c-0696-4d09-b24b-7b4698be963d.webp?w=270&h=380&mode=crop&scale=both",
+    "image": "/projects/proj-11.webp",
     "description": "طراحی، ساخت و اجرای نمای شیشه‌ای، درب و پنجره ترمال‌بریک پروژه ساختمان تجاری آقای مهندس محمدی توسط تیم مهندسی نوآوران پنجره سپاهان.",
     "year": "۱۴۰۰ - ۱۴۰۳",
     "systemsUsed": [
@@ -170,7 +170,7 @@
     "category": "مسکونی و ویلایی",
     "client": "مسکونی خیابان جی",
     "location": "اصفهان و سایر استان‌ها",
-    "image": "https://arvinpanjereh.com/upload/portfolio/8d04be71-2315-457e-a42d-602e8b1c7cc5.webp?w=270&h=380&mode=crop&scale=both",
+    "image": "/projects/proj-12.webp",
     "description": "طراحی، ساخت و اجرای نمای شیشه‌ای، درب و پنجره ترمال‌بریک پروژه پروژه مسکونی خیابان جی توسط تیم مهندسی نوآوران پنجره سپاهان.",
     "year": "۱۴۰۰ - ۱۴۰۳",
     "systemsUsed": [
@@ -185,7 +185,7 @@
     "category": "بانکی و دولتی",
     "client": "بانک صادرات یاسوج",
     "location": "اصفهان و سایر استان‌ها",
-    "image": "https://arvinpanjereh.com/upload/portfolio/38435d91-1e34-469d-8b5f-d04b9fc0fd03.webp?w=270&h=380&mode=crop&scale=both",
+    "image": "/projects/proj-13.webp",
     "description": "طراحی، ساخت و اجرای نمای شیشه‌ای، درب و پنجره ترمال‌بریک پروژه بانک صادرات یاسوج توسط تیم مهندسی نوآوران پنجره سپاهان.",
     "year": "۱۴۰۰ - ۱۴۰۳",
     "systemsUsed": [
@@ -200,7 +200,7 @@
     "category": "بانکی و دولتی",
     "client": "بانک قوامین",
     "location": "اصفهان و سایر استان‌ها",
-    "image": "https://arvinpanjereh.com/upload/portfolio/d26946cb-1749-4eee-aa4c-56ae3a339721.webp?w=270&h=380&mode=crop&scale=both",
+    "image": "/projects/proj-14.webp",
     "description": "طراحی، ساخت و اجرای نمای شیشه‌ای، درب و پنجره ترمال‌بریک پروژه ساختمان بانک قوامین توسط تیم مهندسی نوآوران پنجره سپاهان.",
     "year": "۱۴۰۰ - ۱۴۰۳",
     "systemsUsed": [
@@ -215,7 +215,7 @@
     "category": "تجاری و اداری",
     "client": "تجاری اداری مهستان نقش جهان",
     "location": "اصفهان و سایر استان‌ها",
-    "image": "https://arvinpanjereh.com/upload/portfolio/34d2c5e7-57ac-4d3d-8b1b-1ccd863669ac.webp?w=270&h=380&mode=crop&scale=both",
+    "image": "/projects/proj-15.webp",
     "description": "طراحی، ساخت و اجرای نمای شیشه‌ای، درب و پنجره ترمال‌بریک پروژه ساختمان تجاری اداری مهستان نقش جهان توسط تیم مهندسی نوآوران پنجره سپاهان.",
     "year": "۱۴۰۰ - ۱۴۰۳",
     "systemsUsed": [
@@ -230,7 +230,7 @@
     "category": "بانکی و دولتی",
     "client": "پزشکی قانونی باغ رضوان",
     "location": "اصفهان و سایر استان‌ها",
-    "image": "https://arvinpanjereh.com/upload/portfolio/8e91f8f0-fe3d-4c03-a454-95c48aa019cb.webp?w=270&h=380&mode=crop&scale=both",
+    "image": "/projects/proj-16.webp",
     "description": "طراحی، ساخت و اجرای نمای شیشه‌ای، درب و پنجره ترمال‌بریک پروژه ساختمان پزشکی قانونی باغ رضوان توسط تیم مهندسی نوآوران پنجره سپاهان.",
     "year": "۱۴۰۰ - ۱۴۰۳",
     "systemsUsed": [
@@ -245,7 +245,7 @@
     "category": "بانکی و دولتی",
     "client": "سازمان ثبت اسناد سودان جی",
     "location": "اصفهان و سایر استان‌ها",
-    "image": "https://arvinpanjereh.com/upload/portfolio/581ba748-339e-49ec-bdec-68a0ff067758.webp?w=270&h=380&mode=crop&scale=both",
+    "image": "/projects/proj-17.webp",
     "description": "طراحی، ساخت و اجرای نمای شیشه‌ای، درب و پنجره ترمال‌بریک پروژه سازمان ثبت اسناد سودان جی توسط تیم مهندسی نوآوران پنجره سپاهان.",
     "year": "۱۴۰۰ - ۱۴۰۳",
     "systemsUsed": [
@@ -260,7 +260,7 @@
     "category": "مسکونی و ویلایی",
     "client": "تجاری آقای مهندس حاج حیدری",
     "location": "اصفهان و سایر استان‌ها",
-    "image": "https://arvinpanjereh.com/upload/portfolio/d2cdb500-47dc-4626-a87c-30a7598cb838.webp?w=270&h=380&mode=crop&scale=both",
+    "image": "/projects/proj-18.webp",
     "description": "طراحی، ساخت و اجرای نمای شیشه‌ای، درب و پنجره ترمال‌بریک پروژه ساختمان تجاری آقای مهندس حاج حیدری توسط تیم مهندسی نوآوران پنجره سپاهان.",
     "year": "۱۴۰۰ - ۱۴۰۳",
     "systemsUsed": [
@@ -275,7 +275,7 @@
     "category": "مسکونی و ویلایی",
     "client": "تجاری آقای مهندس آبرویی",
     "location": "اصفهان و سایر استان‌ها",
-    "image": "https://arvinpanjereh.com/upload/portfolio/92fcb2dd-5006-4642-9926-23a97c03b7a0.webp?w=270&h=380&mode=crop&scale=both",
+    "image": "/projects/proj-19.webp",
     "description": "طراحی، ساخت و اجرای نمای شیشه‌ای، درب و پنجره ترمال‌بریک پروژه ساختمان تجاری آقای مهندس آبرویی توسط تیم مهندسی نوآوران پنجره سپاهان.",
     "year": "۱۴۰۰ - ۱۴۰۳",
     "systemsUsed": [
@@ -290,7 +290,7 @@
     "category": "بانکی و دولتی",
     "client": "ثبت اسناد سودان جی",
     "location": "اصفهان و سایر استان‌ها",
-    "image": "https://arvinpanjereh.com/upload/portfolio/46ba6e08-6b3d-40da-a7aa-90190a4c2f9d.webp?w=270&h=380&mode=crop&scale=both",
+    "image": "/projects/proj-20.webp",
     "description": "طراحی، ساخت و اجرای نمای شیشه‌ای، درب و پنجره ترمال‌بریک پروژه ثبت اسناد سودان جی توسط تیم مهندسی نوآوران پنجره سپاهان.",
     "year": "۱۴۰۰ - ۱۴۰۳",
     "systemsUsed": [
@@ -305,7 +305,7 @@
     "category": "بانکی و دولتی",
     "client": "مدرسه نژاد ستاری",
     "location": "اصفهان و سایر استان‌ها",
-    "image": "https://arvinpanjereh.com/upload/portfolio/a9acbf8d-5163-47b5-a564-8cf89343df5d.webp?w=270&h=380&mode=crop&scale=both",
+    "image": "/projects/proj-21.webp",
     "description": "طراحی، ساخت و اجرای نمای شیشه‌ای، درب و پنجره ترمال‌بریک پروژه مدرسه نژاد ستاری توسط تیم مهندسی نوآوران پنجره سپاهان.",
     "year": "۱۴۰۰ - ۱۴۰۳",
     "systemsUsed": [
@@ -320,7 +320,7 @@
     "category": "تعاونی و برج‌ها",
     "client": "تعاونی مسکن فرهنگیان ناحیه 4",
     "location": "اصفهان و سایر استان‌ها",
-    "image": "https://arvinpanjereh.com/upload/portfolio/f03dfeff-43f1-414b-b795-540d16074c7f.webp?w=270&h=380&mode=crop&scale=both",
+    "image": "/projects/proj-22.webp",
     "description": "طراحی، ساخت و اجرای نمای شیشه‌ای، درب و پنجره ترمال‌بریک پروژه تعاونی مسکن فرهنگیان ناحیه 4 توسط تیم مهندسی نوآوران پنجره سپاهان.",
     "year": "۱۴۰۰ - ۱۴۰۳",
     "systemsUsed": [
@@ -335,7 +335,7 @@
     "category": "مسکونی و ویلایی",
     "client": "مسکونی آقای مهندس حمیدی",
     "location": "اصفهان و سایر استان‌ها",
-    "image": "https://arvinpanjereh.com/upload/portfolio/ad6f21f4-1f20-4ee8-9910-51db2fcd50d1.webp?w=270&h=380&mode=crop&scale=both",
+    "image": "/projects/proj-23.webp",
     "description": "طراحی، ساخت و اجرای نمای شیشه‌ای، درب و پنجره ترمال‌بریک پروژه ساختمان مسکونی آقای مهندس حمیدی توسط تیم مهندسی نوآوران پنجره سپاهان.",
     "year": "۱۴۰۰ - ۱۴۰۳",
     "systemsUsed": [
@@ -350,7 +350,7 @@
     "category": "مسکونی و ویلایی",
     "client": "اداری و تجاری آقای مهندس آقا دادی",
     "location": "اصفهان و سایر استان‌ها",
-    "image": "https://arvinpanjereh.com/upload/portfolio/45f5ded1-46f3-4846-b567-1d66e77b3644.webp?w=270&h=380&mode=crop&scale=both",
+    "image": "/projects/proj-24.webp",
     "description": "طراحی، ساخت و اجرای نمای شیشه‌ای، درب و پنجره ترمال‌بریک پروژه ساختمان اداری و تجاری آقای مهندس آقا دادی توسط تیم مهندسی نوآوران پنجره سپاهان.",
     "year": "۱۴۰۰ - ۱۴۰۳",
     "systemsUsed": [
@@ -365,7 +365,7 @@
     "category": "بانکی و دولتی",
     "client": "تعاونی مسکن بانک ملی",
     "location": "اصفهان و سایر استان‌ها",
-    "image": "https://arvinpanjereh.com/upload/portfolio/e93e3f36-7a39-4245-934c-233c489edc46.webp?w=270&h=380&mode=crop&scale=both",
+    "image": "/projects/proj-25.webp",
     "description": "طراحی، ساخت و اجرای نمای شیشه‌ای، درب و پنجره ترمال‌بریک پروژه تعاونی مسکن بانک ملی توسط تیم مهندسی نوآوران پنجره سپاهان.",
     "year": "۱۴۰۰ - ۱۴۰۳",
     "systemsUsed": [
@@ -380,7 +380,7 @@
     "category": "تعاونی و برج‌ها",
     "client": "تعاونی مسکن پرشیا فلز",
     "location": "اصفهان و سایر استان‌ها",
-    "image": "https://arvinpanjereh.com/upload/portfolio/97647a5b-dbfd-4f8f-a163-625e95f1b8e1.webp?w=270&h=380&mode=crop&scale=both",
+    "image": "/projects/proj-26.webp",
     "description": "طراحی، ساخت و اجرای نمای شیشه‌ای، درب و پنجره ترمال‌بریک پروژه تعاونی مسکن پرشیا فلز توسط تیم مهندسی نوآوران پنجره سپاهان.",
     "year": "۱۴۰۰ - ۱۴۰۳",
     "systemsUsed": [
@@ -395,7 +395,7 @@
     "category": "مسکونی و ویلایی",
     "client": "مسکونی آقای مهندس ارفع",
     "location": "اصفهان و سایر استان‌ها",
-    "image": "https://arvinpanjereh.com/upload/portfolio/fd735d51-19d9-4124-8a00-054a90bac414.webp?w=270&h=380&mode=crop&scale=both",
+    "image": "/projects/proj-27.webp",
     "description": "طراحی، ساخت و اجرای نمای شیشه‌ای، درب و پنجره ترمال‌بریک پروژه ساختمان مسکونی آقای مهندس ارفع توسط تیم مهندسی نوآوران پنجره سپاهان.",
     "year": "۱۴۰۰ - ۱۴۰۳",
     "systemsUsed": [
@@ -410,7 +410,7 @@
     "category": "تعاونی و برج‌ها",
     "client": "تعاونی مسکن فرهنگیان ، ناحیه 1",
     "location": "اصفهان و سایر استان‌ها",
-    "image": "https://arvinpanjereh.com/upload/portfolio/b9cc92a9-754e-493a-b3c0-a9295df23fb9.webp?w=270&h=380&mode=crop&scale=both",
+    "image": "/projects/proj-28.webp",
     "description": "طراحی، ساخت و اجرای نمای شیشه‌ای، درب و پنجره ترمال‌بریک پروژه تعاونی مسکن فرهنگیان ، ناحیه 1 توسط تیم مهندسی نوآوران پنجره سپاهان.",
     "year": "۱۴۰۰ - ۱۴۰۳",
     "systemsUsed": [
@@ -425,7 +425,7 @@
     "category": "تعاونی و برج‌ها",
     "client": "تعاونی مسکن جهاد کشاورزی",
     "location": "اصفهان و سایر استان‌ها",
-    "image": "https://arvinpanjereh.com/upload/portfolio/1a6a406b-0d29-4902-975b-63cd6c4cb9e6.webp?w=270&h=380&mode=crop&scale=both",
+    "image": "/projects/proj-29.webp",
     "description": "طراحی، ساخت و اجرای نمای شیشه‌ای، درب و پنجره ترمال‌بریک پروژه تعاونی مسکن جهاد کشاورزی توسط تیم مهندسی نوآوران پنجره سپاهان.",
     "year": "۱۴۰۰ - ۱۴۰۳",
     "systemsUsed": [
@@ -440,7 +440,7 @@
     "category": "تعاونی و برج‌ها",
     "client": "تعاونی مسکن فرهنگیان ناحیه 4",
     "location": "اصفهان و سایر استان‌ها",
-    "image": "https://arvinpanjereh.com/upload/portfolio/06bf6aea-8c08-4eca-b9ad-3e5c9756f1c1.webp?w=270&h=380&mode=crop&scale=both",
+    "image": "/projects/proj-30.webp",
     "description": "طراحی، ساخت و اجرای نمای شیشه‌ای، درب و پنجره ترمال‌بریک پروژه تعاونی مسکن فرهنگیان ناحیه 4 توسط تیم مهندسی نوآوران پنجره سپاهان.",
     "year": "۱۴۰۰ - ۱۴۰۳",
     "systemsUsed": [
@@ -455,7 +455,7 @@
     "category": "مسکونی و ویلایی",
     "client": "مسکونی ملاباشی",
     "location": "اصفهان و سایر استان‌ها",
-    "image": "https://arvinpanjereh.com/upload/portfolio/d465d260-0f27-4d6c-9138-210da1f7082d.webp?w=270&h=380&mode=crop&scale=both",
+    "image": "/projects/proj-31.webp",
     "description": "طراحی، ساخت و اجرای نمای شیشه‌ای، درب و پنجره ترمال‌بریک پروژه ساختمان مسکونی ملاباشی توسط تیم مهندسی نوآوران پنجره سپاهان.",
     "year": "۱۴۰۰ - ۱۴۰۳",
     "systemsUsed": [
@@ -470,7 +470,7 @@
     "category": "تعاونی و برج‌ها",
     "client": "تعاونی مسکن ارتش مراتو",
     "location": "اصفهان و سایر استان‌ها",
-    "image": "https://arvinpanjereh.com/upload/portfolio/0d5aa82c-402c-4d88-92b7-6a14b002b724.webp?w=270&h=380&mode=crop&scale=both",
+    "image": "/projects/proj-32.webp",
     "description": "طراحی، ساخت و اجرای نمای شیشه‌ای، درب و پنجره ترمال‌بریک پروژه تعاونی مسکن ارتش مراتو توسط تیم مهندسی نوآوران پنجره سپاهان.",
     "year": "۱۴۰۰ - ۱۴۰۳",
     "systemsUsed": [
@@ -485,7 +485,7 @@
     "category": "مسکونی و ویلایی",
     "client": "تجاری آقای مهندس فرهنگ",
     "location": "اصفهان و سایر استان‌ها",
-    "image": "https://arvinpanjereh.com/upload/portfolio/f52848c2-c348-471a-906a-c5bb08e9da0c.webp?w=270&h=380&mode=crop&scale=both",
+    "image": "/projects/proj-33.webp",
     "description": "طراحی، ساخت و اجرای نمای شیشه‌ای، درب و پنجره ترمال‌بریک پروژه ساختمان تجاری آقای مهندس فرهنگ توسط تیم مهندسی نوآوران پنجره سپاهان.",
     "year": "۱۴۰۰ - ۱۴۰۳",
     "systemsUsed": [
@@ -500,7 +500,7 @@
     "category": "مسکونی و ویلایی",
     "client": "مسکونی آقای مهندس اختریان",
     "location": "اصفهان و سایر استان‌ها",
-    "image": "https://arvinpanjereh.com/upload/portfolio/b20ab8a2-92f7-4221-a0a0-3ec1d93889ab.webp?w=270&h=380&mode=crop&scale=both",
+    "image": "/projects/proj-34.webp",
     "description": "طراحی، ساخت و اجرای نمای شیشه‌ای، درب و پنجره ترمال‌بریک پروژه ساختمان مسکونی آقای مهندس اختریان توسط تیم مهندسی نوآوران پنجره سپاهان.",
     "year": "۱۴۰۰ - ۱۴۰۳",
     "systemsUsed": [
@@ -515,7 +515,7 @@
     "category": "مسکونی و ویلایی",
     "client": "تجاری آقای مهندس فصیحی",
     "location": "اصفهان و سایر استان‌ها",
-    "image": "https://arvinpanjereh.com/upload/portfolio/62534a33-eefa-4bf8-bf00-8dab65a25cc4.webp?w=270&h=380&mode=crop&scale=both",
+    "image": "/projects/proj-35.webp",
     "description": "طراحی، ساخت و اجرای نمای شیشه‌ای، درب و پنجره ترمال‌بریک پروژه ساختمان تجاری آقای مهندس فصیحی توسط تیم مهندسی نوآوران پنجره سپاهان.",
     "year": "۱۴۰۰ - ۱۴۰۳",
     "systemsUsed": [
@@ -530,7 +530,7 @@
     "category": "مسکونی و ویلایی",
     "client": "اداری آقای مهندس حاجیان",
     "location": "اصفهان و سایر استان‌ها",
-    "image": "https://arvinpanjereh.com/upload/portfolio/73f80e4e-262b-4087-88bd-fb44ec07ad9d.webp?w=270&h=380&mode=crop&scale=both",
+    "image": "/projects/proj-36.webp",
     "description": "طراحی، ساخت و اجرای نمای شیشه‌ای، درب و پنجره ترمال‌بریک پروژه ساختمان اداری آقای مهندس حاجیان توسط تیم مهندسی نوآوران پنجره سپاهان.",
     "year": "۱۴۰۰ - ۱۴۰۳",
     "systemsUsed": [
@@ -545,7 +545,7 @@
     "category": "مسکونی و ویلایی",
     "client": "مسکونی آقای حسین زاده",
     "location": "اصفهان و سایر استان‌ها",
-    "image": "https://arvinpanjereh.com/upload/portfolio/ea3485c8-2db1-45e8-96b4-3005081fe9df.webp?w=270&h=380&mode=crop&scale=both",
+    "image": "/projects/proj-37.webp",
     "description": "طراحی، ساخت و اجرای نمای شیشه‌ای، درب و پنجره ترمال‌بریک پروژه ساختمان مسکونی آقای حسین زاده توسط تیم مهندسی نوآوران پنجره سپاهان.",
     "year": "۱۴۰۰ - ۱۴۰۳",
     "systemsUsed": [
@@ -560,7 +560,7 @@
     "category": "مسکونی و ویلایی",
     "client": "مسکونی آقای مهندس جاودان",
     "location": "اصفهان و سایر استان‌ها",
-    "image": "https://arvinpanjereh.com/upload/portfolio/4b8725db-7579-4582-bdd9-66d32904a417.webp?w=270&h=380&mode=crop&scale=both",
+    "image": "/projects/proj-38.webp",
     "description": "طراحی، ساخت و اجرای نمای شیشه‌ای، درب و پنجره ترمال‌بریک پروژه ساختمان مسکونی آقای مهندس جاودان توسط تیم مهندسی نوآوران پنجره سپاهان.",
     "year": "۱۴۰۰ - ۱۴۰۳",
     "systemsUsed": [
@@ -575,7 +575,7 @@
     "category": "مسکونی و ویلایی",
     "client": "مسکونی آقای مهندس حاتم پور",
     "location": "اصفهان و سایر استان‌ها",
-    "image": "https://arvinpanjereh.com/upload/portfolio/e7c436aa-1f16-4445-967b-bc524fefb99f.webp?w=270&h=380&mode=crop&scale=both",
+    "image": "/projects/proj-39.webp",
     "description": "طراحی، ساخت و اجرای نمای شیشه‌ای، درب و پنجره ترمال‌بریک پروژه ساختمان مسکونی آقای مهندس حاتم پور توسط تیم مهندسی نوآوران پنجره سپاهان.",
     "year": "۱۴۰۰ - ۱۴۰۳",
     "systemsUsed": [
@@ -590,7 +590,7 @@
     "category": "مسکونی و ویلایی",
     "client": "تجاری آقای مهندس عباسی",
     "location": "اصفهان و سایر استان‌ها",
-    "image": "https://arvinpanjereh.com/upload/portfolio/568fc02f-8d01-43d8-8cd0-d9bb1835c566.webp?w=270&h=380&mode=crop&scale=both",
+    "image": "/projects/proj-40.webp",
     "description": "طراحی، ساخت و اجرای نمای شیشه‌ای، درب و پنجره ترمال‌بریک پروژه ساختمان تجاری آقای مهندس عباسی توسط تیم مهندسی نوآوران پنجره سپاهان.",
     "year": "۱۴۰۰ - ۱۴۰۳",
     "systemsUsed": [
@@ -605,7 +605,7 @@
     "category": "مسکونی و ویلایی",
     "client": "مسکونی آقای مهندس توسلی",
     "location": "اصفهان و سایر استان‌ها",
-    "image": "https://arvinpanjereh.com/upload/portfolio/af92bbd9-9a8e-424b-b00f-bca3a3397e5f.webp?w=270&h=380&mode=crop&scale=both",
+    "image": "/projects/proj-41.webp",
     "description": "طراحی، ساخت و اجرای نمای شیشه‌ای، درب و پنجره ترمال‌بریک پروژه ساختمان مسکونی آقای مهندس توسلی توسط تیم مهندسی نوآوران پنجره سپاهان.",
     "year": "۱۴۰۰ - ۱۴۰۳",
     "systemsUsed": [
@@ -620,7 +620,7 @@
     "category": "مسکونی و ویلایی",
     "client": "مسکونی آقای مهندس هرندی",
     "location": "اصفهان و سایر استان‌ها",
-    "image": "https://arvinpanjereh.com/upload/portfolio/65834e72-f67f-4fc5-b175-c6e785ddf6ac.webp?w=270&h=380&mode=crop&scale=both",
+    "image": "/projects/proj-42.webp",
     "description": "طراحی، ساخت و اجرای نمای شیشه‌ای، درب و پنجره ترمال‌بریک پروژه ساختمان مسکونی آقای مهندس هرندی توسط تیم مهندسی نوآوران پنجره سپاهان.",
     "year": "۱۴۰۰ - ۱۴۰۳",
     "systemsUsed": [
@@ -635,7 +635,7 @@
     "category": "مسکونی و ویلایی",
     "client": "تجاری آقای مهندس نصر و دکتر کریمی فرد",
     "location": "اصفهان و سایر استان‌ها",
-    "image": "https://arvinpanjereh.com/upload/portfolio/9af729e6-b219-4e97-9d52-00f2934c8154.webp?w=270&h=380&mode=crop&scale=both",
+    "image": "/projects/proj-43.webp",
     "description": "طراحی، ساخت و اجرای نمای شیشه‌ای، درب و پنجره ترمال‌بریک پروژه ساختمان تجاری آقای مهندس نصر و دکتر کریمی فرد توسط تیم مهندسی نوآوران پنجره سپاهان.",
     "year": "۱۴۰۰ - ۱۴۰۳",
     "systemsUsed": [
@@ -650,7 +650,7 @@
     "category": "مسکونی و ویلایی",
     "client": "ویلای آقای مهندس موسوی ، دهکده زیتون",
     "location": "اصفهان و سایر استان‌ها",
-    "image": "https://arvinpanjereh.com/upload/portfolio/f3c5bc5e-3c8d-4d15-83cd-c82bfb8362bc.webp?w=270&h=380&mode=crop&scale=both",
+    "image": "/projects/proj-44.webp",
     "description": "طراحی، ساخت و اجرای نمای شیشه‌ای، درب و پنجره ترمال‌بریک پروژه ویلای آقای مهندس موسوی ، دهکده زیتون توسط تیم مهندسی نوآوران پنجره سپاهان.",
     "year": "۱۴۰۰ - ۱۴۰۳",
     "systemsUsed": [
@@ -665,7 +665,7 @@
     "category": "بانکی و دولتی",
     "client": "شرکت طرح و اجرای اسپادانا ، بانک مهر",
     "location": "اصفهان و سایر استان‌ها",
-    "image": "https://arvinpanjereh.com/upload/portfolio/dd474e14-24cd-459d-807b-0dc7fd5ad6fb.webp?w=270&h=380&mode=crop&scale=both",
+    "image": "/projects/proj-45.webp",
     "description": "طراحی، ساخت و اجرای نمای شیشه‌ای، درب و پنجره ترمال‌بریک پروژه شرکت طرح و اجرای اسپادانا ، بانک مهر توسط تیم مهندسی نوآوران پنجره سپاهان.",
     "year": "۱۴۰۰ - ۱۴۰۳",
     "systemsUsed": [
@@ -680,7 +680,7 @@
     "category": "مسکونی و ویلایی",
     "client": "مسکونی آقای نصر",
     "location": "اصفهان و سایر استان‌ها",
-    "image": "https://arvinpanjereh.com/upload/portfolio/da317cd0-7679-4fec-aff5-eaff9345a272.webp?w=270&h=380&mode=crop&scale=both",
+    "image": "/projects/proj-46.webp",
     "description": "طراحی، ساخت و اجرای نمای شیشه‌ای، درب و پنجره ترمال‌بریک پروژه ساختمان مسکونی آقای نصر توسط تیم مهندسی نوآوران پنجره سپاهان.",
     "year": "۱۴۰۰ - ۱۴۰۳",
     "systemsUsed": [
@@ -695,7 +695,7 @@
     "category": "مسکونی و ویلایی",
     "client": "مسکونی آقای مهندس فرهنگ",
     "location": "اصفهان و سایر استان‌ها",
-    "image": "https://arvinpanjereh.com/upload/portfolio/052dbea6-350a-41a1-bdf1-0f620d2d2d22.webp?w=270&h=380&mode=crop&scale=both",
+    "image": "/projects/proj-47.webp",
     "description": "طراحی، ساخت و اجرای نمای شیشه‌ای، درب و پنجره ترمال‌بریک پروژه ساختمان مسکونی آقای مهندس فرهنگ توسط تیم مهندسی نوآوران پنجره سپاهان.",
     "year": "۱۴۰۰ - ۱۴۰۳",
     "systemsUsed": [
@@ -710,7 +710,7 @@
     "category": "مسکونی و ویلایی",
     "client": "تجاری آقای مهندس زارعان",
     "location": "اصفهان و سایر استان‌ها",
-    "image": "https://arvinpanjereh.com/upload/portfolio/d9f7827b-5dc6-440e-b05b-7fc05062a2cd.webp?w=270&h=380&mode=crop&scale=both",
+    "image": "/projects/proj-48.webp",
     "description": "طراحی، ساخت و اجرای نمای شیشه‌ای، درب و پنجره ترمال‌بریک پروژه ساختمان تجاری آقای مهندس زارعان توسط تیم مهندسی نوآوران پنجره سپاهان.",
     "year": "۱۴۰۰ - ۱۴۰۳",
     "systemsUsed": [
@@ -725,7 +725,7 @@
     "category": "مسکونی و ویلایی",
     "client": "تجاری آقای مهندس آقادادی",
     "location": "اصفهان و سایر استان‌ها",
-    "image": "https://arvinpanjereh.com/upload/portfolio/3bcfdb46-167a-4b60-bf05-b97584b2b4d8.webp?w=270&h=380&mode=crop&scale=both",
+    "image": "/projects/proj-49.webp",
     "description": "طراحی، ساخت و اجرای نمای شیشه‌ای، درب و پنجره ترمال‌بریک پروژه ساختمان تجاری آقای مهندس آقادادی توسط تیم مهندسی نوآوران پنجره سپاهان.",
     "year": "۱۴۰۰ - ۱۴۰۳",
     "systemsUsed": [
@@ -740,7 +740,7 @@
     "category": "مسکونی و ویلایی",
     "client": "آقای مهندس باقرهادی",
     "location": "اصفهان و سایر استان‌ها",
-    "image": "https://arvinpanjereh.com/upload/portfolio/83b36019-9256-445d-98a3-5f787dbe54a8.webp?w=270&h=380&mode=crop&scale=both",
+    "image": "/projects/proj-50.webp",
     "description": "طراحی، ساخت و اجرای نمای شیشه‌ای، درب و پنجره ترمال‌بریک پروژه ساختمان آقای مهندس باقرهادی توسط تیم مهندسی نوآوران پنجره سپاهان.",
     "year": "۱۴۰۰ - ۱۴۰۳",
     "systemsUsed": [
@@ -755,7 +755,7 @@
     "category": "تجاری و اداری",
     "client": "مرکزپزشکی حضرت ابوالفضل",
     "location": "اصفهان و سایر استان‌ها",
-    "image": "https://arvinpanjereh.com/upload/portfolio/b03ad617-524d-42aa-886b-faa2b1694a21.webp?w=270&h=380&mode=crop&scale=both",
+    "image": "/projects/proj-51.webp",
     "description": "طراحی، ساخت و اجرای نمای شیشه‌ای، درب و پنجره ترمال‌بریک پروژه مرکزپزشکی حضرت ابوالفضل توسط تیم مهندسی نوآوران پنجره سپاهان.",
     "year": "۱۴۰۰ - ۱۴۰۳",
     "systemsUsed": [
@@ -770,7 +770,7 @@
     "category": "مسکونی و ویلایی",
     "client": "مسکونی آقای مهندس باقری",
     "location": "اصفهان و سایر استان‌ها",
-    "image": "https://arvinpanjereh.com/upload/portfolio/096b4a26-5766-46e0-968e-f7b4f0a0d963.webp?w=270&h=380&mode=crop&scale=both",
+    "image": "/projects/proj-52.webp",
     "description": "طراحی، ساخت و اجرای نمای شیشه‌ای، درب و پنجره ترمال‌بریک پروژه ساختمان مسکونی آقای مهندس باقری توسط تیم مهندسی نوآوران پنجره سپاهان.",
     "year": "۱۴۰۰ - ۱۴۰۳",
     "systemsUsed": [
@@ -785,7 +785,7 @@
     "category": "مسکونی و ویلایی",
     "client": "مسکونی مهندس یارامیری",
     "location": "اصفهان و سایر استان‌ها",
-    "image": "https://arvinpanjereh.com/upload/portfolio/ed1aa55e-eeb1-4852-9061-87e16a31f91a.webp?w=270&h=380&mode=crop&scale=both",
+    "image": "/projects/proj-53.webp",
     "description": "طراحی، ساخت و اجرای نمای شیشه‌ای، درب و پنجره ترمال‌بریک پروژه ساختمان مسکونی مهندس یارامیری توسط تیم مهندسی نوآوران پنجره سپاهان.",
     "year": "۱۴۰۰ - ۱۴۰۳",
     "systemsUsed": [
