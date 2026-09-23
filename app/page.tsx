@@ -1,512 +1,1374 @@
-import React from 'react';
+'use client';
+
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { 
-  Building2, 
-  ShieldCheck, 
+  PlaySquare, 
+  Package, 
+  Flame, 
   Award, 
+  Headset, 
   Phone, 
-  ArrowLeft, 
-  ArrowUpLeft, 
-  Play, 
+  Layers, 
+  Maximize, 
+  Grid, 
+  Box, 
+  Sparkles, 
+  ShieldCheck, 
   CheckCircle2, 
-  Calculator, 
-  Sparkles,
-  Layers,
-  Grid,
-  Maximize,
-  Box,
-  TreePine,
+  ArrowLeft, 
+  Send, 
+  Clock, 
+  MapPin, 
+  Building2, 
+  Cpu, 
+  Sliders,
+  ChevronLeft,
+  Play,
+  QrCode,
+  X,
   ExternalLink,
-  QrCode
+  Download,
+  Info
 } from 'lucide-react';
-import { getServices, getProjects, getArticles, getVideos, getSettings, getMaterials } from '@/lib/db';
+import materialsData from '@/data/materials.json';
+import { MaterialItem } from '@/lib/db';
 
-export default async function HomePage() {
-  const services = await getServices();
-  const allProjects = await getProjects();
-  const featuredProjects = allProjects.slice(0, 6);
-  const articles = await getArticles();
-  const recentArticles = articles.slice(0, 3);
-  const videos = await getVideos();
-  const featuredVideos = videos.slice(0, 2);
-  const settings = await getSettings();
-  const materials = await getMaterials();
-  const featuredMaterials = materials.slice(0, 6);
+export default function HomePage() {
+  const [activeTab, setActiveTab] = useState<'motion' | 'products' | 'bestsellers' | 'resume' | 'contact'>('motion');
+  const [motionPlaying, setMotionPlaying] = useState(true);
+  const [windowSlidePos, setWindowSlidePos] = useState(30);
+  const [bestsellerFilter, setBestsellerFilter] = useState<'all' | 'bestseller' | 'new'>('all');
 
-  const iconMap: Record<string, any> = {
-    Grid: Grid,
-    Layers: Layers,
-    Maximize: Maximize,
-    Box: Box,
-    TreePine: TreePine,
-    ShieldCheck: ShieldCheck
-  };
+  // Materials Catalog state within Tab 2
+  const [materialFilter, setMaterialFilter] = useState<'all' | 'thermal_hinged' | 'thermal_sliding' | 'normal_systems' | 'additional_systems'>('all');
+  const [activeVideoMaterial, setActiveVideoMaterial] = useState<MaterialItem | null>(null);
+  const [activeSpecsMaterial, setActiveSpecsMaterial] = useState<MaterialItem | null>(null);
+
+  const materials = materialsData as unknown as MaterialItem[];
+
+  // Listen to hash changes in URL
+  useEffect(() => {
+    const handleHash = () => {
+      const hash = window.location.hash.replace('#tab-', '');
+      if (['motion', 'products', 'bestsellers', 'resume', 'contact'].includes(hash)) {
+        setActiveTab(hash as any);
+      }
+    };
+    handleHash();
+    window.addEventListener('hashchange', handleHash);
+    return () => window.removeEventListener('hashchange', handleHash);
+  }, []);
+
+  const tabs = [
+    { id: 'motion', label: 'تب ۱: موشن نما و پنجره', icon: PlaySquare, desc: 'انیمیشن و موشن متحرک سیستم‌های نما' },
+    { id: 'products', label: 'تب ۲: نمایش محصولات', icon: Package, desc: 'کاتالوگ جامع سیستم‌ها و ۱۲ متریال' },
+    { id: 'bestsellers', label: 'تب ۳: جدید و پرفروش', icon: Flame, desc: 'محصولات جدید و پرفروش‌ترین‌ها' },
+    { id: 'resume', label: 'تب ۴: رزومه و پروژه‌ها', icon: Award, desc: 'کارنامه ۵۰+ پروژه شاخص مهندسی' },
+    { id: 'contact', label: 'تب ۵: تماس و ارتباط', icon: Headset, desc: 'دفتر مرکزی، کارخانه و مشخصات رسمی' },
+  ];
+
+  const filteredMaterials = materials.filter((m) => {
+    if (materialFilter === 'all') return true;
+    return m.categoryKey === materialFilter;
+  });
 
   return (
-    <div className="space-y-24 pb-20">
-      {/* 1. HERO SECTION */}
-      <section className="relative min-h-[85vh] flex items-center justify-center overflow-hidden border-b border-charcoal-800 bg-gradient-to-b from-charcoal-950 via-charcoal-900 to-charcoal-950">
-        {/* Subtle Architectural Grid Texture */}
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#222832_1px,transparent_1px),linear-gradient(to_bottom,#222832_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_40%,#000_70%,transparent_100%)] opacity-30 pointer-events-none" />
-
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative z-10 text-center">
-          {/* Badge */}
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-bronze-500/10 border border-bronze-500/30 text-bronze-400 text-xs font-medium mb-8">
-            <ShieldCheck className="w-4 h-4 text-bronze-400" />
-            <span>پیشگام در مهندسی نما و پنجره‌های دوجداره صنعتی از سال ۱۳۸۵</span>
-          </div>
-
-          {/* Heading */}
-          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-[1.25] max-w-4xl mx-auto">
-            مهندسی دقیق نماهای شیشه‌ای و{' '}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-bronze-400 via-bronze-300 to-amber-200">
-              پنجره‌های ترمال‌بریک
-            </span>
-          </h1>
-
-          <p className="mt-6 text-base sm:text-lg text-titanium-300 max-w-2xl mx-auto leading-relaxed">
-            طراحی محاسباتی، ساخت کارخانه‌ای و اجرای تخصصی کرتین‌وال لامل، فریم‌لس، پنجره‌های کشویی لیفت‌اند‌اسلاید، کامپوزیت و هندریل با بالاترین استانداردهای هوابندی و آب‌بندی.
-          </p>
-
-          {/* CTAs */}
-          <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
-            <Link
-              href="/materials"
-              className="px-6 py-3.5 rounded-xl bg-gradient-to-r from-bronze-500 to-bronze-600 hover:from-bronze-400 hover:to-bronze-500 text-charcoal-950 font-bold shadow-lg shadow-bronze-500/25 flex items-center gap-2 transition-all hover:scale-105 active:scale-95"
-            >
-              <Layers className="w-5 h-5 text-charcoal-950" />
-              <span>کاتالوگ متریال‌ها و سیستم‌ها</span>
-            </Link>
-
-            <Link
-              href="/calculator"
-              className="px-6 py-3.5 rounded-xl bg-charcoal-850 hover:bg-charcoal-800 text-titanium-100 border border-charcoal-700 hover:border-bronze-500/40 flex items-center gap-2 transition-all"
-            >
-              <Calculator className="w-5 h-5 text-bronze-400" />
-              <span>محاسبه‌گر پیش‌فاکتور آنلاین</span>
-            </Link>
-
-            <a
-              href={`tel:${settings.phone.replace(/[^0-9]/g, '')}`}
-              className="px-5 py-3.5 rounded-xl bg-charcoal-900/80 hover:bg-charcoal-850 text-bronze-400 border border-charcoal-700 font-mono text-sm flex items-center gap-2 transition-colors"
-            >
-              <Phone className="w-4 h-4" />
-              <span>{settings.phone}</span>
-            </a>
-          </div>
-
-          {/* Social Proof Stats Bar */}
-          <div className="mt-16 pt-10 border-t border-charcoal-800/80 grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
-            <div className="p-4 rounded-xl bg-charcoal-900/50 border border-charcoal-800">
-              <div className="text-2xl sm:text-3xl font-extrabold text-white font-mono">۱۵+ سال</div>
-              <div className="text-xs text-titanium-400 mt-1 font-medium">پیشینه تخصصی از ۱۳۸۵</div>
-            </div>
-            <div className="p-4 rounded-xl bg-charcoal-900/50 border border-charcoal-800">
-              <div className="text-2xl sm:text-3xl font-extrabold text-white font-mono">۱۵۰۰ متر</div>
-              <div className="text-xs text-titanium-400 mt-1 font-medium">فضای تولید و ماشین‌آلات اروپایی</div>
-            </div>
-            <div className="p-4 rounded-xl bg-charcoal-900/50 border border-charcoal-800">
-              <div className="text-2xl sm:text-3xl font-extrabold text-white font-mono">۳۰۰۰+</div>
-              <div className="text-xs text-titanium-400 mt-1 font-medium">پروژه موفق اداری، بانکی و ویلایی</div>
-            </div>
-            <div className="p-4 rounded-xl bg-charcoal-900/50 border border-charcoal-800">
-              <div className="text-2xl sm:text-3xl font-extrabold text-white font-mono">۱۰ سال</div>
-              <div className="text-xs text-titanium-400 mt-1 font-medium">گارانتی کتبی هوابندی و آب‌بندی</div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 2. SERVICES SECTION */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-3xl mx-auto mb-14">
-          <h2 className="text-xs font-bold text-bronze-400 tracking-wider uppercase mb-2">
-            سبد محصولات و خدمات تخصصی
-          </h2>
-          <p className="text-2xl sm:text-3xl font-extrabold text-white">
-            سیستم‌های مدرن ساختمانی نوآوران پنجره سپاهان
-          </p>
-          <p className="mt-3 text-sm text-titanium-400">
-            بررسی مشخصات فنی، جزئیات پروفیل‌های آلومینیومی و استانداردهای عایق‌بندی هر سیستم
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {services.map((s) => {
-            const IconComponent = iconMap[s.icon] || Building2;
+    <div className="w-full max-w-[1440px] mx-auto px-3 sm:px-6 py-4 space-y-5">
+      
+      {/* ═══════════════════════════════════════════════════════════
+          MAIN TAB SWITCHER BAR (Sharp 0px angles, #cbcccb with frame shadow)
+          ═══════════════════════════════════════════════════════════ */}
+      <div className="aluminum-card sharp frame-shadow p-2 border border-[#b0b3b0]">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-1.5 sm:gap-2">
+          {tabs.map((tab) => {
+            const Icon = tab.icon;
+            const isActive = activeTab === tab.id;
             return (
-              <div
-                key={s.id}
-                className="group rounded-2xl bg-charcoal-900 border border-charcoal-800 hover:border-bronze-500/50 transition-all duration-300 flex flex-col overflow-hidden shadow-lg hover:shadow-2xl hover:shadow-bronze-500/5"
+              <button
+                key={tab.id}
+                onClick={() => {
+                  setActiveTab(tab.id as any);
+                  window.location.hash = `tab-${tab.id}`;
+                }}
+                className={`sharp p-3 sm:p-3.5 text-right transition-all flex flex-col justify-between border ${
+                  isActive
+                    ? 'bg-[#18191a] text-white border-black shadow-md'
+                    : 'bg-[#cbcccb] text-[#1a1a1a] hover:bg-[#b8bab8] border-[#9ea19e] hover:border-black'
+                }`}
               >
-                {/* Image */}
-                <div className="relative h-52 w-full bg-charcoal-850 overflow-hidden">
-                  <img
-                    src={s.image}
-                    alt={s.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    loading="lazy"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-charcoal-900 via-charcoal-900/30 to-transparent" />
-                  <div className="absolute bottom-3 right-3 p-2.5 rounded-xl bg-charcoal-950/80 backdrop-blur-md text-bronze-400 border border-charcoal-700">
-                    <IconComponent className="w-5 h-5" />
-                  </div>
+                <div className="flex items-center justify-between w-full mb-1">
+                  <span className={`text-[10px] font-mono font-bold uppercase tracking-wider ${isActive ? 'text-[#cbcccb]' : 'text-[#444]'}`}>
+                    {tab.id.toUpperCase()}
+                  </span>
+                  <Icon className={`w-4 h-4 ${isActive ? 'text-white' : 'text-black'}`} />
                 </div>
-
-                {/* Content */}
-                <div className="p-6 flex-grow flex flex-col justify-between space-y-4">
-                  <div>
-                    <h3 className="text-lg font-bold text-white group-hover:text-bronze-400 transition-colors">
-                      {s.title}
-                    </h3>
-                    <p className="text-xs text-titanium-400 mt-2 line-clamp-3 leading-relaxed">
-                      {s.summary}
-                    </p>
-                  </div>
-
-                  {/* Highlights */}
-                  <div className="space-y-2 pt-2 border-t border-charcoal-800/80">
-                    {s.features.slice(0, 2).map((feat, idx) => (
-                      <div key={idx} className="flex items-start gap-2 text-xs text-titanium-300">
-                        <CheckCircle2 className="w-3.5 h-3.5 text-bronze-400 shrink-0 mt-0.5" />
-                        <span className="line-clamp-1">{feat}</span>
-                      </div>
-                    ))}
-                  </div>
-
-                  <Link
-                    href={`/services/${s.slug}`}
-                    className="pt-3 inline-flex items-center justify-between text-xs font-bold text-bronze-400 hover:text-bronze-300 transition-colors group/link"
-                  >
-                    <span>جزئیات فنی و مقاطع پروفیل</span>
-                    <ArrowLeft className="w-4 h-4 group-hover/link:-translate-x-1 transition-transform" />
-                  </Link>
+                <div>
+                  <h3 className={`text-xs sm:text-[13px] font-black leading-tight ${isActive ? 'text-white' : 'text-black'}`}>
+                    {tab.label}
+                  </h3>
+                  <p className={`text-[10px] hidden sm:block mt-1 font-medium line-clamp-1 ${isActive ? 'text-gray-300' : 'text-[#555]'}`}>
+                    {tab.desc}
+                  </p>
                 </div>
-              </div>
+              </button>
             );
           })}
         </div>
-      </section>
+      </div>
 
-      {/* 3. MATERIAL & PROFILE CATALOGUE SPOTLIGHT (NEW) */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="rounded-3xl bg-gradient-to-b from-charcoal-900 via-charcoal-900/90 to-charcoal-950 border border-charcoal-800 p-8 sm:p-12 space-y-10">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-charcoal-800 pb-6">
-            <div className="space-y-2">
-              <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-bronze-500/10 border border-bronze-500/30 text-bronze-400 text-xs font-medium font-mono">
-                ENGINEERING PROFILE CATALOGUE
+      {/* ═══════════════════════════════════════════════════════════
+          TAB 1: موشن از پنجره و ساختمان (WINDOW & BUILDING MOTION)
+          ═══════════════════════════════════════════════════════════ */}
+      {activeTab === 'motion' && (
+        <div className="space-y-4 animate-in fade-in duration-300">
+          
+          {/* Main Motion Screen Frame */}
+          <div className="aluminum-card sharp frame-shadow p-3 sm:p-4 border border-[#b0b3b0]">
+            
+            {/* Header Strip inside Frame */}
+            <div className="flex items-center justify-between pb-3 mb-3 border-b border-[#a8aba8] px-1 text-right">
+              <div>
+                <span className="text-[10px] font-mono font-extrabold text-[#444] uppercase block">
+                  INTERACTIVE MOTION VIEW · TAB 1
+                </span>
+                <h2 className="text-sm sm:text-base font-black text-black">
+                  موشن تعاملی عملکرد پنجره لیفت‌اند‌اسلاید و نمای مرتفع شیشه‌ای
+                </h2>
+              </div>
+
+              {/* Motion playback toggles */}
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => setMotionPlaying(!motionPlaying)}
+                  className={`sharp px-3 py-1.5 text-xs font-black border transition-all ${
+                    motionPlaying 
+                      ? 'bg-[#18191a] text-white border-black' 
+                      : 'bg-white text-black border-[#888]'
+                  }`}
+                >
+                  {motionPlaying ? 'موشن خودکار فعال' : 'توقف موشن'}
+                </button>
+              </div>
+            </div>
+
+            {/* Motion Viewport Screen */}
+            <div className="relative h-[440px] sm:h-[560px] lg:h-[620px] bg-[#0c0e12] overflow-hidden sharp border border-black/20 frame-shadow">
+              
+              {/* Layer 1: Background Panoramic Cityscape Skyline */}
+              <img
+                src="https://arvinpanjereh.com/upload/service/742b5647-017c-4a6e-b416-a184adf97dcc.webp"
+                alt="نمای ساختمان شهری و برج شیشه‌ای"
+                className="absolute inset-0 w-full h-full object-cover scale-105"
+              />
+
+              {/* Dynamic Sunlight / Glass Reflection Ray Animation */}
+              <div className="absolute inset-0 pointer-events-none bg-gradient-to-r from-transparent via-white/20 to-transparent w-[50%] h-full animate-light-sweep" />
+
+              {/* Layer 2: Moving Window Panel System (Sliding Door Simulation) */}
+              <div 
+                className={`absolute inset-y-0 right-0 w-[55%] border-l-4 border-[#cbcccb] bg-black/40 backdrop-blur-[2px] shadow-2xl transition-all duration-700 flex flex-col justify-between p-4 ${
+                  motionPlaying ? 'animate-window-slide' : ''
+                }`}
+                style={!motionPlaying ? { transform: `translateX(-${windowSlidePos}%)` } : {}}
+              >
+                {/* Aluminum Profile Frame Accent on Window */}
+                <div className="flex items-center justify-between border-b border-white/20 pb-2">
+                  <span className="text-[10px] font-mono text-[#cbcccb] font-bold">
+                    سیستم کشویی سنگین: مقطع ۱۲۰ میلی‌متر آکپای
+                  </span>
+                  <div className="w-3 h-3 bg-emerald-500 rounded-full animate-ping" />
+                </div>
+
+                {/* Handle & Lock Hardware */}
+                <div className="self-start my-auto flex items-center gap-2 bg-[#18191a]/90 text-white px-3 py-2 sharp border border-white/30 frame-shadow">
+                  <Sliders className="w-4 h-4 text-[#cbcccb]" />
+                  <span className="text-[11px] font-mono font-bold">دستگیره و یراق‌آلات ROTO آلمان</span>
+                </div>
+
+                <div className="text-right space-y-1 bg-black/75 p-3 sharp border border-white/20">
+                  <div className="text-xs font-bold text-white">شیشه دوجداره ۶+۱۲+۶ لمینت عایق صوتی</div>
+                  <div className="text-[10px] text-gray-300 font-mono">U-Value: 1.1 W/m²K · Sound: 42 dB</div>
+                </div>
+              </div>
+
+              {/* Bottom Text Overlay with Dark Gradient */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/35 to-transparent pointer-events-none" />
+
+              <div className="absolute bottom-0 inset-x-0 p-5 sm:p-8 lg:p-10 space-y-3 text-right z-10">
+                <span className="sharp inline-block px-3 py-1 bg-[#cbcccb] text-[#18191a] text-[11px] font-black border border-black shadow-md">
+                  مهندسی تخصصی سیستم‌های نما و بازشوهای مرتفع
+                </span>
+
+                <h1 className="text-2xl sm:text-4xl lg:text-5xl font-black text-white leading-tight">
+                  راهکارهای مدرن نما: ساخت آینده معماری
+                </h1>
+
+                <p className="text-xs sm:text-sm text-gray-200 max-w-2xl font-medium leading-relaxed">
+                  طراحی، محاسبات بار باد و زلزله، تولید صنعتی و اجرای دقیق نماهای کرتین‌وال لامل و پنجره‌های ترمال‌بریک لوکس برای پروژه‌های شاخص کشور.
+                </p>
+
+                {/* Interactive Slider if motion is paused */}
+                {!motionPlaying && (
+                  <div className="pt-2 max-w-xs space-y-1">
+                    <span className="text-[10px] text-gray-300 font-bold block">
+                      کنترل دستی بازشو پنجره: {windowSlidePos}٪
+                    </span>
+                    <input
+                      type="range"
+                      min="0"
+                      max="75"
+                      value={windowSlidePos}
+                      onChange={(e) => setWindowSlidePos(Number(e.target.value))}
+                      className="w-full accent-[#cbcccb] cursor-pointer"
+                    />
+                  </div>
+                )}
+
+                <div className="pt-2 flex flex-wrap items-center gap-3">
+                  <button
+                    onClick={() => setActiveTab('products')}
+                    className="sharp px-6 py-2.5 bg-[#cbcccb] hover:bg-[#b8bab8] text-black text-xs font-black border border-black shadow-md transition-all flex items-center gap-2"
+                  >
+                    <span>مشاهده محصولات و مشخصات فنی</span>
+                    <ArrowLeft className="w-4 h-4" />
+                  </button>
+
+                  <a
+                    href="tel:03133687755"
+                    className="sharp px-5 py-2.5 bg-[#18191a] hover:bg-[#2c2e30] text-white text-xs font-bold border border-white/30 shadow-md transition-all flex items-center gap-2"
+                  >
+                    <Phone className="w-4 h-4 text-[#cbcccb]" />
+                    <span>مشاوره مهندسی: ۰۳۱-۳۳۶۸۷۷۵۵</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            {/* Bottom 3 Engineering Metrics in Sharp Aluminum Cards */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-3">
+              <div className="aluminum-card sharp frame-shadow p-3.5 border border-[#b0b3b0] text-right">
+                <div className="text-xl sm:text-2xl font-black text-black font-mono">۴۲ dB</div>
+                <div className="text-xs font-bold text-[#333] mt-1">مهار کامل آلودگی صوتی با گاز آرگون</div>
+              </div>
+
+              <div className="aluminum-card sharp frame-shadow p-3.5 border border-[#b0b3b0] text-right">
+                <div className="text-xl sm:text-2xl font-black text-black font-mono">۱.۱ W/m²K</div>
+                <div className="text-xs font-bold text-[#333] mt-1">ضریب انتقال حرارت عایق (کاهش ۴۵٪ انرژی)</div>
+              </div>
+
+              <div className="aluminum-card sharp frame-shadow p-3.5 border border-[#b0b3b0] text-right">
+                <div className="text-xl sm:text-2xl font-black text-black font-mono">کلاس ۴ اروپا</div>
+                <div className="text-xs font-bold text-[#333] mt-1">نفوذناپذیری هوا و آب‌بندی با لاستیک‌های EPDM</div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      )}
+
+      {/* ═══════════════════════════════════════════════════════════
+          TAB 2: نمایش محصولات و کاتالوگ متریال‌ها (PRODUCTS & MATERIALS)
+          ═══════════════════════════════════════════════════════════ */}
+      {activeTab === 'products' && (
+        <div className="space-y-6 animate-in fade-in duration-300">
+          
+          {/* SECTION A: 6 ARCHITECTURAL SYSTEMS OVERVIEW */}
+          <div className="aluminum-card sharp frame-shadow p-4 sm:p-5 border border-[#b0b3b0]">
+            <div className="border-b border-[#a8aba8] pb-3 mb-5 text-right">
+              <span className="text-[10px] font-mono font-extrabold text-[#444] uppercase block">
+                CORE ARCHITECTURAL SYSTEMS · TAB 2
               </span>
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-white">
-                کاتالوگ مقاطع و متریال‌های تخصصی مصرفی شرکت
+              <h2 className="text-base sm:text-lg font-black text-black">
+                سیستم‌های ۶ گانه مهندسی نما و پنجره‌های اختصاصی
               </h2>
-              <p className="text-xs sm:text-sm text-titanium-300 max-w-2xl leading-relaxed">
-                سیستم‌های لولایی ترمال‌بریک (TH68, TH60)، کشویی لیفت‌اند‌اسلاید (TS143, TS115, TS77)، نرمال و جان‌پناه‌های شیشه‌ای با تصاویر سه‌بعدی CAD، مشخصات مهندسی و انیمیشن‌های آموزشی مونتاژ.
+              <p className="text-xs text-[#444] font-medium mt-1">
+                طراحی، تولید و نصب با بیلت‌های آلیاژی ۶۰۶۳ استاندارد، خط رنگ پودری الکترواستاتیک و آنادایز اروپایی
               </p>
             </div>
 
-            <Link
-              href="/materials"
-              className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-bronze-500 hover:bg-bronze-400 text-charcoal-950 font-bold text-xs shadow-lg shadow-bronze-500/20 transition-all shrink-0"
-            >
-              <span>مشاهده کامل ۱۲ سیستم و مقایسه فنی</span>
-              <ArrowLeft className="w-4 h-4 text-charcoal-950" />
-            </Link>
+            {/* Products 6-Card Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              
+              {/* Product 1 */}
+              <div className="aluminum-card sharp frame-shadow p-3 border border-[#b0b3b0] flex flex-col justify-between text-right group">
+                <div className="relative h-52 bg-black sharp overflow-hidden border border-black/20 frame-shadow">
+                  <img
+                    src="https://arvinpanjereh.com/upload/service/742b5647-017c-4a6e-b416-a184adf97dcc.webp"
+                    alt="نمای کرتین وال لامل"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-90"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent" />
+                  <span className="absolute top-2 right-2 sharp px-2.5 py-1 bg-[#cbcccb] text-[#18191a] text-[10px] font-black border border-black">
+                    نمای شیشه‌ای
+                  </span>
+                  <div className="absolute bottom-2 right-2 left-2 text-white">
+                    <h3 className="text-sm font-black">نمای کرتین‌وال لامل (Stick &amp; Unitized)</h3>
+                  </div>
+                </div>
+                <div className="pt-3 space-y-2">
+                  <p className="text-[11.5px] text-[#333] leading-relaxed">
+                    سیستم خودایستای نمای شیشه‌ای با مقاطع عمودی (Mullion) و افقی (Transom) جهت نماهای مرتفع بدون ستون مریی.
+                  </p>
+                  <div className="grid grid-cols-2 gap-2 text-[10px] font-mono font-bold bg-[#b8bab8] p-2 sharp border border-[#9ea19e]">
+                    <span>عرض نما: ۵۰ الی ۶۰ mm</span>
+                    <span>ممان اینرسی: تا ۵۵۰ cm⁴</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Product 2 */}
+              <div className="aluminum-card sharp frame-shadow p-3 border border-[#b0b3b0] flex flex-col justify-between text-right group">
+                <div className="relative h-52 bg-black sharp overflow-hidden border border-black/20 frame-shadow">
+                  <img
+                    src="https://arvinpanjereh.com/upload/service/0faef799-a472-46be-83bf-7cf42bbfaaa3.webp"
+                    alt="درب و پنجره ترمال بریک"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-90"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent" />
+                  <span className="absolute top-2 right-2 sharp px-2.5 py-1 bg-[#cbcccb] text-[#18191a] text-[10px] font-black border border-black">
+                    سیستم پنجره
+                  </span>
+                  <div className="absolute bottom-2 right-2 left-2 text-white">
+                    <h3 className="text-sm font-black">پنجره آلومینیوم ترمال‌بریک (Thermal Break)</h3>
+                  </div>
+                </div>
+                <div className="pt-3 space-y-2">
+                  <p className="text-[11.5px] text-[#333] leading-relaxed">
+                    عایق‌بندی صددرصد با تیغه‌های پلی‌آمید تقویت‌شده ۲۴ میلی‌متر جهت جلوگیری از پل حرارتی و تعریق شیشه.
+                  </p>
+                  <div className="grid grid-cols-2 gap-2 text-[10px] font-mono font-bold bg-[#b8bab8] p-2 sharp border border-[#9ea19e]">
+                    <span>ضخامت فریم: ۶۰ الی ۷۵ mm</span>
+                    <span>تنوع بازشو: تک و دوحالته</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Product 3 */}
+              <div className="aluminum-card sharp frame-shadow p-3 border border-[#b0b3b0] flex flex-col justify-between text-right group">
+                <div className="relative h-52 bg-black sharp overflow-hidden border border-black/20 frame-shadow">
+                  <img
+                    src="https://arvinpanjereh.com/upload/service/2f5bb5ed-60bb-49e5-9003-8be94921ad5e.webp"
+                    alt="سیستم لیفت اند اسلاید"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-90"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent" />
+                  <span className="absolute top-2 right-2 sharp px-2.5 py-1 bg-[#cbcccb] text-[#18191a] text-[10px] font-black border border-black">
+                    بازشو فوق‌لوکس
+                  </span>
+                  <div className="absolute bottom-2 right-2 left-2 text-white">
+                    <h3 className="text-sm font-black">پنجره فوق‌لوکس لیفت‌اند‌اسلاید (Lift &amp; Slide)</h3>
+                  </div>
+                </div>
+                <div className="pt-3 space-y-2">
+                  <p className="text-[11.5px] text-[#333] leading-relaxed">
+                    مکانیزم بالابرنده کشویی برای لنگه‌های سنگین تا وزن ۴۰۰ کیلوگرم با حرکت روان و بدون اصطکاک.
+                  </p>
+                  <div className="grid grid-cols-2 gap-2 text-[10px] font-mono font-bold bg-[#b8bab8] p-2 sharp border border-[#9ea19e]">
+                    <span>تحمل وزن: تا ۴۰۰ کیلوگرم</span>
+                    <span>عرض دهانه: تا ۶ متر یکپارچه</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Product 4 */}
+              <div className="aluminum-card sharp frame-shadow p-3 border border-[#b0b3b0] flex flex-col justify-between text-right group">
+                <div className="relative h-52 bg-black sharp overflow-hidden border border-black/20 frame-shadow">
+                  <img
+                    src="https://arvinpanjereh.com/upload/service/4eb9bebe-fbcf-49b0-bc35-12e0b62e49c7.webp"
+                    alt="نمای شیشه‌ای فریم‌لس"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-90"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent" />
+                  <span className="absolute top-2 right-2 sharp px-2.5 py-1 bg-[#cbcccb] text-[#18191a] text-[10px] font-black border border-black">
+                    فریم مخفی
+                  </span>
+                  <div className="absolute bottom-2 right-2 left-2 text-white">
+                    <h3 className="text-sm font-black">نمای شیشه‌ای فریم‌لس (Frameless Structural)</h3>
+                  </div>
+                </div>
+                <div className="pt-3 space-y-2">
+                  <p className="text-[11.5px] text-[#333] leading-relaxed">
+                    سطح کاملاً یکدست شیشه‌ای از نمای خارجی با حداقل درز ژوئن و بازشوهای کاملاً مخفی از دید ناظر.
+                  </p>
+                  <div className="grid grid-cols-2 gap-2 text-[10px] font-mono font-bold bg-[#b8bab8] p-2 sharp border border-[#9ea19e]">
+                    <span>فاصله ژوئن: ۱۰ الی ۲۰ mm</span>
+                    <span>چسب سیلیکون: استراکچرال Dow</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Product 5 */}
+              <div className="aluminum-card sharp frame-shadow p-3 border border-[#b0b3b0] flex flex-col justify-between text-right group">
+                <div className="relative h-52 bg-black sharp overflow-hidden border border-black/20 frame-shadow">
+                  <img
+                    src="https://arvinpanjereh.com/upload/service/2514139a-0bc1-43d5-a2c2-0e131deadcd7.webp"
+                    alt="نمای کامپوزیت آلومینیوم"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-90"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent" />
+                  <span className="absolute top-2 right-2 sharp px-2.5 py-1 bg-[#cbcccb] text-[#18191a] text-[10px] font-black border border-black">
+                    پوشش نما
+                  </span>
+                  <div className="absolute bottom-2 right-2 left-2 text-white">
+                    <h3 className="text-sm font-black">نمای کامپوزیت آلومینیوم (ACP Fireproof)</h3>
+                  </div>
+                </div>
+                <div className="pt-3 space-y-2">
+                  <p className="text-[11.5px] text-[#333] leading-relaxed">
+                    ورق‌های ۴ میلی‌متر با پوشش رنگ PVDF مقاوم در برابر اشعه فرابنفش، خودتمیزشونده و ضدحریق استاندارد FR.
+                  </p>
+                  <div className="grid grid-cols-2 gap-2 text-[10px] font-mono font-bold bg-[#b8bab8] p-2 sharp border border-[#9ea19e]">
+                    <span>ضخامت ورق: ۴ میلی‌متر</span>
+                    <span>گرید نسوز: B1 / A2 Fireproof</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Product 6 */}
+              <div className="aluminum-card sharp frame-shadow p-3 border border-[#b0b3b0] flex flex-col justify-between text-right group">
+                <div className="relative h-52 bg-black sharp overflow-hidden border border-black/20 frame-shadow">
+                  <img
+                    src="https://arvinpanjereh.com/upload/service/46deae7f-1443-48eb-9751-590cbe9cb3b0.webp"
+                    alt="نرده و هندریل شیشه‌ای"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-90"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent" />
+                  <span className="absolute top-2 right-2 sharp px-2.5 py-1 bg-[#cbcccb] text-[#18191a] text-[10px] font-black border border-black">
+                    ایمنی و لوکس
+                  </span>
+                  <div className="absolute bottom-2 right-2 left-2 text-white">
+                    <h3 className="text-sm font-black">هندریل شیشه‌ای و حفاظ استیل ۳۰۴</h3>
+                  </div>
+                </div>
+                <div className="pt-3 space-y-2">
+                  <p className="text-[11.5px] text-[#333] leading-relaxed">
+                    نرده‌های شیشه‌ای دفنی، فیکس‌پوینت و اسپیگوت با شیشه‌های دوجداره لمینت سکوریت و یراق‌آلات استیل ضدزنگ.
+                  </p>
+                  <div className="grid grid-cols-2 gap-2 text-[10px] font-mono font-bold bg-[#b8bab8] p-2 sharp border border-[#9ea19e]">
+                    <span>شیشه: ۸+۸ لمینت PVB</span>
+                    <span>آلیاژ: AISI 304 نگیر</span>
+                  </div>
+                </div>
+              </div>
+
+            </div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {featuredMaterials.map((m) => (
-              <div
-                key={m.id}
-                className="group rounded-2xl bg-charcoal-950/70 border border-charcoal-800/90 hover:border-bronze-500/50 p-5 flex flex-col justify-between transition-all duration-300"
+          {/* SECTION B: 12 COMPANY MATERIALS CATALOGUE (Extracted from 2020-21-door-win.pdf) */}
+          <div className="aluminum-card sharp frame-shadow p-4 sm:p-5 border border-[#b0b3b0] space-y-4">
+            
+            {/* Header with Title and Link to Dedicated Page */}
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between border-b border-[#a8aba8] pb-3 gap-3 text-right">
+              <div>
+                <span className="text-[10px] font-mono font-extrabold text-[#444] uppercase block">
+                  STANDARDIZED FACTORY PROFILES · 12 SYSTEMS
+                </span>
+                <h2 className="text-base sm:text-lg font-black text-black">
+                  کاتالوگ مهندسی ۱۲ سیستم متریال مصرفی نوآوران پنجره سپاهان
+                </h2>
+                <p className="text-xs text-[#444] font-medium mt-1">
+                  شامل رندرهای مقطع سه‌بعدی CAD، مشخصات فنی ممان اینرسی، هوابندی و کیو‌آرکد ویدیوهای انیمیشن مونتاژ
+                </p>
+              </div>
+
+              <Link
+                href="/materials"
+                className="sharp px-4 py-2 bg-[#18191a] hover:bg-[#333] text-white text-xs font-bold border border-black flex items-center gap-1.5 self-start sm:self-auto shrink-0 shadow-sm"
               >
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between">
-                    <span className="px-2.5 py-0.5 rounded bg-charcoal-900 border border-charcoal-700 text-bronze-400 font-mono font-bold text-xs">
-                      {m.code}
-                    </span>
-                    <span className="text-[11px] font-semibold text-emerald-400 font-mono">
-                      {m.specs.thermalUf}
-                    </span>
+                <span>مشاهده صفحه کامل کاتالوگ</span>
+                <ArrowLeft className="w-3.5 h-3.5" />
+              </Link>
+            </div>
+
+            {/* Filter Tabs for 12 Materials */}
+            <div className="flex flex-wrap items-center gap-1.5 pb-2">
+              <button
+                onClick={() => setMaterialFilter('all')}
+                className={`sharp px-3 py-1.5 text-xs font-black border transition-all ${
+                  materialFilter === 'all'
+                    ? 'bg-[#18191a] text-white border-black'
+                    : 'bg-[#cbcccb] text-black border-[#888] hover:bg-[#b8bab8]'
+                }`}
+              >
+                همه ۱۲ سیستم
+              </button>
+              <button
+                onClick={() => setMaterialFilter('thermal_hinged')}
+                className={`sharp px-3 py-1.5 text-xs font-black border transition-all ${
+                  materialFilter === 'thermal_hinged'
+                    ? 'bg-[#18191a] text-white border-black'
+                    : 'bg-[#cbcccb] text-black border-[#888] hover:bg-[#b8bab8]'
+                }`}
+              >
+                لولایی ترمال‌بریک (TH 68 / TH 60)
+              </button>
+              <button
+                onClick={() => setMaterialFilter('thermal_sliding')}
+                className={`sharp px-3 py-1.5 text-xs font-black border transition-all ${
+                  materialFilter === 'thermal_sliding'
+                    ? 'bg-[#18191a] text-white border-black'
+                    : 'bg-[#cbcccb] text-black border-[#888] hover:bg-[#b8bab8]'
+                }`}
+              >
+                کشویی و لیفت ترمال‌بریک (TS 143 / TS 115 / TS 77)
+              </button>
+              <button
+                onClick={() => setMaterialFilter('normal_systems')}
+                className={`sharp px-3 py-1.5 text-xs font-black border transition-all ${
+                  materialFilter === 'normal_systems'
+                    ? 'bg-[#18191a] text-white border-black'
+                    : 'bg-[#cbcccb] text-black border-[#888] hover:bg-[#b8bab8]'
+                }`}
+              >
+                سیستم‌های نرمال (AH 59 / AH 47 / AS 90 / AS 60 / MAS 60)
+              </button>
+              <button
+                onClick={() => setMaterialFilter('additional_systems')}
+                className={`sharp px-3 py-1.5 text-xs font-black border transition-all ${
+                  materialFilter === 'additional_systems'
+                    ? 'bg-[#18191a] text-white border-black'
+                    : 'bg-[#cbcccb] text-black border-[#888] hover:bg-[#b8bab8]'
+                }`}
+              >
+                الحاقی و نما (توری پلیسه / نرده شیشه‌ای)
+              </button>
+            </div>
+
+            {/* 12 Materials Grid in Brushed Aluminum Sharp Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {filteredMaterials.map((m) => (
+                <div
+                  key={m.id}
+                  className="aluminum-card sharp frame-shadow p-3.5 border border-[#b0b3b0] flex flex-col justify-between text-right"
+                >
+                  <div className="space-y-2.5">
+                    {/* Top Code Badge & Thermal Break */}
+                    <div className="flex items-center justify-between pb-1.5 border-b border-[#a8aba8]">
+                      <span className="font-mono font-black text-xs px-2.5 py-0.5 bg-[#18191a] text-white sharp border border-black">
+                        {m.code}
+                      </span>
+                      <span className={`text-[10px] font-bold px-2 py-0.5 sharp border ${
+                        m.isThermalBreak 
+                          ? 'bg-emerald-700 text-white border-emerald-800' 
+                          : 'bg-[#9ea19e] text-black border-black'
+                      }`}>
+                        {m.isThermalBreak ? 'عایق ترمال‌بریک' : 'سیستم نرمال'}
+                      </span>
+                    </div>
+
+                    {/* 3D CAD Cutaway Image Box with frame-shadow */}
+                    <div className="relative h-48 bg-[#e0e2e0] sharp overflow-hidden border border-[#9ea19e] flex items-center justify-center p-2">
+                      <img
+                        src={m.profileCutawayImage}
+                        alt={`مقطع سه‌بعدی ${m.title}`}
+                        className="max-h-full max-w-full object-contain block mx-auto"
+                      />
+                      {m.qrImage && (
+                        <div className="absolute bottom-1.5 left-1.5 p-1 bg-white sharp border border-black shadow-sm" title="اسکن ویدیو">
+                          <img src={m.qrImage} alt="QR Code" className="w-10 h-10 object-contain" />
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Title & Summary */}
+                    <div>
+                      <h3 className="text-xs font-black text-black leading-tight">
+                        {m.title}
+                      </h3>
+                      <p className="text-[11px] text-[#333] mt-1 line-clamp-2 leading-relaxed font-medium">
+                        {m.summary}
+                      </p>
+                    </div>
+
+                    {/* Quick Specs Snippet */}
+                    <div className="grid grid-cols-2 gap-1.5 text-[10px] font-mono font-bold bg-[#b8bab8] p-2 sharp border border-[#9ea19e] text-[#111]">
+                      {m.specs.frameDepth && (
+                        <div>عمق فریم: {m.specs.frameDepth}</div>
+                      )}
+                      {m.specs.maxGlassThickness && (
+                        <div>شیشه: {m.specs.maxGlassThickness}</div>
+                      )}
+                      {m.specs.polyamideWidth && (
+                        <div>پلی‌آمید: {m.specs.polyamideWidth}</div>
+                      )}
+                      {m.specs.airPermeability && (
+                        <div>هوابندی: {m.specs.airPermeability}</div>
+                      )}
+                    </div>
                   </div>
 
-                  <div className="relative h-44 w-full rounded-xl bg-charcoal-900/60 overflow-hidden flex items-center justify-center p-2">
-                    <img
-                      src={m.image}
-                      alt={m.title}
-                      className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500"
-                      loading="lazy"
+                  {/* Action Buttons: Video Player Modal & Full Specs Modal */}
+                  <div className="pt-3 mt-2 border-t border-[#a8aba8] grid grid-cols-2 gap-2">
+                    <button
+                      onClick={() => setActiveVideoMaterial(m)}
+                      className="sharp py-1.5 px-2 bg-[#18191a] hover:bg-[#333] text-white text-[11px] font-bold border border-black flex items-center justify-center gap-1.5 shadow-sm transition-colors"
+                    >
+                      <Play className="w-3.5 h-3.5 text-[#cbcccb] fill-current" />
+                      <span>پخش ویدیو موشن</span>
+                    </button>
+
+                    <button
+                      onClick={() => setActiveSpecsMaterial(m)}
+                      className="sharp py-1.5 px-2 bg-white hover:bg-gray-100 text-black text-[11px] font-bold border border-black flex items-center justify-center gap-1 transition-colors"
+                    >
+                      <Info className="w-3.5 h-3.5 text-black" />
+                      <span>مشخصات فنی</span>
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+          </div>
+
+        </div>
+      )}
+
+      {/* ═══════════════════════════════════════════════════════════
+          TAB 3: محصولات جدید و پرفروش (NEW & BEST SELLERS)
+          ═══════════════════════════════════════════════════════════ */}
+      {activeTab === 'bestsellers' && (
+        <div className="space-y-4 animate-in fade-in duration-300">
+          
+          <div className="aluminum-card sharp frame-shadow p-4 sm:p-5 border border-[#b0b3b0]">
+            
+            {/* Header & Filter Toggle */}
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between border-b border-[#a8aba8] pb-3 mb-5 gap-3 text-right">
+              <div>
+                <span className="text-[10px] font-mono font-extrabold text-[#444] uppercase block">
+                  HOT PICKS &amp; INNOVATIONS · TAB 3
+                </span>
+                <h2 className="text-base sm:text-lg font-black text-black">
+                  محصولات جدید و پرفروش‌ترین سیستم‌های نوآوران پنجره سپاهان
+                </h2>
+              </div>
+
+              {/* Sub Filter */}
+              <div className="flex items-center gap-1.5 self-stretch sm:self-auto">
+                <button
+                  onClick={() => setBestsellerFilter('all')}
+                  className={`sharp px-3 py-1.5 text-xs font-black border transition-all ${
+                    bestsellerFilter === 'all'
+                      ? 'bg-[#18191a] text-white border-black'
+                      : 'bg-[#cbcccb] text-black border-[#888] hover:bg-[#b8bab8]'
+                  }`}
+                >
+                  همه موارد
+                </button>
+                <button
+                  onClick={() => setBestsellerFilter('bestseller')}
+                  className={`sharp px-3 py-1.5 text-xs font-black border transition-all ${
+                    bestsellerFilter === 'bestseller'
+                      ? 'bg-[#18191a] text-white border-black'
+                      : 'bg-[#cbcccb] text-black border-[#888] hover:bg-[#b8bab8]'
+                  }`}
+                >
+                  🔥 پرفروش‌ترین‌ها
+                </button>
+                <button
+                  onClick={() => setBestsellerFilter('new')}
+                  className={`sharp px-3 py-1.5 text-xs font-black border transition-all ${
+                    bestsellerFilter === 'new'
+                      ? 'bg-[#18191a] text-white border-black'
+                      : 'bg-[#cbcccb] text-black border-[#888] hover:bg-[#b8bab8]'
+                  }`}
+                >
+                  ⚡ محصولات جدید
+                </button>
+              </div>
+            </div>
+
+            {/* Bestsellers & New Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              
+              {/* Item 1: Best Seller */}
+              {(bestsellerFilter === 'all' || bestsellerFilter === 'bestseller') && (
+                <div className="aluminum-card sharp frame-shadow p-4 border border-[#b0b3b0] flex flex-col justify-between text-right">
+                  <div className="flex items-center justify-between pb-2 border-b border-[#a8aba8]">
+                    <span className="sharp px-2.5 py-0.5 bg-[#18191a] text-white text-[10px] font-black border border-black flex items-center gap-1">
+                      <Flame className="w-3 h-3 text-amber-400" />
+                      پرفروش‌ترین سیستم مسکونی لوکس
+                    </span>
+                    <span className="text-[10px] font-mono font-bold text-[#444]">کد: TH68-TB</span>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-12 gap-3 pt-3">
+                    <div className="sm:col-span-5 relative h-40 bg-white sharp overflow-hidden border border-black/20 frame-shadow flex items-center justify-center p-2">
+                      <img
+                        src="/images/catalog/th68_render.jpg"
+                        alt="پنجره لولایی ترمال‌بریک TH68"
+                        className="max-h-full max-w-full object-contain"
+                      />
+                    </div>
+                    <div className="sm:col-span-7 space-y-2">
+                      <h3 className="text-sm font-black text-black">پنجره لولایی ترمال‌بریک TH 68 اکپای</h3>
+                      <p className="text-[11px] text-[#333] leading-relaxed">
+                        پراستفاده‌ترین سیستم در برج‌های لوکس مسکونی و اداری اصفهان. دارای تیغه پلی‌آمید عایق و آب‌بندی با لاستیک‌های سه‌گانه EPDM.
+                      </p>
+                      <div className="space-y-1 text-[10px] text-[#222] font-bold">
+                        <div className="flex items-center gap-1.5">
+                          <CheckCircle2 className="w-3 h-3 text-black" />
+                          <span>تحویل فوری از انبار مقاطع آماده</span>
+                        </div>
+                        <div className="flex items-center gap-1.5">
+                          <CheckCircle2 className="w-3 h-3 text-black" />
+                          <span>گارانتی کتبی ۱۰ ساله آب‌بندی و هوابندی</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Item 2: Best Seller */}
+              {(bestsellerFilter === 'all' || bestsellerFilter === 'bestseller') && (
+                <div className="aluminum-card sharp frame-shadow p-4 border border-[#b0b3b0] flex flex-col justify-between text-right">
+                  <div className="flex items-center justify-between pb-2 border-b border-[#a8aba8]">
+                    <span className="sharp px-2.5 py-0.5 bg-[#18191a] text-white text-[10px] font-black border border-black flex items-center gap-1">
+                      <Flame className="w-3 h-3 text-amber-400" />
+                      انتخاب اول پروژه‌های تجاری و بانکی
+                    </span>
+                    <span className="text-[10px] font-mono font-bold text-[#444]">کد: CW-50150</span>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-12 gap-3 pt-3">
+                    <div className="sm:col-span-5 relative h-40 bg-black sharp overflow-hidden border border-black/20 frame-shadow">
+                      <img
+                        src="https://arvinpanjereh.com/upload/service/742b5647-017c-4a6e-b416-a184adf97dcc.webp"
+                        alt="کرتین وال لامل ۵۰ در ۱۵۰"
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <div className="sm:col-span-7 space-y-2">
+                      <h3 className="text-sm font-black text-black">سیستم لامل کرتین‌وال مقطع ۵۰×۱۵۰ استاتیکی</h3>
+                      <p className="text-[11px] text-[#333] leading-relaxed">
+                        اجرا شده در شعب بانک ملت، تجارت و مجتمع‌های اداری. بالاترین ممان اینرسی برای دهانه‌های مرتفع تا ۴.۵ متر بین سقف‌ها.
+                      </p>
+                      <div className="space-y-1 text-[10px] text-[#222] font-bold">
+                        <div className="flex items-center gap-1.5">
+                          <CheckCircle2 className="w-3 h-3 text-black" />
+                          <span>محاسبات تاییدیه نظام مهندسی با Sap2000</span>
+                        </div>
+                        <div className="flex items-center gap-1.5">
+                          <CheckCircle2 className="w-3 h-3 text-black" />
+                          <span>اجرای شیشه‌های جامبو سایز ۳×۴ متر</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Item 3: New Product */}
+              {(bestsellerFilter === 'all' || bestsellerFilter === 'new') && (
+                <div className="aluminum-card sharp frame-shadow p-4 border border-[#b0b3b0] flex flex-col justify-between text-right">
+                  <div className="flex items-center justify-between pb-2 border-b border-[#a8aba8]">
+                    <span className="sharp px-2.5 py-0.5 bg-black text-white text-[10px] font-black border border-black flex items-center gap-1">
+                      <Sparkles className="w-3 h-3 text-cyan-300" />
+                      محصول جدید و دهانه عریض
+                    </span>
+                    <span className="text-[10px] font-mono font-bold text-[#444]">کد: TS143-HEAVY</span>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-12 gap-3 pt-3">
+                    <div className="sm:col-span-5 relative h-40 bg-white sharp overflow-hidden border border-black/20 frame-shadow flex items-center justify-center p-2">
+                      <img
+                        src="/images/catalog/ts143_render.jpg"
+                        alt="سیستم کشویی سنگین TS143"
+                        className="max-h-full max-w-full object-contain"
+                      />
+                    </div>
+                    <div className="sm:col-span-7 space-y-2">
+                      <h3 className="text-sm font-black text-black">سیستم کشویی فوق سنگین ترمال‌بریک TS 143</h3>
+                      <p className="text-[11px] text-[#333] leading-relaxed">
+                        طراحی شده برای ابعاد بزرگ و ارتفاع‌های تا ۳ متر با قابلیت نصب شیشه‌های سه‌جداره تا ضخامت ۳۸ میلی‌متر.
+                      </p>
+                      <div className="space-y-1 text-[10px] text-[#222] font-bold">
+                        <div className="flex items-center gap-1.5">
+                          <CheckCircle2 className="w-3 h-3 text-black" />
+                          <span>تحمل وزن لنگه تا ۳۰۰ کیلوگرم</span>
+                        </div>
+                        <div className="flex items-center gap-1.5">
+                          <CheckCircle2 className="w-3 h-3 text-black" />
+                          <span>نوار پلی‌آمید ۲۴ میلی‌متری عایق حرارت</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Item 4: New Product */}
+              {(bestsellerFilter === 'all' || bestsellerFilter === 'new') && (
+                <div className="aluminum-card sharp frame-shadow p-4 border border-[#b0b3b0] flex flex-col justify-between text-right">
+                  <div className="flex items-center justify-between pb-2 border-b border-[#a8aba8]">
+                    <span className="sharp px-2.5 py-0.5 bg-black text-white text-[10px] font-black border border-black flex items-center gap-1">
+                      <Sparkles className="w-3 h-3 text-cyan-300" />
+                      محصول تکمیلی و مدرن
+                    </span>
+                    <span className="text-[10px] font-mono font-bold text-[#444]">کد: VERANDAH-FENCE</span>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-12 gap-3 pt-3">
+                    <div className="sm:col-span-5 relative h-40 bg-white sharp overflow-hidden border border-black/20 frame-shadow flex items-center justify-center p-2">
+                      <img
+                        src="/images/catalog/verandah_fence_render.jpg"
+                        alt="سیستم جان‌پناه و نرده شیشه‌ای"
+                        className="max-h-full max-w-full object-contain"
+                      />
+                    </div>
+                    <div className="sm:col-span-7 space-y-2">
+                      <h3 className="text-sm font-black text-black">سیستم جان‌پناه و نرده شیشه‌ای تمام آلومینیومی</h3>
+                      <p className="text-[11px] text-[#333] leading-relaxed">
+                        نصب دفنی یا روکار با مقاومت بسیار بالا در برابر بار ضربه و باد، سازگار با شیشه‌های دوجداره لمینت سکوریت ۱۰+۱۰.
+                      </p>
+                      <div className="space-y-1 text-[10px] text-[#222] font-bold">
+                        <div className="flex items-center gap-1.5">
+                          <CheckCircle2 className="w-3 h-3 text-black" />
+                          <span>دید پانورامای بدون مانع برای تراس‌ها</span>
+                        </div>
+                        <div className="flex items-center gap-1.5">
+                          <CheckCircle2 className="w-3 h-3 text-black" />
+                          <span>پوشش آنادایز ضدخش و مقاوم در برابر باران اسیدی</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+            </div>
+
+          </div>
+
+        </div>
+      )}
+
+      {/* ═══════════════════════════════════════════════════════════
+          TAB 4: رزومه و نمونه کارها (PORTFOLIO & RESUME)
+          ═══════════════════════════════════════════════════════════ */}
+      {activeTab === 'resume' && (
+        <div className="space-y-4 animate-in fade-in duration-300">
+          
+          <div className="aluminum-card sharp frame-shadow p-4 sm:p-5 border border-[#b0b3b0]">
+            <div className="border-b border-[#a8aba8] pb-3 mb-5 text-right">
+              <span className="text-[10px] font-mono font-extrabold text-[#444] uppercase block">
+                ICONIC ACHIEVEMENTS · TAB 4
+              </span>
+              <h2 className="text-base sm:text-lg font-black text-black">
+                رزومه اجرایی و پروژه‌های شاخص نوآوران پنجره سپاهان
+              </h2>
+              <p className="text-xs text-[#444] font-medium mt-1">
+                بیش از ۵۰ پروژه برجسته دولتی، بانکی، تجاری و ویلایی در اصفهان و سایر استان‌های کشور
+              </p>
+            </div>
+
+            {/* Resume Highlights Counter Row */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-5">
+              <div className="aluminum-card sharp frame-shadow p-3 border border-[#b0b3b0] text-center">
+                <div className="text-2xl font-black font-mono text-black">۱۵+</div>
+                <div className="text-[11px] font-bold text-[#333] mt-0.5">سال سابقه صنعتی</div>
+              </div>
+              <div className="aluminum-card sharp frame-shadow p-3 border border-[#b0b3b0] text-center">
+                <div className="text-2xl font-black font-mono text-black">۵۰+</div>
+                <div className="text-[11px] font-bold text-[#333] mt-0.5">پروژه تحویل‌شده</div>
+              </div>
+              <div className="aluminum-card sharp frame-shadow p-3 border border-[#b0b3b0] text-center">
+                <div className="text-2xl font-black font-mono text-black">۱۵۰۰ m²</div>
+                <div className="text-[11px] font-bold text-[#333] mt-0.5">وسعت کارخانه تولیدی</div>
+              </div>
+              <div className="aluminum-card sharp frame-shadow p-3 border border-[#b0b3b0] text-center">
+                <div className="text-2xl font-black font-mono text-black">۱۰ سال</div>
+                <div className="text-[11px] font-bold text-[#333] mt-0.5">گارانتی تضمین کیفیت</div>
+              </div>
+            </div>
+
+            {/* Projects Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              
+              {/* Project 1 */}
+              <div className="aluminum-card sharp frame-shadow p-3 border border-[#b0b3b0] flex flex-col justify-between text-right group">
+                <div className="relative h-56 bg-black sharp overflow-hidden border border-black/20 frame-shadow">
+                  <img
+                    src="/projects/proj-1.webp"
+                    alt="مجتمع تجاری اداری سپهر"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent" />
+                  <span className="absolute top-2 right-2 sharp px-2.5 py-1 bg-[#18191a] text-white text-[10px] font-bold border border-black">
+                    تجاری - اداری
+                  </span>
+                  <div className="absolute bottom-2 right-2 left-2 text-white">
+                    <h3 className="text-sm font-black">مجتمع اداری تجاری سپهر اصفهان</h3>
+                    <p className="text-[10px] text-gray-300 font-mono">متراژ: ۲۸۰۰ مترمربع نمای کرتین‌وال</p>
+                  </div>
+                </div>
+                <div className="pt-2.5 text-[11px] text-[#333] space-y-1">
+                  <div><strong>سیستم:</strong> لامل آلومینیومی ۵۰×۱۵۰ + شیشه دوجداره سکوریت لمینت</div>
+                  <div><strong>کارفرما:</strong> بخش خصوصی · سال اجرا: ۱۴۰۱</div>
+                </div>
+              </div>
+
+              {/* Project 2 */}
+              <div className="aluminum-card sharp frame-shadow p-3 border border-[#b0b3b0] flex flex-col justify-between text-right group">
+                <div className="relative h-56 bg-black sharp overflow-hidden border border-black/20 frame-shadow">
+                  <img
+                    src="/projects/proj-2.webp"
+                    alt="شعب بانک‌های استان اصفهان"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent" />
+                  <span className="absolute top-2 right-2 sharp px-2.5 py-1 bg-[#18191a] text-white text-[10px] font-bold border border-black">
+                    بانکی و سازمانی
+                  </span>
+                  <div className="absolute bottom-2 right-2 left-2 text-white">
+                    <h3 className="text-sm font-black">شعب مرکزی بانک ملت و تجارت</h3>
+                    <p className="text-[10px] text-gray-300 font-mono">متراژ: بیش از ۱۲۰۰ مترمربع</p>
+                  </div>
+                </div>
+                <div className="pt-2.5 text-[11px] text-[#333] space-y-1">
+                  <div><strong>سیستم:</strong> نمای شیشه‌ای ضدسرقت + کامپوزیت آلومینیوم نسوز</div>
+                  <div><strong>کارفرما:</strong> مدیریت شعب بانک‌ها · سال اجرا: ۱۳۹۹ - ۱۴۰۲</div>
+                </div>
+              </div>
+
+              {/* Project 3 */}
+              <div className="aluminum-card sharp frame-shadow p-3 border border-[#b0b3b0] flex flex-col justify-between text-right group">
+                <div className="relative h-56 bg-black sharp overflow-hidden border border-black/20 frame-shadow">
+                  <img
+                    src="/projects/proj-3.webp"
+                    alt="برج مسکونی مهرگان"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent" />
+                  <span className="absolute top-2 right-2 sharp px-2.5 py-1 bg-[#18191a] text-white text-[10px] font-bold border border-black">
+                    مسکونی لوکس
+                  </span>
+                  <div className="absolute bottom-2 right-2 left-2 text-white">
+                    <h3 className="text-sm font-black">برج باغ مسکونی مهرگان (خیابان مشتاق)</h3>
+                    <p className="text-[10px] text-gray-300 font-mono">متراژ: ۱۸۵۰ مترمربع پنجره‌های ترمال‌بریک</p>
+                  </div>
+                </div>
+                <div className="pt-2.5 text-[11px] text-[#333] space-y-1">
+                  <div><strong>سیستم:</strong> پنجره‌های لیفت‌اند‌اسلاید دهانه عریض با آنادایز شامپاینی</div>
+                  <div><strong>کارفرما:</strong> شرکت تعاونی مسکن مهرگان · سال اجرا: ۱۴۰۲</div>
+                </div>
+              </div>
+
+            </div>
+
+            <div className="pt-4 text-center">
+              <Link
+                href="/projects"
+                className="sharp inline-flex items-center gap-2 px-6 py-2.5 bg-[#18191a] hover:bg-[#333] text-white text-xs font-black border border-black shadow-md transition-colors"
+              >
+                <span>مشاهده آرشیو کامل ۵۳ پروژه شاخص شرکت</span>
+                <ArrowLeft className="w-4 h-4" />
+              </Link>
+            </div>
+
+          </div>
+
+        </div>
+      )}
+
+      {/* ═══════════════════════════════════════════════════════════
+          TAB 5: تماس با ما و راه ارتباطی (CONTACT & COMMUNICATION)
+          ═══════════════════════════════════════════════════════════ */}
+      {activeTab === 'contact' && (
+        <div className="space-y-4 animate-in fade-in duration-300">
+          
+          <div className="aluminum-card sharp frame-shadow p-4 sm:p-6 border border-[#b0b3b0]">
+            <div className="border-b border-[#a8aba8] pb-3 mb-6 text-right">
+              <span className="text-[10px] font-mono font-extrabold text-[#444] uppercase block">
+                COMMUNICATION DESK · TAB 5
+              </span>
+              <h2 className="text-base sm:text-lg font-black text-black">
+                راه‌های ارتباط با دفتر مرکزی، کارخانه و مشخصات رسمی حقوقی شرکت
+              </h2>
+              <p className="text-xs text-[#444] font-medium mt-1">
+                مشاوره فنی با مهندسین محاسب، استعلام سریع قیمت پیش‌فاکتور و ارسال نقشه‌های ساختمانی
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
+              
+              {/* Right Side: Fast Contact Channels & Credentials (Col 1 to 5) */}
+              <div className="lg:col-span-5 space-y-3 text-right">
+                
+                {/* Official Legal Credentials Card */}
+                <div className="aluminum-card sharp frame-shadow p-4 border border-[#b0b3b0] space-y-2.5">
+                  <div className="flex items-center gap-2 pb-2 border-b border-[#a8aba8]">
+                    <ShieldCheck className="w-4 h-4 text-black" />
+                    <span className="text-xs font-black text-black">اطلاعات شناسنامه‌ای و ثبتی شرکت</span>
+                  </div>
+                  <div className="space-y-1.5 text-xs">
+                    <div className="flex justify-between items-center bg-[#b8bab8] p-2 sharp border border-[#9ea19e]">
+                      <span className="text-[#333] font-medium">نام رسمی ثبتی:</span>
+                      <strong className="text-black">نوآوران پنجره سپاهان</strong>
+                    </div>
+                    <div className="flex justify-between items-center bg-[#b8bab8] p-2 sharp border border-[#9ea19e] font-mono">
+                      <span className="text-[#333] font-sans font-medium">شناسه ملی:</span>
+                      <strong className="text-black">۱۴۰۱۵۰۲۶۲۳۰</strong>
+                    </div>
+                    <div className="flex justify-between items-center bg-[#b8bab8] p-2 sharp border border-[#9ea19e] font-mono">
+                      <span className="text-[#333] font-sans font-medium">شماره ثبت رسمی:</span>
+                      <strong className="text-black">۳۸۹۲</strong>
+                    </div>
+                    <div className="flex justify-between items-center bg-[#b8bab8] p-2 sharp border border-[#9ea19e] font-mono">
+                      <span className="text-[#333] font-sans font-medium">کد پستی ثبتی:</span>
+                      <strong className="text-black">۸۴۳۶۱۸۵۵۰۳</strong>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Telephone Numbers Card */}
+                <div className="aluminum-card sharp frame-shadow p-4 border border-[#b0b3b0] space-y-2">
+                  <span className="text-[10px] font-bold text-[#444] uppercase block">تلفن‌های مستقیم دفتر مرکزی</span>
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <a href="tel:03133687755" className="text-xl font-black font-mono text-black hover:underline block">
+                        ۰۳۱-۳۳۶۸۷۷۵۵
+                      </a>
+                      <a href="tel:0314144" className="text-base font-bold font-mono text-[#333] hover:underline block mt-0.5">
+                        خط ۴ رقمی: ۰۳۱-۴۱۴۴
+                      </a>
+                    </div>
+                    <div className="w-10 h-10 bg-[#18191a] text-white flex items-center justify-center sharp shadow-sm">
+                      <Phone className="w-5 h-5 text-[#cbcccb]" />
+                    </div>
+                  </div>
+                  <p className="text-[11px] text-[#444]">
+                    پاسخگویی سریع کارشناسان فنی از ۸ صبح تا ۵ بعدازظهر
+                  </p>
+                </div>
+
+                {/* Direct Mobile & WhatsApp */}
+                <div className="aluminum-card sharp frame-shadow p-4 border border-[#b0b3b0] space-y-2">
+                  <span className="text-[10px] font-bold text-[#444] uppercase block">واحد فروش و ارسال نقشه واتساپ</span>
+                  <div className="flex items-center justify-between">
+                    <a href="tel:09301545858" className="text-base font-black font-mono text-black hover:underline">
+                      ۰۹۳۰-۱۵۴۵۸۵۸
+                    </a>
+                    <a
+                      href="https://wa.me/989301545858"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="sharp px-3 py-1.5 bg-emerald-700 text-white text-[11px] font-bold hover:bg-emerald-600 transition-colors"
+                    >
+                      ارسال در واتساپ
+                    </a>
+                  </div>
+                  <p className="text-[11px] text-[#444]">
+                    شماره مستقیم مهندس محاسب جهت بررسی ابعاد و نقشه‌های اتوکد (DWG/PDF)
+                  </p>
+                </div>
+
+                {/* Factory & Office Address */}
+                <div className="aluminum-card sharp frame-shadow p-4 border border-[#b0b3b0] space-y-3">
+                  <div className="flex items-start gap-2.5">
+                    <MapPin className="w-4 h-4 text-black shrink-0 mt-0.5" />
+                    <div>
+                      <strong className="text-xs font-black text-black block">دفتر رسمی شرکت:</strong>
+                      <span className="text-[11.5px] text-[#333] leading-relaxed block mt-0.5">
+                        اصفهان، خیابان امام خمینی، خیابان بسیج، کوچه ۱۳۵، کوچه فردوسی (بهار)، پلاک ۱۰۰
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-2.5 border-t border-[#a8aba8] pt-2.5">
+                    <Building2 className="w-4 h-4 text-black shrink-0 mt-0.5" />
+                    <div>
+                      <strong className="text-xs font-black text-black block">کارخانه صنعتی و خط مونتاژ:</strong>
+                      <span className="text-[11.5px] text-[#333] leading-relaxed block mt-0.5">
+                        اصفهان، شهرک صنعتی جی، خیابان ۲۸، فرعی ۴، پلاک ۶۲
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-2.5 border-t border-[#a8aba8] pt-2.5">
+                    <Clock className="w-4 h-4 text-black shrink-0 mt-0.5" />
+                    <div>
+                      <strong className="text-xs font-black text-black block">ساعات کاری و بازدید:</strong>
+                      <span className="text-[11.5px] text-[#333] block mt-0.5">
+                        شنبه تا چهارشنبه: ۸:۰۰ الی ۱۷:۰۰ | پنج‌شنبه: ۸:۰۰ الی ۱۳:۳۰
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+              {/* Left Side: Online Consultation & RFQ Form (Col 6 to 12) */}
+              <div className="lg:col-span-7">
+                <form
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    alert('درخواست شما با موفقیت ثبت شد. کارشناسان مهندسی نوآوران پنجره سپاهان تا حداکثر ۲ ساعت کاری با شما تماس خواهند گرفت.');
+                  }}
+                  className="aluminum-card sharp frame-shadow p-5 sm:p-6 border border-[#b0b3b0] space-y-4 text-right"
+                >
+                  <div className="border-b border-[#a8aba8] pb-2">
+                    <h3 className="text-sm font-black text-black">فرم سریع استعلام قیمت و مشاوره پروژه</h3>
+                    <p className="text-[11px] text-[#444]">مشخصات پروژه خود را وارد کنید تا کارشناسان جهت متره با شما تماس بگیرند.</p>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div className="space-y-1">
+                      <label className="text-[11px] font-bold text-black block">نام و نام خانوادگی:</label>
+                      <input
+                        type="text"
+                        required
+                        placeholder="مثال: مهندس حسینی"
+                        className="w-full sharp px-3 py-2 bg-white text-xs border border-[#888] focus:border-black outline-none frame-shadow text-right"
+                      />
+                    </div>
+
+                    <div className="space-y-1">
+                      <label className="text-[11px] font-bold text-black block">شماره تماس مستقیم (موبایل):</label>
+                      <input
+                        type="tel"
+                        required
+                        placeholder="۰۹۱۲۳۴۵۶۷۸۹"
+                        className="w-full sharp px-3 py-2 bg-white text-xs border border-[#888] focus:border-black outline-none frame-shadow text-left font-mono"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div className="space-y-1">
+                      <label className="text-[11px] font-bold text-black block">نوع سیستم درخواستی:</label>
+                      <select className="w-full sharp px-3 py-2 bg-white text-xs border border-[#888] focus:border-black outline-none frame-shadow text-right">
+                        <option>سیستم‌های لولایی ترمال‌بریک (TH 68 / TH 60)</option>
+                        <option>سیستم‌های کشویی و لیفت ترمال‌بریک (TS 143 / TS 115 / TS 77)</option>
+                        <option>سیستم‌های نرمال (AH 59 / AH 47 / AS 90 / AS 60 / MAS 60)</option>
+                        <option>نمای کرتین وال لامل (Stick / Unitized)</option>
+                        <option>نمای شیشه‌ای فریم‌لس استراکچرال</option>
+                        <option>نمای کامپوزیت آلومینیوم (ACP ضدحریق)</option>
+                        <option>توری پلیسه و نرده و جان‌پناه شیشه‌ای</option>
+                      </select>
+                    </div>
+
+                    <div className="space-y-1">
+                      <label className="text-[11px] font-bold text-black block">متراژ تقریبی نما یا پنجره (مترمربع):</label>
+                      <input
+                        type="number"
+                        placeholder="مثال: ۲۵۰"
+                        className="w-full sharp px-3 py-2 bg-white text-xs border border-[#888] focus:border-black outline-none frame-shadow text-right font-mono"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="space-y-1">
+                    <label className="text-[11px] font-bold text-black block">توضیحات تکمیلی یا موقعیت پروژه:</label>
+                    <textarea
+                      rows={3}
+                      placeholder="آدرس پروژه، نیاز به محاسبات ایستایی، رنگ پروفیل درخواستی یا نوع شیشه..."
+                      className="w-full sharp px-3 py-2 bg-white text-xs border border-[#888] focus:border-black outline-none frame-shadow text-right"
                     />
                   </div>
 
-                  <div>
-                    <span className="text-[10px] font-bold text-bronze-400 block">{m.category}</span>
-                    <h3 className="text-sm font-bold text-white mt-0.5 group-hover:text-bronze-300 transition-colors line-clamp-1">
-                      {m.title}
-                    </h3>
-                    <p className="text-xs text-titanium-400 mt-1 line-clamp-2 leading-relaxed">
-                      {m.summary}
-                    </p>
-                  </div>
-
-                  <div className="grid grid-cols-2 gap-2 bg-charcoal-900/60 p-2.5 rounded-lg text-[10px] font-mono text-titanium-300 border border-charcoal-800">
-                    <div>فریم: {m.specs.frameWidth}</div>
-                    <div>شیشه: {m.specs.glassThickness}</div>
-                  </div>
-                </div>
-
-                <div className="pt-4 border-t border-charcoal-800/80 mt-3 flex items-center justify-between">
-                  <Link
-                    href="/materials"
-                    className="text-xs font-bold text-bronze-400 hover:text-bronze-300 flex items-center gap-1"
+                  <button
+                    type="submit"
+                    className="w-full sharp py-3 bg-[#18191a] hover:bg-[#333] text-white text-xs font-black border border-black shadow-md transition-all flex items-center justify-center gap-2"
                   >
-                    <span>بررسی مشخصات و ویدیو</span>
-                    <ArrowLeft className="w-3.5 h-3.5" />
-                  </Link>
-
-                  {m.qrUrl && (
-                    <a
-                      href={m.qrUrl}
-                      target="_blank"
-                      rel="noreferrer"
-                      title="مشاهده صفحه کاتالوگ"
-                      className="text-titanium-400 hover:text-white"
-                    >
-                      <ExternalLink className="w-3.5 h-3.5" />
-                    </a>
-                  )}
-                </div>
+                    <Send className="w-3.5 h-3.5" />
+                    <span>ارسال مشخصات جهت دریافت پیش‌فاکتور رسمی</span>
+                  </button>
+                </form>
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
-      {/* 4. FEATURED PROJECTS SHOWCASE */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-10 pb-4 border-b border-charcoal-800 gap-4">
-          <div>
-            <h2 className="text-xs font-bold text-bronze-400 tracking-wider uppercase mb-1">
-              کارنامه و پروژه‌های شاخص
-            </h2>
-            <p className="text-2xl sm:text-3xl font-extrabold text-white">
-              پروژه‌های اجرایی در سطح استان و کشور
-            </p>
-          </div>
-          <Link
-            href="/projects"
-            className="inline-flex items-center gap-2 text-sm font-bold text-bronze-400 hover:text-bronze-300 transition-colors shrink-0"
-          >
-            <span>مشاهده همه ۵۵+ پروژه</span>
-            <ArrowLeft className="w-4 h-4" />
-          </Link>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {featuredProjects.map((p) => (
-            <Link
-              key={p.id}
-              href="/projects"
-              className="group rounded-xl bg-charcoal-900 border border-charcoal-800 overflow-hidden hover:border-bronze-500/40 transition-all shadow-md min-w-0 block"
-            >
-              <div className="relative h-64 w-full bg-charcoal-850 overflow-hidden">
-                <img
-                  src={p.image}
-                  alt={p.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 block"
-                  loading="lazy"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-charcoal-950 via-transparent to-transparent opacity-80 group-hover:opacity-60 transition-opacity" />
-                
-                {/* HD Quality Badge */}
-                <span className="absolute top-3 left-3 px-2 py-0.5 rounded bg-bronze-500/90 text-charcoal-950 font-black text-[9px] tracking-wider shadow-sm flex items-center gap-1 backdrop-blur-sm">
-                  <Sparkles className="w-2.5 h-2.5" />
-                  HD
-                </span>
-
-                <span className="absolute top-3 right-3 px-2.5 py-1 rounded-md bg-charcoal-950/80 backdrop-blur-md text-[11px] font-medium text-bronze-300 border border-charcoal-700">
-                  {p.category}
-                </span>
-              </div>
-              <div className="p-4 min-w-0">
-                <h3 className="text-sm font-bold text-white group-hover:text-bronze-400 transition-colors line-clamp-1">
-                  {p.title}
-                </h3>
-                <p className="text-xs text-titanium-400 mt-1 line-clamp-2 leading-relaxed">
-                  {p.description}
-                </p>
-                <div className="mt-3 pt-2 flex items-center justify-between text-[11px] text-bronze-400 font-medium border-t border-charcoal-800/80">
-                  <span>مشاهده پروژه در گالری</span>
-                  <ArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-1 transition-transform" />
-                </div>
-              </div>
-            </Link>
-          ))}
-        </div>
-      </section>
-
-      {/* 5. EDUCATIONAL VIDEO SECTION SPOTLIGHT */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="rounded-3xl bg-gradient-to-b from-charcoal-900 to-charcoal-950 border border-charcoal-800 p-8 sm:p-12 relative overflow-hidden">
-          <div className="max-w-3xl mb-10">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-bronze-500/20 text-bronze-300 text-xs font-medium mb-3 border border-bronze-500/30">
-              <Play className="w-3.5 h-3.5 fill-current" />
-              کتابخانه ویدیوهای آموزشی و مهندسی
-            </span>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-white">
-              آموزش‌های تصویری، انیمیشن مقاطع و تست‌های آزمایشگاهی
-            </h2>
-            <p className="mt-3 text-sm text-titanium-300 leading-relaxed">
-              مشاهده انیمیشن‌های سه‌بعدی نحوه مونتاژ قطعات، عملکرد بوژی‌های لیفت‌اند‌اسلاید، گسکت‌های درزبند، تست دسی‌بل و آزمایش‌های نفوذ آب.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {featuredVideos.map((v) => (
-              <div
-                key={v.id}
-                className="rounded-2xl bg-charcoal-950/80 border border-charcoal-800 overflow-hidden flex flex-col group hover:border-bronze-500/40 transition-all shadow-xl"
-              >
-                <div className="relative h-56 w-full bg-charcoal-850 overflow-hidden">
-                  <img
-                    src={v.thumbnail || 'https://arvinpanjereh.com/upload/service/742b5647-017c-4a6e-b416-a184adf97dcc.webp'}
-                    alt={v.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-80"
-                  />
-                  <div className="absolute inset-0 bg-charcoal-950/40 flex items-center justify-center">
-                    <div className="w-14 h-14 rounded-full bg-bronze-500 text-charcoal-950 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
-                      <Play className="w-6 h-6 fill-current mr-0.5" />
-                    </div>
-                  </div>
-                  <span className="absolute top-3 right-3 px-2.5 py-1 rounded bg-charcoal-950/80 text-[11px] text-bronze-300 font-mono">
-                    {v.platform === 'direct' ? 'انیمیشن مقاطع مهندسی' : v.platform === 'aparat' ? 'آپارات' : 'یوتیوب'}
-                  </span>
-                  {v.duration && (
-                    <span className="absolute bottom-3 left-3 px-2 py-0.5 rounded bg-charcoal-950/90 text-[10px] font-mono text-titanium-300">
-                      {v.duration}
-                    </span>
-                  )}
-                </div>
-
-                <div className="p-6 flex-grow flex flex-col justify-between space-y-3">
-                  <div>
-                    <span className="text-[11px] text-bronze-400 font-semibold">{v.category}</span>
-                    <h3 className="text-sm font-bold text-white mt-1 line-clamp-2 leading-relaxed">
-                      {v.title}
-                    </h3>
-                    <p className="text-xs text-titanium-400 mt-2 line-clamp-2 leading-relaxed">
-                      {v.description}
-                    </p>
-                  </div>
-
-                  <Link
-                    href="/videos"
-                    className="text-xs font-bold text-bronze-400 hover:text-bronze-300 flex items-center gap-1.5 pt-2"
-                  >
-                    <span>مشاهده کامل ویدیو و توضیحات</span>
-                    <ArrowLeft className="w-3.5 h-3.5" />
-                  </Link>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="mt-8 text-center">
-            <Link
-              href="/videos"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-charcoal-800 hover:bg-charcoal-700 text-titanium-100 border border-charcoal-700 text-sm font-bold transition-colors"
-            >
-              <span>ورود به کتابخانه جامع ویدیوهای آموزشی</span>
-              <ArrowLeft className="w-4 h-4 text-bronze-400" />
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* 6. CALCULATOR CALLOUT BANNER */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="rounded-3xl bg-gradient-to-r from-bronze-600 via-bronze-500 to-amber-500 text-charcoal-950 p-8 sm:p-12 flex flex-col md:flex-row items-center justify-between gap-8 shadow-2xl">
-          <div className="space-y-3 max-w-2xl text-center md:text-right">
-            <span className="inline-block px-3 py-1 rounded-full bg-charcoal-950/20 text-charcoal-950 text-xs font-extrabold uppercase">
-              محاسبه‌گر پیش‌فاکتور مهندسی
-            </span>
-            <h2 className="text-2xl sm:text-3xl font-black leading-snug">
-              ابعاد پروژه‌تان را وارد کنید و برآورد تخمینی قیمت را دریافت نمایید
-            </h2>
-            <p className="text-xs sm:text-sm font-medium opacity-90 leading-relaxed">
-              انتخاب نوع سیستم (کرتین‌وال، لیفت‌اند‌اسلاید، لامل، ترمال‌بریک)، نوع شیشه (دوجداره، لمینت، سکوریت)، و متراژ تقریبی نما و پنجره.
-            </p>
-          </div>
-
-          <Link
-            href="/calculator"
-            className="px-8 py-4 rounded-xl bg-charcoal-950 hover:bg-charcoal-900 text-bronze-400 font-extrabold text-sm shadow-xl hover:scale-105 active:scale-95 transition-all shrink-0 flex items-center gap-2"
-          >
-            <Calculator className="w-5 h-5 text-bronze-400" />
-            <span>ورود به محاسبه‌گر قیمت</span>
-          </Link>
-        </div>
-      </section>
-
-      {/* 7. ARTICLES & TECHNICAL GUIDES */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-10 pb-4 border-b border-charcoal-800 gap-4">
-          <div>
-            <h2 className="text-xs font-bold text-bronze-400 tracking-wider uppercase mb-1">
-              دانشنامه مهندسی
-            </h2>
-            <p className="text-2xl sm:text-3xl font-extrabold text-white">
-              آخرین مقالات و استانداردهای ساختمانی
-            </p>
-          </div>
-          <Link
-            href="/articles"
-            className="inline-flex items-center gap-2 text-sm font-bold text-bronze-400 hover:text-bronze-300 transition-colors shrink-0"
-          >
-            <span>مشاهده همه مقالات</span>
-            <ArrowLeft className="w-4 h-4" />
-          </Link>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {recentArticles.map((a) => (
-            <div
-              key={a.id}
-              className="rounded-2xl bg-charcoal-900 border border-charcoal-800 overflow-hidden flex flex-col group hover:border-bronze-500/40 transition-all shadow-md"
-            >
-              <div className="relative h-48 w-full bg-charcoal-850 overflow-hidden">
-                <img
-                  src={a.image}
-                  alt={a.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  loading="lazy"
-                />
-                <span className="absolute top-3 right-3 px-2.5 py-1 rounded bg-charcoal-950/80 text-[11px] text-bronze-300 border border-charcoal-700">
-                  {a.category}
-                </span>
-              </div>
-              <div className="p-6 flex-grow flex flex-col justify-between space-y-4">
-                <div>
-                  <span className="text-[11px] font-mono text-titanium-500">{a.date}</span>
-                  <h3 className="text-sm font-bold text-white mt-1 group-hover:text-bronze-400 transition-colors line-clamp-2 leading-relaxed">
-                    {a.title}
-                  </h3>
-                  <p className="text-xs text-titanium-400 mt-2 line-clamp-3 leading-relaxed">
-                    {a.excerpt}
-                  </p>
-                </div>
-                <Link
-                  href={`/articles/${a.slug}`}
-                  className="text-xs font-bold text-bronze-400 hover:text-bronze-300 flex items-center gap-1 pt-2"
-                >
-                  <span>ادامه مطلب و مطالعه راهنما</span>
-                  <ArrowLeft className="w-3.5 h-3.5" />
-                </Link>
-              </div>
             </div>
-          ))}
+
+          </div>
+
         </div>
-      </section>
+      )}
+
+      {/* ═══════════════════════════════════════════════════════════
+          MODAL: VIDEO PLAYER (Direct .m4v playback)
+          ═══════════════════════════════════════════════════════════ */}
+      {activeVideoMaterial && (
+        <div 
+          className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-3 sm:p-6"
+          onClick={() => setActiveVideoMaterial(null)}
+        >
+          <div 
+            className="aluminum-card sharp frame-shadow max-w-3xl w-full border border-black overflow-hidden flex flex-col"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between p-3 border-b border-[#a8aba8] bg-[#cbcccb]">
+              <div className="flex items-center gap-2">
+                <span className="font-mono font-black text-xs px-2 py-0.5 bg-black text-white sharp">
+                  {activeVideoMaterial.code}
+                </span>
+                <h3 className="text-xs sm:text-sm font-black text-black">
+                  انیمیشن مقاطع و مونتاژ: {activeVideoMaterial.title}
+                </h3>
+              </div>
+              <button 
+                onClick={() => setActiveVideoMaterial(null)}
+                className="p-1 text-black hover:bg-black/20 sharp transition-colors"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <div className="relative bg-black aspect-video flex items-center justify-center overflow-hidden">
+              {activeVideoMaterial.videoUrl ? (
+                <video
+                  src={activeVideoMaterial.videoUrl}
+                  controls
+                  autoPlay
+                  playsInline
+                  className="w-full h-full object-contain"
+                />
+              ) : (
+                <div className="text-white text-xs">ویدیویی برای این سیستم یافت نشد.</div>
+              )}
+            </div>
+
+            <div className="p-3 bg-[#cbcccb] flex items-center justify-between text-xs border-t border-[#a8aba8]">
+              <span className="text-[11px] text-[#333] font-medium">
+                ویدیوی رسمی استخراج‌شده از کاتالوگ آکپای ایران
+              </span>
+              {activeVideoMaterial.videoUrl && (
+                <a
+                  href={activeVideoMaterial.videoUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="sharp px-3 py-1 bg-[#18191a] text-white text-[11px] font-bold flex items-center gap-1.5"
+                >
+                  <Download className="w-3.5 h-3.5" />
+                  <span>دانلود مستقیم ویدیو</span>
+                </a>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ═══════════════════════════════════════════════════════════
+          MODAL: FULL TECHNICAL SPECS
+          ═══════════════════════════════════════════════════════════ */}
+      {activeSpecsMaterial && (
+        <div 
+          className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-3 sm:p-6"
+          onClick={() => setActiveSpecsMaterial(null)}
+        >
+          <div 
+            className="aluminum-card sharp frame-shadow max-w-2xl w-full border border-black overflow-hidden flex flex-col"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between p-3.5 border-b border-[#a8aba8] bg-[#cbcccb]">
+              <div className="flex items-center gap-2">
+                <span className="font-mono font-black text-xs px-2.5 py-0.5 bg-black text-white sharp">
+                  {activeSpecsMaterial.code}
+                </span>
+                <h3 className="text-sm font-black text-black">
+                  مشخصات فنی و مهندسی: {activeSpecsMaterial.title}
+                </h3>
+              </div>
+              <button 
+                onClick={() => setActiveSpecsMaterial(null)}
+                className="p-1 text-black hover:bg-black/20 sharp transition-colors"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <div className="p-5 space-y-4 max-h-[75vh] overflow-y-auto text-right">
+              {/* Profile Image & Summary */}
+              <div className="grid grid-cols-1 sm:grid-cols-12 gap-3 items-center bg-[#b8bab8] p-3 sharp border border-[#9ea19e]">
+                <div className="sm:col-span-4 h-32 bg-white sharp border border-[#888] flex items-center justify-center p-1.5">
+                  <img
+                    src={activeSpecsMaterial.profileCutawayImage}
+                    alt={activeSpecsMaterial.title}
+                    className="max-h-full max-w-full object-contain"
+                  />
+                </div>
+                <div className="sm:col-span-8 space-y-1.5">
+                  <div className="text-xs font-bold text-black">{activeSpecsMaterial.title}</div>
+                  <p className="text-[11px] text-[#333] leading-relaxed">{activeSpecsMaterial.summary}</p>
+                </div>
+              </div>
+
+              {/* Specs Table */}
+              <div className="space-y-1.5">
+                <h4 className="text-xs font-black text-black">جدول مشخصات فنی مقطع:</h4>
+                <div className="grid grid-cols-2 gap-2 text-xs font-mono">
+                  {Object.entries(activeSpecsMaterial.specs).map(([k, v]) => {
+                    const labels: Record<string, string> = {
+                      frameDepth: 'عمق فریم (کلاف)',
+                      sashDepth: 'عمق لنگه بازشو',
+                      glassThicknessRange: 'بازه ضخامت شیشه',
+                      maxGlassThickness: 'حداکثر ضخامت شیشه',
+                      polyamideWidth: 'عرض تیغه پلی‌آمید',
+                      airPermeability: 'رده نفوذناپذیری هوا',
+                      waterTightness: 'رده آب‌بندی در برابر باران',
+                      windResistance: 'مقاومت در برابر فشار باد',
+                      acousticInsulation: 'عایق‌بندی صوتی',
+                      thermalTransmittance: 'ضریب انتقال حرارت (U-Value)',
+                      profileAlloy: 'آلیاژ شمش مصرفی',
+                      maxSashWeight: 'حداکثر وزن مجاز لنگه',
+                      maxHeight: 'حداکثر ارتفاع بازشو',
+                      maxWidth: 'حداکثر عرض بازشو',
+                      gasketType: 'نوع درزبند و لاستیک',
+                      openingOptions: 'انواع بازشو مجاز',
+                      applications: 'کاربردهای پیشنهادی'
+                    };
+                    const label = labels[k] || k;
+                    return (
+                      <div key={k} className="p-2 bg-[#b8bab8] sharp border border-[#9ea19e] flex justify-between items-center text-[11px]">
+                        <span className="font-sans text-[#333] font-bold">{label}:</span>
+                        <strong className="text-black">{v}</strong>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Applications List */}
+              {activeSpecsMaterial.applications && activeSpecsMaterial.applications.length > 0 && (
+                <div className="space-y-1.5">
+                  <h4 className="text-xs font-black text-black">کاربردهای سازه‌ای:</h4>
+                  <div className="flex flex-wrap gap-1.5">
+                    {activeSpecsMaterial.applications.map((app, idx) => (
+                      <span key={idx} className="sharp px-2 py-1 bg-white text-black text-[11px] font-bold border border-black">
+                        ✓ {app}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <div className="p-3 bg-[#cbcccb] flex items-center justify-between border-t border-[#a8aba8]">
+              <button
+                onClick={() => {
+                  const m = activeSpecsMaterial;
+                  setActiveSpecsMaterial(null);
+                  setActiveVideoMaterial(m);
+                }}
+                className="sharp px-4 py-1.5 bg-[#18191a] text-white text-xs font-bold flex items-center gap-1.5"
+              >
+                <Play className="w-3.5 h-3.5 fill-current" />
+                <span>پخش انیمیشن این سیستم</span>
+              </button>
+
+              <button
+                onClick={() => setActiveSpecsMaterial(null)}
+                className="sharp px-3 py-1.5 bg-white text-black text-xs font-bold border border-black"
+              >
+                بستن
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
     </div>
   );
 }

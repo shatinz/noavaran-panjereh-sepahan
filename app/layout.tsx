@@ -21,9 +21,9 @@ export default function RootLayout({
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
         <link rel="icon" href="/favicon.ico" sizes="any" />
       </head>
-      <body className="bg-charcoal-950 text-titanium-100 min-h-screen flex flex-col selection:bg-bronze-500 selection:text-charcoal-950">
+      <body className="min-h-screen flex flex-col sharp selection:bg-[#18191a] selection:text-white">
         <Header />
-        <main className="flex-grow pt-20">
+        <main className="flex-grow">
           {children}
         </main>
         <Footer />
