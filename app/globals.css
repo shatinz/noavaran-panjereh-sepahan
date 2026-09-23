@@ -2,20 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&family=Inter:wght@400;500;600;700;800;900&display=swap');
 
 :root {
-  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-vazir: 'Vazirmatn', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-vazir: 'Vazirmatn', system-ui, -apple-system, sans-serif;
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
 /* ══════════════════════════════════════════════
-   BASE: Page Background with Brushed Aluminum Grain
+   BASE: Light Smooth Page Background (#e6e8e6)
+   Allows the darker #cbcccb cards to clearly stand out
    ══════════════════════════════════════════════ */
 html, body {
-  background-color: #d7d8d7;
-  color: #1a1a1a;
-  font-family: var(--font-sans);
+  background-color: #e6e8e6;
+  color: #18191a;
+  font-family: var(--font-vazir);
   overflow-x: hidden;
   min-width: 0;
   scroll-behavior: smooth;
@@ -24,145 +25,107 @@ html, body {
 }
 
 body {
-  background-color: #d7d8d7;
-  background-image:
-    linear-gradient(
-      90deg,
-      rgba(255, 255, 255, 0.18) 0%,
-      rgba(240, 242, 240, 0.28) 25%,
-      rgba(215, 217, 215, 0.15) 50%,
-      rgba(240, 242, 240, 0.28) 75%,
-      rgba(255, 255, 255, 0.18) 100%
-    ),
-    repeating-linear-gradient(
-      0deg,
-      rgba(0, 0, 0, 0.025) 0px,
-      rgba(0, 0, 0, 0.025) 1px,
-      transparent 1px,
-      transparent 3px
-    );
-}
-
-/* ══════════════════════════════════════════════
-   BRUSHED ALUMINUM TEXTURE CLASSES
-   ══════════════════════════════════════════════ */
-.aluminum-bar {
-  background-color: #cbcbcb;
+  background-color: #e6e8e6;
   background-image:
     linear-gradient(
       90deg,
       rgba(255, 255, 255, 0.45) 0%,
-      rgba(225, 227, 225, 0.2) 20%,
-      rgba(255, 255, 255, 0.55) 45%,
-      rgba(205, 207, 205, 0.25) 70%,
+      rgba(235, 237, 235, 0.25) 25%,
+      rgba(255, 255, 255, 0.5) 50%,
+      rgba(235, 237, 235, 0.25) 75%,
       rgba(255, 255, 255, 0.45) 100%
     ),
     repeating-linear-gradient(
       0deg,
-      rgba(255, 255, 255, 0.14) 0px,
-      rgba(255, 255, 255, 0.14) 1px,
-      transparent 1px,
-      transparent 2px
-    ),
-    repeating-linear-gradient(
-      0deg,
-      rgba(0, 0, 0, 0.035) 0px,
-      rgba(0, 0, 0, 0.035) 1px,
+      rgba(0, 0, 0, 0.018) 0px,
+      rgba(0, 0, 0, 0.018) 1px,
       transparent 1px,
       transparent 4px
     );
-  border: 1px solid #b0b2b0;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7), 0 3px 12px rgba(0, 0, 0, 0.07);
 }
 
-.aluminum-card {
-  background-color: #cbcccb;
+/* ══════════════════════════════════════════════
+   BRUSHED ALUMINUM #cbcccb WITH ENLARGED TEXTURE
+   Darker than background, sharp 0px angles, clear brushed striations
+   ══════════════════════════════════════════════ */
+.aluminum-card,
+.aluminum-bar,
+.aluminum-surface {
+  background-color: #cbcccb !important;
   background-image:
+    /* High-contrast metallic specular gradient */
     linear-gradient(
       90deg,
-      rgba(255, 255, 255, 0.38) 0%,
-      rgba(235, 237, 235, 0.18) 20%,
-      rgba(255, 255, 255, 0.5) 45%,
-      rgba(205, 207, 205, 0.22) 70%,
+      rgba(255, 255, 255, 0.45) 0%,
+      rgba(200, 202, 200, 0.2) 15%,
+      rgba(255, 255, 255, 0.6) 35%,
+      rgba(188, 190, 188, 0.25) 55%,
+      rgba(255, 255, 255, 0.55) 75%,
+      rgba(205, 207, 205, 0.2) 90%,
       rgba(255, 255, 255, 0.4) 100%
     ),
+    /* Zoomed-in horizontal brushed aluminum grain (prominent striations) */
     repeating-linear-gradient(
       0deg,
-      rgba(255, 255, 255, 0.12) 0px,
-      rgba(255, 255, 255, 0.12) 1px,
-      transparent 1px,
-      transparent 2px
+      rgba(255, 255, 255, 0.22) 0px,
+      rgba(255, 255, 255, 0.22) 2px,
+      transparent 2px,
+      transparent 5px
     ),
     repeating-linear-gradient(
       0deg,
-      rgba(0, 0, 0, 0.03) 0px,
-      rgba(0, 0, 0, 0.03) 1px,
+      rgba(0, 0, 0, 0.065) 0px,
+      rgba(0, 0, 0, 0.065) 1px,
       transparent 1px,
-      transparent 4px
-    );
-  border: 1px solid #b2b4b2;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.65), 0 4px 14px rgba(0, 0, 0, 0.08);
-}
-
-.aluminum-surface {
-  background-color: #cbcccb;
-  background-image:
-    linear-gradient(
-      90deg,
-      rgba(255, 255, 255, 0.35) 0%,
-      rgba(240, 242, 240, 0.2) 25%,
-      rgba(205, 207, 205, 0.2) 50%,
-      rgba(240, 242, 240, 0.2) 75%,
-      rgba(255, 255, 255, 0.35) 100%
-    ),
-    repeating-linear-gradient(
-      0deg,
-      rgba(255, 255, 255, 0.1) 0px,
-      rgba(255, 255, 255, 0.1) 1px,
-      transparent 1px,
-      transparent 2px
-    );
-  border: 1px solid #b5b8b5;
+      transparent 3px
+    ) !important;
+  border: 1px solid #b0b3b0;
+  border-radius: 0px !important;
 }
 
 /* ══════════════════════════════════════════════
-   SHADOWS & DETAILS
+   SUBTLE ALL-AROUND DROP SHADOW
+   Surrounds headers, cards, images, and descriptions
+   so they distinctively pop from the background
    ══════════════════════════════════════════════ */
-.shadow-mockup-card {
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.09), 0 1px 3px rgba(0, 0, 0, 0.06);
+.frame-shadow,
+.subtle-allaround-shadow {
+  box-shadow: 0 0 14px rgba(0, 0, 0, 0.13), 0 2px 6px rgba(0, 0, 0, 0.07) !important;
 }
 
-.shadow-mockup-hover {
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.14), 0 2px 6px rgba(0, 0, 0, 0.08);
+.frame-shadow-hover {
+  transition: all 0.25s ease-in-out;
+}
+.frame-shadow-hover:hover {
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2), 0 4px 10px rgba(0, 0, 0, 0.12) !important;
 }
 
-.text-shadow-heading {
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
-}
-
-.text-shadow-card {
-  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.85);
+/* Sharp angle enforcement */
+.sharp {
+  border-radius: 0px !important;
 }
 
 /* ══════════════════════════════════════════════
-   SECTION NUMERALS
+   ANIMATIONS & MOTION
    ══════════════════════════════════════════════ */
-.section-numeral {
-  font-size: 1.25rem;
-  font-weight: 300;
-  color: #333333;
-  line-height: 1;
-  font-family: system-ui, -apple-system, sans-serif;
-  user-select: none;
+@keyframes windowSlide {
+  0% { transform: translateX(0); }
+  50% { transform: translateX(-40%); }
+  100% { transform: translateX(0); }
 }
 
-.large-faint-numeral {
-  font-size: 2.75rem;
-  font-weight: 300;
-  color: #555555;
-  line-height: 1;
-  font-family: system-ui, -apple-system, sans-serif;
-  user-select: none;
+@keyframes lightSweep {
+  0% { transform: translateX(-150%) skewX(-25deg); opacity: 0; }
+  50% { opacity: 0.35; }
+  100% { transform: translateX(250%) skewX(-25deg); opacity: 0; }
+}
+
+.animate-window-slide {
+  animation: windowSlide 8s ease-in-out infinite;
+}
+
+.animate-light-sweep {
+  animation: lightSweep 6s infinite;
 }
 
 /* ══════════════════════════════════════════════
@@ -173,12 +136,12 @@ body {
   height: 7px;
 }
 ::-webkit-scrollbar-track {
-  background: #d7d8d7;
+  background: #e6e8e6;
 }
 ::-webkit-scrollbar-thumb {
-  background: #a8aba8;
-  border-radius: 4px;
+  background: #b0b3b0;
+  border-radius: 0px !important;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #7a7d7a;
+  background: #808380;
 }

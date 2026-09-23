@@ -2,80 +2,81 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { Phone, MapPin, Building2, ArrowUpRight } from 'lucide-react';
+import { Phone, MapPin, Building2, ArrowUpLeft } from 'lucide-react';
 
 export default function Footer() {
   return (
-    <footer className="w-full max-w-[1440px] mx-auto px-4 sm:px-8 pt-4 pb-8 mt-6">
-      <div className="aluminum-card rounded-2xl p-6 sm:p-10 border border-[#b2b4b2] shadow-mockup-card">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 text-left">
+    <footer className="w-full max-w-[1440px] mx-auto px-3 sm:px-6 pt-4 pb-8 mt-6">
+      <div className="aluminum-card sharp frame-shadow p-6 sm:p-8 border border-[#b0b3b0]">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 text-right">
 
           {/* Col 1: Brand */}
           <div className="space-y-3">
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 bg-black text-white flex items-center justify-center rounded-lg shadow-sm">
+              <div className="w-9 h-9 bg-black text-white flex items-center justify-center sharp shadow-sm">
                 <Building2 className="w-5 h-5 text-white" />
               </div>
               <div className="leading-tight">
-                <span className="text-sm font-black text-black block tracking-tight">Noavaran Panjereh</span>
-                <span className="text-[10px] text-[#555] block font-mono uppercase tracking-wider">Sepahan Co.</span>
+                <span className="text-sm font-black text-black block">نوآوران پنجره سپاهان</span>
+                <span className="text-[10px] text-[#444] block font-mono uppercase tracking-wider">Noavaran Panjereh</span>
               </div>
             </div>
-            <p className="text-[11.5px] text-[#444] leading-relaxed font-medium">
-              Architectural engineering and precision fabrication of high-rise glass curtain walls, frameless systems, and European thermal-break aluminum fenestration.
+            <p className="text-[11.5px] text-[#333] leading-relaxed font-medium">
+              مرجع مهندسی، طراحی سازه‌ای و اجرای صنعتی نماهای شیشه‌ای کرتین‌وال لامل، فریم‌لس، پنجره‌های آلومینیوم ترمال‌بریک و کامپوزیت در سراسر کشور.
             </p>
           </div>
 
-          {/* Col 2: Architectural Systems */}
+          {/* Col 2: Facade Systems */}
           <div>
-            <h3 className="text-xs font-black text-[#1a1a1a] uppercase tracking-wider mb-3 border-l-2 border-black pl-2">
-              Facade Systems
+            <h3 className="text-xs font-black text-black uppercase tracking-wider mb-3 border-r-2 border-black pr-2">
+              سیستم‌های نما و بازشو
             </h3>
-            <ul className="space-y-2 text-[11.5px] font-semibold text-[#444]">
+            <ul className="space-y-2 text-[11.5px] font-bold text-[#333]">
               <li>
                 <Link href="/services/curtain-wall-lamella" className="hover:text-black hover:underline flex items-center justify-between transition-colors">
-                  <span>Curtain Wall (Lamella)</span>
-                  <ArrowUpRight className="w-3.5 h-3.5 opacity-60" />
+                  <span>نمای کرتین‌وال (لامل)</span>
+                  <ArrowUpLeft className="w-3.5 h-3.5 opacity-60" />
                 </Link>
               </li>
               <li>
                 <Link href="/services/frameless-facade" className="hover:text-black hover:underline flex items-center justify-between transition-colors">
-                  <span>Frameless Glass Facade</span>
-                  <ArrowUpRight className="w-3.5 h-3.5 opacity-60" />
+                  <span>نمای شیشه‌ای فریم‌لس</span>
+                  <ArrowUpLeft className="w-3.5 h-3.5 opacity-60" />
                 </Link>
               </li>
               <li>
                 <Link href="/services/aluminum-windows-doors" className="hover:text-black hover:underline flex items-center justify-between transition-colors">
-                  <span>Thermal Break &amp; Lift-Slide</span>
-                  <ArrowUpRight className="w-3.5 h-3.5 opacity-60" />
+                  <span>پنجره ترمال‌بریک و لیفت‌اسلاید</span>
+                  <ArrowUpLeft className="w-3.5 h-3.5 opacity-60" />
                 </Link>
               </li>
               <li>
                 <Link href="/services/composite-facade" className="hover:text-black hover:underline flex items-center justify-between transition-colors">
-                  <span>Aluminum Composite (ACP)</span>
-                  <ArrowUpRight className="w-3.5 h-3.5 opacity-60" />
+                  <span>نمای کامپوزیت آلومینیوم (ACP)</span>
+                  <ArrowUpLeft className="w-3.5 h-3.5 opacity-60" />
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* Col 3: Navigation & Portal */}
+          {/* Col 3: Portal Navigation */}
           <div>
-            <h3 className="text-xs font-black text-[#1a1a1a] uppercase tracking-wider mb-3 border-l-2 border-black pl-2">
-              Navigation
+            <h3 className="text-xs font-black text-black uppercase tracking-wider mb-3 border-r-2 border-black pr-2">
+              بخش‌های سایت
             </h3>
-            <ul className="space-y-2 text-[11.5px] font-semibold text-[#444]">
-              <li><Link href="/projects" className="hover:text-black hover:underline block">Iconic Projects Archive (50+)</Link></li>
-              <li><Link href="/calculator" className="hover:text-black hover:underline block">Online Window Cost Estimator</Link></li>
-              <li><Link href="/articles" className="hover:text-black hover:underline block">Technical Knowledgebase</Link></li>
-              <li><Link href="/about" className="hover:text-black hover:underline block">Company Profile &amp; Factory</Link></li>
+            <ul className="space-y-2 text-[11.5px] font-bold text-[#333]">
+              <li><Link href="/#tab-motion" className="hover:text-black hover:underline block">تب ۱: موشن نما و پنجره</Link></li>
+              <li><Link href="/#tab-products" className="hover:text-black hover:underline block">تب ۲: کاتالوگ جامع محصولات</Link></li>
+              <li><Link href="/#tab-bestsellers" className="hover:text-black hover:underline block">تب ۳: سیستم‌های جدید و پرفروش</Link></li>
+              <li><Link href="/#tab-resume" className="hover:text-black hover:underline block">تب ۴: رزومه و پروژه‌های شاخص</Link></li>
+              <li><Link href="/#tab-contact" className="hover:text-black hover:underline block">تب ۵: استعلام قیمت و پیش‌فاکتور</Link></li>
             </ul>
           </div>
 
           {/* Col 4: Contact & Factory */}
           <div className="space-y-2.5">
-            <h3 className="text-xs font-black text-[#1a1a1a] uppercase tracking-wider mb-3 border-l-2 border-black pl-2">
-              Headquarters
+            <h3 className="text-xs font-black text-black uppercase tracking-wider mb-3 border-r-2 border-black pr-2">
+              دفتر مرکزی و کارخانه
             </h3>
             <div className="space-y-2 text-[11.5px]">
               <div className="flex items-start gap-2">
@@ -86,8 +87,8 @@ export default function Footer() {
               </div>
               <div className="flex items-start gap-2">
                 <MapPin className="w-4 h-4 text-black shrink-0 mt-0.5" />
-                <span className="text-[11.5px] leading-relaxed text-[#444] font-medium">
-                  Isfahan, Jey Industrial City, 28th St., Alley 4
+                <span className="text-[11.5px] leading-relaxed text-[#333] font-medium">
+                  اصفهان، شهرک صنعتی جی، خیابان ۲۸، فرعی ۴
                 </span>
               </div>
             </div>
@@ -96,10 +97,10 @@ export default function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="mt-8 pt-4 border-t border-[#b2b4b2] flex flex-col sm:flex-row items-center justify-between text-[11px] text-[#666] font-semibold gap-2">
-          <p>© {new Date().getFullYear()} Noavaran Panjereh Sepahan Co. All rights reserved.</p>
-          <p className="font-mono text-[10.5px]">
-            iPhone 17 Pro Brushed Aluminum Edition
+        <div className="mt-8 pt-4 border-t border-[#a8aba8] flex flex-col sm:flex-row items-center justify-between text-[11px] text-[#555] font-bold gap-2">
+          <p>© {new Date().getFullYear()} کلیه حقوق برای شرکت نوآوران پنجره سپاهان محفوظ است.</p>
+          <p className="font-mono text-[10px]">
+            Noavaran Panjereh Sepahan · Precision Architectural Engineering
           </p>
         </div>
       </div>
