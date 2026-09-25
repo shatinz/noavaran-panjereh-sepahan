@@ -1,0 +1,519 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Adobe Illustrator (AI) & Vector Graphics Compatible Artboard System -->
+<!-- Noavaran Window Sepahan (نوآوران پنجره سپاهان) - Complete 9 Desktop Artboards -->
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+     x="0px" y="0px" viewBox="0 0 4500 2900" width="4500" height="2900" 
+     xml:space="preserve" style="background-color: #120308; font-family: 'Vazirmatn', -apple-system, sans-serif;">
+  
+  <defs>
+    <!-- Palettes & Gradients -->
+    <linearGradient id="ai_bgDark" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2B0814" />
+      <stop offset="50%" stop-color="#380A1A" />
+      <stop offset="100%" stop-color="#19040C" />
+    </linearGradient>
+
+    <linearGradient id="ai_cardLight" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#F4F2EE" />
+      <stop offset="50%" stop-color="#EBE7E0" />
+      <stop offset="100%" stop-color="#E2DDD4" />
+    </linearGradient>
+
+    <linearGradient id="ai_gold" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#D4B038" />
+      <stop offset="100%" stop-color="#F7E7A9" />
+    </linearGradient>
+
+    <filter id="ai_shadow" x="-5%" y="-5%" width="110%" height="115%">
+      <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#000000" flood-opacity="0.75"/>
+    </filter>
+  </defs>
+
+  <!-- Title Banner -->
+  <g id="Document_Header" transform="translate(100, 60)">
+    <text x="4300" y="40" fill="#D4B038" font-size="36" font-weight="900" text-anchor="end">🏢 نوآوران پنجره سپاهان (Noavaran Window Sepahan) - Adobe Illustrator Vector Mockup</text>
+    <text x="4300" y="85" fill="#D9C7CF" font-size="20" text-anchor="end">سیستم طراحی کامل ۹ فریم دسکتاپ (1440px) با چینش راست‌به‌چپ (RTL) و تایپوگرافی فارسی</text>
+  </g>
+
+  <!-- ========================================================
+       ROW 1: SCREENS 01, 02, 03
+       ======================================================== -->
+
+  <!-- ARTBOARD 01: HERO SECTION -->
+  <g id="Artboard_01_Hero" transform="translate(100, 160)" filter="url(#ai_shadow)">
+    <!-- Canvas Frame -->
+    <rect width="1380" height="840" rx="16" fill="url(#ai_bgDark)" stroke="#521D2C" stroke-width="3"/>
+    
+    <!-- Top Nav Bar -->
+    <rect width="1380" height="70" fill="#20040D" rx="16"/>
+    <text x="1330" y="44" fill="#FFFFFF" font-size="18" font-weight="bold" text-anchor="end">🪟 نوآوران پنجره سپاهان</text>
+    
+    <!-- RTL Nav Links -->
+    <text x="1050" y="42" fill="#D4B038" font-size="14" font-weight="bold" text-anchor="end">خانه</text>
+    <text x="960" y="42" fill="#FFFFFF" font-size="14" text-anchor="end">درباره ما</text>
+    <text x="850" y="42" fill="#FFFFFF" font-size="14" text-anchor="end">ارتباط با ما</text>
+    <text x="740" y="42" fill="#FFFFFF" font-size="14" text-anchor="end">پروژه‌ها</text>
+    <text x="640" y="42" fill="#FFFFFF" font-size="14" text-anchor="end">محصولات</text>
+    <text x="540" y="42" fill="#FFFFFF" font-size="14" text-anchor="end">مقالات</text>
+    <text x="450" y="42" fill="#FFFFFF" font-size="14" text-anchor="end">خدمات</text>
+
+    <!-- Quick Call Button -->
+    <rect x="50" y="16" width="130" height="38" rx="6" fill="none" stroke="#D4B038" stroke-width="1.5"/>
+    <text x="115" y="41" fill="#FFFFFF" font-size="13" font-weight="bold" text-anchor="middle">تماس فوری</text>
+
+    <!-- Hero Image Area (Left) -->
+    <rect x="60" y="110" width="580" height="670" rx="14" fill="#280814" stroke="#521D2C" stroke-width="2"/>
+    <circle cx="350" cy="400" r="80" fill="#380A1A"/>
+    <text x="350" y="408" fill="#D4B038" font-size="36" text-anchor="middle">🏢</text>
+    <text x="350" y="520" fill="#FFFFFF" font-size="18" font-weight="bold" text-anchor="middle">نمای شیشه‌ای و کرتین‌وال برج سپاهان</text>
+    <text x="350" y="555" fill="#D9C7CF" font-size="14" text-anchor="middle">پروژه لوکس اجرا شده در اصفهان</text>
+
+    <!-- Hero Typography (Right - RTL) -->
+    <text x="1320" y="240" fill="#D4B038" font-size="22" font-weight="bold" text-anchor="end">پنجره، درب و سیستم‌های تخصصی آلومینیومی</text>
+    <text x="1320" y="320" fill="#FFFFFF" font-size="44" font-weight="900" text-anchor="end">نوآوران پنجره سپاهان</text>
+    
+    <text x="1320" y="390" fill="#D9C7CF" font-size="17" text-anchor="end">تولیدکننده انواع سیستم‌های پیشرفته درب و پنجره دوجداره</text>
+    <text x="1320" y="425" fill="#D9C7CF" font-size="17" text-anchor="end">آلومینیوم ترمال‌بریک، سیستم‌های کشویی لیفت اند اسلاید و نماهای کرتین‌وال</text>
+    <text x="1320" y="460" fill="#D9C7CF" font-size="17" text-anchor="end">با بالاترین استانداردهای مهندسی ساختمان در اصفهان و نجف‌آباد.</text>
+
+    <!-- CTAs -->
+    <rect x="1100" y="530" width="220" height="54" rx="8" fill="url(#ai_cardLight)"/>
+    <text x="1210" y="564" fill="#1F1419" font-size="16" font-weight="bold" text-anchor="middle">استعلام قیمت آنلاین</text>
+
+    <rect x="850" y="530" width="230" height="54" rx="8" fill="none" stroke="#FFFFFF" stroke-width="2"/>
+    <text x="965" y="564" fill="#FFFFFF" font-size="16" font-weight="bold" text-anchor="middle">کاتالوگ مقاطع آلومینیوم</text>
+
+    <!-- Screen Tag -->
+    <rect x="1160" y="780" width="160" height="30" rx="4" fill="#380A1A"/>
+    <text x="1240" y="800" fill="#D4B038" font-size="12" font-weight="bold" text-anchor="middle">01 - HERO SCREEN</text>
+  </g>
+
+  <!-- ARTBOARD 02: DISTRIBUTION -->
+  <g id="Artboard_02_Distribution" transform="translate(1560, 160)" filter="url(#ai_shadow)">
+    <rect width="1380" height="840" rx="16" fill="url(#ai_bgDark)" stroke="#521D2C" stroke-width="3"/>
+    
+    <text x="690" y="80" fill="#FFFFFF" font-size="28" font-weight="900" text-anchor="middle">DISTRIBUTION / شبکه توزیع سراسری</text>
+    <text x="690" y="120" fill="#D4B038" font-size="16" text-anchor="middle">مرکز تولید و ارسال مستقیم از کارخانه نجف‌آباد اصفهان به سراسر ایران</text>
+
+    <!-- Map Graphic Visual Container -->
+    <rect x="140" y="160" width="1100" height="580" rx="16" fill="#380A1A" stroke="#521D2C" stroke-width="2"/>
+    
+    <!-- Central Hub Badge -->
+    <rect x="490" y="240" width="400" height="60" rx="30" fill="url(#ai_gold)"/>
+    <text x="690" y="278" fill="#1F1419" font-size="18" font-weight="900" text-anchor="middle">📍 مرکز اصلی تولید: اصفهان / نجف‌آباد</text>
+
+    <!-- Distribution Nodes -->
+    <g transform="translate(240, 360)">
+      <circle cx="100" cy="80" r="16" fill="#D4B038"/>
+      <text x="100" y="130" fill="#FFFFFF" font-size="16" font-weight="bold" text-anchor="middle">تهران و البرز</text>
+
+      <circle cx="350" cy="60" r="16" fill="#D4B038"/>
+      <text x="350" y="110" fill="#FFFFFF" font-size="16" font-weight="bold" text-anchor="middle">مشهد و خراسان</text>
+
+      <circle cx="600" cy="120" r="16" fill="#D4B038"/>
+      <text x="600" y="170" fill="#FFFFFF" font-size="16" font-weight="bold" text-anchor="middle">شیراز و جنوب</text>
+
+      <circle cx="800" cy="80" r="16" fill="#D4B038"/>
+      <text x="800" y="130" fill="#FFFFFF" font-size="16" font-weight="bold" text-anchor="middle">تبریز و شمال‌غرب</text>
+    </g>
+
+    <text x="690" y="660" fill="#D9C7CF" font-size="16" text-anchor="middle">تأمین و اجرای مهندسی سیستم‌های درب، پنجره دوجداره و نمای کرتین‌وال در تمام استان‌های کشور</text>
+
+    <!-- Screen Tag -->
+    <rect x="1140" y="780" width="180" height="30" rx="4" fill="#380A1A"/>
+    <text x="1230" y="800" fill="#D4B038" font-size="12" font-weight="bold" text-anchor="middle">02 - DISTRIBUTION</text>
+  </g>
+
+  <!-- ARTBOARD 03: SERVICES (2x2) -->
+  <g id="Artboard_03_Services" transform="translate(3020, 160)" filter="url(#ai_shadow)">
+    <rect width="1380" height="840" rx="16" fill="url(#ai_bgDark)" stroke="#521D2C" stroke-width="3"/>
+    
+    <text x="690" y="80" fill="#FFFFFF" font-size="28" font-weight="900" text-anchor="middle">SERVICES / خدمات تخصصی مهندسی نما و پنجره</text>
+    
+    <!-- 2x2 Cards -->
+    <!-- Card 01 -->
+    <g transform="translate(710, 140)">
+      <rect width="600" height="260" rx="14" fill="url(#ai_cardLight)"/>
+      <text x="50" y="90" fill="#2B0814" font-size="54" font-weight="900">01</text>
+      <text x="550" y="90" fill="#1F1419" font-size="22" font-weight="bold" text-anchor="end">طراحی و تولید پنجره و درب اختصاصی</text>
+      <text x="550" y="140" fill="#736166" font-size="15" text-anchor="end">ساخت با شمش آلومینیوم استاندارد 6063 و برش CNC لیزری</text>
+      <text x="550" y="175" fill="#736166" font-size="15" text-anchor="end">هماهنگ با مدرن‌ترین طرح‌های معماری معاصر</text>
+    </g>
+
+    <!-- Card 02 -->
+    <g transform="translate(70, 140)">
+      <rect width="600" height="260" rx="14" fill="url(#ai_cardLight)"/>
+      <text x="50" y="90" fill="#2B0814" font-size="54" font-weight="900">02</text>
+      <text x="550" y="90" fill="#1F1419" font-size="22" font-weight="bold" text-anchor="end">سیستم‌های عایق حرارتی ترمال‌بریک</text>
+      <text x="550" y="140" fill="#736166" font-size="15" text-anchor="end">استفاده از تیغه‌های پلی‌آمید اصل آلمانی ۲۴ میلی‌متری</text>
+      <text x="550" y="175" fill="#736166" font-size="15" text-anchor="end">جلوگیری کامل از اتلاف انرژی و نفوذ صدا تا ۴۵ دسی‌بل</text>
+    </g>
+
+    <!-- Card 03 -->
+    <g transform="translate(710, 440)">
+      <rect width="600" height="260" rx="14" fill="url(#ai_cardLight)"/>
+      <text x="50" y="90" fill="#2B0814" font-size="54" font-weight="900">03</text>
+      <text x="550" y="90" fill="#1F1419" font-size="22" font-weight="bold" text-anchor="end">طراحی و اجرای نمای شیشه‌ای کرتین‌وال</text>
+      <text x="550" y="140" fill="#736166" font-size="15" text-anchor="end">اجرای سیستم‌های فریم‌لس، لامل (استیک) و سمی‌فریم‌لس</text>
+      <text x="550" y="175" fill="#736166" font-size="15" text-anchor="end">محاسبات دقیق بارهای باد و زلزله با نرم‌افزارهای تخصصی</text>
+    </g>
+
+    <!-- Card 04 -->
+    <g transform="translate(70, 440)">
+      <rect width="600" height="260" rx="14" fill="url(#ai_cardLight)"/>
+      <text x="50" y="90" fill="#2B0814" font-size="54" font-weight="900">04</text>
+      <text x="550" y="90" fill="#1F1419" font-size="22" font-weight="bold" text-anchor="end">سیستم‌های لیفت اند اسلاید دهانه بزرگ</text>
+      <text x="550" y="140" fill="#736166" font-size="15" text-anchor="end">حرکت روان پنجره‌های پانوراما با وزن لنگه تا ۴۰۰ کیلوگرم</text>
+      <text x="550" y="175" fill="#736166" font-size="15" text-anchor="end">دید بی‌نهایت بدون مزاحمت ستون و پروفیل اضافه</text>
+    </g>
+
+    <!-- Screen Tag -->
+    <rect x="1160" y="780" width="160" height="30" rx="4" fill="#380A1A"/>
+    <text x="1240" y="800" fill="#D4B038" font-size="12" font-weight="bold" text-anchor="middle">03 - SERVICES (2x2)</text>
+  </g>
+
+  <!-- ========================================================
+       ROW 2: SCREENS 04, 05, 06
+       ======================================================== -->
+
+  <!-- ARTBOARD 04: PRODUCTS (3x3 Grid) -->
+  <g id="Artboard_04_Products" transform="translate(100, 1060)" filter="url(#ai_shadow)">
+    <rect width="1380" height="840" rx="16" fill="url(#ai_bgDark)" stroke="#521D2C" stroke-width="3"/>
+    <text x="690" y="70" fill="#FFFFFF" font-size="26" font-weight="900" text-anchor="middle">PRODUCTS / محصولات و مقاطع آلومینیومی</text>
+
+    <!-- Row 1 Cards -->
+    <g transform="translate(930, 110)">
+      <rect width="390" height="310" rx="12" fill="url(#ai_cardLight)"/>
+      <rect x="20" y="20" width="350" height="170" rx="8" fill="#D9D0C7"/>
+      <text x="195" y="110" fill="#1F1419" font-size="16" text-anchor="middle">🪟 پنجره لولایی ترمال‌بریک</text>
+      <text x="195" y="225" fill="#1F1419" font-size="16" font-weight="bold" text-anchor="middle">پنجره لولایی دوحالته سپنتا</text>
+      <rect x="20" y="250" width="350" height="40" rx="6" fill="#2B0814"/>
+      <text x="195" y="275" fill="#FFFFFF" font-size="13" font-weight="bold" text-anchor="middle">استعلام قیمت آنلاین</text>
+    </g>
+
+    <g transform="translate(495, 110)">
+      <rect width="390" height="310" rx="12" fill="url(#ai_cardLight)"/>
+      <rect x="20" y="20" width="350" height="170" rx="8" fill="#D9D0C7"/>
+      <text x="195" y="110" fill="#1F1419" font-size="16" text-anchor="middle">🪟 پنجره کشویی مونوریل</text>
+      <text x="195" y="225" fill="#1F1419" font-size="16" font-weight="bold" text-anchor="middle">سیستم کشویی سری ویستا</text>
+      <rect x="20" y="250" width="350" height="40" rx="6" fill="#2B0814"/>
+      <text x="195" y="275" fill="#FFFFFF" font-size="13" font-weight="bold" text-anchor="middle">استعلام قیمت آنلاین</text>
+    </g>
+
+    <g transform="translate(60, 110)">
+      <rect width="390" height="310" rx="12" fill="url(#ai_cardLight)"/>
+      <rect x="20" y="20" width="350" height="170" rx="8" fill="#D9D0C7"/>
+      <text x="195" y="110" fill="#1F1419" font-size="16" text-anchor="middle">🪟 پنجره لیفت اند اسلاید</text>
+      <text x="195" y="225" fill="#1F1419" font-size="16" font-weight="bold" text-anchor="middle">سیستم کشویی فوق سنگین</text>
+      <rect x="20" y="250" width="350" height="40" rx="6" fill="#2B0814"/>
+      <text x="195" y="275" fill="#FFFFFF" font-size="13" font-weight="bold" text-anchor="middle">استعلام قیمت آنلاین</text>
+    </g>
+
+    <!-- Row 2 Cards -->
+    <g transform="translate(930, 450)">
+      <rect width="390" height="310" rx="12" fill="url(#ai_cardLight)"/>
+      <rect x="20" y="20" width="350" height="170" rx="8" fill="#D9D0C7"/>
+      <text x="195" y="110" fill="#1F1419" font-size="16" text-anchor="middle">🏢 نمای کرتین‌وال لامل</text>
+      <text x="195" y="225" fill="#1F1419" font-size="16" font-weight="bold" text-anchor="middle">نمای شیشه‌ای فریم‌لس مدرن</text>
+      <rect x="20" y="250" width="350" height="40" rx="6" fill="#2B0814"/>
+      <text x="195" y="275" fill="#FFFFFF" font-size="13" font-weight="bold" text-anchor="middle">استعلام قیمت آنلاین</text>
+    </g>
+
+    <g transform="translate(495, 450)">
+      <rect width="390" height="310" rx="12" fill="url(#ai_cardLight)"/>
+      <rect x="20" y="20" width="350" height="170" rx="8" fill="#D9D0C7"/>
+      <text x="195" y="110" fill="#1F1419" font-size="16" text-anchor="middle">🚪 درب ورودی پیوت</text>
+      <text x="195" y="225" fill="#1F1419" font-size="16" font-weight="bold" text-anchor="middle">درب لولایی محور وسط لوکس</text>
+      <rect x="20" y="250" width="350" height="40" rx="6" fill="#2B0814"/>
+      <text x="195" y="275" fill="#FFFFFF" font-size="13" font-weight="bold" text-anchor="middle">استعلام قیمت آنلاین</text>
+    </g>
+
+    <g transform="translate(60, 450)">
+      <rect width="390" height="310" rx="12" fill="url(#ai_cardLight)"/>
+      <rect x="20" y="20" width="350" height="170" rx="8" fill="#D9D0C7"/>
+      <text x="195" y="110" fill="#1F1419" font-size="16" text-anchor="middle">🏛️ اسکای‌لایت و سقف شیشه‌ای</text>
+      <text x="195" y="225" fill="#1F1419" font-size="16" font-weight="bold" text-anchor="middle">نورگیرهای آلومینیومی عایق</text>
+      <rect x="20" y="250" width="350" height="40" rx="6" fill="#2B0814"/>
+      <text x="195" y="275" fill="#FFFFFF" font-size="13" font-weight="bold" text-anchor="middle">استعلام قیمت آنلاین</text>
+    </g>
+
+    <!-- Screen Tag -->
+    <rect x="1160" y="780" width="160" height="30" rx="4" fill="#380A1A"/>
+    <text x="1240" y="800" fill="#D4B038" font-size="12" font-weight="bold" text-anchor="middle">04 - PRODUCTS (3x3)</text>
+  </g>
+
+  <!-- ARTBOARD 05: PRODUCT DETAIL (Specs Panel) -->
+  <g id="Artboard_05_ProductDetail" transform="translate(1560, 1060)" filter="url(#ai_shadow)">
+    <rect width="1380" height="840" rx="16" fill="url(#ai_bgDark)" stroke="#521D2C" stroke-width="3"/>
+    <text x="690" y="70" fill="#FFFFFF" font-size="26" font-weight="900" text-anchor="middle">PRODUCT DETAIL / مشخصات فنی سیستم لیفت اند اسلاید</text>
+
+    <!-- Left: Product Showcase Visual -->
+    <rect x="60" y="120" width="600" height="640" rx="16" fill="#2E0A16" stroke="#521D2C" stroke-width="2"/>
+    <circle cx="360" cy="400" r="100" fill="#3D0F20"/>
+    <text x="360" y="415" fill="#D4B038" font-size="44" text-anchor="middle">🪟</text>
+    <text x="360" y="540" fill="#FFFFFF" font-size="20" font-weight="bold" text-anchor="middle">نمای سه‌بعدی پروفیل مقطع پنجره</text>
+
+    <!-- Right: Specs Table (RTL) -->
+    <g transform="translate(700, 120)">
+      <rect width="620" height="640" rx="16" fill="url(#ai_cardLight)"/>
+      <text x="580" y="60" fill="#1F1419" font-size="24" font-weight="900" text-anchor="end">مشخصات فنی سیستم Lift &amp; Slide سپنتا</text>
+      <text x="580" y="95" fill="#736166" font-size="15" text-anchor="end">شناسه استاندارد: NV-LS-400 | طراحی مهندسی پنجره سپاهان</text>
+
+      <!-- Rows -->
+      <g transform="translate(30, 130)">
+        <rect width="560" height="44" rx="6" fill="#FFFFFF"/>
+        <text x="540" y="28" fill="#1F1419" font-size="14" font-weight="bold" text-anchor="end">آلیاژ پروفیل:</text>
+        <text x="30" y="28" fill="#736166" font-size="14" text-anchor="start">شمش 6063-T6 درجه یک صادراتی</text>
+      </g>
+
+      <g transform="translate(30, 190)">
+        <rect width="560" height="44" rx="6" fill="#FFFFFF"/>
+        <text x="540" y="28" fill="#1F1419" font-size="14" font-weight="bold" text-anchor="end">تیغه پلی‌آمید عایق:</text>
+        <text x="30" y="28" fill="#736166" font-size="14" text-anchor="start">۲۴ میلی‌متر PA66 GF25 ضدحرارت</text>
+      </g>
+
+      <g transform="translate(30, 250)">
+        <rect width="560" height="44" rx="6" fill="#FFFFFF"/>
+        <text x="540" y="28" fill="#1F1419" font-size="14" font-weight="bold" text-anchor="end">ضخامت شیشه خور:</text>
+        <text x="30" y="28" fill="#736166" font-size="14" text-anchor="start">دوجداره و سه‌جداره از ۲۴ تا ۳۸ میلی‌متر</text>
+      </g>
+
+      <g transform="translate(30, 310)">
+        <rect width="560" height="44" rx="6" fill="#FFFFFF"/>
+        <text x="540" y="28" fill="#1F1419" font-size="14" font-weight="bold" text-anchor="end">حداکثر تحمل وزن:</text>
+        <text x="30" y="28" fill="#736166" font-size="14" text-anchor="start">تا ۴۰۰ کیلوگرم با یراق‌آلات Siegenia آلمان</text>
+      </g>
+
+      <g transform="translate(30, 370)">
+        <rect width="560" height="44" rx="6" fill="#FFFFFF"/>
+        <text x="540" y="28" fill="#1F1419" font-size="14" font-weight="bold" text-anchor="end">پوشش سطح و رنگ:</text>
+        <text x="30" y="28" fill="#736166" font-size="14" text-anchor="start">آنادایزینگ مات و براق / رنگ الکترواستاتیک</text>
+      </g>
+
+      <!-- CTA -->
+      <rect x="30" y="520" width="560" height="54" rx="8" fill="#2B0814"/>
+      <text x="310" y="554" fill="#FFFFFF" font-size="16" font-weight="bold" text-anchor="middle">ثبت استعلام قیمت این محصول</text>
+    </g>
+
+    <!-- Screen Tag -->
+    <rect x="1160" y="780" width="160" height="30" rx="4" fill="#380A1A"/>
+    <text x="1240" y="800" fill="#D4B038" font-size="12" font-weight="bold" text-anchor="middle">05 - PRODUCT DETAIL</text>
+  </g>
+
+  <!-- ARTBOARD 06: ARTICLES -->
+  <g id="Artboard_06_Articles" transform="translate(3020, 1060)" filter="url(#ai_shadow)">
+    <rect width="1380" height="840" rx="16" fill="url(#ai_bgDark)" stroke="#521D2C" stroke-width="3"/>
+    <text x="690" y="70" fill="#FFFFFF" font-size="26" font-weight="900" text-anchor="middle">ARTICLES / مقالات و دانش فنی آلومینیوم ساختمانی</text>
+
+    <!-- 3 Article Cards -->
+    <g transform="translate(930, 120)">
+      <rect width="390" height="630" rx="14" fill="url(#ai_cardLight)"/>
+      <rect x="20" y="20" width="350" height="260" rx="10" fill="#D9D0C7"/>
+      <text x="195" y="155" fill="#1F1419" font-size="16" text-anchor="middle">📰 تصویر مقاله</text>
+      <text x="350" y="320" fill="#736166" font-size="13" text-anchor="end">تاریخ: ۱۵ مهر ۱۴۰۳ | واحد تحقیق و توسعه</text>
+      <text x="350" y="365" fill="#1F1419" font-size="18" font-weight="bold" text-anchor="end">مزایای پنجره ترمال‌بریک</text>
+      <text x="350" y="400" fill="#1F1419" font-size="18" font-weight="bold" text-anchor="end">در مناطق اقلیمی گرم و خشک</text>
+      <text x="350" y="445" fill="#736166" font-size="14" text-anchor="end">بررسی عملکرد حرارتی و جلوگیری از اتلاف</text>
+      <text x="350" y="475" fill="#736166" font-size="14" text-anchor="end">انرژی در ساختمان‌های مدرن اصفهان...</text>
+      <text x="350" y="580" fill="#2B0814" font-size="14" font-weight="bold" text-anchor="end">← مطالعه کامل مقاله (Read More)</text>
+    </g>
+
+    <g transform="translate(495, 120)">
+      <rect width="390" height="630" rx="14" fill="url(#ai_cardLight)"/>
+      <rect x="20" y="20" width="350" height="260" rx="10" fill="#D9D0C7"/>
+      <text x="195" y="155" fill="#1F1419" font-size="16" text-anchor="middle">📰 تصویر مقاله</text>
+      <text x="350" y="320" fill="#736166" font-size="13" text-anchor="end">تاریخ: ۲۸ شهریور ۱۴۰۳ | دپارتمان نما</text>
+      <text x="350" y="365" fill="#1F1419" font-size="18" font-weight="bold" text-anchor="end">مقایسه فنی نمای کرتین‌وال</text>
+      <text x="350" y="400" fill="#1F1419" font-size="18" font-weight="bold" text-anchor="end">فریم‌لس و سیستم‌های سنتی</text>
+      <text x="350" y="445" fill="#736166" font-size="14" text-anchor="end">تحلیل استاتیکی وزن سازه، نفوذ آب و هوا</text>
+      <text x="350" y="475" fill="#736166" font-size="14" text-anchor="end">و سرعت نصب در برج‌های بلندمرتبه...</text>
+      <text x="350" y="580" fill="#2B0814" font-size="14" font-weight="bold" text-anchor="end">← مطالعه کامل مقاله (Read More)</text>
+    </g>
+
+    <g transform="translate(60, 120)">
+      <rect width="390" height="630" rx="14" fill="url(#ai_cardLight)"/>
+      <rect x="20" y="20" width="350" height="260" rx="10" fill="#D9D0C7"/>
+      <text x="195" y="155" fill="#1F1419" font-size="16" text-anchor="middle">📰 تصویر مقاله</text>
+      <text x="350" y="320" fill="#736166" font-size="13" text-anchor="end">تاریخ: ۱۰ مرداد ۱۴۰۳ | مهندسی شیشه</text>
+      <text x="350" y="365" fill="#1F1419" font-size="18" font-weight="bold" text-anchor="end">راهنمای انتخاب شیشه دوجداره</text>
+      <text x="350" y="400" fill="#1F1419" font-size="18" font-weight="bold" text-anchor="end">کنترل تابش خورشید و گاز آرگون</text>
+      <text x="350" y="445" fill="#736166" font-size="14" text-anchor="end">تاثیر ضخامت اسپیسر و لایه‌های Low-E</text>
+      <text x="350" y="475" fill="#736166" font-size="14" text-anchor="end">در آسایش حرارتی فضای داخلی...</text>
+      <text x="350" y="580" fill="#2B0814" font-size="14" font-weight="bold" text-anchor="end">← مطالعه کامل مقاله (Read More)</text>
+    </g>
+
+    <!-- Screen Tag -->
+    <rect x="1160" y="780" width="160" height="30" rx="4" fill="#380A1A"/>
+    <text x="1240" y="800" fill="#D4B038" font-size="12" font-weight="bold" text-anchor="middle">06 - ARTICLES</text>
+  </g>
+
+  <!-- ========================================================
+       ROW 3: SCREENS 07, 08, 09
+       ======================================================== -->
+
+  <!-- ARTBOARD 07: PROJECTS -->
+  <g id="Artboard_07_Projects" transform="translate(100, 1960)" filter="url(#ai_shadow)">
+    <rect width="1380" height="840" rx="16" fill="url(#ai_bgDark)" stroke="#521D2C" stroke-width="3"/>
+    <text x="690" y="60" fill="#FFFFFF" font-size="26" font-weight="900" text-anchor="middle">PROJECTS / پروژه‌های برتر اجرا شده</text>
+
+    <!-- Filter Tabs -->
+    <g transform="translate(340, 90)">
+      <rect x="560" y="0" width="130" height="38" rx="19" fill="url(#ai_cardLight)"/>
+      <text x="625" y="24" fill="#1F1419" font-size="13" font-weight="bold" text-anchor="middle">همه پروژه‌ها</text>
+
+      <rect x="420" y="0" width="130" height="38" rx="19" fill="#380A1A" stroke="#521D2C" stroke-width="1"/>
+      <text x="485" y="24" fill="#FFFFFF" font-size="13" text-anchor="middle">مسکونی لوکس</text>
+
+      <rect x="250" y="0" width="160" height="38" rx="19" fill="#380A1A" stroke="#521D2C" stroke-width="1"/>
+      <text x="330" y="24" fill="#FFFFFF" font-size="13" text-anchor="middle">برج‌های تجاری و اداری</text>
+
+      <rect x="120" y="0" width="120" height="38" rx="19" fill="#380A1A" stroke="#521D2C" stroke-width="1"/>
+      <text x="180" y="24" fill="#FFFFFF" font-size="13" text-anchor="middle">ویلایی و مدرن</text>
+
+      <rect x="0" y="0" width="110" height="38" rx="19" fill="#380A1A" stroke="#521D2C" stroke-width="1"/>
+      <text x="55" y="24" fill="#FFFFFF" font-size="13" text-anchor="middle">کرتین‌وال</text>
+    </g>
+
+    <!-- Projects Grid -->
+    <g transform="translate(930, 160)">
+      <rect width="390" height="580" rx="14" fill="#380A1A" stroke="#521D2C" stroke-width="1.5"/>
+      <rect x="15" y="15" width="360" height="380" rx="10" fill="#240610"/>
+      <text x="195" y="210" fill="#D9C7CF" font-size="16" text-anchor="middle">🏢 عکس برج مسکونی نگین</text>
+      <text x="360" y="440" fill="#FFFFFF" font-size="18" font-weight="bold" text-anchor="end">برج مسکونی نگین زاینده‌رود</text>
+      <text x="360" y="475" fill="#D4B038" font-size="14" text-anchor="end">📍 موقعیت: اصفهان - بیشه حبیب</text>
+      <text x="360" y="510" fill="#D9C7CF" font-size="13" text-anchor="end">⚙️ سیستم: کرتین‌وال + لیفت اند اسلاید</text>
+    </g>
+
+    <g transform="translate(495, 160)">
+      <rect width="390" height="580" rx="14" fill="#380A1A" stroke="#521D2C" stroke-width="1.5"/>
+      <rect x="15" y="15" width="360" height="380" rx="10" fill="#240610"/>
+      <text x="195" y="210" fill="#D9C7CF" font-size="16" text-anchor="middle">🏢 عکس مجتمع پارسیان</text>
+      <text x="360" y="440" fill="#FFFFFF" font-size="18" font-weight="bold" text-anchor="end">مجتمع تجاری و اداری پارسیان</text>
+      <text x="360" y="475" fill="#D4B038" font-size="14" text-anchor="end">📍 موقعیت: اصفهان - چهارباغ بالا</text>
+      <text x="360" y="510" fill="#D9C7CF" font-size="13" text-anchor="end">⚙️ سیستم: پنجره‌های ترمال‌بریک سپنتا</text>
+    </g>
+
+    <g transform="translate(60, 160)">
+      <rect width="390" height="580" rx="14" fill="#380A1A" stroke="#521D2C" stroke-width="1.5"/>
+      <rect x="15" y="15" width="360" height="380" rx="10" fill="#240610"/>
+      <text x="195" y="210" fill="#D9C7CF" font-size="16" text-anchor="middle">🏡 عکس ویلای مدرن ناژوان</text>
+      <text x="360" y="440" fill="#FFFFFF" font-size="18" font-weight="bold" text-anchor="end">ویلای مدرن بیشه ناژوان</text>
+      <text x="360" y="475" fill="#D4B038" font-size="14" text-anchor="end">📍 موقعیت: اصفهان - پارک ناژوان</text>
+      <text x="360" y="510" fill="#D9C7CF" font-size="13" text-anchor="end">⚙️ سیستم: پنجره‌های فریم‌لس پانوراما</text>
+    </g>
+
+    <!-- Screen Tag -->
+    <rect x="1160" y="780" width="160" height="30" rx="4" fill="#380A1A"/>
+    <text x="1240" y="800" fill="#D4B038" font-size="12" font-weight="bold" text-anchor="middle">07 - PROJECTS</text>
+  </g>
+
+  <!-- ARTBOARD 08: ABOUT -->
+  <g id="Artboard_08_About" transform="translate(1560, 1960)" filter="url(#ai_shadow)">
+    <rect width="1380" height="840" rx="16" fill="url(#ai_bgDark)" stroke="#521D2C" stroke-width="3"/>
+    
+    <!-- Left Visual -->
+    <rect x="60" y="100" width="580" height="680" rx="16" fill="#2E0A16" stroke="#521D2C" stroke-width="2"/>
+    <circle cx="350" cy="400" r="90" fill="#3D0F20"/>
+    <text x="350" y="415" fill="#D4B038" font-size="44" text-anchor="middle">🏭</text>
+    <text x="350" y="530" fill="#FFFFFF" font-size="20" font-weight="bold" text-anchor="middle">خط تولید اتوماتیک CNC کارخانه</text>
+
+    <!-- Right About Content (RTL) -->
+    <text x="1320" y="150" fill="#FFFFFF" font-size="34" font-weight="900" text-anchor="end">درباره نوآوران پنجره سپاهان</text>
+    <text x="1320" y="200" fill="#D9C7CF" font-size="16" text-anchor="end">بیش از دو دهه تجربه درخشان در طراحی و تولید تخصصی سیستم‌های آلومینیومی</text>
+    <text x="1320" y="235" fill="#D9C7CF" font-size="16" text-anchor="end">مجهز به پیشرفته‌ترین خطوط مونتاژ و ماشین‌آلات مدرن در شهرک صنعتی نجف‌آباد اصفهان.</text>
+
+    <!-- 4 Cards Grid -->
+    <g transform="translate(1010, 290)">
+      <rect width="310" height="180" rx="12" fill="url(#ai_cardLight)"/>
+      <text x="270" y="50" fill="#1F1419" font-size="22">🛡️</text>
+      <text x="270" y="85" fill="#1F1419" font-size="16" font-weight="bold" text-anchor="end">تضمین کیفیت و اصالت</text>
+      <text x="270" y="120" fill="#736166" font-size="13" text-anchor="end">شمش خالص آلومینیوم 6063</text>
+      <text x="270" y="145" fill="#736166" font-size="13" text-anchor="end">و یراق‌آلات اروپایی اصل</text>
+    </g>
+
+    <g transform="translate(680, 290)">
+      <rect width="310" height="180" rx="12" fill="url(#ai_cardLight)"/>
+      <text x="270" y="50" fill="#1F1419" font-size="22">💡</text>
+      <text x="270" y="85" fill="#1F1419" font-size="16" font-weight="bold" text-anchor="end">مشاوره و طراحی مهندسی</text>
+      <text x="270" y="120" fill="#736166" font-size="13" text-anchor="end">طراحی شاپ‌درایینگ و محاسبات</text>
+      <text x="270" y="145" fill="#736166" font-size="13" text-anchor="end">استاتیکی نما و پنجره</text>
+    </g>
+
+    <g transform="translate(1010, 500)">
+      <rect width="310" height="180" rx="12" fill="url(#ai_cardLight)"/>
+      <text x="270" y="50" fill="#1F1419" font-size="22">📥</text>
+      <text x="270" y="85" fill="#1F1419" font-size="16" font-weight="bold" text-anchor="end">دانلود کاتالوگ جامع</text>
+      <text x="270" y="120" fill="#736166" font-size="13" text-anchor="end">مشخصات فنی تمام مقاطع</text>
+      <text x="270" y="145" fill="#736166" font-size="13" text-anchor="end">و پروفیل‌های اختصاصی</text>
+    </g>
+
+    <g transform="translate(680, 500)">
+      <rect width="310" height="180" rx="12" fill="url(#ai_cardLight)"/>
+      <text x="270" y="50" fill="#1F1419" font-size="22">🏗️</text>
+      <text x="270" y="85" fill="#1F1419" font-size="16" font-weight="bold" text-anchor="end">نصب و اجرای استاندارد</text>
+      <text x="270" y="120" fill="#736166" font-size="13" text-anchor="end">اکیپ‌های حرفه‌ای با نظارت</text>
+      <text x="270" y="145" fill="#736166" font-size="13" text-anchor="end">مستقیم مهندسین ناظر پروژه</text>
+    </g>
+
+    <!-- Screen Tag -->
+    <rect x="1160" y="780" width="160" height="30" rx="4" fill="#380A1A"/>
+    <text x="1240" y="800" fill="#D4B038" font-size="12" font-weight="bold" text-anchor="middle">08 - ABOUT</text>
+  </g>
+
+  <!-- ARTBOARD 09: CONTACT -->
+  <g id="Artboard_09_Contact" transform="translate(3020, 1960)" filter="url(#ai_shadow)">
+    <rect width="1380" height="840" rx="16" fill="url(#ai_bgDark)" stroke="#521D2C" stroke-width="3"/>
+    <text x="690" y="60" fill="#FFFFFF" font-size="26" font-weight="900" text-anchor="middle">CONTACT / ارتباط با کارشناسان و استعلام قیمت</text>
+
+    <!-- Left Box: Factory & Map Info -->
+    <g transform="translate(60, 110)">
+      <rect width="580" height="600" rx="16" fill="#380A1A" stroke="#521D2C" stroke-width="2"/>
+      <text x="540" y="60" fill="#FFFFFF" font-size="20" font-weight="bold" text-anchor="end">دفتر مرکزی و کارخانه نوآوران پنجره سپاهان</text>
+      
+      <!-- Mini Map Visual -->
+      <rect x="30" y="90" width="520" height="240" rx="10" fill="#20040D"/>
+      <text x="290" y="215" fill="#D4B038" font-size="16" text-anchor="middle">🗺️ نقشه موقعیت کارخانه (شهرک صنعتی نجف‌آباد)</text>
+
+      <text x="540" y="380" fill="#D9C7CF" font-size="15" text-anchor="end">📍 اصفهان، شهرک صنعتی نجف‌آباد، فاز ۲، خیابان کارآفرینان ۷</text>
+      <text x="540" y="425" fill="#D9C7CF" font-size="15" text-anchor="end">📞 تلفن تماس دفتر مرکزی: ۰۳۱-۴۲۷۴۰۰۰۰ (۱۰ خط مستقیم)</text>
+      <text x="540" y="470" fill="#D9C7CF" font-size="15" text-anchor="end">✉️ ایمیل واحد فروش و مهندسی: info@noavaranwindow.com</text>
+      <text x="540" y="515" fill="#D9C7CF" font-size="15" text-anchor="end">⏰ ساعات کاری: شنبه تا چهارشنبه ۸:۰۰ الی ۱۷:۰۰</text>
+    </g>
+
+    <!-- Right Box: Quote Request Form (RTL) -->
+    <g transform="translate(700, 110)">
+      <rect width="620" height="600" rx="16" fill="url(#ai_cardLight)"/>
+      <text x="580" y="60" fill="#1F1419" font-size="22" font-weight="900" text-anchor="end">فرم استعلام قیمت و مشاوره فنی رایگان</text>
+
+      <g transform="translate(30, 90)">
+        <text x="560" y="24" fill="#1F1419" font-size="14" font-weight="bold" text-anchor="end">نام و نام خانوادگی:</text>
+        <rect y="35" width="560" height="46" rx="6" fill="#FFFFFF" stroke="#D9D0C7"/>
+        <text x="540" y="64" fill="#736166" font-size="14" text-anchor="end">مثال: مهندس احمدی</text>
+      </g>
+
+      <g transform="translate(30, 185)">
+        <text x="560" y="24" fill="#1F1419" font-size="14" font-weight="bold" text-anchor="end">شماره تماس همراه:</text>
+        <rect y="35" width="560" height="46" rx="6" fill="#FFFFFF" stroke="#D9D0C7"/>
+        <text x="540" y="64" fill="#736166" font-size="14" text-anchor="end">۰۹۱۲...</text>
+      </g>
+
+      <g transform="translate(30, 280)">
+        <text x="560" y="24" fill="#1F1419" font-size="14" font-weight="bold" text-anchor="end">شرح پروژه / متراژ و نوع سیستم پنجره:</text>
+        <rect y="35" width="560" height="110" rx="6" fill="#FFFFFF" stroke="#D9D0C7"/>
+        <text x="540" y="70" fill="#736166" font-size="14" text-anchor="end">متراژ تقریبی، شهر محل پروژه و سیستم مورد نظر خود را بنویسید...</text>
+      </g>
+
+      <!-- Submit Button -->
+      <rect x="30" y="470" width="560" height="54" rx="8" fill="#2B0814"/>
+      <text x="310" y="504" fill="#FFFFFF" font-size="16" font-weight="bold" text-anchor="middle">ارسال درخواست استعلام قیمت</text>
+    </g>
+
+    <!-- Footer Note -->
+    <rect y="780" width="1380" height="60" fill="#19040C" rx="16"/>
+    <text x="690" y="816" fill="#D9C7CF" font-size="14" text-anchor="middle">© کلیه حقوق مادی و معنوی متعلق به شرکت نوآوران پنجره سپاهان می‌باشد. | استاندارد ملی ایران</text>
+
+    <!-- Screen Tag -->
+    <rect x="1160" y="740" width="160" height="30" rx="4" fill="#380A1A"/>
+    <text x="1240" y="760" fill="#D4B038" font-size="12" font-weight="bold" text-anchor="middle">09 - CONTACT</text>
+  </g>
+</svg>

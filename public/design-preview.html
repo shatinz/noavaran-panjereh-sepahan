@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>نوآوران پنجره سپاهان | Noavaran Window Sepahan</title>
+  <!-- Vazirmatn Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #230610;
+      --bg-dark-secondary: #320A18;
+      --bg-dark-card: #3D0D1E;
+      --surface-light: #EFECE8;
+      --surface-light-card: #E5E0D8;
+      --surface-white: #FFFFFF;
+      --text-dark: #1F1419;
+      --text-muted: #736166;
+      --text-light: #FFFFFF;
+      --text-light-muted: #D9C7CF;
+      --accent-gold: #D4B038;
+      --border-dark: #521D2C;
+      --border-light: #D9D0C7;
+      --font-vazir: 'Vazirmatn', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: var(--font-vazir);
+    }
+
+    body {
+      background-color: #120308;
+      color: var(--text-light);
+      direction: rtl;
+      text-align: right;
+      overflow-x: hidden;
+    }
+
+    /* Top Control Bar */
+    .top-bar {
+      position: sticky;
+      top: 0;
+      z-index: 999;
+      background: rgba(18, 3, 8, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border-dark);
+      padding: 12px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .top-bar-title {
+      font-weight: 700;
+      font-size: 15px;
+      color: var(--accent-gold);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .screen-nav {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .screen-nav a {
+      color: var(--text-light-muted);
+      text-decoration: none;
+      font-size: 12px;
+      padding: 6px 12px;
+      border-radius: 6px;
+      background: var(--bg-dark-secondary);
+      border: 1px solid var(--border-dark);
+      transition: all 0.2s ease;
+    }
+
+    .screen-nav a:hover, .screen-nav a.active {
+      background: var(--surface-light);
+      color: var(--text-dark);
+      font-weight: 600;
+    }
+
+    /* Section Containers */
+    .screen-container {
+      max-width: 1440px;
+      margin: 40px auto;
+      background: var(--bg-dark);
+      border-radius: 20px;
+      border: 2px solid var(--border-dark);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .screen-label {
+      background: var(--bg-dark-secondary);
+      padding: 10px 24px;
+      border-bottom: 1px solid var(--border-dark);
+      font-size: 13px;
+      color: var(--accent-gold);
+      font-weight: 700;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    /* Header */
+    .site-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 48px;
+      background: var(--bg-dark);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .brand-logo {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--text-light);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-logo span {
+      color: var(--accent-gold);
+    }
+
+    .nav-items {
+      display: flex;
+      list-style: none;
+      gap: 28px;
+    }
+
+    .nav-items a {
+      color: var(--text-light);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .nav-items a.active, .nav-items a:hover {
+      color: var(--accent-gold);
+    }
+
+    .btn-header {
+      padding: 8px 18px;
+      border: 1px solid var(--accent-gold);
+      color: var(--text-light);
+      background: transparent;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    /* 1. HERO SECTION */
+    .hero-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      padding: 64px 64px;
+      align-items: center;
+      min-height: 600px;
+      background: linear-gradient(135deg, rgba(43, 8, 20, 0.95), rgba(25, 4, 12, 0.98)), url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1400&q=80') center/cover;
+    }
+
+    .hero-text h1 {
+      font-size: 44px;
+      font-weight: 900;
+      line-height: 1.3;
+      margin-bottom: 16px;
+      color: var(--text-light);
+    }
+
+    .hero-text h2 {
+      font-size: 22px;
+      color: var(--accent-gold);
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+
+    .hero-text p {
+      font-size: 16px;
+      color: var(--text-light-muted);
+      line-height: 1.8;
+      margin-bottom: 32px;
+      max-width: 540px;
+    }
+
+    .hero-cta-group {
+      display: flex;
+      gap: 16px;
+    }
+
+    .btn-primary {
+      padding: 14px 32px;
+      background: var(--surface-light);
+      color: var(--text-dark);
+      border: none;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.2s, background 0.2s;
+    }
+
+    .btn-primary:hover {
+      background: #FFFFFF;
+      transform: translateY(-2px);
+    }
+
+    .btn-outline {
+      padding: 14px 32px;
+      background: transparent;
+      color: var(--text-light);
+      border: 1.5px solid var(--text-light);
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .hero-image-card {
+      height: 480px;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+      border: 2px solid rgba(212, 176, 56, 0.3);
+      position: relative;
+    }
+
+    .hero-image-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* 2. DISTRIBUTION SECTION */
+    .dist-section {
+      padding: 64px 48px;
+      text-align: center;
+      background: var(--bg-dark);
+    }
+
+    .section-title {
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--text-light);
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .section-subtitle {
+      color: var(--accent-gold);
+      font-size: 15px;
+      margin-bottom: 40px;
+    }
+
+    .map-box {
+      max-width: 900px;
+      margin: 0 auto;
+      background: var(--bg-dark-secondary);
+      border: 1px solid var(--border-dark);
+      border-radius: 16px;
+      padding: 40px;
+      position: relative;
+    }
+
+    .map-hub-badge {
+      display: inline-block;
+      padding: 8px 18px;
+      background: var(--accent-gold);
+      color: var(--text-dark);
+      font-weight: 800;
+      border-radius: 20px;
+      font-size: 14px;
+      margin-bottom: 24px;
+    }
+
+    /* 3. SERVICES SECTION (2x2 Grid) */
+    .services-section {
+      padding: 64px 48px;
+      background: var(--bg-dark);
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .service-card {
+      background: var(--surface-light);
+      border-radius: 14px;
+      padding: 36px 32px;
+      color: var(--text-dark);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 200px;
+      transition: transform 0.2s;
+    }
+
+    .service-card:hover {
+      transform: translateY(-4px);
+    }
+
+    .service-num {
+      font-size: 42px;
+      font-weight: 900;
+      color: var(--bg-dark);
+      line-height: 1;
+      text-align: left;
+    }
+
+    .service-title {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--text-dark);
+      line-height: 1.4;
+      margin-top: 16px;
+    }
+
+    /* 4. PRODUCTS SECTION (3x3 Grid) */
+    .products-section {
+      padding: 64px 48px;
+      background: var(--bg-dark);
+    }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .product-card {
+      background: var(--surface-light);
+      border-radius: 12px;
+      padding: 16px;
+      color: var(--text-dark);
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .product-thumb {
+      height: 140px;
+      border-radius: 8px;
+      overflow: hidden;
+      background: #ccc;
+    }
+
+    .product-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .product-card-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-dark);
+    }
+
+    .btn-quote {
+      background: var(--bg-dark);
+      color: var(--text-light);
+      padding: 10px;
+      border: none;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    /* 5. PRODUCT DETAIL */
+    .product-detail-section {
+      padding: 64px 48px;
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 40px;
+      align-items: center;
+      background: var(--bg-dark);
+    }
+
+    .spec-panel {
+      background: var(--surface-light);
+      padding: 32px;
+      border-radius: 16px;
+      color: var(--text-dark);
+    }
+
+    .spec-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 14px;
+      background: #FFFFFF;
+      border-radius: 6px;
+      margin-bottom: 8px;
+      font-size: 13px;
+    }
+
+    .spec-key {
+      font-weight: 700;
+      color: var(--text-dark);
+    }
+
+    .spec-val {
+      color: var(--text-muted);
+    }
+
+    /* 6. PROJECTS (Filterable) */
+    .projects-section {
+      padding: 64px 48px;
+      background: var(--bg-dark);
+    }
+
+    .filter-tabs {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 36px;
+    }
+
+    .filter-tab {
+      padding: 8px 24px;
+      border-radius: 20px;
+      background: var(--bg-dark-secondary);
+      color: var(--text-light);
+      border: 1px solid var(--border-dark);
+      font-size: 13px;
+      cursor: pointer;
+    }
+
+    .filter-tab.active {
+      background: var(--surface-light);
+      color: var(--text-dark);
+      font-weight: 700;
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .project-card {
+      background: var(--bg-dark-secondary);
+      border: 1px solid var(--border-dark);
+      border-radius: 14px;
+      overflow: hidden;
+      padding: 12px;
+    }
+
+    .project-photo {
+      height: 240px;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 12px;
+    }
+
+    .project-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* 7. ABOUT & CONTACT */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 32px;
+      padding: 48px;
+    }
+
+    .form-group {
+      margin-bottom: 14px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 6px;
+      color: var(--text-dark);
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 12px;
+      border-radius: 6px;
+      border: 1px solid var(--border-light);
+      font-size: 13px;
+    }
+
+    /* Footer */
+    .site-footer {
+      padding: 32px 48px;
+      background: var(--bg-dark-secondary);
+      border-top: 1px solid var(--border-dark);
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      color: var(--text-light-muted);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Controller -->
+  <div class="top-bar">
+    <div class="top-bar-title">
+      🏢 نوآوران پنجره سپاهان | پیش‌نمایش زنده دیزاین سیستم و صفحات
+    </div>
+    <div class="screen-nav">
+      <a href="#hero">01 هیرو</a>
+      <a href="#distribution">02 توزیع سراسری</a>
+      <a href="#services">03 خدمات</a>
+      <a href="#products">04 محصولات</a>
+      <a href="#detail">05 مشخصات فنی</a>
+      <a href="#articles">06 مقالات</a>
+      <a href="#projects">07 پروژه‌ها</a>
+      <a href="#about">08 درباره ما</a>
+      <a href="#contact">09 تماس</a>
+    </div>
+  </div>
+
+  <!-- 01 HERO -->
+  <div class="screen-container" id="hero">
+    <div class="screen-label">
+      <span>🖥️ فریم 01: Hero Section (1440px)</span>
+      <span>RTL / Vazirmatn / Auto Layout</span>
+    </div>
+    <header class="site-header">
+      <button class="btn-header">تماس فوری با کارخانه</button>
+      <ul class="nav-items">
+        <li><a href="#" class="active">خانه</a></li>
+        <li><a href="#">درباره ما</a></li>
+        <li><a href="#">ارتباط با ما</a></li>
+        <li><a href="#">پروژه‌ها</a></li>
+        <li><a href="#">محصولات</a></li>
+        <li><a href="#">مقالات</a></li>
+        <li><a href="#">خدمات</a></li>
+      </ul>
+      <div class="brand-logo">
+        <span>🪟</span> نوآوران پنجره سپاهان
+      </div>
+    </header>
+
+    <div class="hero-section">
+      <div class="hero-image-card">
+        <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=800&q=80" alt="نمای پروژه آلومینیومی">
+      </div>
+      <div class="hero-text">
+        <h2>پنجره، درب و سیستم‌های تخصصی آلومینیوم</h2>
+        <h1>نوآوران پنجره سپاهان</h1>
+        <p>
+          تولیدکننده انواع سیستم‌های پیشرفته درب و پنجره دوجداره آلومینیوم ترمال‌بریک، سیستم‌های کشویی لیفت اند اسلاید و نماهای مدرن کرتین‌وال در اصفهان و نجف‌آباد.
+        </p>
+        <div class="hero-cta-group">
+          <button class="btn-primary">استعلام قیمت آنلاین</button>
+          <button class="btn-outline">کاتالوگ مقاطع آلومینیوم</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 02 DISTRIBUTION -->
+  <div class="screen-container" id="distribution">
+    <div class="screen-label">
+      <span>🖥️ فریم 02: Distribution Map</span>
+      <span>شبکه توزیع و ارسال سراسری</span>
+    </div>
+    <div class="dist-section">
+      <h2 class="section-title">DISTRIBUTION</h2>
+      <div class="section-subtitle">شبکه توزیع، نمایندگی‌ها و دفاتر مهندسی سراسر کشور</div>
+      <div class="map-box">
+        <div class="map-hub-badge">📍 مرکز تولید و توزیع اصلی: اصفهان / نجف‌آباد</div>
+        <p style="color: var(--text-light-muted); font-size: 15px; line-height: 1.8;">
+          تأمین و اجرای تخصصی انواع پنجره‌های ترمال‌بریک و کرتین‌وال در تهران، مشهد، شیراز، تبریز، اهواز، مازندران، کیش و سراسر ایران.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 03 SERVICES -->
+  <div class="screen-container" id="services">
+    <div class="screen-label">
+      <span>🖥️ فریم 03: Services (2x2 Grid)</span>
+      <span>کارت‌های متالیک 01 تا 04</span>
+    </div>
+    <div class="services-section">
+      <h2 class="section-title" style="text-align: center;">SERVICES</h2>
+      <div class="section-subtitle" style="text-align: center;">خدمات تخصصی مهندسی نما و سیستم‌های آلومینیومی</div>
+      <div class="services-grid">
+        <div class="service-card">
+          <div class="service-num">01</div>
+          <div class="service-title">طراحی و تولید پنجره و درب آلومینیومی اختصاصی</div>
+        </div>
+        <div class="service-card">
+          <div class="service-num">02</div>
+          <div class="service-title">سیستم‌های پیشرفته ترمال‌بریک و عایق صوت و حرارت</div>
+        </div>
+        <div class="service-card">
+          <div class="service-num">03</div>
+          <div class="service-title">طراحی و اجرای نمای شیشه‌ای کرتین‌وال و فریم‌لس</div>
+        </div>
+        <div class="service-card">
+          <div class="service-num">04</div>
+          <div class="service-title">سیستم‌های کشویی و لیفت اند اسلاید دهانه‌های بزرگ</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 04 PRODUCTS -->
+  <div class="screen-container" id="products">
+    <div class="screen-label">
+      <span>🖥️ فریم 04: Products Showcase</span>
+      <span>گرید ۳ ستونه محصولات و استعلام قیمت</span>
+    </div>
+    <div class="products-section">
+      <h2 class="section-title" style="text-align: center;">PRODUCTS</h2>
+      <div class="section-subtitle" style="text-align: center;">سیستم‌های در و پنجره آلومینیومی نوآوران پنجره سپاهان</div>
+      <div class="products-grid">
+        <div class="product-card">
+          <div class="product-thumb"><img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=400&q=80" alt="پنجره لولایی"></div>
+          <div class="product-card-title">پنجره لولایی ترمال‌بریک</div>
+          <button class="btn-quote">استعلام قیمت</button>
+        </div>
+        <div class="product-card">
+          <div class="product-thumb"><img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=400&q=80" alt="پنجره کشویی"></div>
+          <div class="product-card-title">پنجره کشویی مونوریل</div>
+          <button class="btn-quote">استعلام قیمت</button>
+        </div>
+        <div class="product-card">
+          <div class="product-thumb"><img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=400&q=80" alt="لیفت اند اسلاید"></div>
+          <div class="product-card-title">پنجره لیفت اند اسلاید</div>
+          <button class="btn-quote">استعلام قیمت</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 05 PRODUCT DETAIL -->
+  <div class="screen-container" id="detail">
+    <div class="screen-label">
+      <span>🖥️ فریم 05: Product Detail</span>
+      <span>مشخصات فنی و جدول متریال</span>
+    </div>
+    <div class="product-detail-section">
+      <div class="hero-image-card" style="height: 400px;">
+        <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=800&q=80" alt="پنجره اسلاید">
+      </div>
+      <div class="spec-panel">
+        <h3 style="font-size: 20px; font-weight: 800; margin-bottom: 6px;">سیستم کشویی سنگین Lift & Slide سری سپنتا</h3>
+        <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 20px;">مشخصات فنی و ساختار پروفیل</p>
+        <div class="spec-row"><span class="spec-key">نوع آلیاژ آلومینیوم:</span><span class="spec-val">6063-T6 استاندارد بین‌المللی</span></div>
+        <div class="spec-row"><span class="spec-key">تیغه حرارتی عایق:</span><span class="spec-val">پلی‌آمید 24mm فایبرگلاس</span></div>
+        <div class="spec-row"><span class="spec-key">ضخامت شیشه خور:</span><span class="spec-val">دوجداره و سه‌جداره تا 38mm</span></div>
+        <div class="spec-row"><span class="spec-key">تحمل وزن هر لنگه:</span><span class="spec-val">تا 400 کیلوگرم یراق آلمانی</span></div>
+        <div class="spec-row"><span class="spec-key">پوشش سطح:</span><span class="spec-val">آنادایز مات و براق / رنگ الکترواستاتیک</span></div>
+        <button class="btn-primary" style="width: 100%; margin-top: 16px; background: var(--bg-dark); color: #fff;">ثبت استعلام قیمت این سیستم</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 07 PROJECTS -->
+  <div class="screen-container" id="projects">
+    <div class="screen-label">
+      <span>🖥️ فریم 07: Projects Gallery</span>
+      <span>گالری پروژه‌ها و تب‌های فیلتر</span>
+    </div>
+    <div class="projects-section">
+      <h2 class="section-title" style="text-align: center;">PROJECTS</h2>
+      <div class="section-subtitle" style="text-align: center;">پروژه‌های برتر و شاخص اجرا شده</div>
+      <div class="filter-tabs">
+        <div class="filter-tab active">همه پروژه‌ها</div>
+        <div class="filter-tab">مسکونی لوکس</div>
+        <div class="filter-tab">برج‌های تجاری و اداری</div>
+        <div class="filter-tab">ویلایی و مدرن</div>
+        <div class="filter-tab">نماهای کرتین‌وال</div>
+      </div>
+      <div class="projects-grid">
+        <div class="project-card">
+          <div class="project-photo"><img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=400&q=80" alt="پروژه نگین"></div>
+          <h4 style="color: var(--text-light); font-size: 15px; margin-bottom: 4px;">برج مسکونی نگین زاینده‌رود</h4>
+          <div style="color: var(--accent-gold); font-size: 12px;">📍 اصفهان - بیشه حبیب</div>
+        </div>
+        <div class="project-card">
+          <div class="project-photo"><img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=400&q=80" alt="مجتمع پارسیان"></div>
+          <h4 style="color: var(--text-light); font-size: 15px; margin-bottom: 4px;">مجتمع تجاری و اداری پارسیان</h4>
+          <div style="color: var(--accent-gold); font-size: 12px;">📍 اصفهان - چهارباغ بالا</div>
+        </div>
+        <div class="project-card">
+          <div class="project-photo"><img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=400&q=80" alt="ویلای ناژوان"></div>
+          <h4 style="color: var(--text-light); font-size: 15px; margin-bottom: 4px;">ویلای مدرن ناژوان</h4>
+          <div style="color: var(--accent-gold); font-size: 12px;">📍 اصفهان - پارک ناژوان</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 09 CONTACT -->
+  <div class="screen-container" id="contact">
+    <div class="screen-label">
+      <span>🖥️ فریم 09: Contact & Quote Form</span>
+      <span>فرم استعلام و آدرس کارخانه</span>
+    </div>
+    <div class="contact-grid">
+      <div style="background: var(--bg-dark-secondary); padding: 32px; border-radius: 16px; border: 1px solid var(--border-dark);">
+        <h3 style="color: var(--text-light); font-size: 18px; margin-bottom: 16px;">دفتر مرکزی و کارخانه</h3>
+        <p style="color: var(--text-light-muted); font-size: 13px; line-height: 2; margin-bottom: 12px;">
+          📍 اصفهان، شهرک صنعتی نجف‌آباد، فاز ۲، خیابان کارآفرینان ۷<br>
+          📞 تلفن تماس: ۰۳۱-۴۲۷۴۰۰۰۰ (۱۰ خط مستقیم)<br>
+          ✉️ ایمیل: info@noavaranwindow.com<br>
+          ⏰ ساعات کاری: شنبه تا چهارشنبه ۸:۰۰ الی ۱۷:۰۰
+        </p>
+      </div>
+      <div style="background: var(--surface-light); padding: 32px; border-radius: 16px;">
+        <h3 style="color: var(--text-dark); font-size: 18px; margin-bottom: 16px;">فرم استعلام قیمت و مشاوره</h3>
+        <div class="form-group">
+          <label>نام و نام خانوادگی</label>
+          <input type="text" class="form-input" placeholder="مثال: مهندس احمدی">
+        </div>
+        <div class="form-group">
+          <label>شماره تماس</label>
+          <input type="text" class="form-input" placeholder="۰۹۱۲...">
+        </div>
+        <div class="form-group">
+          <label>شرح پروژه</label>
+          <textarea class="form-input" rows="3" placeholder="متراژ و نوع پنجره مورد نیاز خود را بنویسید..."></textarea>
+        </div>
+        <button class="btn-primary" style="width: 100%; background: var(--bg-dark); color: #fff;">ارسال درخواست استعلام</button>
+      </div>
+    </div>
+    <footer class="site-footer">
+      <div>استاندارد ملی ایران | گواهینامه فنی مرکز تحقیقات راه، مسکن و شهرسازی</div>
+      <div>© کلیه حقوق مادی و معنوی متعلق به شرکت نوآوران پنجره سپاهان می‌باشد.</div>
+    </footer>
+  </div>
+
+</body>
+</html>
