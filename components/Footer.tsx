@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Phone, MapPin, Building2, ArrowUpLeft, ShieldCheck, Layers, Video } from 'lucide-react';
 
 export default function Footer() {
@@ -13,8 +14,14 @@ export default function Footer() {
           {/* Col 1: Brand & Official Credentials */}
           <div className="space-y-3">
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 bg-black text-white flex items-center justify-center sharp shadow-sm">
-                <Building2 className="w-5 h-5 text-white" />
+              <div className="relative w-10 h-10 shrink-0 flex items-center justify-center">
+                <Image
+                  src="/images/icon.svg"
+                  alt="لوگوی نوآوران پنجره سپاهان"
+                  width={40}
+                  height={40}
+                  className="w-full h-full object-contain"
+                />
               </div>
               <div className="leading-tight">
                 <span className="text-sm font-black text-black block">نوآوران پنجره سپاهان</span>

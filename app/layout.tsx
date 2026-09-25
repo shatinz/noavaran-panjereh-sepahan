@@ -8,6 +8,17 @@ export const metadata: Metadata = {
   title: 'نوآوران پنجره سپاهان | تولید و اجرای نمای شیشه‌ای، کرتین وال و پنجره ترمال‌بریک',
   description: 'شرکت نوآوران پنجره سپاهان، طراح و مجری تخصصی نماهای مدرن کرتین وال (لامل)، نمای شیشه‌ای فریم‌لس، درب و پنجره‌های دوجداره آلومینیوم ترمال بریک، کامپوزیت و ترموود در اصفهان و سراسر کشور.',
   keywords: 'نوآوران پنجره سپاهان, کرتین وال, لامل, پنجره دوجداره, ترمال بریک, لیفت اند اسلاید, نمای کامپوزیت, فریم لس, اصفهان',
+  icons: {
+    icon: [
+      { url: '/favicon.ico', sizes: 'any' },
+      { url: '/icon.svg', type: 'image/svg+xml' },
+      { url: '/icon.png', sizes: '512x512', type: 'image/png' },
+    ],
+    apple: [
+      { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
+    ],
+    shortcut: '/favicon.ico',
+  },
 };
 
 export default function RootLayout({
@@ -20,6 +31,8 @@ export default function RootLayout({
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
         <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
       </head>
       <body className="min-h-screen flex flex-col sharp selection:bg-[#18191a] selection:text-white">
         <Header />

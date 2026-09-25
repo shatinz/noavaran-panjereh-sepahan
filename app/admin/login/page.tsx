@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 import { ShieldCheck, Lock, User, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 
@@ -42,8 +43,15 @@ export default function AdminLoginPage() {
     <div className="min-h-[75vh] flex items-center justify-center px-4 py-12">
       <div className="max-w-md w-full rounded-3xl bg-charcoal-900 border border-charcoal-800 p-8 sm:p-10 space-y-8 shadow-2xl">
         <div className="text-center space-y-2">
-          <div className="w-12 h-12 rounded-2xl bg-bronze-500/20 text-bronze-400 border border-bronze-500/30 flex items-center justify-center mx-auto mb-4">
-            <ShieldCheck className="w-6 h-6" />
+          <div className="w-16 h-16 mx-auto mb-4 relative flex items-center justify-center">
+            <Image
+              src="/images/logo-dark.svg"
+              alt="لوگوی شرکت نوآوران پنجره سپاهان"
+              width={64}
+              height={64}
+              className="w-16 h-16 object-contain drop-shadow-md"
+              priority
+            />
           </div>
           <h1 className="text-2xl font-bold text-white">ورود به پنل مدیریت</h1>
           <p className="text-xs text-titanium-400">

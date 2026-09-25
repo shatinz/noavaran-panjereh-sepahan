@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { Menu, X, Phone, PlaySquare, Package, Flame, Award, Headset, Layers, Video, FileText, ChevronDown } from 'lucide-react';
 
@@ -37,24 +38,16 @@ export default function Header() {
       <div className="aluminum-bar sharp frame-shadow px-4 sm:px-6 h-[60px] flex items-center justify-between border border-[#b0b3b0]">
         
         {/* RIGHT: Logo & Brand Name (in RTL) */}
-        <Link href="/" className="flex items-center gap-3 group">
-          <div className="text-black flex items-center justify-center shrink-0">
-            <svg
-              viewBox="0 0 32 32"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2.4"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="w-8 h-8 group-hover:scale-105 transition-transform"
-            >
-              <rect x="3" y="4" width="7" height="24" rx="0" />
-              <polygon points="10,4 19,7 19,25 10,28" />
-              <polygon points="19,7 27,9 27,23 19,25" />
-              <line x1="6.5" y1="4" x2="6.5" y2="28" strokeWidth="1.5" strokeOpacity="0.4" />
-              <line x1="14.5" y1="5.5" x2="14.5" y2="26.5" strokeWidth="1.5" strokeOpacity="0.4" />
-              <line x1="23" y1="8" x2="23" y2="24" strokeWidth="1.5" strokeOpacity="0.4" />
-            </svg>
+        <Link href="/" className="flex items-center gap-2.5 sm:gap-3 group">
+          <div className="relative w-9 h-9 sm:w-10 sm:h-10 shrink-0 flex items-center justify-center group-hover:scale-105 transition-transform">
+            <Image
+              src="/images/icon.svg"
+              alt="لوگوی نوآوران پنجره سپاهان"
+              width={40}
+              height={40}
+              className="w-full h-full object-contain"
+              priority
+            />
           </div>
 
           <div className="flex flex-col text-right leading-[1.1]">
