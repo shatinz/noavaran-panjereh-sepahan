@@ -1,78 +1,73 @@
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { getArticles } from '@/lib/db';
-import { BookOpen, Calendar, ArrowLeft, Tag } from 'lucide-react';
+import { PageHero } from '@/components/ui/PageHero';
+import { Breadcrumbs } from '@/components/ui/Breadcrumbs';
+import { Calendar, ArrowLeft } from 'lucide-react';
+import { getLocalMediaFallback, withBasePath } from '@/lib/media';
 
 export const metadata = {
   title: 'دانشنامه و مقالات تخصصی مهندسی نما و پنجره | نوآوران پنجره سپاهان',
-  description: 'مقالات علمی و کاربردی درباره مزایای پنجره دوجداره، استانداردهای عایق صوتی و حرارتی، مهار پل‌های حرارتی و تکنولوژی‌های نماهای شیشه‌ای.',
+  description: 'مقالات علمی و کاربردی درباره مباحث ترمال‌بریک، استاندارد ملی، عایق صوتی و مدیریت انرژی در ساختمان.',
 };
 
 export default async function ArticlesPage() {
   const articles = await getArticles();
 
   return (
-    <div className="w-full max-w-[1440px] mx-auto px-3 sm:px-6 py-4 space-y-5">
-      {/* Header */}
-      <section className="aluminum-card sharp frame-shadow p-6 sm:p-10 border border-[#b0b3b0] text-center space-y-3">
-        <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#18191a] text-white text-[11px] font-bold sharp border border-black shadow-sm">
-          <BookOpen className="w-4 h-4 text-[#cbcccb]" />
-          <span>دانشنامه فنی و مقالات مهندسی</span>
-        </div>
-        <h1 className="text-2xl sm:text-4xl font-black text-black tracking-tight leading-tight">
-          مقالات و راهنماهای جامع نوآوران پنجره سپاهان
-        </h1>
-        <p className="max-w-2xl mx-auto text-xs sm:text-sm text-[#333] leading-relaxed font-medium">
-          جدیدترین پژوهش‌ها، بررسی مقررات ملی ساختمان، استانداردهای بهینه‌سازی مصرف انرژی (مبحث ۱۹) و مقایسه‌های فنی سیستم‌های مدرن نما.
-        </p>
-      </section>
+    <>
+      <Breadcrumbs items={[{ label: 'دانشنامه و مقالات' }]} />
+      <PageHero 
+        title="دانشنامه و مقالات تخصصی" 
+        subtitle="دانش فنی مهندسی نما و پنجره"
+      />
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {articles.map((a) => (
-          <article
-            key={a.id}
-            className="aluminum-card sharp frame-shadow p-3.5 border border-[#b0b3b0] flex flex-col justify-between group text-right"
-          >
-            <div>
-              <div className="relative h-48 w-full bg-black sharp overflow-hidden border border-black/20 frame-shadow">
-                <img
-                  src={a.image}
-                  alt={a.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-                <span className="absolute top-2 right-2 px-2.5 py-0.5 sharp bg-white text-black text-[10px] font-bold border border-black">
-                  {a.category}
-                </span>
-              </div>
-
-              <div className="pt-3 space-y-2">
-                <div className="flex items-center gap-2 text-[10px] text-[#555] font-mono font-bold">
-                  <Calendar className="w-3.5 h-3.5" />
-                  <span>{a.date}</span>
-                  <span>•</span>
-                  <span>{a.author}</span>
-                </div>
-                <h2 className="text-xs sm:text-sm font-black text-black group-hover:text-black transition-colors line-clamp-2 leading-snug">
-                  {a.title}
-                </h2>
-                <p className="text-[11px] text-[#333] line-clamp-3 leading-relaxed font-medium">
-                  {a.excerpt}
-                </p>
-              </div>
-            </div>
-
-            <div className="pt-3 border-t border-[#a8aba8] mt-3">
+      <div className="w-full max-w-[1440px] mx-auto px-4 md:px-8 py-16 md:py-24 space-y-12" dir="rtl">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {articles.map((a) => {
+            const imgSrc = withBasePath(a.image) || getLocalMediaFallback(a.slug, 'article');
+            return (
               <Link
                 href={`/articles/${a.slug}`}
-                className="text-xs font-black text-black hover:underline flex items-center justify-between"
+                key={a.id}
+                className="group bg-ink-950 border border-ink-800 rounded-xl overflow-hidden metal-shadow hover:border-signal-500/50 transition-colors flex flex-col h-full text-right"
               >
-                <span>مطالعه کامل مقاله تخصصی</span>
-                <ArrowLeft className="w-3.5 h-3.5" />
+                <div className="relative aspect-video w-full bg-ink-900 overflow-hidden">
+                  <Image
+                    src={imgSrc}
+                    alt={a.title}
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-500 opacity-80 group-hover:opacity-100"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-ink-950 via-transparent to-transparent opacity-80" />
+                  <div className="absolute top-3 right-3 px-2.5 py-1 bg-signal-500 text-white text-[10px] font-bold rounded-lg border border-signal-500">
+                    {a.category}
+                  </div>
+                </div>
+
+                <div className="p-5 flex flex-col flex-grow">
+                  <div className="flex items-center gap-2 text-[10px] text-steel-400 font-mono font-bold mb-3">
+                    <Calendar className="w-3.5 h-3.5 text-signal-500" />
+                    <span>{a.date}</span>
+                  </div>
+                  <h2 className="text-lg font-black text-white font-vazir group-hover:text-signal-500 transition-colors mb-3 line-clamp-2">
+                    {a.title}
+                  </h2>
+                  <p className="text-xs text-steel-400 line-clamp-3 leading-relaxed font-vazir mb-6 flex-grow">
+                    {a.excerpt}
+                  </p>
+                  
+                  <div className="pt-4 border-t border-ink-800 flex items-center justify-between text-xs font-bold text-steel-300 font-vazir group-hover:text-signal-500 transition-colors mt-auto">
+                    <span>مطالعه کامل مقاله</span>
+                    <ArrowLeft className="w-4 h-4 -scale-x-100" />
+                  </div>
+                </div>
               </Link>
-            </div>
-          </article>
-        ))}
+            );
+          })}
+        </div>
       </div>
-    </div>
+    </>
   );
 }

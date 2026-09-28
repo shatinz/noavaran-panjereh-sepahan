@@ -1,11 +1,13 @@
 import React from 'react';
 import { getSettings } from '@/lib/db';
-import { Building2, ShieldCheck, Factory, Award, CheckCircle2, Phone, MapPin, FileCheck, Shield } from 'lucide-react';
+import { PageHero } from '@/components/ui/PageHero';
+import { Breadcrumbs } from '@/components/ui/Breadcrumbs';
+import { Building2, ShieldCheck, Factory, Award, CheckCircle2, FileCheck } from 'lucide-react';
 import Link from 'next/link';
 
 export const metadata = {
-  title: 'درباره شرکت و تاریخچه کارخانه | نوآوران پنجره سپاهان',
-  description: 'آشنایی با تاریخچه شرکت نوآوران پنجره سپاهان از سال ۱۳۸۵، مشخصات رسمی ثبتی و ظرفیت‌های کارخانه ۱۵۰۰ متری، استانداردهای تولید و مهندسی نما.',
+  title: 'درباره شرکت و کارخانه نوآوران پنجره سپاهان | نوآوران پنجره سپاهان',
+  description: 'آشنایی با تاریخچه شرکت، مشخصات ثبتی، کارخانه ۱۵۰۰ متری مجهز به دستگاه‌های CNC و خط تولید پیشرفته نماهای کرتین‌وال و آلومینیوم ترمال‌بریک.',
 };
 
 export default async function AboutPage() {
@@ -13,146 +15,128 @@ export default async function AboutPage() {
 
   const timeline = [
     {
-      year: '۱۳۸۵',
-      title: 'تأسیس کارگاه تخصصی درب و پنجره',
-      description: 'شروع به کار مجموعه در قالب کارگاه صنعتی و تخصصی ساخت درب و پنجره‌های آلومینیومی در اصفهان.'
+      year: '۱۳۹۰',
+      title: 'تاسیس کارگاه طراحی نصب و پیمانکاری',
+      description: 'شروع به عنوان یک گروه کوچک در زمینه مشاوره، طراحی و نصب پروژه‌های نما و پنجره.'
     },
     {
       year: '۱۳۹۳',
-      title: 'توسعه به کارخانه ۱۵۰۰ متری مدرن',
-      description: 'انتقال خطوط تولید به شهرک صنعتی و تجهیز کامل کارخانه به ماشین‌آلات پیشرفته اکستروژن، مونتاژ و فرز CNC اروپایی.'
+      title: 'خرید دستگاه‌های نیمه‌اتوماتیک',
+      description: 'ورود به عرصه تولید کارگاهی و مجهز شدن به دستگاه‌های برش دقیق و پرس‌های کارگاهی.'
     },
     {
       year: '۱۴۰۰',
-      title: 'ورود به پروژه‌های کلان بانکی و سازمانی',
-      description: 'توسعه دپارتمان مهندسی محاسبات و اجرای نماهای مرتفع کرتین وال لامل در شعب بانک‌ها، شهرداری‌ها و مجتمع‌های تجاری بزرگ.'
+      title: 'احداث کارخانه در منطقه صنعتی',
+      description: 'توسعه فاز تولید و انتقال به فضای صنعتی بزرگتر با تجهیز به خط مونتاژ پیشرفته.'
     },
     {
-      year: 'امروز',
-      title: 'نوآوران پنجره سپاهان؛ مرجع مهندسی نما',
-      description: 'ارائه سبد جامع مهندسی شامل نماهای مدرن شیشه‌ای، لیفت‌اند‌اسلاید، ترموود، کامپوزیت، سیستم توری پلیسه و جان‌پناه‌های شیشه‌ای با گارانتی کتبی.'
+      year: 'اکنون',
+      title: 'نوآوران پنجره سپاهان؛ مجری پروژه‌های ملی',
+      description: 'ثبت رسمی شرکت، استقرار سیستم تضمین کیفیت و انجام موفقیت‌آمیز بیش از ۵۵ پروژه شاخص کشوری.'
     }
   ];
 
   return (
-    <div className="w-full max-w-[1440px] mx-auto px-3 sm:px-6 py-4 space-y-5">
-      {/* Header */}
-      <section className="aluminum-card sharp frame-shadow p-6 sm:p-10 border border-[#b0b3b0] text-center space-y-3">
-        <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#18191a] text-white text-[11px] font-bold sharp border border-black shadow-sm">
-          <ShieldCheck className="w-4 h-4 text-[#cbcccb]" />
-          <span>هویت رسمی، اصالت مهندسی و تعهد اجرایی</span>
-        </div>
-        <h1 className="text-2xl sm:text-4xl font-black text-black tracking-tight leading-tight">
-          درباره شرکت نوآوران پنجره سپاهان
-        </h1>
-        <p className="max-w-2xl mx-auto text-xs sm:text-sm text-[#333] leading-relaxed font-medium">
-          بیش از یک دهه و نیم پیشگامی در طراحی محاسباتی، ساخت دقیق صنعتی و اجرای ماندگار در سراسر کشور.
-        </p>
-      </section>
+    <>
+      <Breadcrumbs items={[{ label: 'درباره ما' }]} />
+      <PageHero 
+        title="نوآوران پنجره سپاهان" 
+        subtitle="رزومه، تاریخچه و مشخصات ثبتی کارخانه"
+      />
 
-      {/* Official Legal Registration Credentials Card */}
-      <div className="aluminum-card sharp frame-shadow p-5 sm:p-6 border border-[#b0b3b0] space-y-4 text-right">
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-b border-[#a8aba8] pb-3">
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 sharp bg-[#18191a] text-white flex items-center justify-center font-bold">
-              <FileCheck className="w-5 h-5 text-[#cbcccb]" />
-            </div>
-            <div>
-              <h2 className="text-xs sm:text-sm font-black text-black">مشخصات ثبتی و حقوقی شرکت نوآوران پنجره سپاهان</h2>
-              <span className="text-[11px] text-[#444] font-medium">دارای پروانه بهره‌برداری صنعتی و عضو رسمی سندیکای آلومینیوم ایران</span>
-            </div>
-          </div>
-          <span className="px-3 py-1 sharp bg-black text-white text-xs font-mono font-bold">
-            شناسه ملی ۱۴۰۱۵۰۲۶۲۳۰
-          </span>
-        </div>
-
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 text-xs font-mono">
-          <div className="bg-[#b8bab8] p-3 sharp border border-[#9ea19e]">
-            <span className="text-[#444] font-sans block text-[10px] font-bold">نام رسمی شرکت:</span>
-            <span className="text-xs font-black text-black mt-0.5 block font-sans">نوآوران پنجره سپاهان</span>
-          </div>
-          <div className="bg-[#b8bab8] p-3 sharp border border-[#9ea19e]">
-            <span className="text-[#444] font-sans block text-[10px] font-bold">شماره ثبت رسمی:</span>
-            <span className="text-base font-black text-black mt-0.5 block">۳۸۹۲</span>
-          </div>
-          <div className="bg-[#b8bab8] p-3 sharp border border-[#9ea19e]">
-            <span className="text-[#444] font-sans block text-[10px] font-bold">کد پستی ثبتی:</span>
-            <span className="text-base font-black text-black mt-0.5 block">۸۴۳۶۱۸۵۵۰۳</span>
-          </div>
-          <div className="bg-[#b8bab8] p-3 sharp border border-[#9ea19e]">
-            <span className="text-[#444] font-sans block text-[10px] font-bold">تلفن کارخانه و ثبت:</span>
-            <span className="text-base font-black text-black mt-0.5 block">۰۳۱-۳۳۶۸۷۷۵۵</span>
-          </div>
-        </div>
-      </div>
-
-      {/* Industrial Capabilities Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-right">
-        <div className="aluminum-card sharp frame-shadow p-5 border border-[#b0b3b0] space-y-2">
-          <div className="w-10 h-10 sharp bg-[#18191a] text-white flex items-center justify-center font-bold">
-            <Factory className="w-5 h-5 text-[#cbcccb]" />
-          </div>
-          <h3 className="text-sm font-black text-black">کارخانه تولیدی ۱۵۰۰ متری</h3>
-          <p className="text-xs text-[#333] leading-relaxed font-medium">
-            تجهیز شده با خطوط برش دوکله دیجیتال، فرز CNC کپی‌روتر، پرس پانچ‌های پنوماتیک و خط اختصاصی بسته‌بندی حباب‌دار صنعتی.
+      <div className="w-full max-w-[1440px] mx-auto px-4 md:px-8 py-16 md:py-24 space-y-12" dir="rtl">
+        
+        {/* Intro */}
+        <section className="max-w-3xl text-center mx-auto space-y-6">
+          <ShieldCheck className="w-12 h-12 text-signal-500 mx-auto" />
+          <p className="text-lg text-steel-300 leading-relaxed font-vazir">
+            بیش از یک دهه تجربه در طراحی محاسباتی، نقشه‌کشی فاز ۲، ساخت دقیق کارخانه‌ای و اجرای در محل پروژه‌های مدرن نما و درب و پنجره‌های اختصاصی.
           </p>
-        </div>
+        </section>
 
-        <div className="aluminum-card sharp frame-shadow p-5 border border-[#b0b3b0] space-y-2">
-          <div className="w-10 h-10 sharp bg-[#18191a] text-white flex items-center justify-center font-bold">
-            <Building2 className="w-5 h-5 text-[#cbcccb]" />
-          </div>
-          <h3 className="text-sm font-black text-black">محاسبات مهندسی سازه و نما</h3>
-          <p className="text-xs text-[#333] leading-relaxed font-medium">
-            تحلیل بارهای استاتیکی باد، زلزله و ممان اینرسی دهانه‌های شیشه‌ای با نرم‌افزارهای تخصصی Orgadata آلمان و Sap2000.
-          </p>
-        </div>
-
-        <div className="aluminum-card sharp frame-shadow p-5 border border-[#b0b3b0] space-y-2">
-          <div className="w-10 h-10 sharp bg-[#18191a] text-white flex items-center justify-center font-bold">
-            <Award className="w-5 h-5 text-[#cbcccb]" />
-          </div>
-          <h3 className="text-sm font-black text-black">۱۰ سال ضمانت کتبی کیفیت</h3>
-          <p className="text-xs text-[#333] leading-relaxed font-medium">
-            تمامی پروژه‌های تحویل‌شده همراه با شناسنامه مشخصات فنی، گواهی اصالت بیلت ۶۰۶۳ و گارانتی هوابندی و آب‌بندی ۱۰ ساله ارائه می‌شوند.
-          </p>
-        </div>
-      </div>
-
-      {/* Timeline Section */}
-      <div className="aluminum-card sharp frame-shadow p-6 sm:p-8 border border-[#b0b3b0] space-y-6 text-right">
-        <div className="border-b border-[#a8aba8] pb-3">
-          <h2 className="text-base font-black text-black">مسیر رشد و توسعه نوآوران پنجره سپاهان</h2>
-          <p className="text-xs text-[#444] mt-0.5">گاه‌شمار کلیدی توسعه فناوری و ظرفیت‌های تولیدی شرکت</p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          {timeline.map((item, idx) => (
-            <div key={idx} className="bg-[#b8bab8] p-4 sharp border border-[#9ea19e] space-y-2">
-              <span className="text-sm font-black text-black font-mono block pb-1 border-b border-[#9ea19e]">
-                {item.year}
-              </span>
-              <h3 className="text-xs font-black text-black mt-1">{item.title}</h3>
-              <p className="text-[11px] text-[#333] leading-relaxed font-medium">{item.description}</p>
+        {/* Official Legal Registration */}
+        <section className="bg-ink-950 border border-ink-800 rounded-xl overflow-hidden metal-shadow">
+          <div className="bg-ink-900 border-b border-ink-800 p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <FileCheck className="w-8 h-8 text-signal-500" />
+              <div>
+                <h2 className="text-lg font-black text-white font-vazir">مشخصات ثبتی و حقوقی شرکت</h2>
+                <span className="text-sm text-steel-400 font-vazir">عضو رسمی اتحادیه صنایع آلومینیوم ایران</span>
+              </div>
             </div>
-          ))}
-        </div>
-      </div>
+            <span className="px-4 py-2 bg-ink-950 text-white text-sm font-mono font-bold rounded-lg border border-ink-800">
+              شناسه ملی: ۱۴۰۱۵۰۲۶۲۳۰
+            </span>
+          </div>
 
-      {/* CTA Bottom */}
-      <div className="aluminum-card sharp frame-shadow p-6 border border-[#b0b3b0] flex flex-col sm:flex-row items-center justify-between gap-4 text-right">
-        <div>
-          <h3 className="text-sm font-black text-black">مشاهده ۱۲ سیستم اختصاصی کاتالوگ متریال‌ها</h3>
-          <p className="text-xs text-[#444] mt-0.5">بررسی رندرهای سه‌بعدی CAD، مشخصات فنی و ویدیوهای انیمیشن</p>
-        </div>
-        <Link
-          href="/materials"
-          className="sharp px-5 py-2.5 bg-[#18191a] text-white hover:bg-[#333] text-xs font-bold border border-black shadow-sm transition-colors"
-        >
-          ورود به کاتالوگ مهندسی
-        </Link>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-px bg-ink-800 text-right">
+            <div className="bg-ink-950 p-6 space-y-2">
+              <span className="text-steel-400 font-vazir text-xs block">نام رسمی شرکت:</span>
+              <span className="text-white font-black font-vazir block">نوآوران پنجره سپاهان</span>
+            </div>
+            <div className="bg-ink-950 p-6 space-y-2">
+              <span className="text-steel-400 font-vazir text-xs block">شماره ثبت رسمی:</span>
+              <span className="text-white font-black font-mono block text-xl tracking-widest">3892</span>
+            </div>
+            <div className="bg-ink-950 p-6 space-y-2">
+              <span className="text-steel-400 font-vazir text-xs block">کد پستی ثبتی:</span>
+              <span className="text-white font-black font-mono block text-xl tracking-widest">8431811565</span>
+            </div>
+            <div className="bg-ink-950 p-6 space-y-2">
+              <span className="text-steel-400 font-vazir text-xs block">تلفن کارخانه و دفتر:</span>
+              <span className="text-white font-black font-mono block text-xl tracking-widest" dir="ltr">031-33687755</span>
+            </div>
+          </div>
+        </section>
+
+        {/* Industrial Capabilities */}
+        <section className="grid grid-cols-1 md:grid-cols-3 gap-6 text-right">
+          <div className="bg-ink-950 border border-ink-800 rounded-xl p-6 md:p-8 space-y-4 metal-shadow hover:border-signal-500/30 transition-colors">
+            <Factory className="w-10 h-10 text-signal-500" />
+            <h3 className="text-lg font-black text-white font-vazir">کارخانه تولیدی ۱۵۰۰ متری</h3>
+            <p className="text-sm text-steel-400 leading-relaxed font-vazir text-justify">
+              خط تولید کاملاً ایزوله با بهره‌گیری از اره‌های دوکله دیجیتال، دستگاه‌های پرس زاویه بادی، کپی‌فرز و سیستم‌های پولیش جهت حفظ کیفیت آنودایز و رنگ.
+            </p>
+          </div>
+
+          <div className="bg-ink-950 border border-ink-800 rounded-xl p-6 md:p-8 space-y-4 metal-shadow hover:border-signal-500/30 transition-colors">
+            <Building2 className="w-10 h-10 text-signal-500" />
+            <h3 className="text-lg font-black text-white font-vazir">تیم مهندسی و دپارتمان فنی</h3>
+            <p className="text-sm text-steel-400 leading-relaxed font-vazir text-justify">
+              تیم مجرب متشکل از مهندسین معماری و عمران جهت تهیه نقشه‌های شاپ‌دراوینگ (فاز ۲)، متره دقیق و محاسبات ممان اینرسی پروفیل‌ها.
+            </p>
+          </div>
+
+          <div className="bg-ink-950 border border-ink-800 rounded-xl p-6 md:p-8 space-y-4 metal-shadow hover:border-signal-500/30 transition-colors">
+            <Award className="w-10 h-10 text-signal-500" />
+            <h3 className="text-lg font-black text-white font-vazir">کنترل کیفیت (QC) سه‌مرحله‌ای</h3>
+            <p className="text-sm text-steel-400 leading-relaxed font-vazir text-justify">
+              تست دقیق برش، بازبینی کیفیت اسمبل و کنترل نهایی آب‌بندی پیش از ارسال. بسته‌بندی با فوم و سلفون جهت جلوگیری از آسیب در حمل و نصب.
+            </p>
+          </div>
+        </section>
+
+        {/* Timeline */}
+        <section className="bg-ink-900 border border-ink-800 rounded-xl p-8 md:p-12 metal-shadow text-right">
+          <h2 className="text-2xl font-black text-white font-vazir border-r-4 border-signal-500 pr-4 mb-10">
+            مسیر توسعه و پیشرفت ما
+          </h2>
+          <div className="space-y-8 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-ink-800 before:to-transparent">
+            {timeline.map((item, idx) => (
+              <div key={idx} className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
+                <div className="flex items-center justify-center w-10 h-10 rounded-full border-4 border-ink-900 bg-signal-500 text-white font-bold font-mono text-xs shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 shadow-[0_0_15px_rgba(171,0,23,0.5)] relative z-10">
+                  {item.year}
+                </div>
+                <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-ink-950 p-5 rounded-xl border border-ink-800 shadow-sm text-right">
+                  <h4 className="text-lg font-bold text-white font-vazir mb-2">{item.title}</h4>
+                  <p className="text-sm text-steel-400 font-vazir leading-relaxed text-justify">{item.description}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
       </div>
-    </div>
+    </>
   );
 }

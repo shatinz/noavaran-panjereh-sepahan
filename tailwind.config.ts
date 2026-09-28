@@ -10,38 +10,40 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        charcoal: {
-          950: "#0c0e12",
-          900: "#14171d",
-          850: "#1b2028",
-          800: "#222832",
-          700: "#2f3846",
-          600: "#414d5e",
+        ink: {
+          950: "#0a0002",
+          900: "#1e0004",
+          800: "#330009",
         },
-        bronze: {
-          50: "#fdf8ee",
-          100: "#faefd5",
-          200: "#f5dda8",
-          300: "#efc674",
-          400: "#e6ab41",
-          500: "#c78d22",
-          600: "#ad6f19",
-          700: "#895017",
-          800: "#704019",
-          900: "#5d3618",
+        blood: {
+          900: "#4a000a",
+          800: "#6b000e",
+          700: "#8b0012",
         },
-        titanium: {
-          50: "#f8fafc",
-          100: "#f1f5f9",
-          200: "#e2e8f0",
-          300: "#cbd5e1",
-          400: "#94a3b8",
-          500: "#64748b",
+        signal: {
+          500: "#ab0017",
+          400: "#d1001c",
+        },
+        steel: {
+          100: "#fefefe",
+          200: "#e3e4e6",
+          300: "#c8c8ca",
+          400: "#b0b0b0",
+          500: "#969696",
+        },
+        copper: {
+          400: "#e6c3b8",
+          500: "#cca699",
+          600: "#b38c80",
         },
       },
       fontFamily: {
         vazir: ["Vazirmatn", "system-ui", "-apple-system", "sans-serif"],
         inter: ["Inter", "system-ui", "-apple-system", "sans-serif"],
+      },
+      backgroundImage: {
+        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+        'metal-brushed': 'linear-gradient(90deg, rgba(255,255,255,0.45) 0%, rgba(200,202,200,0.2) 15%, rgba(255,255,255,0.6) 35%, rgba(188,190,188,0.25) 55%, rgba(255,255,255,0.55) 75%, rgba(205,207,205,0.2) 90%, rgba(255,255,255,0.4) 100%), repeating-linear-gradient(0deg, rgba(255,255,255,0.22) 0px, rgba(255,255,255,0.22) 2px, transparent 2px, transparent 5px), repeating-linear-gradient(0deg, rgba(0,0,0,0.065) 0px, rgba(0,0,0,0.065) 1px, transparent 1px, transparent 3px)',
       },
     },
   },

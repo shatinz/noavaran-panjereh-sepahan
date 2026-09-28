@@ -1,210 +1,166 @@
-'use client';
+"use client";
 
-import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
-import { usePathname } from 'next/navigation';
-import { Menu, X, Phone, PlaySquare, Package, Flame, Award, Headset, Layers, Video, FileText, ChevronDown } from 'lucide-react';
+import React, { useState } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import { Menu, X, ChevronDown, Phone } from "lucide-react";
+import { usePathname } from "next/navigation";
+import { Button } from "./ui/Button";
+import { withBasePath } from "@/lib/media";
+import settingsData from "@/data/settings.json";
 
-export default function Header() {
+export function Header() {
   const [isOpen, setIsOpen] = useState(false);
-  const [moreOpen, setMoreOpen] = useState(false);
   const pathname = usePathname();
+  const phone = settingsData.factoryPhones[0];
 
-  useEffect(() => {
-    setIsOpen(false);
-    setMoreOpen(false);
-  }, [pathname]);
+  React.useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setIsOpen(false);
+    };
+    if (isOpen) {
+      document.addEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = '';
+    };
+  }, [isOpen]);
 
-  const tabs = [
-    { id: 'motion', href: '/#tab-motion', label: 'موشن نما و پنجره', icon: PlaySquare },
-    { id: 'products', href: '/#tab-products', label: 'نمایش محصولات', icon: Package },
-    { id: 'materials', href: '/materials', label: 'کاتالوگ متریال‌ها', icon: Layers, isPage: true },
-    { id: 'bestsellers', href: '/#tab-bestsellers', label: 'محصولات جدید و پرفروش', icon: Flame },
-    { id: 'resume', href: '/#tab-resume', label: 'رزومه و نمونه‌کارها', icon: Award },
-    { id: 'contact', href: '/#tab-contact', label: 'تماس با ما و ارتباط', icon: Headset },
-  ];
-
-  const moreLinks = [
-    { href: '/videos', label: 'ویدیوهای آموزشی و تست', icon: Video },
-    { href: '/projects', label: 'آرشیو ۵۰+ پروژه شاخص', icon: Award },
-    { href: '/calculator', label: 'محاسبه‌گر آنلاین پیش‌فاکتور', icon: Package },
-    { href: '/articles', label: 'دانشنامه و مقالات مهندسی', icon: FileText },
+  const navLinks = [
+    { href: "/", label: "خانه" },
+    { href: "/services", label: "خدمات" },
+    { href: "/materials", label: "محصولات" },
+    { href: "/projects", label: "پروژه‌ها" },
+    { href: "/videos", label: "ویدیوها" },
+    { href: "/articles", label: "مقالات" },
+    { href: "/calculator", label: "ماشین‌حساب" },
+    { href: "/about", label: "درباره ما" },
+    { href: "/contact", label: "ارتباط با ما" },
   ];
 
   return (
-    <header className="sticky top-0 z-50 w-full max-w-[1440px] mx-auto px-3 sm:px-6 pt-2 pb-1">
-      {/* Aluminum Header Bar - Sharp 0px corners, #cbcccb with zoomed brushed texture, subtle all-around shadow */}
-      <div className="aluminum-bar sharp frame-shadow px-4 sm:px-6 h-[60px] flex items-center justify-between border border-[#b0b3b0]">
-        
-        {/* RIGHT: Logo & Brand Name (in RTL) */}
-        <Link href="/" className="flex items-center gap-2.5 sm:gap-3 group">
-          <div className="relative w-9 h-9 sm:w-10 sm:h-10 shrink-0 flex items-center justify-center group-hover:scale-105 transition-transform">
-            <Image
-              src="/images/icon.svg"
-              alt="لوگوی نوآوران پنجره سپاهان"
-              width={40}
-              height={40}
-              className="w-full h-full object-contain"
-              priority
-            />
-          </div>
+    <header className="sticky top-0 z-50 w-full" dir="rtl">
+      {/* Aluminum Header Bar */}
+      <div className="bg-metal-brushed metal-shadow border-b border-steel-200">
+        <div className="max-w-[1440px] mx-auto px-4 h-20 flex items-center justify-between">
+          
+          {/* RIGHT: Logo */}
+          <Link href="/" className="flex items-center gap-3 group">
+            <div className="relative w-12 h-12 shrink-0 group-hover:scale-105 transition-transform">
+              <Image
+                src={withBasePath("/images/icon.svg")}
+                alt="نوآوران پنجره سپاهان"
+                fill
+                className="object-contain"
+                priority
+              />
+            </div>
+            <div className="flex flex-col text-ink-950 leading-tight">
+              <span className="text-sm md:text-base font-black tracking-tight font-vazir">
+                نوآوران پنجره سپاهان
+              </span>
+              <span className="text-[10px] md:text-xs font-bold font-sans tracking-widest uppercase opacity-70">
+                Noavaran Panjereh
+              </span>
+            </div>
+          </Link>
 
-          <div className="flex flex-col text-right leading-[1.1]">
-            <span className="text-xs sm:text-[13px] font-black text-black tracking-tight block">
-              نوآوران پنجره سپاهان
-            </span>
-            <span className="text-[9px] text-[#444] font-bold font-mono tracking-wider uppercase block">
-              Noavaran Panjereh
-            </span>
-          </div>
-        </Link>
-
-        {/* CENTER / LEFT: Sharp Tabs Navigation */}
-        <nav className="hidden xl:flex items-center gap-1.5">
-          {tabs.map((tab) => {
-            const Icon = tab.icon;
-            const isMaterials = tab.href === '/materials';
-            return (
+          {/* CENTER: Navigation */}
+          <nav className="hidden lg:flex items-center gap-1 xl:gap-2">
+            {navLinks.map((link) => (
               <Link
-                key={tab.id}
-                href={tab.href}
-                className={`sharp px-2.5 py-1.5 text-xs font-black transition-all border flex items-center gap-1.5 frame-shadow-hover ${
-                  pathname === tab.href
-                    ? 'bg-[#18191a] text-white border-black'
-                    : 'text-[#1a1a1a] hover:bg-[#18191a] hover:text-white border-transparent hover:border-black'
+                key={link.href}
+                href={link.href}
+                className={`px-3 py-2 text-sm font-bold font-vazir transition-all relative group ${
+                  pathname === link.href
+                    ? "text-signal-500"
+                    : "text-ink-900 hover:text-signal-500"
                 }`}
               >
-                <Icon className="w-3.5 h-3.5 opacity-70" />
-                <span>{tab.label}</span>
-                {isMaterials && (
-                  <span className="px-1.5 py-0.2 bg-black text-[#cbcccb] text-[9px] font-mono font-bold sharp">
-                    ۱۲ سیستم
-                  </span>
-                )}
-              </Link>
-            );
-          })}
-
-          {/* More Dropdown */}
-          <div className="relative">
-            <button
-              onClick={() => setMoreOpen(!moreOpen)}
-              onMouseEnter={() => setMoreOpen(true)}
-              className="sharp px-2 py-1.5 text-xs font-bold text-[#222] hover:bg-[#18191a] hover:text-white transition-all flex items-center gap-1 border border-transparent hover:border-black"
-            >
-              <span>سایر بخش‌ها</span>
-              <ChevronDown className="w-3 h-3 opacity-60" />
-            </button>
-
-            {moreOpen && (
-              <div
-                onMouseLeave={() => setMoreOpen(false)}
-                className="absolute left-0 top-full mt-1 w-52 aluminum-card sharp frame-shadow p-2 border border-[#b0b3b0] space-y-1 z-50 animate-in fade-in"
-              >
-                {moreLinks.map((ml) => {
-                  const Icon = ml.icon;
-                  return (
-                    <Link
-                      key={ml.href}
-                      href={ml.href}
-                      onClick={() => setMoreOpen(false)}
-                      className="sharp flex items-center gap-2 px-2.5 py-2 text-xs font-bold text-black hover:bg-[#18191a] hover:text-white transition-colors"
-                    >
-                      <Icon className="w-3.5 h-3.5 opacity-70" />
-                      <span>{ml.label}</span>
-                    </Link>
-                  );
-                })}
-              </div>
-            )}
-          </div>
-        </nav>
-
-        {/* LEFT: Official Phones with Sharp Corners */}
-        <div className="hidden sm:flex items-center gap-2">
-          <a
-            href="tel:03133687755"
-            className="sharp px-3 py-1.5 bg-[#18191a] text-white text-xs font-black tracking-wider flex items-center gap-1.5 hover:bg-[#333] transition-colors border border-black shadow-sm"
-            title="تلفن رسمی شرکت"
-          >
-            <Phone className="w-3.5 h-3.5 text-[#cbcccb]" />
-            <span className="font-mono">۰۳۱-۳۳۶۸۷۷۵۵</span>
-          </a>
-          <a
-            href="tel:0314144"
-            className="sharp px-2.5 py-1.5 bg-[#cbcccb] text-black text-xs font-black tracking-wider flex items-center gap-1 hover:bg-[#b8bab8] transition-colors border border-black shadow-sm"
-            title="خط ۴ رقمی"
-          >
-            <span className="font-mono">۰۳۱-۴۱۴۴</span>
-          </a>
-        </div>
-
-        {/* Mobile Hamburger Button */}
-        <button
-          onClick={() => setIsOpen(!isOpen)}
-          className="xl:hidden p-2 text-black hover:bg-black/10 sharp border border-transparent transition-colors"
-          aria-label="منوی سایت"
-        >
-          {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-        </button>
-      </div>
-
-      {/* Mobile Drawer Menu */}
-      {isOpen && (
-        <div className="xl:hidden mt-1.5 aluminum-bar sharp frame-shadow p-3 space-y-1.5 border border-[#b0b3b0]">
-          {tabs.map((tab) => {
-            const Icon = tab.icon;
-            return (
-              <Link
-                key={tab.id}
-                href={tab.href}
-                onClick={() => setIsOpen(false)}
-                className="sharp block px-3 py-2 text-xs font-bold text-[#1a1a1a] hover:bg-[#18191a] hover:text-white transition-colors border border-transparent hover:border-black flex items-center justify-between"
-              >
-                <div className="flex items-center gap-2">
-                  <Icon className="w-4 h-4" />
-                  <span>{tab.label}</span>
-                </div>
-                {tab.href === '/materials' && (
-                  <span className="px-1.5 py-0.5 bg-black text-white text-[9px] font-mono sharp">
-                    ۱۲ سیستم
-                  </span>
-                )}
-              </Link>
-            );
-          })}
-
-          <div className="pt-2 border-t border-[#b0b3b0] space-y-1">
-            {moreLinks.map((ml) => (
-              <Link
-                key={ml.href}
-                href={ml.href}
-                onClick={() => setIsOpen(false)}
-                className="sharp block px-3 py-1.5 text-xs text-[#333] hover:bg-black/10"
-              >
-                {ml.label}
+                {link.label}
+                <span className={`absolute bottom-0 right-0 w-full h-0.5 bg-signal-500 transition-transform origin-right ${pathname === link.href ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'}`} />
               </Link>
             ))}
-          </div>
+          </nav>
 
-          <div className="pt-2 border-t border-[#b0b3b0] grid grid-cols-2 gap-2">
+          {/* LEFT: Actions (EN pill, CTA, Phone, Hamburger) */}
+          <div className="flex items-center gap-3">
+            <div className="hidden items-center bg-ink-950 text-white text-[10px] font-bold px-2 py-1 rounded cursor-pointer hover:bg-ink-800 transition-colors">
+              EN
+            </div>
             <a
-              href="tel:03133687755"
-              className="sharp py-2 bg-[#18191a] text-white text-xs font-bold flex items-center justify-center gap-1.5"
+              href={`tel:${phone.replace(/\D/g, '')}`}
+              className="hidden md:flex items-center gap-2 text-ink-950 font-bold hover:text-signal-500 transition-colors font-sans"
             >
-              <Phone className="w-3.5 h-3.5 text-[#cbcccb]" />
-              <span className="font-mono">۰۳۱-۳۳۶۸۷۷۵۵</span>
+              <Phone className="w-4 h-4" />
+              <bdi dir="ltr" style={{ unicodeBidi: 'isolate' }}>{phone}</bdi>
             </a>
-            <a
-              href="tel:0314144"
-              className="sharp py-2 bg-white text-black text-xs font-bold flex items-center justify-center gap-1 border border-black"
+            <Button variant="primary" href="/contact" className="hidden sm:inline-flex text-sm py-2 px-4">
+              درخواست مشاوره
+            </Button>
+
+            {/* Mobile Hamburger Button */}
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="lg:hidden p-2 text-ink-950 hover:bg-ink-900/10 rounded-md transition-colors"
+              aria-label="منوی سایت"
+              aria-expanded={isOpen}
             >
-              <span className="font-mono">خط ۴ رقمی: ۴۱۴۴</span>
+              <Menu className="w-6 h-6" />
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Mobile Drawer Menu Overlay */}
+      {isOpen && (
+        <div 
+          className="fixed inset-0 bg-black/60 z-40 lg:hidden backdrop-blur-sm"
+          onClick={() => setIsOpen(false)}
+        />
+      )}
+
+      {/* Mobile Drawer Content */}
+      <div 
+        className={`fixed top-0 right-0 h-full w-4/5 max-w-sm bg-ink-950 z-50 transform transition-transform duration-300 lg:hidden flex flex-col border-l border-ink-800 metal-shadow ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}
+      >
+        <div className="flex items-center justify-between p-4 border-b border-ink-800">
+          <span className="text-white font-bold font-vazir">منوی دسترسی</span>
+          <button onClick={() => setIsOpen(false)} className="p-2 text-steel-400 hover:text-white" aria-label="بستن منو">
+            <X className="w-6 h-6" />
+          </button>
+        </div>
+        <div className="flex flex-col p-4 overflow-y-auto flex-grow">
+          {navLinks.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              onClick={() => setIsOpen(false)}
+              className={`px-4 py-3 text-base font-bold font-vazir border-b border-ink-800/50 ${
+                pathname === link.href ? "text-signal-500" : "text-white hover:text-signal-500"
+              }`}
+            >
+              {link.label}
+            </Link>
+          ))}
+          <div className="pt-6 flex flex-col gap-4 mt-auto">
+            <Button variant="primary" href="/contact" className="w-full justify-center">
+              درخواست مشاوره
+            </Button>
+            <a
+              href={`tel:${phone.replace(/\D/g, '')}`}
+              className="w-full py-3 border border-steel-500 text-white rounded-lg flex items-center justify-center gap-2 font-sans font-bold"
+            >
+              <Phone className="w-4 h-4" />
+              <bdi dir="ltr" style={{ unicodeBidi: 'isolate' }}>{phone}</bdi>
             </a>
           </div>
         </div>
-      )}
+      </div>
     </header>
   );
 }

@@ -9,14 +9,12 @@
   --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
-/* ══════════════════════════════════════════════
-   BASE: Light Smooth Page Background (#e6e8e6)
-   Allows the darker #cbcccb cards to clearly stand out
-   ══════════════════════════════════════════════ */
 html, body {
-  background-color: #e6e8e6;
-  color: #18191a;
+  background-color: #0a0002;
+  color: #fefefe;
   font-family: var(--font-vazir);
+  font-size: 17px;
+  line-height: 1.9;
   overflow-x: hidden;
   min-width: 0;
   scroll-behavior: smooth;
@@ -24,124 +22,99 @@ html, body {
   padding: 0;
 }
 
+h1, h2, h3, h4, h5, h6 {
+  line-height: 1.25;
+}
+
 body {
-  background-color: #e6e8e6;
-  background-image:
-    linear-gradient(
-      90deg,
-      rgba(255, 255, 255, 0.45) 0%,
-      rgba(235, 237, 235, 0.25) 25%,
-      rgba(255, 255, 255, 0.5) 50%,
-      rgba(235, 237, 235, 0.25) 75%,
-      rgba(255, 255, 255, 0.45) 100%
-    ),
-    repeating-linear-gradient(
-      0deg,
-      rgba(0, 0, 0, 0.018) 0px,
-      rgba(0, 0, 0, 0.018) 1px,
-      transparent 1px,
-      transparent 4px
-    );
+  /* Black-red canvas */
+  background-image: linear-gradient(
+    to bottom,
+    #ab0017 0%,
+    #6b000e 25%,
+    #1e0004 70%,
+    #0a0002 100%
+  );
+  background-attachment: fixed;
 }
 
-/* ══════════════════════════════════════════════
-   BRUSHED ALUMINUM #cbcccb WITH ENLARGED TEXTURE
-   Darker than background, sharp 0px angles, clear brushed striations
-   ══════════════════════════════════════════════ */
-.aluminum-card,
-.aluminum-bar,
-.aluminum-surface {
-  background-color: #cbcccb !important;
-  background-image:
-    /* High-contrast metallic specular gradient */
-    linear-gradient(
-      90deg,
-      rgba(255, 255, 255, 0.45) 0%,
-      rgba(200, 202, 200, 0.2) 15%,
-      rgba(255, 255, 255, 0.6) 35%,
-      rgba(188, 190, 188, 0.25) 55%,
-      rgba(255, 255, 255, 0.55) 75%,
-      rgba(205, 207, 205, 0.2) 90%,
-      rgba(255, 255, 255, 0.4) 100%
-    ),
-    /* Zoomed-in horizontal brushed aluminum grain (prominent striations) */
-    repeating-linear-gradient(
-      0deg,
-      rgba(255, 255, 255, 0.22) 0px,
-      rgba(255, 255, 255, 0.22) 2px,
-      transparent 2px,
-      transparent 5px
-    ),
-    repeating-linear-gradient(
-      0deg,
-      rgba(0, 0, 0, 0.065) 0px,
-      rgba(0, 0, 0, 0.065) 1px,
-      transparent 1px,
-      transparent 3px
-    ) !important;
-  border: 1px solid #b0b3b0;
-  border-radius: 0px !important;
+/* Base focus rings */
+:focus-visible {
+  outline: 2px solid #ab0017;
+  outline-offset: 2px;
 }
 
-/* ══════════════════════════════════════════════
-   SUBTLE ALL-AROUND DROP SHADOW
-   Surrounds headers, cards, images, and descriptions
-   so they distinctively pop from the background
-   ══════════════════════════════════════════════ */
-.frame-shadow,
-.subtle-allaround-shadow {
-  box-shadow: 0 0 14px rgba(0, 0, 0, 0.13), 0 2px 6px rgba(0, 0, 0, 0.07) !important;
+/* Brushed aluminum base utility */
+.bg-metal-brushed {
+  background-color: #cbcccb;
+  background-image: 
+    linear-gradient(90deg, rgba(255, 255, 255, 0.45) 0%, rgba(200, 202, 200, 0.2) 15%, rgba(255, 255, 255, 0.6) 35%, rgba(188, 190, 188, 0.25) 55%, rgba(255, 255, 255, 0.55) 75%, rgba(205, 207, 205, 0.2) 90%, rgba(255, 255, 255, 0.4) 100%),
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.22) 0px, rgba(255, 255, 255, 0.22) 2px, transparent 2px, transparent 5px),
+    repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.065) 0px, rgba(0, 0, 0, 0.065) 1px, transparent 1px, transparent 3px);
+  border: 1px solid #e3e4e6;
 }
 
-.frame-shadow-hover {
+.bg-copper-brushed {
+  background-color: #cca699;
+  background-image: 
+    linear-gradient(90deg, rgba(255, 255, 255, 0.3) 0%, rgba(185, 132, 118, 0.2) 15%, rgba(230, 201, 189, 0.4) 35%, rgba(204, 166, 153, 0.1) 55%, rgba(230, 201, 189, 0.3) 75%, rgba(185, 132, 118, 0.2) 90%, rgba(255, 255, 255, 0.2) 100%),
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.15) 0px, rgba(255, 255, 255, 0.15) 2px, transparent 2px, transparent 5px),
+    repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.08) 0px, rgba(0, 0, 0, 0.08) 1px, transparent 1px, transparent 3px);
+  border: 1px solid #e6c9bd;
+}
+
+/* Soft shadow for metals */
+.metal-shadow {
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3), 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.metal-shadow-hover {
   transition: all 0.25s ease-in-out;
 }
-.frame-shadow-hover:hover {
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2), 0 4px 10px rgba(0, 0, 0, 0.12) !important;
+
+.metal-shadow-hover:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), 0 4px 10px rgba(0, 0, 0, 0.25);
 }
 
-/* Sharp angle enforcement (0px border-radius) */
-.sharp {
-  border-radius: 0px !important;
-}
-
-/* ══════════════════════════════════════════════
-   ANIMATIONS & MOTION
-   ══════════════════════════════════════════════ */
-@keyframes windowSlide {
-  0% { transform: translateX(0); }
-  50% { transform: translateX(-40%); }
-  100% { transform: translateX(0); }
-}
-
-@keyframes lightSweep {
+@keyframes metalSweep {
   0% { transform: translateX(-150%) skewX(-25deg); opacity: 0; }
   50% { opacity: 0.35; }
   100% { transform: translateX(250%) skewX(-25deg); opacity: 0; }
 }
 
-.animate-window-slide {
-  animation: windowSlide 8s ease-in-out infinite;
+.animate-metal-sweep {
+  animation: metalSweep 6s infinite;
 }
 
-.animate-light-sweep {
-  animation: lightSweep 6s infinite;
+@media (prefers-reduced-motion: reduce) {
+  html, body {
+    scroll-behavior: auto;
+  }
+  .animate-metal-sweep {
+    animation: none;
+  }
 }
 
-/* ══════════════════════════════════════════════
-   SCROLLBAR (Brushed Aluminum Style)
-   ══════════════════════════════════════════════ */
 ::-webkit-scrollbar {
   width: 7px;
   height: 7px;
 }
 ::-webkit-scrollbar-track {
-  background: #e6e8e6;
+  background: #1e0004;
 }
 ::-webkit-scrollbar-thumb {
-  background: #b0b3b0;
-  border-radius: 0px !important;
+  background: #ab0017;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #808380;
+  background: #d1001c;
+}
+
+/* Progressive enhancement for Reveal */
+.js .reveal-wrapper:not(.is-revealed) {
+  opacity: 0;
+  transform: translateY(2rem);
+}
+.reveal-wrapper.is-revealed {
+  opacity: 1;
+  transform: translateY(0);
 }
