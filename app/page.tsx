@@ -5,6 +5,7 @@ import { Services } from "@/components/home/Services";
 import { SystemsGrid } from "@/components/home/SystemsGrid";
 import { FeaturedProjects } from "@/components/home/FeaturedProjects";
 import { Process } from "@/components/home/Process";
+import { DistributionMap } from "@/components/home/DistributionMap";
 import { CtaBand } from "@/components/home/CtaBand";
 
 export default function Home() {
@@ -30,6 +31,8 @@ export default function Home() {
       <div className="bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-blood-900/10 via-[#0a0002] to-[#0a0002]">
         <Process />
       </div>
+
+      <DistributionMap />
       <CtaBand />
     </main>
   );
