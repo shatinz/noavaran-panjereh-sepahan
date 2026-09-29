@@ -1,0 +1,154 @@
+{
+  "projectPath": "C:\\Users\\PC\\prj\\noavaran",
+  "url": "https://shatinz.github.io/noavaran-panjereh-sepahan/",
+  "normalizedPath": "/noavaran-panjereh-sepahan",
+  "macroPrompt": "",
+  "autoTrigger": false,
+  "pins": [
+    {
+      "id": "pin_1790692690611_7zsp",
+      "index": 1,
+      "url": "https://shatinz.github.io/noavaran-panjereh-sepahan/",
+      "normalizedPath": "/noavaran-panjereh-sepahan",
+      "prompt": "delete the rictangle around it i should be directly on the page.",
+      "anchor": {
+        "tagName": "div",
+        "testId": null,
+        "stableId": null,
+        "cssSelector": "main.min-h-screen.bg-transparent > section.jsx-d464459b5a137e1c.relative > div.jsx-d464459b5a137e1c.relative > div.jsx-d464459b5a137e1c.relative",
+        "xpath": "/html[1]/body[1]/main[1]/main[1]/section[3]/div[2]/div[2]",
+        "textQuote": {
+          "exact": "تهران و البرز\nمشهد\nتبریز\nشیراز\nاهواز\nبندرعباس و کیش\nمازندران و گیلان\nکرمان\nیزد\nکرمانشاه و غرب\nاصفهان"
+        },
+        "geometry": {
+          "docX": 1517,
+          "docY": 5853.74560546875,
+          "offsetFromElementLeft": 989.8637084960938,
+          "offsetFromElementTop": 208.53036499023438,
+          "rect": {
+            "width": 1000,
+            "height": 1044.3326416015625
+          }
+        },
+        "computedStyles": {
+          "color": "rgb(255, 255, 255)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "fontSize": "17px",
+          "fontWeight": "400",
+          "display": "block"
+        },
+        "outerHtml": "<div class=\"jsx-d464459b5a137e1c relative w-full max-w-[1000px] mx-auto bg-gradient-to-b from-[#1a0208]/90 via-[#26030c]/80 to-[#120105]/95 rounded-3xl border border-[#6b000e]/40 p-4 sm:p-8 md:p-10 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.9),0_0_40px_rgba(171,0,23,0.15)] overflow-hidden\"><div class=\"j"
+      },
+      "createdAt": 1790692690611
+    },
+    {
+      "id": "pin_1790692766138_ikbm",
+      "index": 2,
+      "url": "https://shatinz.github.io/noavaran-panjereh-sepahan/",
+      "normalizedPath": "/noavaran-panjereh-sepahan",
+      "prompt": "ma\nke the numbers dropping down with animaiton.",
+      "anchor": {
+        "tagName": "div",
+        "testId": null,
+        "stableId": null,
+        "cssSelector": "main.min-h-screen.bg-transparent > section.relative.z-20 > div.reveal-wrapper.transition-all > div.bg-metal-brushed.metal-shadow",
+        "xpath": "/html[1]/body[1]/main[1]/main[1]/section[2]/div[1]/div[1]",
+        "textQuote": {
+          "exact": "+۲۰\nسال تجربه\n+۵۳\nپروژه اجرایی\nناعدد\nمتر مربع مساحت کارخانه\n۱۲\nسیستم آلومینیوم"
+        },
+        "geometry": {
+          "docX": 830,
+          "docY": 1014.361572265625,
+          "offsetFromElementLeft": 497.3728942871094,
+          "offsetFromElementTop": 21.088287353515625,
+          "rect": {
+            "width": 1389.000732421875,
+            "height": 172.24575805664062
+          }
+        },
+        "computedStyles": {
+          "color": "rgb(255, 255, 255)",
+          "backgroundColor": "rgb(203, 204, 203)",
+          "fontSize": "17px",
+          "fontWeight": "400",
+          "display": "grid"
+        },
+        "outerHtml": "<div class=\"bg-metal-brushed metal-shadow rounded-2xl p-6 sm:p-10 grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-4 divide-x divide-x-reverse divide-steel-300\"><div class=\"flex flex-col items-center justify-center text-center px-4\"><span class=\"text-4xl md:text-5xl font-black text-signal-500 font-vazir"
+      },
+      "createdAt": 1790692766138
+    },
+    {
+      "id": "pin_1790692860722_l2a5",
+      "index": 3,
+      "url": "https://shatinz.github.io/noavaran-panjereh-sepahan/",
+      "normalizedPath": "/noavaran-panjereh-sepahan",
+      "prompt": "change this with a lighter colour.",
+      "anchor": {
+        "tagName": "span",
+        "testId": null,
+        "stableId": null,
+        "cssSelector": "section.py-16.md\\:py-24 > div.reveal-wrapper.transition-all > div.mb-12.text-center > span.inline-block.text-signal-500",
+        "xpath": "/html[1]/body[1]/main[1]/main[1]/div[1]/section[1]/div[1]/div[1]/span[1]",
+        "textQuote": {
+          "exact": "تخصص ما در صنعت آلومینیوم"
+        },
+        "geometry": {
+          "docX": 1004,
+          "docY": 1348.6723022460938,
+          "offsetFromElementLeft": 91.16455078125,
+          "offsetFromElementTop": 6.387725830078125,
+          "rect": {
+            "width": 228.56637573242188,
+            "height": 21.257061004638672
+          }
+        },
+        "computedStyles": {
+          "color": "rgb(171, 0, 23)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "fontSize": "14.875px",
+          "fontWeight": "700",
+          "display": "inline-block"
+        },
+        "outerHtml": "<span class=\"inline-block text-signal-500 font-bold tracking-widest text-xs md:text-sm mb-3 font-vazir uppercase\"><span class=\"inline-block w-2 h-2 bg-signal-500 rounded-sm ml-2 align-middle \"></span>تخصص ما در صنعت آلومینیوم</span>"
+      },
+      "createdAt": 1790692860722
+    },
+    {
+      "id": "pin_1790693059619_yu61",
+      "index": 4,
+      "url": "https://shatinz.github.io/noavaran-panjereh-sepahan/",
+      "normalizedPath": "/noavaran-panjereh-sepahan",
+      "prompt": "we dont need a seperate frame here. big dots for each number and numbers seperated from each other",
+      "anchor": {
+        "tagName": "div",
+        "testId": null,
+        "stableId": null,
+        "cssSelector": "div.reveal-wrapper.transition-all > div.group.relative > div.p-5.bg-gradient-to-b > div.flex.flex-wrap",
+        "xpath": "/html[1]/body[1]/main[1]/main[1]/div[2]/section[1]/div[3]/div[3]/div[1]/div[3]/div[1]",
+        "textQuote": {
+          "exact": "۴۲ - ۴۷ - ۵۹ - ۹۰ - ۱۰۰ میلی‌متر\n۴۴ - ۵۱.۱ میلی‌متر"
+        },
+        "geometry": {
+          "docX": 930,
+          "docY": 3077.361572265625,
+          "offsetFromElementLeft": 221.36651611328125,
+          "offsetFromElementTop": 34.5826416015625,
+          "rect": {
+            "width": 283.38629150390625,
+            "height": 53.37217330932617
+          }
+        },
+        "computedStyles": {
+          "color": "rgb(255, 255, 255)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "fontSize": "17px",
+          "fontWeight": "400",
+          "display": "flex"
+        },
+        "outerHtml": "<div class=\"flex flex-wrap items-center justify-center gap-1.5 mt-auto\"><span class=\"text-[10px] md:text-xs font-bold text-ink-800 bg-white/50 border border-white/80 px-2 py-0.5 rounded shadow-sm\">۴۲ - ۴۷ - ۵۹ - ۹۰ - ۱۰۰ میلی‌متر</span><span class=\"text-[10px] md:text-xs font-bold text-ink-800 bg-wh"
+      },
+      "createdAt": 1790693059619
+    }
+  ],
+  "timestamp": 1790693071708
+}
