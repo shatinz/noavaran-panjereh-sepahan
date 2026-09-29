@@ -10,6 +10,31 @@ interface MetalCardProps {
   className?: string;
 }
 
+function renderSpecItems(spec: string) {
+  // If spec has multiple numbers separated by hyphens (e.g. "۴۲ - ۴۷ - ۵۹ - ۹۰ - ۱۰۰ میلی‌متر")
+  if (spec.includes("-")) {
+    const parts = spec.split("-").map((p) => p.trim()).filter(Boolean);
+    return (
+      <div className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 font-vazir text-xs md:text-sm font-black text-ink-950">
+        {parts.map((part, idx) => (
+          <React.Fragment key={idx}>
+            {idx > 0 && (
+              <span className="w-2 h-2 rounded-full bg-signal-500 inline-block shrink-0 shadow-sm" aria-hidden="true" />
+            )}
+            <span>{part}</span>
+          </React.Fragment>
+        ))}
+      </div>
+    );
+  }
+
+  return (
+    <span className="font-vazir text-xs md:text-sm font-bold text-ink-950">
+      {spec}
+    </span>
+  );
+}
+
 export function MetalCard({ imageSrc, imageAlt, title, badge, specs, className = "" }: MetalCardProps) {
   return (
     <div className={`group relative bg-metal-brushed metal-shadow metal-shadow-hover rounded-xl overflow-hidden flex flex-col ${className}`}>
@@ -39,11 +64,11 @@ export function MetalCard({ imageSrc, imageAlt, title, badge, specs, className =
         <h3 className="font-bold text-base md:text-lg text-ink-950 font-vazir text-center mb-3 line-clamp-2 leading-tight">{title}</h3>
         
         {specs && specs.length > 0 && (
-          <div className="flex flex-wrap items-center justify-center gap-1.5 mt-auto">
+          <div className="flex flex-col items-center justify-center gap-1.5 mt-auto pt-2.5 border-t border-steel-400/40 w-full">
             {specs.slice(0, 2).map((spec, i) => (
-              <span key={i} className="text-[10px] md:text-xs font-bold text-ink-800 bg-white/50 border border-white/80 px-2 py-0.5 rounded shadow-sm">
-                {spec}
-              </span>
+              <div key={i} className="w-full flex items-center justify-center">
+                {renderSpecItems(spec)}
+              </div>
             ))}
           </div>
         )}

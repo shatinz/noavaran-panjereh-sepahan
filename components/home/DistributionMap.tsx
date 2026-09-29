@@ -237,8 +237,8 @@ export function DistributionMap() {
           </div>
         </div>
 
-        {/* Interactive Map Visual Area */}
-        <div className="relative w-full max-w-[1000px] mx-auto bg-gradient-to-b from-[#1a0208]/90 via-[#26030c]/80 to-[#120105]/95 rounded-3xl border border-[#6b000e]/40 p-4 sm:p-8 md:p-10 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.9),0_0_40px_rgba(171,0,23,0.15)] overflow-hidden">
+        {/* Interactive Map Visual Area - Directly on page background without enclosing rectangle */}
+        <div className="relative w-full max-w-[1000px] mx-auto p-2 sm:p-4">
           
           {/* Central Isfahan Badge on Mobile */}
           <div className="sm:hidden mb-4 p-3 bg-ink-950/80 rounded-xl border border-signal-500/30 flex items-center justify-between text-xs font-vazir">
@@ -595,7 +595,7 @@ export function DistributionMap() {
           )}
 
           {/* Bottom Highlights Strip */}
-          <div className="mt-8 pt-6 border-t border-ink-800/80 grid grid-cols-1 sm:grid-cols-3 gap-4 text-right">
+          <div className="mt-8 pt-6 border-t border-[#ab0017]/20 grid grid-cols-1 sm:grid-cols-3 gap-4 text-right">
             <div className="flex items-start gap-3 p-3 rounded-xl bg-ink-950/50 border border-white/5">
               <Building className="w-5 h-5 text-signal-500 shrink-0 mt-0.5" />
               <div>

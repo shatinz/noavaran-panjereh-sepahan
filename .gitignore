@@ -33,5 +33,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-
 .vercel
+
+# VCP runtime files
+/.gemini/
+FEEDBACK_PROMPT.md
+agent_inbox.md

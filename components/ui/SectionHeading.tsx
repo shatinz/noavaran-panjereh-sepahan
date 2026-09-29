@@ -4,8 +4,8 @@ export function SectionHeading({ title, subtitle, className = "", centered = tru
   return (
     <div className={`mb-12 ${centered ? 'text-center' : 'text-right'} ${className}`}>
       {subtitle && (
-        <span className="inline-block text-signal-500 font-bold tracking-widest text-xs md:text-sm mb-3 font-vazir uppercase">
-          <span className={`inline-block w-2 h-2 bg-signal-500 rounded-sm ml-2 align-middle ${centered ? '' : ''}`} />
+        <span className="inline-block text-steel-200 font-bold tracking-widest text-xs md:text-sm mb-3 font-vazir uppercase">
+          <span className="inline-block w-2 h-2 bg-signal-400 rounded-sm ml-2 align-middle" />
           {subtitle}
         </span>
       )}
