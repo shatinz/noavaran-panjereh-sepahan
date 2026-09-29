@@ -112,7 +112,7 @@ export default async function ProjectDetailPage({ params }: Props) {
               <div className="space-y-3 pt-2">
                 <a href="tel:03133687755" className="flex items-center justify-center gap-2 w-full py-3 bg-signal-500 hover:bg-signal-400 text-white font-bold rounded-lg transition-colors font-sans">
                   <Phone className="w-5 h-5" />
-                  <span dir="ltr">031-33687755</span>
+                  <bdi dir="ltr" style={{ unicodeBidi: 'isolate' }}>031-33687755</bdi>
                 </a>
                 <Link href="/calculator" className="flex items-center justify-center gap-2 w-full py-3 bg-ink-950 hover:bg-ink-800 text-white font-bold rounded-lg border border-ink-800 transition-colors font-vazir">
                   <Calculator className="w-5 h-5" />

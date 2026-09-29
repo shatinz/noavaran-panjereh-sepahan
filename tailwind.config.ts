@@ -38,7 +38,7 @@ const config: Config = {
         },
       },
       fontFamily: {
-        vazir: ["Vazirmatn", "system-ui", "-apple-system", "sans-serif"],
+        vazir: ["Vazirmatn", "Tahoma", "Arial", "system-ui", "-apple-system", "sans-serif"],
         inter: ["Inter", "system-ui", "-apple-system", "sans-serif"],
       },
       backgroundImage: {

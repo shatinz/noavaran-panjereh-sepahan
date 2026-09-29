@@ -84,7 +84,9 @@ export default async function AboutPage() {
             </div>
             <div className="bg-ink-950 p-6 space-y-2">
               <span className="text-steel-400 font-vazir text-xs block">تلفن کارخانه و دفتر:</span>
-              <span className="text-white font-black font-mono block text-xl tracking-widest" dir="ltr">031-33687755</span>
+              <span className="text-white font-black font-mono inline-block text-xl tracking-widest text-right" dir="ltr">
+                <bdi dir="ltr" style={{ unicodeBidi: 'isolate' }}>031-33687755</bdi>
+              </span>
             </div>
           </div>
         </section>

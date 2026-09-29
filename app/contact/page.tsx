@@ -68,7 +68,9 @@ export default function ContactPage() {
             </div>
             <div className="bg-ink-950 p-6 space-y-2">
               <span className="text-steel-400 font-vazir text-xs block">تلفن کارخانه و دفتر:</span>
-              <span className="text-white font-black font-mono block text-xl tracking-widest" dir="ltr">031-33687755</span>
+              <span className="text-white font-black font-mono inline-block text-xl tracking-widest text-right" dir="ltr">
+                <bdi dir="ltr" style={{ unicodeBidi: 'isolate' }}>031-33687755</bdi>
+              </span>
             </div>
           </div>
         </section>
@@ -191,7 +193,9 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <h3 className="text-sm font-bold text-white font-vazir mb-1">تلفن کارخانه و دفتر فروش</h3>
-                    <a href="tel:03133687755" className="text-lg font-black text-signal-500 font-mono tracking-widest block" dir="ltr">031 - 33687755</a>
+                    <a href="tel:03133687755" className="text-lg font-black text-signal-500 font-mono tracking-widest inline-block text-right" dir="ltr">
+                      <bdi dir="ltr" style={{ unicodeBidi: 'isolate' }}>031-33687755</bdi>
+                    </a>
                   </div>
                 </div>
 

@@ -490,10 +490,11 @@ export function DistributionMap() {
                         x={dx}
                         y={dy}
                         textAnchor={textAnchor}
+                        direction="rtl"
                         fill={isHovered ? "#ff4d6d" : "#fefefe"}
                         fontSize="15"
                         fontWeight="800"
-                        fontFamily="Vazirmatn, sans-serif"
+                        fontFamily="Vazirmatn, Tahoma, sans-serif"
                         className="drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)] transition-colors duration-200 select-none"
                       >
                         {city.name}
@@ -547,10 +548,11 @@ export function DistributionMap() {
                     x="0"
                     y="5"
                     textAnchor="middle"
+                    direction="rtl"
                     fill="#ffffff"
                     fontSize="16"
                     fontWeight="900"
-                    fontFamily="Vazirmatn, sans-serif"
+                    fontFamily="Vazirmatn, Tahoma, sans-serif"
                     className="drop-shadow-md select-none"
                   >
                     اصفهان
@@ -581,8 +583,8 @@ export function DistributionMap() {
                   </p>
                 </div>
               </div>
-              <div className="text-left shrink-0 self-end sm:self-center">
-                <span className="text-[11px] text-signal-400 font-mono font-bold block">
+              <div className="text-right sm:text-left shrink-0 self-start sm:self-center">
+                <span className="text-[11px] text-signal-400 font-vazir font-bold block">
                   ارسال مستقیم از کارخانه نجف‌آباد
                 </span>
                 <span className="text-[10px] text-steel-400 font-vazir block">
