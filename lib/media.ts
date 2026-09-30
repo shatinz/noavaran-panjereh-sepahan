@@ -10,10 +10,11 @@ export function withBasePath(path?: string): string {
 
 export const ServiceImageMap: Record<string, string> = {
   "aluminum-windows-doors": "/projects/proj-31.webp",
-  "frameless-facade": "/projects/proj-44.webp",
+  "curtain-wall-lamella": "/projects/proj-47.webp",
   "curtain-wall": "/projects/proj-47.webp",
+  "frameless-facade": "/projects/proj-44.webp",
+  "glass-balcony": "/projects/proj-12.webp",
   "composite-facade": "/projects/proj-3.webp",
-  "thermowood-facade": "/projects/proj-33.webp",
   "steel-glass-railings": "/projects/proj-5.webp",
 };
 

@@ -53,8 +53,8 @@ export function ProofStrip() {
   const toFa = (num: number | string) => Number(num).toLocaleString('fa-IR');
 
   const stats = [
-    { value: <bdi dir="ltr">{`+${toFa(yearsExp)}`}</bdi>, label: "سال تجربه" },
-    { value: <bdi dir="ltr">{`+${toFa(projectCount)}`}</bdi>, label: "پروژه اجرایی" },
+    { value: <bdi dir="ltr">+۳۰</bdi>, label: "سال تجربه" },
+    { value: <bdi dir="ltr">+۲۰۰۰</bdi>, label: "پروژه اجرایی" },
     { value: toFa(factoryArea), label: "متر مربع مساحت کارخانه" },
     { value: toFa(systemCount), label: "سیستم آلومینیوم" },
   ];

@@ -36,9 +36,11 @@ export default function RootLayout({
     email: settingsData.email,
     sameAs: [
       settingsData.socialLinks.instagram,
-      settingsData.socialLinks.linkedin,
+      settingsData.socialLinks.whatsapp,
+      (settingsData.socialLinks as any).eitaa || "https://eitaa.com/noavaranpanjereh",
       settingsData.socialLinks.telegram,
       settingsData.socialLinks.aparat,
+      settingsData.socialLinks.linkedin,
     ],
     openingHours: 'Mo,Tu,We,Sa,Su 08:00-17:00 Th 08:00-13:00'
   };
