@@ -1,0 +1,82 @@
+{
+  "projectPath": "C:\\Users\\PC\\prj\\noavaran",
+  "url": "https://shatinz.github.io/noavaran-panjereh-sepahan/projects/proj-1",
+  "normalizedPath": "/noavaran-panjereh-sepahan/projects/proj-1",
+  "macroPrompt": "",
+  "autoTrigger": false,
+  "pins": [
+    {
+      "id": "pin_1790756026751_311t",
+      "index": 1,
+      "url": "https://shatinz.github.io/noavaran-panjereh-sepahan/projects/proj-1",
+      "normalizedPath": "/noavaran-panjereh-sepahan/projects/proj-1",
+      "prompt": "background  image is not visible at all its covered by the red colour completely",
+      "anchor": {
+        "tagName": "div",
+        "testId": null,
+        "stableId": null,
+        "cssSelector": "body > main.flex-grow > div.relative.w-full > div.absolute.bg-cover",
+        "xpath": "/html[1]/body[1]/main[1]/div[1]/div[2]",
+        "textQuote": {
+          "exact": ""
+        },
+        "geometry": {
+          "docX": 1317,
+          "docY": 144.25988698005676,
+          "offsetFromElementLeft": 1317,
+          "offsetFromElementTop": 13.380645751953125,
+          "rect": {
+            "width": 2054.2373046875,
+            "height": 293.23797607421875
+          }
+        },
+        "computedStyles": {
+          "color": "rgb(255, 255, 255)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "fontSize": "17px",
+          "fontWeight": "400",
+          "display": "block"
+        },
+        "outerHtml": "<div class=\"absolute inset-0 opacity-20 bg-cover bg-center mix-blend-overlay\" style=\"background-image: url(&quot;/noavaran-panjereh-sepahan/projects/proj-1.webp&quot;);\"></div>"
+      },
+      "createdAt": 1790756026751
+    },
+    {
+      "id": "pin_1790756056300_njec",
+      "index": 2,
+      "url": "https://shatinz.github.io/noavaran-panjereh-sepahan/projects/proj-1",
+      "normalizedPath": "/noavaran-panjereh-sepahan/projects/proj-1",
+      "prompt": "delete the year section",
+      "anchor": {
+        "tagName": "div",
+        "testId": null,
+        "stableId": null,
+        "cssSelector": "div.space-y-8 > div.bg-ink-950.border > div.space-y-4.text-sm > div.flex.items-start",
+        "xpath": "/html[1]/body[1]/main[1]/div[2]/div[1]/div[2]/div[1]/div[1]/div[3]",
+        "textQuote": {
+          "exact": "سال اجرا\n۱۴۰۰ - ۱۴۰۳"
+        },
+        "geometry": {
+          "docX": 588,
+          "docY": 832.6158142089844,
+          "offsetFromElementLeft": 211.76412963867188,
+          "offsetFromElementTop": 22.4639892578125,
+          "rect": {
+            "width": 353.125,
+            "height": 46.75141143798828
+          }
+        },
+        "computedStyles": {
+          "color": "rgb(200, 200, 202)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "fontSize": "14.875px",
+          "fontWeight": "400",
+          "display": "flex"
+        },
+        "outerHtml": "<div class=\"flex items-start gap-3\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-calendar w-5 h-5 text-signal-500 shrink-0\"><path d=\"M8 2v4\"></"
+      },
+      "createdAt": 1790756056300
+    }
+  ],
+  "timestamp": 1790756077372
+}

@@ -1,0 +1,82 @@
+{
+  "projectPath": "C:\\Users\\PC\\prj\\noavaran",
+  "url": "https://shatinz.github.io/noavaran-panjereh-sepahan/projects",
+  "normalizedPath": "/noavaran-panjereh-sepahan/projects",
+  "macroPrompt": "",
+  "autoTrigger": false,
+  "pins": [
+    {
+      "id": "pin_1790755879240_4bfi",
+      "index": 1,
+      "url": "https://shatinz.github.io/noavaran-panjereh-sepahan/projects",
+      "normalizedPath": "/noavaran-panjereh-sepahan/projects",
+      "prompt": "delete this categorization",
+      "anchor": {
+        "tagName": "div",
+        "testId": null,
+        "stableId": null,
+        "cssSelector": "body > main.flex-grow > div.w-full.mx-auto > div.flex.justify-center",
+        "xpath": "/html[1]/body[1]/main[1]/div[2]/div[1]",
+        "textQuote": {
+          "exact": "همه پروژه‌ها (53)\nبانکی و دولتی\nتجاری و اداری\nمسکونی و ویلایی\nتعاونی و مجتمع‌ها"
+        },
+        "geometry": {
+          "docX": 1480,
+          "docY": 480,
+          "offsetFromElementLeft": 1138.8806457519531,
+          "offsetFromElementTop": 3.764129638671875,
+          "rect": {
+            "width": 1372.0162353515625,
+            "height": 95.72740173339844
+          }
+        },
+        "computedStyles": {
+          "color": "rgb(255, 255, 255)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "fontSize": "17px",
+          "fontWeight": "400",
+          "display": "flex"
+        },
+        "outerHtml": "<div class=\"flex justify-center\"><div class=\"flex flex-wrap items-center gap-2 mb-12\"><button class=\"px-6 py-2.5 rounded-full text-sm font-bold font-vazir transition-all border bg-signal-500 text-white border-signal-500 shadow-[0_0_15px_rgba(171,0,23,0.3)]\">همه پروژه‌ها (53)</button><button class=\"p"
+      },
+      "createdAt": 1790755879240
+    },
+    {
+      "id": "pin_1790755929762_ov8m",
+      "index": 2,
+      "url": "https://shatinz.github.io/noavaran-panjereh-sepahan/projects",
+      "normalizedPath": "/noavaran-panjereh-sepahan/projects",
+      "prompt": "delete this",
+      "anchor": {
+        "tagName": "div",
+        "testId": null,
+        "stableId": null,
+        "cssSelector": "main.flex-grow > div.relative.w-full > div.relative.z-10 > div.text-signal-500.font-bold",
+        "xpath": "/html[1]/body[1]/main[1]/div[1]/div[2]/div[1]",
+        "textQuote": {
+          "exact": "بیش از ۵۵ پروژه موفق در سراسر کشور"
+        },
+        "geometry": {
+          "docX": 1073,
+          "docY": 245,
+          "offsetFromElementLeft": 534.9526977539062,
+          "offsetFromElementTop": 12.125701904296875,
+          "rect": {
+            "width": 978.1426391601562,
+            "height": 21.257061004638672
+          }
+        },
+        "computedStyles": {
+          "color": "rgb(171, 0, 23)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "fontSize": "14.875px",
+          "fontWeight": "700",
+          "display": "block"
+        },
+        "outerHtml": "<div class=\"text-signal-500 font-bold font-sans tracking-widest uppercase text-sm\">بیش از ۵۵ پروژه موفق در سراسر کشور</div>"
+      },
+      "createdAt": 1790755929762
+    }
+  ],
+  "timestamp": 1790755952698
+}

@@ -1,0 +1,226 @@
+{
+  "projectPath": "C:\\Users\\PC\\prj\\noavaran",
+  "url": "https://shatinz.github.io/noavaran-panjereh-sepahan/",
+  "normalizedPath": "/noavaran-panjereh-sepahan",
+  "macroPrompt": "",
+  "autoTrigger": false,
+  "pins": [
+    {
+      "id": "pin_1790755192627_udaf",
+      "index": 1,
+      "url": "https://shatinz.github.io/noavaran-panjereh-sepahan/",
+      "normalizedPath": "/noavaran-panjereh-sepahan",
+      "prompt": "+ 30 years of experience \n2000 projects",
+      "anchor": {
+        "tagName": "div",
+        "testId": null,
+        "stableId": null,
+        "cssSelector": "main.min-h-screen.bg-transparent > section.jsx-c1d1c4a17ef087c5.relative > div.reveal-wrapper.transition-all > div.jsx-c1d1c4a17ef087c5.bg-metal-brushed",
+        "xpath": "/html[1]/body[1]/main[1]/main[1]/section[2]/div[1]/div[1]",
+        "textQuote": {
+          "exact": "+۲۰\nسال تجربه\n+۵۳\nپروژه اجرایی\nناعدد\nمتر مربع مساحت کارخانه\n۱۲\nسیستم آلومینیوم"
+        },
+        "geometry": {
+          "docX": 1702,
+          "docY": 1494.3219604492188,
+          "offsetFromElementLeft": 854.1451416015625,
+          "offsetFromElementTop": 12.91314697265625,
+          "rect": {
+            "width": 1389.0360107421875,
+            "height": 173.33155822753906
+          }
+        },
+        "computedStyles": {
+          "color": "rgb(255, 255, 255)",
+          "backgroundColor": "rgb(203, 204, 203)",
+          "fontSize": "17px",
+          "fontWeight": "400",
+          "display": "grid"
+        },
+        "outerHtml": "<div class=\"jsx-c1d1c4a17ef087c5 bg-metal-brushed metal-shadow rounded-2xl p-6 sm:p-10 grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-4 divide-x divide-x-reverse divide-steel-300 overflow-hidden\"><div class=\"jsx-c1d1c4a17ef087c5 flex flex-col items-center justify-center text-center px-4 overflow-hidde"
+      },
+      "createdAt": 1790755192627
+    },
+    {
+      "id": "pin_1790755209680_32ev",
+      "index": 2,
+      "url": "https://shatinz.github.io/noavaran-panjereh-sepahan/",
+      "normalizedPath": "/noavaran-panjereh-sepahan",
+      "prompt": "delete thermowood",
+      "anchor": {
+        "tagName": "div",
+        "testId": null,
+        "stableId": null,
+        "cssSelector": "div.reveal-wrapper.transition-all > a.relative.block > div.relative.h-full > div.bg-copper-brushed.pb-8",
+        "xpath": "/html[1]/body[1]/main[1]/main[1]/div[1]/section[1]/div[2]/div[5]/a[1]/div[2]/div[1]",
+        "textQuote": {
+          "exact": "05\nنمای چوبی ترموود (Thermowood)"
+        },
+        "geometry": {
+          "docX": 1200,
+          "docY": 1946.525390625,
+          "offsetFromElementLeft": 395.86865234375,
+          "offsetFromElementTop": 17.270477294921875,
+          "rect": {
+            "width": 446.0098876953125,
+            "height": 121.2394027709961
+          }
+        },
+        "computedStyles": {
+          "color": "rgb(255, 255, 255)",
+          "backgroundColor": "rgb(204, 166, 153)",
+          "fontSize": "17px",
+          "fontWeight": "400",
+          "display": "block"
+        },
+        "outerHtml": "<div class=\"bg-copper-brushed pb-8 pt-6 px-6 shadow-sm\"><div class=\"flex items-center gap-4\"><span class=\"text-5xl font-black text-[#1e0004] font-sans tracking-tighter drop-shadow-sm\">05</span><h3 class=\"text-xl font-bold text-[#1e0004] font-vazir drop-shadow-sm line-clamp-2\">نمای چوبی ترموود (Therm"
+      },
+      "createdAt": 1790755209680
+    },
+    {
+      "id": "pin_1790755253426_ckeq",
+      "index": 3,
+      "url": "https://shatinz.github.io/noavaran-panjereh-sepahan/",
+      "normalizedPath": "/noavaran-panjereh-sepahan",
+      "prompt": "اضافه کردن سیستم جامبالکنی",
+      "anchor": {
+        "tagName": "section",
+        "testId": null,
+        "stableId": "services",
+        "cssSelector": "#services",
+        "xpath": "/html[1]/body[1]/main[1]/main[1]/div[1]/section[1]",
+        "textQuote": {
+          "exact": "تخصص ما در صنعت آلومینیوم\nخدمات و راهکارهای مهندسی\n01\nنمای کرتین وال / لامل (Curtain Wall)\n\nپیشرفته‌"
+        },
+        "geometry": {
+          "docX": 1721,
+          "docY": 1618.525390625,
+          "offsetFromElementLeft": 1413.8672485351562,
+          "offsetFromElementTop": 385.0155334472656,
+          "rect": {
+            "width": 1439.9893798828125,
+            "height": 1197.7401123046875
+          }
+        },
+        "computedStyles": {
+          "color": "rgb(255, 255, 255)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "fontSize": "17px",
+          "fontWeight": "400",
+          "display": "block"
+        },
+        "outerHtml": "<section id=\"services\" class=\"py-16 md:py-24 max-w-[1440px] mx-auto px-4 sm:px-6 relative z-10\" dir=\"rtl\"><div class=\"reveal-wrapper transition-all duration-700 ease-out is-revealed \" style=\"transition-delay:0ms\"><div class=\"mb-12 text-center \"><span class=\"inline-block text-steel-200 font-bold trac"
+      },
+      "createdAt": 1790755253426
+    },
+    {
+      "id": "pin_1790755277828_90ve",
+      "index": 4,
+      "url": "https://shatinz.github.io/noavaran-panjereh-sepahan/",
+      "normalizedPath": "/noavaran-panjereh-sepahan",
+      "prompt": "درب و پنجره بیاد گزینه اول",
+      "anchor": {
+        "tagName": "section",
+        "testId": null,
+        "stableId": "services",
+        "cssSelector": "#services",
+        "xpath": "/html[1]/body[1]/main[1]/main[1]/div[1]/section[1]",
+        "textQuote": {
+          "exact": "تخصص ما در صنعت آلومینیوم\nخدمات و راهکارهای مهندسی\n01\nنمای کرتین وال / لامل (Curtain Wall)\n\nپیشرفته‌"
+        },
+        "geometry": {
+          "docX": 1726,
+          "docY": 1546.525390625,
+          "offsetFromElementLeft": 1418.8672485351562,
+          "offsetFromElementTop": 313.0155334472656,
+          "rect": {
+            "width": 1439.9893798828125,
+            "height": 1197.7401123046875
+          }
+        },
+        "computedStyles": {
+          "color": "rgb(255, 255, 255)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "fontSize": "17px",
+          "fontWeight": "400",
+          "display": "block"
+        },
+        "outerHtml": "<section id=\"services\" class=\"py-16 md:py-24 max-w-[1440px] mx-auto px-4 sm:px-6 relative z-10\" dir=\"rtl\"><div class=\"reveal-wrapper transition-all duration-700 ease-out is-revealed \" style=\"transition-delay:0ms\"><div class=\"mb-12 text-center \"><span class=\"inline-block text-steel-200 font-bold trac"
+      },
+      "createdAt": 1790755277828
+    },
+    {
+      "id": "pin_1790755338394_90q0",
+      "index": 5,
+      "url": "https://shatinz.github.io/noavaran-panjereh-sepahan/",
+      "normalizedPath": "/noavaran-panjereh-sepahan",
+      "prompt": "add whatsapp insta and eita. information is available in thr project dir",
+      "anchor": {
+        "tagName": "div",
+        "testId": null,
+        "stableId": null,
+        "cssSelector": "div.mx-auto.px-4 > div.grid.grid-cols-1 > div.space-y-6 > div.flex.items-center",
+        "xpath": "/html[1]/body[1]/footer[1]/div[2]/div[1]/div[1]/div[1]",
+        "textQuote": {
+          "exact": ""
+        },
+        "geometry": {
+          "docX": 1657,
+          "docY": 7738.5537109375,
+          "offsetFromElementLeft": 248.61376953125,
+          "offsetFromElementTop": 1.45977783203125,
+          "rect": {
+            "width": 304.7492980957031,
+            "height": 42.49646759033203
+          }
+        },
+        "computedStyles": {
+          "color": "rgb(255, 255, 255)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "fontSize": "17px",
+          "fontWeight": "400",
+          "display": "flex"
+        },
+        "outerHtml": "<div class=\"flex items-center gap-4\"><a href=\"https://instagram.com/noavaran.panjereh\" target=\"_blank\" rel=\"noopener noreferrer\" class=\"w-10 h-10 rounded-full bg-ink-900 flex items-center justify-center text-white hover:bg-signal-500 transition-colors\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\""
+      },
+      "createdAt": 1790755338394
+    },
+    {
+      "id": "pin_1790755376037_ihk9",
+      "index": 6,
+      "url": "https://shatinz.github.io/noavaran-panjereh-sepahan/",
+      "normalizedPath": "/noavaran-panjereh-sepahan",
+      "prompt": "add info@noavaranpanjereh.ir",
+      "anchor": {
+        "tagName": "div",
+        "testId": null,
+        "stableId": null,
+        "cssSelector": "div.mx-auto.px-4 > div.grid.grid-cols-1 > div.space-y-6 > div.flex.items-center",
+        "xpath": "/html[1]/body[1]/footer[1]/div[2]/div[1]/div[1]/div[1]",
+        "textQuote": {
+          "exact": ""
+        },
+        "geometry": {
+          "docX": 1467,
+          "docY": 7759.5537109375,
+          "offsetFromElementLeft": 58.61376953125,
+          "offsetFromElementTop": 22.45977783203125,
+          "rect": {
+            "width": 304.7492980957031,
+            "height": 42.49646759033203
+          }
+        },
+        "computedStyles": {
+          "color": "rgb(255, 255, 255)",
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "fontSize": "17px",
+          "fontWeight": "400",
+          "display": "flex"
+        },
+        "outerHtml": "<div class=\"flex items-center gap-4\"><a href=\"https://instagram.com/noavaran.panjereh\" target=\"_blank\" rel=\"noopener noreferrer\" class=\"w-10 h-10 rounded-full bg-ink-900 flex items-center justify-center text-white hover:bg-signal-500 transition-colors\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\""
+      },
+      "createdAt": 1790755376037
+    }
+  ],
+  "timestamp": 1790755423772
+}
