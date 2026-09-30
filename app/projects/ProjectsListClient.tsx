@@ -1,40 +1,17 @@
 "use client";
 
-import React, { useState } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ProjectItem } from '@/lib/db';
-import { FilterChips } from '@/components/ui/FilterChips';
 import { ArrowLeft, MapPin } from 'lucide-react';
 import { withBasePath } from '@/lib/media';
 
 export function ProjectsListClient({ projects }: { projects: ProjectItem[] }) {
-  const [activeCategory, setActiveCategory] = useState<string>('all');
-
-  const categories = [
-    { id: 'all', label: `همه پروژه‌ها (${projects.length})` },
-    { id: 'بانکی و دولتی', label: 'بانکی و دولتی' },
-    { id: 'تجاری و اداری', label: 'تجاری و اداری' },
-    { id: 'مسکونی و ویلایی', label: 'مسکونی و ویلایی' },
-    { id: 'تعاونی و مجتمع‌ها', label: 'تعاونی و مجتمع‌ها' }
-  ];
-
-  const filtered = activeCategory === 'all'
-    ? projects
-    : projects.filter(p => p.category.includes(activeCategory) || activeCategory.includes(p.category));
-
   return (
     <div className="w-full max-w-[1440px] mx-auto px-4 md:px-8 py-12 space-y-8" dir="rtl">
-      <div className="flex justify-center">
-        <FilterChips 
-          categories={categories} 
-          activeCategory={activeCategory} 
-          onChange={setActiveCategory} 
-        />
-      </div>
-
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {filtered.map(p => (
+        {projects.map(p => (
           <Link
             key={p.id}
             href={`/projects/${p.id}`}

@@ -17,7 +17,6 @@ export default async function ProjectsPage() {
       <Breadcrumbs items={[{ label: 'پروژه‌های اجرا شده' }]} />
       <PageHero 
         title="پروژه‌های شاخص و نمونه‌کارهای اجرایی" 
-        subtitle="بیش از ۵۵ پروژه موفق در سراسر کشور"
       />
       <ProjectsListClient projects={projects} />
     </>

@@ -1,29 +1,29 @@
 import React from "react";
 import { SectionHeading } from "../ui/SectionHeading";
 import { Reveal } from "../ui/Reveal";
-import { PenTool, Cog, Factory, Hammer } from "lucide-react";
+import { PenTool, Cog, Factory, Hammer, ShieldCheck } from "lucide-react";
 
 export function Process() {
   const steps = [
     {
-      title: "طراحی و معماری",
-      desc: "طراحی تخصصی نماهای مدرن شیشه‌ای و در و پنجره‌های آلومینیومی.",
+      title: "طراحی و محاسبات",
+      desc: "تهیه نقشه‌های شاپ‌دراوینگ، محاسبات استاتیکی ممان اینرسی و انتخاب سیستم مناسب.",
       icon: PenTool,
     },
     {
-      title: "مهندسی سیستم‌ها",
-      desc: "ارزیابی و انتخاب پروفیل‌های اختصاصی متناسب با نیاز پروژه.",
-      icon: Cog,
-    },
-    {
-      title: "تولید صنعتی",
-      desc: "تولید ساختارمند و یکپارچه قطعات در کارخانه اختصاصی شرکت.",
+      title: "ساخت و تولید",
+      desc: "تولید صنعتی و مونتاژ دقیق در کارخانه ۱۵۰۰ متری مجهز به ماشین‌آلات پیشرفته دیجیتال.",
       icon: Factory,
     },
     {
-      title: "نصب و اجرا",
-      desc: "اجرای دقیق نمای ساختمان و پنجره‌ها توسط تیم‌های اجرایی مجرب.",
+      title: "نصب و تحویل",
+      desc: "حمل ایمن، نصب مهندسی، رگلاژ دقیق، تست هوابندی و آب‌بندی و تحویل رسمی پروژه.",
       icon: Hammer,
+    },
+    {
+      title: "پشتیبانی و گارانتی",
+      desc: "ارائه خدمات پس از فروش مداوم، تامین قطعات و ضمانت‌نامه کتبی کیفیت اجرا.",
+      icon: ShieldCheck,
     },
   ];
 

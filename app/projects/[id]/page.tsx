@@ -4,7 +4,7 @@ import { getProjects } from '@/lib/db';
 import { PageHero } from '@/components/ui/PageHero';
 import { Breadcrumbs } from '@/components/ui/Breadcrumbs';
 import { Gallery } from '@/components/ui/Gallery';
-import { MapPin, Calendar, Layers, ShieldCheck } from 'lucide-react';
+import { MapPin, Layers, ShieldCheck } from 'lucide-react';
 import Link from 'next/link';
 import { Phone, Calculator } from 'lucide-react';
 
@@ -87,16 +87,6 @@ export default async function ProjectDetailPage({ params }: Props) {
                     </div>
                   </div>
                 </div>
-
-                {project.year && (
-                  <div className="flex items-start gap-3">
-                    <Calendar className="w-5 h-5 text-signal-500 shrink-0" />
-                    <div>
-                      <strong className="block text-white mb-1">سال اجرا</strong>
-                      <span>{project.year}</span>
-                    </div>
-                  </div>
-                )}
               </div>
             </div>
 

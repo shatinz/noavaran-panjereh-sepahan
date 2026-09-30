@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import iranProvinces from "@/data/iran_provinces.json";
-import { MapPin, Building, ShieldCheck, Truck, RefreshCw, Sparkles, Navigation } from "lucide-react";
+import { MapPin, Building, ShieldCheck, Truck, Navigation } from "lucide-react";
 
 interface CityNode {
   id: string;
@@ -195,10 +195,6 @@ export function DistributionMap() {
     };
   };
 
-  const handleReplay = () => {
-    triggerCameraZoomSequence();
-  };
-
   return (
     <section
       ref={sectionRef}
@@ -212,29 +208,12 @@ export function DistributionMap() {
       <div className="relative z-10 max-w-[1440px] mx-auto px-4 sm:px-6">
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto space-y-4 mb-10 md:mb-14">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#ab0017]/15 border border-[#ab0017]/30 text-signal-400 text-xs font-mono font-bold tracking-widest uppercase shadow-[0_0_15px_rgba(171,0,23,0.3)]">
-            <Sparkles className="w-3.5 h-3.5 animate-pulse" />
-            <span>NATIONWIDE DISTRIBUTION</span>
-          </div>
-
           <h2 className="text-3xl sm:text-5xl font-black font-vazir text-white tracking-tight">
             DISTRIBUTION
           </h2>
           <p className="text-base sm:text-lg text-steel-200 font-vazir leading-relaxed">
             طراحی مهندسی و ساخت صنعتی در کارخانه اصفهان؛ ارسال و اجرای تخصصی در سراسر ایران
           </p>
-
-          {/* Camera Replay / Interactive Control Pill */}
-          <div className="pt-2 flex items-center justify-center gap-3">
-            <button
-              onClick={handleReplay}
-              className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-ink-900/80 hover:bg-[#ab0017] text-steel-300 hover:text-white text-xs font-vazir font-bold border border-white/10 hover:border-[#ab0017] transition-all metal-shadow group"
-              title="مشاهده مجدد موشن زوم دوربین از اصفهان"
-            >
-              <RefreshCw className="w-3.5 h-3.5 group-hover:rotate-180 transition-transform duration-700" />
-              <span>پخش مجدد حرکت دوربین از اصفهان</span>
-            </button>
-          </div>
         </div>
 
         {/* Interactive Map Visual Area - Directly on page background without enclosing rectangle */}
