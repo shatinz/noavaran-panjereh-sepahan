@@ -3,14 +3,21 @@
 import React from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { LayoutDashboard, FileText, Image, Video, Settings, LogOut, ArrowRight, Building2 } from 'lucide-react';
+import { LayoutDashboard, FileText, Image, Video, Settings, LogOut, ArrowRight, Building2, Layers } from 'lucide-react';
 
 export default function AdminNav() {
   const pathname = usePathname();
   const router = useRouter();
 
   const handleLogout = async () => {
-    await fetch('/api/admin/auth', { method: 'DELETE' });
+    try {
+      await fetch('/api/admin/auth', { method: 'DELETE' });
+    } catch (e) {
+      // offline/static mode
+    }
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('noavaran_admin_session');
+    }
     router.push('/admin/login');
   };
 
@@ -18,6 +25,7 @@ export default function AdminNav() {
     { href: '/admin', label: 'داشبورد اصلی', icon: LayoutDashboard },
     { href: '/admin/articles', label: 'مدیریت مقالات', icon: FileText },
     { href: '/admin/projects', label: 'مدیریت پروژه‌ها', icon: Image },
+    { href: '/admin/materials', label: 'سیستم‌ها و متریال', icon: Layers },
     { href: '/admin/videos', label: 'ویدیوهای آموزشی', icon: Video },
     { href: '/admin/settings', label: 'اطلاعات تماس و شرکت', icon: Settings },
   ];

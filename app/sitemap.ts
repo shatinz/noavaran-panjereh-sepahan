@@ -5,52 +5,54 @@ import projectsData from '@/data/projects.json';
 import articlesData from '@/data/articles.json';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://noavaranpanjereh.com';
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://noavaranpanjereh.vercel.app';
+  const now = new Date();
 
-  const staticRoutes = [
-    '',
-    '/services',
-    '/materials',
-    '/projects',
-    '/about',
-    '/contact',
-    '/calculator',
-    '/videos',
-    '/articles',
-  ].map((route) => ({
-    url: `${baseUrl}${route}`,
-    lastModified: new Date(),
-    changeFrequency: 'weekly' as const,
-    priority: route === '' ? 1 : 0.8,
+  const coreRoutes: Array<{ route: string; priority: number; changeFrequency: MetadataRoute.Sitemap[number]['changeFrequency'] }> = [
+    { route: '', priority: 1.0, changeFrequency: 'daily' },
+    { route: '/services', priority: 0.9, changeFrequency: 'weekly' },
+    { route: '/materials', priority: 0.9, changeFrequency: 'weekly' },
+    { route: '/projects', priority: 0.9, changeFrequency: 'weekly' },
+    { route: '/articles', priority: 0.8, changeFrequency: 'weekly' },
+    { route: '/videos', priority: 0.8, changeFrequency: 'weekly' },
+    { route: '/about', priority: 0.8, changeFrequency: 'monthly' },
+    { route: '/contact', priority: 0.85, changeFrequency: 'monthly' },
+  ];
+
+  const staticPages: MetadataRoute.Sitemap = coreRoutes.map((item) => ({
+    url: `${baseUrl}${item.route}`,
+    lastModified: now,
+    changeFrequency: item.changeFrequency,
+    priority: item.priority,
   }));
 
-  const services = servicesData.map((s) => ({
+  const services: MetadataRoute.Sitemap = servicesData.map((s) => ({
     url: `${baseUrl}/services/${s.slug}`,
-    lastModified: new Date(),
-    changeFrequency: 'monthly' as const,
-    priority: 0.7,
+    lastModified: now,
+    changeFrequency: 'weekly',
+    priority: 0.85,
   }));
 
-  const materials = materialsData.map((m) => ({
+  const materials: MetadataRoute.Sitemap = materialsData.map((m) => ({
     url: `${baseUrl}/materials/${m.id}`,
-    lastModified: new Date(),
-    changeFrequency: 'monthly' as const,
-    priority: 0.7,
+    lastModified: now,
+    changeFrequency: 'weekly',
+    priority: 0.8,
   }));
 
-  const projects = projectsData.map((p) => ({
+  const projects: MetadataRoute.Sitemap = projectsData.map((p) => ({
     url: `${baseUrl}/projects/${p.id}`,
-    lastModified: new Date(),
-    changeFrequency: 'monthly' as const,
-    priority: 0.6,
+    lastModified: now,
+    changeFrequency: 'monthly',
+    priority: 0.75,
   }));
 
-  const articles = articlesData.map((a) => ({
+  const articles: MetadataRoute.Sitemap = articlesData.map((a) => ({
     url: `${baseUrl}/articles/${a.slug}`,
-    lastModified: new Date(),
-    changeFrequency: 'monthly' as const,
-    priority: 0.6,
+    lastModified: now,
+    changeFrequency: 'monthly',
+    priority: 0.75,
   }));
 
-  return [...staticRoutes, ...services, ...materials, ...projects, ...articles];
+  return [...staticPages, ...services, ...materials, ...projects, ...articles];
 }

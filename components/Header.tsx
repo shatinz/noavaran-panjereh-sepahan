@@ -37,7 +37,6 @@ export function Header() {
     { href: "/projects", label: "پروژه‌ها" },
     { href: "/videos", label: "ویدیوها" },
     { href: "/articles", label: "مقالات" },
-    { href: "/calculator", label: "ماشین‌حساب" },
     { href: "/about", label: "درباره ما" },
     { href: "/contact", label: "ارتباط با ما" },
   ];

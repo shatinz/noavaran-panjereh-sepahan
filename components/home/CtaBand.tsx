@@ -1,7 +1,7 @@
 import React from "react";
 import { Reveal } from "../ui/Reveal";
 import { Button } from "../ui/Button";
-import { PhoneCall, Calculator } from "lucide-react";
+import { PhoneCall, Building2 } from "lucide-react";
 
 export function CtaBand() {
   return (
@@ -29,9 +29,9 @@ export function CtaBand() {
               <PhoneCall className="w-5 h-5" />
               درخواست مشاوره
             </Button>
-            <Button variant="outline" href="/calculator" className="w-full sm:w-auto text-lg px-8 py-4 gap-2 !border-ink-950 !text-ink-950 hover:!bg-ink-950/10">
-              <Calculator className="w-5 h-5" />
-              ماشین‌حساب متراژ
+            <Button variant="outline" href="/projects" className="w-full sm:w-auto text-lg px-8 py-4 gap-2 !border-ink-950 !text-ink-950 hover:!bg-ink-950/10">
+              <Building2 className="w-5 h-5" />
+              مشاهده نمونه‌پروژه‌ها
             </Button>
           </div>
         </div>

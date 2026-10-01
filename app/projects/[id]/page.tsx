@@ -6,19 +6,38 @@ import { Breadcrumbs } from '@/components/ui/Breadcrumbs';
 import { Gallery } from '@/components/ui/Gallery';
 import { MapPin, Layers, ShieldCheck } from 'lucide-react';
 import Link from 'next/link';
-import { Phone, Calculator } from 'lucide-react';
+import { Phone, MessageSquare } from 'lucide-react';
 
 interface Props {
   params: { id: string; };
 }
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://noavaranpanjereh.vercel.app';
+
 export async function generateMetadata({ params }: Props) {
   const projects = await getProjects();
   const project = projects.find(p => p.id === params.id);
   if (!project) return { title: 'Not Found' };
+  const fullImgUrl = project.image.startsWith('http') ? project.image : `${siteUrl}${project.image}`;
+
   return {
-    title: `${project.title} | پروژه‌های نوآوران پنجره سپاهان`,
+    title: `${project.title} (${project.location || 'اصفهان'}) | پروژه‌های نوآوران پنجره`,
     description: `پروژه ${project.title} واقع در ${project.location || 'اصفهان'} با اجرای ${project.systemsUsed?.join(' و ')}`,
+    alternates: {
+      canonical: `/projects/${project.id}`,
+    },
+    openGraph: {
+      title: `${project.title} | نوآوران پنجره سپاهان`,
+      description: `پروژه اجرایی ${project.title} در ${project.location || 'اصفهان'} با سیستم‌های ${project.systemsUsed?.join('، ')}`,
+      url: `${siteUrl}/projects/${project.id}`,
+      images: [{ url: fullImgUrl, alt: project.title }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: project.title,
+      description: `پروژه اجرایی ${project.title}`,
+      images: [fullImgUrl],
+    },
   };
 }
 
@@ -34,9 +53,60 @@ export default async function ProjectDetailPage({ params }: Props) {
 
   // Mock secondary images for the gallery if not provided, just repeat the main image
   const galleryImages = [project.image, project.image, project.image];
+  const fullImgUrl = project.image.startsWith('http') ? project.image : `${siteUrl}${project.image}`;
+
+  const breadcrumbsLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'صفحه اصلی',
+        item: siteUrl,
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'پروژه‌های اجرا شده',
+        item: `${siteUrl}/projects`,
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: project.title,
+        item: `${siteUrl}/projects/${project.id}`,
+      },
+    ],
+  };
+
+  const projectLd = {
+    '@context': 'https://schema.org',
+    '@type': 'CreativeWork',
+    name: project.title,
+    description: `پروژه ساختمانی ${project.title} با اجرای سیستم‌های ${project.systemsUsed?.join(' و ')} در ${project.location || 'اصفهان'}`,
+    image: fullImgUrl,
+    locationCreated: {
+      '@type': 'Place',
+      name: project.location || 'اصفهان',
+    },
+    creator: {
+      '@type': 'Organization',
+      name: 'نوآوران پنجره سپاهان',
+      url: siteUrl,
+    },
+  };
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbsLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(projectLd) }}
+      />
       <Breadcrumbs items={[
         { label: 'پروژه‌های اجرا شده', href: '/projects' },
         { label: project.title }
@@ -104,9 +174,9 @@ export default async function ProjectDetailPage({ params }: Props) {
                   <Phone className="w-5 h-5" />
                   <bdi dir="ltr" style={{ unicodeBidi: 'isolate' }}>031-33687755</bdi>
                 </a>
-                <Link href="/calculator" className="flex items-center justify-center gap-2 w-full py-3 bg-ink-950 hover:bg-ink-800 text-white font-bold rounded-lg border border-ink-800 transition-colors font-vazir">
-                  <Calculator className="w-5 h-5" />
-                  <span>ماشین‌حساب متراژ</span>
+                <Link href="/contact" className="flex items-center justify-center gap-2 w-full py-3 bg-ink-950 hover:bg-ink-800 text-white font-bold rounded-lg border border-ink-800 transition-colors font-vazir">
+                  <MessageSquare className="w-5 h-5 text-signal-500" />
+                  <span>استعلام و مشاوره فنی</span>
                 </Link>
               </div>
             </div>

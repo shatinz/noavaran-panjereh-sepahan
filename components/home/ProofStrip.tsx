@@ -3,10 +3,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Reveal } from "../ui/Reveal";
 
-import settingsData from "@/data/settings.json";
-import projectsData from "@/data/projects.json";
-import materialsData from "@/data/materials.json";
-
 export function ProofStrip() {
   const [isInView, setIsInView] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -43,20 +39,10 @@ export function ProofStrip() {
     };
   }, []);
 
-  const currentPersianYear = parseInt(new Intl.DateTimeFormat('en-US-u-ca-persian', {year: 'numeric'}).format(new Date()));
-  const yearsExp = currentPersianYear - settingsData.establishedYear;
-  const projectCount = projectsData.length;
-  const systemCount = materialsData.length;
-  const factoryAreaMatch = settingsData.factoryArea.match(/[\d۰-۹]+/);
-  const factoryArea = factoryAreaMatch ? factoryAreaMatch[0] : '';
-
-  const toFa = (num: number | string) => Number(num).toLocaleString('fa-IR');
-
   const stats = [
-    { value: <bdi dir="ltr">+۳۰</bdi>, label: "سال تجربه" },
-    { value: <bdi dir="ltr">+۲۰۰۰</bdi>, label: "پروژه اجرایی" },
-    { value: toFa(factoryArea), label: "متر مربع مساحت کارخانه" },
-    { value: toFa(systemCount), label: "سیستم آلومینیوم" },
+    { value: <bdi dir="ltr">+۳۰</bdi>, label: "سال تجربه درخشان" },
+    { value: <bdi dir="ltr">+۲۰۰۰</bdi>, label: "پروژه اجرایی موفق" },
+    { value: <bdi dir="ltr">+۱۲</bdi>, label: "سیستم اختصاصی آلومینیوم" },
   ];
 
   return (
@@ -64,7 +50,7 @@ export function ProofStrip() {
       <Reveal delay={200}>
         <div 
           ref={containerRef}
-          className="bg-metal-brushed metal-shadow rounded-2xl p-6 sm:p-10 grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-4 divide-x divide-x-reverse divide-steel-300 overflow-hidden"
+          className="bg-metal-brushed metal-shadow rounded-2xl p-6 sm:p-10 grid grid-cols-1 sm:grid-cols-3 gap-8 sm:gap-4 divide-y sm:divide-y-0 sm:divide-x sm:divide-x-reverse divide-steel-300 overflow-hidden"
         >
           {stats.map((stat, idx) => (
             <div key={idx} className="flex flex-col items-center justify-center text-center px-4 overflow-hidden">

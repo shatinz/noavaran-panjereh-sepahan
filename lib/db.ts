@@ -345,3 +345,36 @@ export async function getMaterialById(id: string): Promise<MaterialItem | null> 
   return list.find(m => m.id === id || m.code.toLowerCase() === id.toLowerCase()) || null;
 }
 
+export async function createMaterial(material: Omit<MaterialItem, 'id'> & { id?: string }): Promise<MaterialItem> {
+  const list = await getMaterials();
+  const generatedId = material.id || (material.code ? material.code.toLowerCase().replace(/[^a-z0-9]/g, '') : `mat-${Date.now()}`);
+  const newItem: MaterialItem = {
+    ...material,
+    id: generatedId,
+  };
+  list.unshift(newItem);
+  memoryMaterials = list;
+  writeJsonFile('materials.json', list);
+  return newItem;
+}
+
+export async function updateMaterial(id: string, updates: Partial<MaterialItem>): Promise<MaterialItem | null> {
+  const list = await getMaterials();
+  const index = list.findIndex(m => m.id === id || m.code.toLowerCase() === id.toLowerCase());
+  if (index === -1) return null;
+  list[index] = { ...list[index], ...updates };
+  memoryMaterials = list;
+  writeJsonFile('materials.json', list);
+  return list[index];
+}
+
+export async function deleteMaterial(id: string): Promise<boolean> {
+  const list = await getMaterials();
+  const filtered = list.filter(m => m.id !== id && m.code.toLowerCase() !== id.toLowerCase());
+  if (filtered.length === list.length) return false;
+  memoryMaterials = filtered;
+  writeJsonFile('materials.json', filtered);
+  return true;
+}
+
+

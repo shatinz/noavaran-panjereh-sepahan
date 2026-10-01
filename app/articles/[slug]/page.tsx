@@ -12,12 +12,45 @@ interface Props {
   params: { slug: string; };
 }
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://noavaranpanjereh.vercel.app';
+
+const toIsoDate = (persianDateStr: string) => {
+  const map: Record<string, string> = {
+    '۱۴۰۳/۰۴/۱۵': '2024-07-05',
+    '۱۴۰۳/۰۳/۲۰': '2024-06-09',
+    '۱۴۰۳/۰۲/۱۰': '2024-04-29',
+    '۱۴۰۳/۰۱/۲۵': '2024-04-14',
+  };
+  return map[persianDateStr] || '2024-07-01';
+};
+
 export async function generateMetadata({ params }: Props) {
   const article = await getArticleBySlug(params.slug);
   if (!article) return { title: 'Not Found' };
+  const imgSrc = withBasePath(article.image) || getLocalMediaFallback(article.slug, 'article');
+  const fullImgUrl = imgSrc.startsWith('http') ? imgSrc : `${siteUrl}${imgSrc}`;
+
   return {
     title: `${article.title} | دانشنامه نوآوران پنجره سپاهان`,
     description: article.excerpt,
+    alternates: {
+      canonical: `/articles/${article.slug}`,
+    },
+    openGraph: {
+      title: article.title,
+      description: article.excerpt,
+      url: `${siteUrl}/articles/${article.slug}`,
+      type: 'article',
+      publishedTime: toIsoDate(article.date),
+      authors: [article.author || 'نوآوران پنجره سپاهان'],
+      images: [{ url: fullImgUrl, alt: article.title }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: article.title,
+      description: article.excerpt,
+      images: [fullImgUrl],
+    },
   };
 }
 
@@ -31,9 +64,68 @@ export default async function ArticleDetailPage({ params }: Props) {
   if (!article) notFound();
 
   const imgSrc = withBasePath(article.image) || getLocalMediaFallback(article.slug, 'article');
+  const fullImgUrl = imgSrc.startsWith('http') ? imgSrc : `${siteUrl}${imgSrc}`;
+
+  const breadcrumbsLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'صفحه اصلی',
+        item: siteUrl,
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'دانشنامه و مقالات',
+        item: `${siteUrl}/articles`,
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: article.title,
+        item: `${siteUrl}/articles/${article.slug}`,
+      },
+    ],
+  };
+
+  const articleLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: article.title,
+    description: article.excerpt,
+    image: fullImgUrl,
+    datePublished: toIsoDate(article.date),
+    author: {
+      '@type': 'Person',
+      name: article.author || 'مهندسی نوآوران پنجره سپاهان',
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'نوآوران پنجره سپاهان',
+      logo: {
+        '@type': 'ImageObject',
+        url: `${siteUrl}/images/logo-white.png`,
+      },
+    },
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': `${siteUrl}/articles/${article.slug}`,
+    },
+  };
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbsLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleLd) }}
+      />
       <Breadcrumbs items={[
         { label: 'دانشنامه و مقالات', href: '/articles' },
         { label: article.title }

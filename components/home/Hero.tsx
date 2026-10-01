@@ -36,11 +36,14 @@ export function Hero() {
 
       <div className="relative z-10 max-w-[1440px] w-full mx-auto px-4 sm:px-6 text-center mt-8 md:mt-16">
         <Reveal>
-          <h1 className="text-5xl md:text-8xl font-black text-white mb-6 font-vazir drop-shadow-2xl">
+          <h1 className="text-4xl sm:text-6xl md:text-8xl font-black text-white mb-6 font-vazir drop-shadow-2xl">
             نوآوران پنجره سپاهان
+            <span className="block text-xl sm:text-2xl md:text-3xl text-signal-500 font-bold mt-3">
+              طراحی و تولید نمای کرتین‌وال و پنجره ترمال‌بریک
+            </span>
           </h1>
-          <h2 className="text-lg md:text-3xl text-steel-200 font-bold mb-10 max-w-3xl mx-auto font-vazir leading-relaxed text-shadow-sm">
-            طراحی محاسباتی و تولید صنعتی مدرن‌ترین سیستم‌های در، پنجره و نمای آلومینیومی
+          <h2 className="text-base sm:text-lg md:text-2xl text-steel-200 font-medium mb-10 max-w-3xl mx-auto font-vazir leading-relaxed text-shadow-sm">
+            تولید صنعتی انواع درب و پنجره دوجداره آلومینیوم ترمال‌بریک، نمای شیشه‌ای کرتین‌وال (لامل و فریم‌لس) و سیستم جام‌بالکنی در کارخانه ۱۵۰۰ متری اصفهان
           </h2>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">

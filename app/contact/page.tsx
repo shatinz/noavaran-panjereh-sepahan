@@ -1,35 +1,78 @@
-"use client";
-
-import React, { useState } from 'react';
+import React from 'react';
+import type { Metadata } from 'next';
 import { PageHero } from '@/components/ui/PageHero';
 import { Breadcrumbs } from '@/components/ui/Breadcrumbs';
-import { MapPin, Phone, Mail, Clock, Send, ShieldCheck, Factory, FileCheck, CheckCircle2 } from 'lucide-react';
+import { ContactFormClient } from '@/components/contact/ContactFormClient';
+import { MapPin, Phone, Clock, ShieldCheck, FileCheck } from 'lucide-react';
+import settingsData from '@/data/settings.json';
+
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://noavaranpanjereh.vercel.app';
+
+export const metadata: Metadata = {
+  title: 'تماس با ما | مشاوره تخصصی و استعلام قیمت نما و پنجره ترمال‌بریک',
+  description: 'راه‌های ارتباط با دفتر مهندسی فروش و کارخانه نوآوران پنجره سپاهان در اصفهان. تماس با ۳۳۶۸۷۷۵۵-۰۳۱ و موبایل ۰۹۳۰۱۵۴۵۸۵۸ جهت استعلام قیمت، برآورد متراژ و بازدید پروژه.',
+  alternates: {
+    canonical: '/contact',
+  },
+  openGraph: {
+    title: 'تماس با نوآوران پنجره سپاهان | استعلام قیمت و مشاوره مهندسی',
+    description: 'مشاوره رایگان، برآورد دقیق قیمت و صدور پیش‌فاکتور نماهای مدرن کرتین‌وال و پنجره‌های اختصاصی ترمال‌بریک.',
+    url: `${siteUrl}/contact`,
+  },
+};
 
 export default function ContactPage() {
-  const [submitted, setSubmitted] = useState(false);
-  const [errors, setErrors] = useState<Record<string, string>>({});
+  const contactLd = {
+    '@context': 'https://schema.org',
+    '@type': 'ContactPage',
+    name: 'تماس با نوآوران پنجره سپاهان',
+    description: 'درخواست مشاوره، برآورد قیمت و اطلاعات تماس دفتر مهندسی و کارخانه نوآوران پنجره سپاهان',
+    url: `${siteUrl}/contact`,
+    mainEntity: {
+      '@type': ['LocalBusiness', 'HomeAndConstructionBusiness'],
+      name: settingsData.companyName,
+      telephone: settingsData.phone,
+      email: settingsData.email,
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: settingsData.officeAddress,
+        addressLocality: 'Isfahan',
+        addressRegion: 'Isfahan',
+        addressCountry: 'IR',
+        postalCode: settingsData.postalCode,
+      },
+    },
+  };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-    const honeypot = formData.get('bot-field');
-    if (honeypot) return; // Silent reject for bots
-
-    const newErrors: Record<string, string> = {};
-    if (!formData.get('name')) newErrors.name = 'لطفا نام خود را وارد کنید.';
-    if (!formData.get('phone')) newErrors.phone = 'لطفا شماره تماس خود را وارد کنید.';
-
-    if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors);
-      return;
-    }
-
-    setErrors({});
-    setSubmitted(true);
+  const breadcrumbsLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'صفحه اصلی',
+        item: siteUrl,
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'تماس با ما',
+        item: `${siteUrl}/contact`,
+      },
+    ],
   };
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(contactLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbsLd) }}
+      />
       <Breadcrumbs items={[{ label: 'تماس با ما' }]} />
       <PageHero 
         title="ارتباط با مهندسی فروش" 
@@ -49,134 +92,35 @@ export default function ContactPage() {
               </div>
             </div>
             <span className="px-4 py-2 bg-ink-950 text-white text-sm font-mono font-bold rounded-lg border border-ink-800">
-              شناسه ملی: ۱۴۰۱۵۰۲۶۲۳۰
+              شناسه ملی: {settingsData.nationalId}
             </span>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-px bg-ink-800 text-right">
             <div className="bg-ink-950 p-6 space-y-2">
               <span className="text-steel-400 font-vazir text-xs block">نام رسمی شرکت:</span>
-              <span className="text-white font-black font-vazir block">نوآوران پنجره سپاهان</span>
+              <span className="text-white font-black font-vazir block">{settingsData.companyName}</span>
             </div>
             <div className="bg-ink-950 p-6 space-y-2">
               <span className="text-steel-400 font-vazir text-xs block">شماره ثبت رسمی:</span>
-              <span className="text-white font-black font-mono block text-xl tracking-widest">3892</span>
+              <span className="text-white font-black font-mono block text-xl tracking-widest">{settingsData.registrationNumber}</span>
             </div>
             <div className="bg-ink-950 p-6 space-y-2">
               <span className="text-steel-400 font-vazir text-xs block">کد پستی ثبتی:</span>
-              <span className="text-white font-black font-mono block text-xl tracking-widest">8431811565</span>
+              <span className="text-white font-black font-mono block text-xl tracking-widest">{settingsData.postalCode}</span>
             </div>
             <div className="bg-ink-950 p-6 space-y-2">
               <span className="text-steel-400 font-vazir text-xs block">تلفن کارخانه و دفتر:</span>
               <span className="text-white font-black font-mono inline-block text-xl tracking-widest text-right" dir="ltr">
-                <bdi dir="ltr" style={{ unicodeBidi: 'isolate' }}>031-33687755</bdi>
+                <bdi dir="ltr" style={{ unicodeBidi: 'isolate' }}>{settingsData.phone}</bdi>
               </span>
             </div>
           </div>
         </section>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 text-right">
-          
-          {/* Form Section */}
-          <div className="bg-ink-950 border border-ink-800 rounded-xl p-6 md:p-8 space-y-6 metal-shadow">
-            <h2 className="text-xl font-black text-white font-vazir border-r-4 border-signal-500 pr-4">
-              ارسال درخواست مشاوره و پیش‌فاکتور
-            </h2>
-
-            {submitted ? (
-              <div className="bg-ink-900 border border-emerald-500/50 rounded-xl p-8 text-center space-y-4">
-                <CheckCircle2 className="w-16 h-16 text-emerald-500 mx-auto" />
-                <h3 className="text-lg font-bold text-white font-vazir">درخواست شما با موفقیت ثبت شد</h3>
-                <p className="text-sm text-steel-400 font-vazir">
-                  کارشناسان مهندسی فروش ما در اسرع وقت با شما تماس خواهند گرفت.
-                </p>
-                <button
-                  onClick={() => setSubmitted(false)}
-                  className="mt-4 text-signal-500 hover:text-signal-400 text-sm font-bold font-vazir transition-colors"
-                >
-                  ارسال درخواست جدید
-                </button>
-              </div>
-            ) : (
-              <form onSubmit={handleSubmit} className="space-y-4">
-                {/* Honeypot */}
-                <input type="text" name="bot-field" className="hidden" aria-hidden="true" tabIndex={-1} />
-
-                <div>
-                  <label htmlFor="name" className="block text-sm font-bold text-white font-vazir mb-2">
-                    نام و نام خانوادگی / نام شرکت <span className="text-signal-500">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    aria-describedby={errors.name ? "name-error" : undefined}
-                    className={`w-full bg-ink-900 border ${errors.name ? 'border-signal-500 focus:border-signal-500' : 'border-ink-800 focus:border-steel-400'} rounded-lg px-4 py-3 text-white focus:outline-none transition-colors font-vazir`}
-                    placeholder="مثال: شرکت عمران سازان"
-                  />
-                  {errors.name && (
-                    <p id="name-error" className="text-signal-500 text-xs font-vazir mt-1">{errors.name}</p>
-                  )}
-                </div>
-
-                <div>
-                  <label htmlFor="phone" className="block text-sm font-bold text-white font-vazir mb-2">
-                    شماره تماس (موبایل یا تلفن ثابت) <span className="text-signal-500">*</span>
-                  </label>
-                  <input
-                    type="tel"
-                    id="phone"
-                    name="phone"
-                    dir="ltr"
-                    aria-describedby={errors.phone ? "phone-error" : undefined}
-                    className={`w-full bg-ink-900 border ${errors.phone ? 'border-signal-500 focus:border-signal-500' : 'border-ink-800 focus:border-steel-400'} rounded-lg px-4 py-3 text-white focus:outline-none transition-colors font-mono text-left`}
-                    placeholder="0912..."
-                  />
-                  {errors.phone && (
-                    <p id="phone-error" className="text-signal-500 text-xs font-vazir mt-1">{errors.phone}</p>
-                  )}
-                </div>
-
-                <div>
-                  <label htmlFor="projectType" className="block text-sm font-bold text-white font-vazir mb-2">
-                    نوع سیستم درخواستی
-                  </label>
-                  <select
-                    id="projectType"
-                    name="projectType"
-                    className="w-full bg-ink-900 border border-ink-800 focus:border-steel-400 rounded-lg px-4 py-3 text-white focus:outline-none transition-colors font-vazir appearance-none"
-                  >
-                    <option value="کرتین‌وال لامل">نمای شیشه‌ای کرتین‌وال (لامل)</option>
-                    <option value="کرتین‌وال فریم‌لس">نمای شیشه‌ای فریم‌لس</option>
-                    <option value="آلومینیوم ترمال‌بریک">پنجره آلومینیوم ترمال‌بریک</option>
-                    <option value="کامپوزیت پنل">نمای ورق کامپوزیت آلومینیوم</option>
-                    <option value="سایر">سایر موارد (هندریل، چوب ترموود و ...)</option>
-                  </select>
-                </div>
-
-                <div>
-                  <label htmlFor="message" className="block text-sm font-bold text-white font-vazir mb-2">
-                    توضیحات تکمیلی پروژه (اختیاری)
-                  </label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    rows={4}
-                    className="w-full bg-ink-900 border border-ink-800 focus:border-steel-400 rounded-lg px-4 py-3 text-white focus:outline-none transition-colors font-vazir resize-none"
-                    placeholder="حدود متراژ، شهر محل اجرا، یا سایر جزئیات..."
-                  ></textarea>
-                </div>
-
-                <button
-                  type="submit"
-                  className="w-full bg-signal-500 hover:bg-signal-400 text-white font-bold py-3.5 rounded-lg transition-colors font-vazir flex items-center justify-center gap-2"
-                >
-                  <Send className="w-4 h-4 ml-2" />
-                  ارسال درخواست مشاوره
-                </button>
-              </form>
-            )}
-          </div>
+          {/* Interactive Form Component */}
+          <ContactFormClient />
 
           {/* Contact Details Section */}
           <div className="space-y-6">
@@ -193,8 +137,8 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <h3 className="text-sm font-bold text-white font-vazir mb-1">تلفن کارخانه و دفتر فروش</h3>
-                    <a href="tel:03133687755" className="text-lg font-black text-signal-500 font-mono tracking-widest inline-block text-right" dir="ltr">
-                      <bdi dir="ltr" style={{ unicodeBidi: 'isolate' }}>031-33687755</bdi>
+                    <a href={`tel:${settingsData.phone.replace(/[^0-9]/g, '')}`} className="text-lg font-black text-signal-500 font-mono tracking-widest inline-block text-right" dir="ltr">
+                      <bdi dir="ltr" style={{ unicodeBidi: 'isolate' }}>{settingsData.phone}</bdi>
                     </a>
                   </div>
                 </div>
@@ -206,7 +150,7 @@ export default function ContactPage() {
                   <div>
                     <h3 className="text-sm font-bold text-white font-vazir mb-1">آدرس کارخانه و دفتر مرکزی</h3>
                     <p className="text-sm text-steel-400 font-vazir leading-relaxed">
-                      اصفهان، شهرک صنعتی محمودآباد، خیابان ۲۴، نبش چهارراه اول، پلاک ۲، کارخانه نوآوران پنجره سپاهان
+                      {settingsData.officialCompanyAddress}
                     </p>
                   </div>
                 </div>
@@ -218,9 +162,7 @@ export default function ContactPage() {
                   <div>
                     <h3 className="text-sm font-bold text-white font-vazir mb-1">ساعات کاری مهندسی فروش</h3>
                     <p className="text-sm text-steel-400 font-vazir leading-relaxed">
-                      شنبه تا چهارشنبه: ۸:۰۰ صبح الی ۱۷:۰۰<br />
-                      پنج‌شنبه‌ها: ۸:۰۰ صبح الی ۱۳:۰۰<br />
-                      تعطیلات رسمی: تعطیل
+                      {settingsData.workingHours}
                     </p>
                   </div>
                 </div>
@@ -230,7 +172,7 @@ export default function ContactPage() {
             {/* Map Placeholder */}
             <div className="aspect-[4/3] w-full bg-ink-900 rounded-xl border border-ink-800 overflow-hidden metal-shadow flex flex-col items-center justify-center text-steel-500">
               <MapPin className="w-10 h-10 mb-2 opacity-50" />
-              <span className="font-vazir text-sm font-bold">نقشه مسیریابی کارخانه</span>
+              <span className="font-vazir text-sm font-bold">نقشه مسیریابی کارخانه اصفهان</span>
             </div>
           </div>
         </div>
