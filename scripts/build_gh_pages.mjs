@@ -79,6 +79,7 @@ function processDir(dir) {
         ['href="/favicon.ico"', 'href="/noavaran-panjereh-sepahan/favicon.ico"'],
         ['href="/apple-icon.png"', 'href="/noavaran-panjereh-sepahan/apple-icon.png"'],
         ['href="/icon.svg"', 'href="/noavaran-panjereh-sepahan/icon.svg"'],
+        ['href="/llms.txt"', 'href="/noavaran-panjereh-sepahan/llms.txt"'],
       ];
 
       for (const [from, to] of preloadReplacements) {

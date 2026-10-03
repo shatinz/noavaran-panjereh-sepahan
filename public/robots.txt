@@ -24,4 +24,7 @@ Allow: /
 User-agent: CCBot
 Allow: /
 
+User-agent: DeepSeekBot
+Allow: /
+
 Sitemap: https://noavaranpanjereh.vercel.app/sitemap.xml

@@ -66,7 +66,7 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen bg-transparent overflow-hidden">
+    <div className="min-h-screen bg-transparent overflow-hidden">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }}
@@ -94,6 +94,6 @@ export default function Home() {
 
       <DistributionMap />
       <CtaBand />
-    </main>
+    </div>
   );
 }

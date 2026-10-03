@@ -235,6 +235,7 @@ export default function RootLayout({
     <html lang="fa" dir="rtl">
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+        <link rel="describedby" href="/llms.txt" type="text/markdown" />
         <script dangerouslySetInnerHTML={{ __html: `document.documentElement.classList.add('js');` }} />
         <script
           type="application/ld+json"
