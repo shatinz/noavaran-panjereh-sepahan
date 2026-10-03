@@ -1,0 +1,72 @@
+name: CI / CD to Noavaran Server
+
+on:
+  push:
+    branches: [redblack]
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build & Verify (CI)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 12
+
+      - name: Install Dependencies
+        run: pnpm install --no-frozen-lockfile
+
+      - name: Build Next.js
+        run: pnpm run build
+        env:
+          ADMIN_USERNAME: ${{ secrets.ADMIN_USERNAME || 'admin' }}
+          ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD || 'noavaran2026' }}
+          NODE_OPTIONS: "--max-old-space-size=4096"
+
+  deploy:
+    name: Deploy to Server (CD)
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/redblack'
+    steps:
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          port: ${{ secrets.SERVER_PORT || 22 }}
+          timeout: 120s
+          command_timeout: 15m
+          script: |
+            set -e
+            echo "=== Syncing repository on server ==="
+            cd /var/www/noavaran
+            git fetch origin redblack
+            git reset --hard origin/redblack
+
+            echo "=== Installing dependencies ==="
+            pnpm install --no-frozen-lockfile
+
+            echo "=== Building application ==="
+            export NODE_OPTIONS="--max-old-space-size=2048"
+            pnpm run build
+
+            echo "=== Reloading PM2 process ==="
+            pm2 reload ecosystem.config.cjs --update-env || pm2 start ecosystem.config.cjs
+            pm2 save
+
+            echo "=== Verifying Health Check ==="
+            sleep 3
+            curl -fI http://127.0.0.1:3000 || exit 1
+            echo "Deployment to Noavaran server completed successfully!"

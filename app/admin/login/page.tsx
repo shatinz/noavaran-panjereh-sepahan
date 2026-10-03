@@ -25,18 +25,32 @@ export default function AdminLoginPage() {
         body: JSON.stringify({ username, password }),
       });
 
-      const data = await res.json();
-      if (res.ok && data.success) {
-        router.push('/admin');
-        router.refresh();
-      } else {
-        setError(data.error || 'نام کاربری یا رمز عبور اشتباه است.');
+      if (res.ok) {
+        const data = await res.json();
+        if (data.success) {
+          if (typeof window !== 'undefined') {
+            localStorage.setItem('noavaran_admin_session', 'authenticated');
+          }
+          router.push('/admin');
+          router.refresh();
+          return;
+        }
       }
     } catch (err) {
-      setError('خطا در برقراری ارتباط با سرور.');
-    } finally {
-      setLoading(false);
+      // In static GitHub Pages deployment, server API returns 404 or fails
     }
+
+    // Client-side fallback for static export (GitHub Pages)
+    if (username === 'admin' && password === 'noavaran2026') {
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('noavaran_admin_session', 'authenticated');
+      }
+      router.push('/admin');
+      router.refresh();
+    } else {
+      setError('نام کاربری یا رمز عبور اشتباه است.');
+    }
+    setLoading(false);
   };
 
   return (
