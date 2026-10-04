@@ -18,7 +18,7 @@ export function Footer() {
           {/* Brand */}
           <div className="space-y-6">
             <Link href="/" className="flex items-center gap-3">
-              <Image src={withBasePath("/images/logo-white.svg")} alt="نوآوران پنجره سپاهان" width={60} height={60} />
+              <Image src={withBasePath("/images/logo-white.png")} alt="نوآوران پنجره سپاهان" width={60} height={60} />
               <div className="flex flex-col text-white">
                 <span className="text-lg font-black font-vazir tracking-tight">نوآوران پنجره سپاهان</span>
                 <span className="text-xs text-steel-400 font-sans tracking-widest uppercase">Noavaran Panjereh</span>
