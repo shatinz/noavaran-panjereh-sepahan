@@ -183,9 +183,12 @@ async function main() {
 
   // Target domains for Noavaran Panjereh
   const targetDomains = [
+    'https://noavaranpanjereh.com/',
+    'sc-domain:noavaranpanjereh.com',
     'https://noavaranpanjereh.vercel.app/',
     'https://noavaran.vercel.app/',
-    'sc-domain:noavaranpanjereh.ir'
+    'sc-domain:noavaranpanjereh.ir',
+    'https://noavaranpanjereh.ir/'
   ];
 
   for (const domain of targetDomains) {
