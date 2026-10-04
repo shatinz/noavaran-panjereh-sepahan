@@ -154,12 +154,8 @@ export function Footer() {
             <span className="w-1 h-1 bg-ink-950 rounded-full" />
             <span className="font-sans" dir="ltr">www.NoavaranPanjereh.com</span>
           </div>
-          <div className="flex items-center gap-3">
-            <span>© {new Date().getFullYear()} کلیه حقوق محفوظ است.</span>
-            <span className="w-1 h-1 bg-ink-950/40 rounded-full" />
-            <Link href="/admin" className="text-ink-950/60 hover:text-signal-600 transition-colors inline-flex items-center gap-1 font-mono text-[11px]" title="ورود مدیریت">
-              <span>پنل مدیریت</span>
-            </Link>
+          <div>
+            © {new Date().getFullYear()} کلیه حقوق محفوظ است.
           </div>
         </div>
       </div>
