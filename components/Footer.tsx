@@ -17,16 +17,21 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
           {/* Brand */}
           <div className="space-y-6">
-            <Link href="/" className="flex items-center gap-3">
-              <Image src={withBasePath("/images/logo-white.png")} alt="نوآوران پنجره سپاهان" width={60} height={60} />
+            <Link href="/" className="flex items-center gap-4 group">
+              <div className="relative w-20 h-20 sm:w-24 sm:h-24 shrink-0 transition-transform group-hover:scale-105">
+                <Image 
+                  src={withBasePath("/images/logo-white.png")} 
+                  alt="نوآوران پنجره سپاهان" 
+                  fill 
+                  className="object-contain"
+                  sizes="96px"
+                />
+              </div>
               <div className="flex flex-col text-white">
-                <span className="text-lg font-black font-vazir tracking-tight">نوآوران پنجره سپاهان</span>
-                <span className="text-xs text-steel-400 font-sans tracking-widest uppercase">Noavaran Panjereh</span>
+                <span className="text-xl sm:text-2xl font-black font-vazir tracking-tight">نوآوران پنجره سپاهان</span>
+                <span className="text-xs sm:text-sm text-steel-400 font-sans tracking-widest uppercase">Noavaran Panjereh</span>
               </div>
             </Link>
-            <p className="text-steel-300 text-sm leading-relaxed font-vazir text-justify">
-              طراحی محاسباتی، تولید صنعتی و اجرای نماهای مدرن شیشه‌ای، درب و پنجره‌های اختصاصی دوجداره و ترمال‌بریک با بهره‌گیری از تکنولوژی روز.
-            </p>
             <div className="pt-2 flex flex-col gap-3">
               <div className="flex items-center gap-3">
                 {/* Instagram */}
