@@ -42,7 +42,7 @@ export function ProofStrip() {
   const stats = [
     { value: <bdi dir="ltr">+۳۰</bdi>, label: "سال تجربه درخشان" },
     { value: <bdi dir="ltr">+۲۰۰۰</bdi>, label: "پروژه اجرایی موفق" },
-    { value: <bdi dir="ltr">+۱۲</bdi>, label: "سیستم اختصاصی آلومینیوم" },
+    { value: <bdi dir="ltr">+۲۵</bdi>, label: "پروژه در دست اجرا" },
   ];
 
   return (

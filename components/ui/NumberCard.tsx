@@ -29,16 +29,16 @@ export function NumberCard({ number, title, description, image, href, className 
 
       {/* Content overlay */}
       <div className="relative h-full flex flex-col z-10">
-        {/* Copper Metal Header Strip */}
-        <div className="bg-copper-brushed pb-8 pt-6 px-6 shadow-sm">
+        {/* Light Brushed Aluminum Header Strip */}
+        <div className="bg-metal-brushed pb-8 pt-6 px-6 shadow-sm border-b border-steel-200">
            <div className="flex items-center gap-4">
-             <span className="text-5xl font-black text-[#1e0004] font-sans tracking-tighter drop-shadow-sm">{number}</span>
-             <h3 className="text-xl font-bold text-[#1e0004] font-vazir drop-shadow-sm line-clamp-2">{title}</h3>
+             <span className="text-5xl font-black text-ink-950 font-sans tracking-tighter drop-shadow-sm">{number}</span>
+             <h3 className="text-xl font-bold text-ink-950 font-vazir drop-shadow-sm line-clamp-2">{title}</h3>
            </div>
         </div>
 
         {/* Gradient fade to photo */}
-        <div className="h-24 bg-gradient-to-b from-[#cca699]/80 via-[#cca699]/20 to-transparent" />
+        <div className="h-24 bg-gradient-to-b from-[#cbcccb]/80 via-[#cbcccb]/20 to-transparent" />
 
         <div className="flex-grow" />
 
@@ -56,7 +56,7 @@ export function NumberCard({ number, title, description, image, href, className 
       
       {/* Sheen sweep */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-xl z-20">
-        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#cca699]/40 to-transparent -translate-x-[150%] skew-x-[-25deg] group-hover:animate-metal-sweep" />
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#ffffff]/30 to-transparent -translate-x-[150%] skew-x-[-25deg] group-hover:animate-metal-sweep" />
       </div>
     </Link>
   );

@@ -277,7 +277,7 @@ export function DistributionMap() {
                 </linearGradient>
               </defs>
 
-              {/* 1. IRAN PROVINCES SILHOUETTE */}
+              {/* 1. IRAN PROVINCES SILHOUETTE - Clean White with Isfahan in Pink */}
               <g id="iran-provinces-group">
                 {iranProvinces.map((prov) => {
                   const isIsfahanProv = prov.id === "isfahan";
@@ -286,10 +286,10 @@ export function DistributionMap() {
                       key={prov.id}
                       id={prov.id}
                       d={prov.d}
-                      fill={isIsfahanProv ? "#380917" : "#1f040d"}
-                      stroke={isIsfahanProv ? "#ab0017" : "#4a0b1c"}
-                      strokeWidth={isIsfahanProv ? "2" : "1"}
-                      className="transition-colors duration-500 hover:fill-[#440a1c]"
+                      fill={isIsfahanProv ? "#f472b6" : "#ffffff"}
+                      stroke={isIsfahanProv ? "#db2777" : "#e2e8f0"}
+                      strokeWidth={isIsfahanProv ? "2" : "0.75"}
+                      className="transition-colors duration-500 hover:opacity-90"
                     />
                   );
                 })}
@@ -300,17 +300,17 @@ export function DistributionMap() {
                 <circle
                   r="18"
                   fill="none"
-                  stroke="#ff2a4b"
-                  strokeWidth="1.5"
-                  className="animate-ping origin-center opacity-60"
+                  stroke="#f472b6"
+                  strokeWidth="2"
+                  className="animate-ping origin-center opacity-70"
                   style={{ animationDuration: "3s" }}
                 />
                 <circle
                   r="32"
                   fill="none"
-                  stroke="#ab0017"
-                  strokeWidth="1"
-                  className="animate-ping origin-center opacity-30"
+                  stroke="#db2777"
+                  strokeWidth="1.5"
+                  className="animate-ping origin-center opacity-50"
                   style={{ animationDuration: "3s", animationDelay: "1.2s" }}
                 />
               </g>
@@ -483,7 +483,7 @@ export function DistributionMap() {
                 })}
               </g>
 
-              {/* 5. ISFAHAN CENTRAL HUB (THE SOURCE) */}
+              {/* 5. ISFAHAN CENTRAL HUB (THE SOURCE - STYLISH PINK) */}
               <g
                 id="central-hub-isfahan"
                 transform={`translate(${ISFAHAN.x}, ${ISFAHAN.y})`}
@@ -493,15 +493,15 @@ export function DistributionMap() {
                 {/* Outer Ring */}
                 <circle
                   r="20"
-                  fill="rgba(171, 0, 23, 0.3)"
-                  stroke="#ab0017"
+                  fill="rgba(244, 114, 182, 0.3)"
+                  stroke="#db2777"
                   strokeWidth="1.5"
                 />
 
                 {/* Main Hub Core */}
                 <circle
                   r="10"
-                  fill="#ab0017"
+                  fill="#db2777"
                   stroke="#ffffff"
                   strokeWidth="2.5"
                   filter="url(#dist-neon)"
@@ -519,7 +519,7 @@ export function DistributionMap() {
                     height="30"
                     rx="15"
                     fill="rgba(10, 0, 2, 0.85)"
-                    stroke="#ab0017"
+                    stroke="#db2777"
                     strokeWidth="1.5"
                     className="backdrop-blur-md"
                   />

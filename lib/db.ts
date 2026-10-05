@@ -303,14 +303,14 @@ export async function getSettings(): Promise<CompanySettings> {
     mobile: "09139090673",
     whatsapp: "09139090673",
     telegram: "noavaranpanjereh",
-    email: "info@noavaranpanjereh.ir",
+    email: "info@noavaranpanjereh.com",
     officeAddress: "اصفهان، خیابان محتشم کاشانی، روبروی پست بانک مرکزی، ساختمان نوید، طبقه ۶",
     officeAddressEn: "6th Floor, Navid Building, Opposite Central Post Bank, Mohtasham Kashani St, Isfahan, Iran",
     factoryAddress: "اصفهان، خیابان امام خمینی، خیابان بسیج، کوچه ورزشگاه، بن‌بست قربانی، پلاک ۵۰",
     factoryAddressEn: "No. 50, Ghorbani Dead-end, Varzeshgah Alley, Basij St, Imam Khomeini St, Isfahan, Iran",
     workingHours: "شنبه تا چهارشنبه: ۸:۰۰ الی ۱۷:۰۰ | پنج‌شنبه‌ها: ۸:۰۰ الی ۱۳:۰۰",
     socialLinks: {
-      instagram: "https://instagram.com/noavaran.panjereh",
+      instagram: "https://instagram.com/noavaran_panjereh_sepahan",
       telegram: "https://t.me/noavaranpanjereh",
       whatsapp: "https://wa.me/989139090673",
       aparat: "https://aparat.com/noavaranpanjereh",
@@ -376,5 +376,36 @@ export async function deleteMaterial(id: string): Promise<boolean> {
   writeJsonFile('materials.json', filtered);
   return true;
 }
+
+// ADMIN CREDENTIALS
+export interface AdminCredentials {
+  username: string;
+  password: string;
+}
+
+let memoryAdminAuth: AdminCredentials | null = null;
+
+export async function getAdminCredentials(): Promise<AdminCredentials> {
+  if (memoryAdminAuth) return memoryAdminAuth;
+  const fallback: AdminCredentials = {
+    username: process.env.ADMIN_USERNAME || 'admin',
+    password: process.env.ADMIN_PASSWORD || 'noavaran2026',
+  };
+  const data = readJsonFile<AdminCredentials>('admin_auth.json', fallback);
+  memoryAdminAuth = data;
+  return data;
+}
+
+export async function updateAdminCredentials(updates: Partial<AdminCredentials>): Promise<AdminCredentials> {
+  const current = await getAdminCredentials();
+  const updated: AdminCredentials = {
+    username: updates.username?.trim() || current.username,
+    password: updates.password?.trim() || current.password,
+  };
+  memoryAdminAuth = updated;
+  writeJsonFile('admin_auth.json', updated);
+  return updated;
+}
+
 
 

@@ -69,16 +69,6 @@ export function Footer() {
                   </svg>
                 </a>
               </div>
-
-              {/* Direct email line */}
-              <a 
-                href="mailto:info@noavaranpanjereh.ir" 
-                className="inline-flex items-center gap-2 text-sm text-steel-300 hover:text-white transition-colors font-sans pt-1" 
-                dir="ltr"
-              >
-                <Mail className="w-4 h-4 text-signal-500 shrink-0" />
-                <span>info@noavaranpanjereh.ir</span>
-              </a>
             </div>
           </div>
 
@@ -115,8 +105,8 @@ export function Footer() {
               </li>
               <li className="flex items-center gap-3">
                 <Mail className="w-5 h-5 text-signal-500 shrink-0" />
-                <a href={`mailto:${email}`} className="hover:text-white transition-colors font-sans" dir="ltr">
-                  {email}
+                <a href="mailto:info@noavaranpanjereh.com" className="hover:text-white transition-colors font-sans" dir="ltr">
+                  info@noavaranpanjereh.com
                 </a>
               </li>
               <li className="flex items-start gap-3 pt-2 border-t border-ink-800">
@@ -154,8 +144,20 @@ export function Footer() {
             <span className="w-1 h-1 bg-ink-950 rounded-full" />
             <span className="font-sans" dir="ltr">www.NoavaranPanjereh.com</span>
           </div>
-          <div>
-            © {new Date().getFullYear()} کلیه حقوق محفوظ است.
+          <div className="flex items-center gap-3 flex-wrap justify-center font-sans">
+            <span>© {new Date().getFullYear()} کلیه حقوق محفوظ است.</span>
+            <span className="w-1 h-1 bg-ink-950 rounded-full" />
+            <span>
+              Powered by{' '}
+              <a 
+                href="https://github.com/shatinz" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="font-bold underline hover:text-signal-600 transition-colors"
+              >
+                OO
+              </a>
+            </span>
           </div>
         </div>
       </div>

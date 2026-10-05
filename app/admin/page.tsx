@@ -79,12 +79,12 @@ export default async function AdminDashboardPage() {
 
           <div className="p-6 rounded-2xl bg-charcoal-900 border border-charcoal-800 space-y-2">
             <div className="flex items-center justify-between text-titanium-400">
-              <span className="text-xs font-medium">اطلاعات تماس</span>
+              <span className="text-xs font-medium">اطلاعات شرکت و امنیت</span>
               <Settings className="w-5 h-5 text-amber-400" />
             </div>
             <div className="text-sm font-bold text-white font-mono truncate">{settings.phoneLabel}</div>
             <Link href="/admin/settings" className="text-[11px] text-amber-400 hover:underline inline-block pt-1">
-              ویرایش آدرس و تلفن‌ها ←
+              تنظیمات تماس و تغییر رمز عبور ←
             </Link>
           </div>
         </div>

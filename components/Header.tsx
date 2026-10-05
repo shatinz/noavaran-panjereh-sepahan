@@ -48,8 +48,8 @@ export function Header() {
         <div className="max-w-[1440px] mx-auto px-4 h-20 flex items-center justify-between">
           
           {/* RIGHT: Logo */}
-          <Link href="/" className="flex items-center gap-3 group">
-            <div className="relative w-12 h-12 shrink-0 group-hover:scale-105 transition-transform">
+          <Link href="/" className="flex items-center gap-2.5 sm:gap-3 group shrink-0">
+            <div className="relative w-10 h-10 sm:w-12 sm:h-12 shrink-0 group-hover:scale-105 transition-transform">
               <Image
                 src={withBasePath("/images/icon.svg")}
                 alt="نوآوران پنجره سپاهان"
@@ -58,23 +58,41 @@ export function Header() {
                 priority
               />
             </div>
-            <div className="flex flex-col text-ink-950 leading-tight">
-              <span className="text-sm md:text-base font-black tracking-tight font-vazir">
+            <div className="flex flex-col text-ink-950 leading-tight min-w-0">
+              <span className="text-sm md:text-base font-black tracking-tight font-vazir whitespace-nowrap">
                 نوآوران پنجره سپاهان
               </span>
-              <span className="text-[10px] md:text-xs font-bold font-sans tracking-widest uppercase opacity-70">
+              <span className="text-[9px] md:text-[11px] font-bold font-sans tracking-wider uppercase opacity-75 whitespace-nowrap overflow-hidden text-ellipsis">
                 Noavaran Panjereh
               </span>
             </div>
           </Link>
 
           {/* CENTER: Navigation */}
-          <nav className="hidden lg:flex items-center gap-1 xl:gap-2">
+          <nav className="hidden xl:flex items-center gap-1">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className={`px-3 py-2 text-sm font-bold font-vazir transition-all relative group ${
+                className={`px-2.5 py-1.5 text-xs xl:text-sm font-bold font-vazir whitespace-nowrap transition-all relative group ${
+                  pathname === link.href
+                    ? "text-signal-500"
+                    : "text-ink-900 hover:text-signal-500"
+                }`}
+              >
+                {link.label}
+                <span className={`absolute bottom-0 right-0 w-full h-0.5 bg-signal-500 transition-transform origin-right ${pathname === link.href ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'}`} />
+              </Link>
+            ))}
+          </nav>
+
+          {/* Nav links for lg screens (compact) */}
+          <nav className="hidden lg:flex xl:hidden items-center gap-0.5">
+            {navLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={`px-2 py-1.5 text-xs font-bold font-vazir whitespace-nowrap transition-all relative group ${
                   pathname === link.href
                     ? "text-signal-500"
                     : "text-ink-900 hover:text-signal-500"
@@ -87,18 +105,15 @@ export function Header() {
           </nav>
 
           {/* LEFT: Actions (EN pill, CTA, Phone, Hamburger) */}
-          <div className="flex items-center gap-3">
-            <div className="hidden items-center bg-ink-950 text-white text-[10px] font-bold px-2 py-1 rounded cursor-pointer hover:bg-ink-800 transition-colors">
-              EN
-            </div>
+          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
             <a
               href={`tel:${phone.replace(/\D/g, '')}`}
-              className="hidden md:flex items-center gap-2 text-ink-950 font-bold hover:text-signal-500 transition-colors font-sans"
+              className="hidden 2xl:flex items-center gap-1.5 text-ink-950 font-bold hover:text-signal-500 transition-colors font-sans text-xs"
             >
-              <Phone className="w-4 h-4" />
+              <Phone className="w-3.5 h-3.5" />
               <bdi dir="ltr" style={{ unicodeBidi: 'isolate' }}>{phone}</bdi>
             </a>
-            <Button variant="primary" href="/contact" className="hidden sm:inline-flex text-sm py-2 px-4">
+            <Button variant="primary" href="/contact" className="hidden sm:inline-flex text-xs py-2 px-3.5 whitespace-nowrap">
               درخواست مشاوره
             </Button>
 

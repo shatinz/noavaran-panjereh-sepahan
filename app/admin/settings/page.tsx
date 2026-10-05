@@ -3,13 +3,22 @@
 import React, { useState, useEffect } from 'react';
 import AdminNav from '@/components/AdminNav';
 import { CompanySettings } from '@/lib/db';
-import { Settings, Save, CheckCircle2, Phone, MapPin, Building2, Globe } from 'lucide-react';
+import { Settings, Save, CheckCircle2, Phone, MapPin, Building2, Globe, Lock, User, KeyRound } from 'lucide-react';
 
 export default function AdminSettingsPage() {
   const [settings, setSettings] = useState<CompanySettings | null>(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
+
+  // Admin credentials state
+  const [adminUsername, setAdminUsername] = useState('admin');
+  const [currentPassword, setCurrentPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [credSaving, setCredSaving] = useState(false);
+  const [credSaved, setCredSaved] = useState(false);
+  const [credError, setCredError] = useState('');
 
   useEffect(() => {
     fetch('/api/admin/settings')
@@ -40,6 +49,46 @@ export default function AdminSettingsPage() {
       alert('خطا در ذخیره تنظیمات');
     } finally {
       setSaving(false);
+    }
+  };
+
+  const handleChangeCredentials = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setCredError('');
+    setCredSaved(false);
+
+    if (newPassword && newPassword !== confirmPassword) {
+      setCredError('رمز عبور جدید و تکرار آن یکسان نیستند.');
+      return;
+    }
+
+    setCredSaving(true);
+
+    try {
+      const res = await fetch('/api/admin/auth', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          currentPassword,
+          newUsername: adminUsername,
+          newPassword,
+        }),
+      });
+
+      const data = await res.json();
+      if (res.ok && data.success) {
+        setCredSaved(true);
+        setCurrentPassword('');
+        setNewPassword('');
+        setConfirmPassword('');
+        setTimeout(() => setCredSaved(false), 4000);
+      } else {
+        setCredError(data.error || 'خطا در به‌روزرسانی مشخصات ورود');
+      }
+    } catch (err) {
+      setCredError('خطای برقراری ارتباط با سرور');
+    } finally {
+      setCredSaving(false);
     }
   };
 
@@ -286,7 +335,7 @@ export default function AdminSettingsPage() {
             </div>
           </div>
 
-          {/* Submit Button */}
+          {/* Submit Button for Company Settings */}
           <div className="flex justify-end">
             <button
               type="submit"
@@ -294,10 +343,102 @@ export default function AdminSettingsPage() {
               className="px-6 py-3.5 rounded-xl bg-bronze-500 hover:bg-bronze-400 text-charcoal-950 font-bold text-xs flex items-center gap-2 shadow-lg shadow-bronze-500/20 transition-all hover:scale-[1.01] disabled:opacity-50"
             >
               <Save className="w-4 h-4 text-charcoal-950" />
-              <span>{saving ? 'در حال ذخیره...' : 'ذخیره کلیه تنظیمات'}</span>
+              <span>{saving ? 'در حال ذخیره...' : 'ذخیره کلیه تنظیمات شرکت'}</span>
             </button>
           </div>
         </form>
+
+        {/* Admin Credentials & Security Card */}
+        <div className="rounded-3xl bg-charcoal-900 border border-charcoal-800 p-6 sm:p-8 space-y-6 text-xs">
+          <div className="flex items-center justify-between border-b border-charcoal-800 pb-4">
+            <h2 className="text-sm font-bold text-white flex items-center gap-2 border-r-2 border-rose-500 pr-2">
+              <KeyRound className="w-4 h-4 text-rose-400" />
+              <span>امنیت و تغییر نام کاربری و رمز عبور مدیریت</span>
+            </h2>
+            {credSaved && (
+              <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-950/60 border border-emerald-500/40 text-emerald-400 text-xs">
+                <CheckCircle2 className="w-4 h-4" />
+                <span>نام کاربری و رمز عبور با موفقیت تغییر یافت</span>
+              </div>
+            )}
+          </div>
+
+          <p className="text-titanium-400 leading-relaxed">
+            جهت حفظ امنیت پرتال، می‌توانید نام کاربری و رمز عبور اختصاصی پنل مدیریت را در این بخش ویرایش کنید.
+          </p>
+
+          {credError && (
+            <div className="p-3 rounded-xl bg-rose-950/50 border border-rose-500/40 text-rose-300 text-xs text-center">
+              {credError}
+            </div>
+          )}
+
+          <form onSubmit={handleChangeCredentials} className="space-y-4 max-w-xl">
+            <div>
+              <label className="text-titanium-300 block mb-1">نام کاربری جدید یا فعلی:</label>
+              <div className="relative">
+                <User className="w-4 h-4 text-titanium-500 absolute right-3 top-1/2 -translate-y-1/2" />
+                <input
+                  type="text"
+                  required
+                  value={adminUsername}
+                  onChange={(e) => setAdminUsername(e.target.value)}
+                  placeholder="admin"
+                  className="w-full pr-10 pl-3 py-2.5 rounded-xl bg-charcoal-850 border border-charcoal-700 text-white font-mono focus:border-rose-500 focus:outline-none"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label className="text-titanium-300 block mb-1">رمز عبور فعلی مدیریت (جهت تایید هویت):</label>
+              <div className="relative">
+                <Lock className="w-4 h-4 text-titanium-500 absolute right-3 top-1/2 -translate-y-1/2" />
+                <input
+                  type="password"
+                  required
+                  value={currentPassword}
+                  onChange={(e) => setCurrentPassword(e.target.value)}
+                  placeholder="••••••••"
+                  className="w-full pr-10 pl-3 py-2.5 rounded-xl bg-charcoal-850 border border-charcoal-700 text-white font-mono focus:border-rose-500 focus:outline-none"
+                />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label className="text-titanium-300 block mb-1">رمز عبور جدید:</label>
+                <input
+                  type="password"
+                  required
+                  value={newPassword}
+                  onChange={(e) => setNewPassword(e.target.value)}
+                  placeholder="حداقل ۴ کاراکتر"
+                  className="w-full p-2.5 rounded-xl bg-charcoal-850 border border-charcoal-700 text-white font-mono focus:border-rose-500 focus:outline-none"
+                />
+              </div>
+              <div>
+                <label className="text-titanium-300 block mb-1">تکرار رمز عبور جدید:</label>
+                <input
+                  type="password"
+                  required
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  placeholder="تکرار رمز جدید"
+                  className="w-full p-2.5 rounded-xl bg-charcoal-850 border border-charcoal-700 text-white font-mono focus:border-rose-500 focus:outline-none"
+                />
+              </div>
+            </div>
+
+            <button
+              type="submit"
+              disabled={credSaving}
+              className="px-6 py-3 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs flex items-center gap-2 shadow-lg shadow-rose-600/20 transition-all hover:scale-[1.01] disabled:opacity-50"
+            >
+              <Lock className="w-4 h-4" />
+              <span>{credSaving ? 'در حال ذخیره...' : 'به‌روزرسانی رمز عبور مدیریت'}</span>
+            </button>
+          </form>
+        </div>
       </div>
     </div>
   );
