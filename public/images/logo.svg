@@ -64,7 +64,7 @@ viewBox="0 0 4191.77 4635.84"
     .fil11 {fill:none}
     .fil5 {fill:#FEFEFE}
     .fil9 {fill:#373435}
-    .fil12 {fill:#373435}
+    .fil12 {fill:#373435;fill-rule:nonzero}
     .fil0 {fill:#96DAF8}
     .fil1 {fill:#00AFEF}
     .fil8 {fill:#9B2130}

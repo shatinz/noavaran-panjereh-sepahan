@@ -101,10 +101,11 @@ def make_logo_svg(domain_text, target_width, tracking=0.025, y_baseline=4520.0):
     
     # Replace the text elements in corel_svg
     svg_out = corel_svg
-    # Remove FontID0 and FontID1 in defs if desired or keep clean
+    # Fix .fil12 style and fill-rule to avoid evenodd triangle overlap artifacts in glyphs
+    svg_out = svg_out.replace('.fil12 {fill:#373435}', '.fil12 {fill:#373435;fill-rule:nonzero}')
     svg_out = re.sub(r'<text[^>]+>3892: تبث هرامش</text>', shomareh_svg_group, svg_out)
     svg_out = re.sub(r'<text[^>]+>سهامی خاص</text>', sehami_svg_group, svg_out)
-    domain_tag = f'<path class="fil12" d="{text_d}" />'
+    domain_tag = f'<path class="fil12" fill-rule="nonzero" d="{text_d}" />'
     svg_out = re.sub(r'<g transform="matrix\(0\.622123[^>]+>.*?</g>', domain_tag, svg_out, flags=re.DOTALL)
     return svg_out
 
