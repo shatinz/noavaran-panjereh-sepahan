@@ -6,8 +6,8 @@ import numpy as np
 
 sys.stdout.reconfigure(encoding='utf-8')
 
-pdf_path = r'C:\Users\PC\Downloads\Eitaa Desktop\Untitled-1.pdf'
-svg_source_path = r'C:\Users\PC\Downloads\Eitaa Desktop\Untitled-1.svg'
+pdf_path = r'C:\Users\PC\Downloads\Eitaa Desktop\Noavaran-Logo.pdf'
+svg_source_path = r'c:\Users\PC\prj\noavaran\public\logo.svg'
 
 output_dir_public = r'c:\Users\PC\prj\noavaran\public'
 output_dir_images = os.path.join(output_dir_public, 'images')
@@ -19,19 +19,14 @@ print("Opening PDF:", pdf_path)
 doc = fitz.open(pdf_path)
 page = doc[0]
 
-# 1. Extract pure vector SVG
-svg_text = page.get_svg_image()
+# Preserve pure vector SVG
+with open(svg_source_path, 'r', encoding='utf-8') as f:
+    svg_text = f.read()
 
-# Save original vector SVG
 logo_svg_path = os.path.join(output_dir_images, 'logo.svg')
 with open(logo_svg_path, 'w', encoding='utf-8') as f:
     f.write(svg_text)
 print(f"Saved {logo_svg_path} (len: {len(svg_text)})")
-
-# Also save into public/logo.svg
-public_logo_svg = os.path.join(output_dir_public, 'logo.svg')
-with open(public_logo_svg, 'w', encoding='utf-8') as f:
-    f.write(svg_text)
 
 # 2. Create dark-mode optimized SVG (white text for circular banner and base)
 # In pdf_extracted.svg, the dark charcoal color used for text and strokes is #373435 or rgb(55,52,53)
