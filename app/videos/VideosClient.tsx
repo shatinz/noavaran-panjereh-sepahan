@@ -60,7 +60,7 @@ export function VideosClient({ videos }: { videos: VideoItem[] }) {
             >
               <div className="relative aspect-video w-full bg-ink-900 overflow-hidden">
                 <Image
-                  src={info.thumbnail}
+                  src={info.thumbnail || v.thumbnail || '/images/catalog/th68_render.jpg'}
                   alt={v.title}
                   fill
                   className="object-cover group-hover:scale-105 transition-transform duration-500 opacity-80 group-hover:opacity-100"
@@ -125,6 +125,7 @@ export function VideosClient({ videos }: { videos: VideoItem[] }) {
               {extractVideoInfo(activeVideo.videoUrl || activeVideo.videoId || '', activeVideo.platform).embedUrl ? (
                 <iframe
                   src={extractVideoInfo(activeVideo.videoUrl || activeVideo.videoId || '', activeVideo.platform).embedUrl}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
                   className="w-full h-full border-none"
                   title={activeVideo.title}

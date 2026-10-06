@@ -25,8 +25,8 @@ export function DistributionMap() {
   const [selectedCity, setSelectedCity] = useState<CityNode | null>(null);
   const sectionRef = useRef<HTMLElement>(null);
 
-  // Center coordinate of Isfahan Hub
-  const ISFAHAN = { x: 486, y: 610, name: "اصفهان", label: "کارخانه مرکزی و دفتر مهندسی" };
+  // Center coordinate of Isfahan Hub (exact center of Isfahan province)
+  const ISFAHAN = { x: 505, y: 520, name: "اصفهان", label: "کارخانه مرکزی و دفتر مهندسی" };
 
   // Key nationwide distribution destinations
   const CITIES: CityNode[] = [
@@ -36,7 +36,7 @@ export function DistributionMap() {
       province: "استان تهران و البرز",
       x: 495,
       y: 345,
-      path: "M 486 610 Q 480 470, 495 345",
+      path: "M 505 520 Q 498 430, 495 345",
       labelPos: "top",
       projects: "بیش از ۱۸ برج اداری، سفارت و مجتمع مسکونی لوکس",
       systemTypes: "کرتین‌وال لامل، پنجره‌های ترمال‌بریک TH 68 و فریم‌لس",
@@ -48,7 +48,7 @@ export function DistributionMap() {
       province: "خراسان رضوی",
       x: 955,
       y: 310,
-      path: "M 486 610 Q 730 430, 955 310",
+      path: "M 505 520 Q 730 390, 955 310",
       labelPos: "top-right",
       projects: "۸ مجتمع بزرگ هتلی و مراکز تجاری شاخص",
       systemTypes: "نمای شیشه‌ای یکپارچه، ترمال‌بریک لیفت‌اند‌اسلاید",
@@ -60,7 +60,7 @@ export function DistributionMap() {
       province: "آذربایجان شرقی و غربی",
       x: 195,
       y: 155,
-      path: "M 486 610 Q 320 370, 195 155",
+      path: "M 505 520 Q 340 330, 195 155",
       labelPos: "top-left",
       projects: "سیستم‌های دوجداره مهندسی مقاوم در برابر برودت کوهستانی",
       systemTypes: "پروفیل‌های اختصاصی با پلی‌آمید ۲۴ میلی‌متری و گاز آرگون",
@@ -72,7 +72,7 @@ export function DistributionMap() {
       province: "فارس و بوشهر",
       x: 585,
       y: 775,
-      path: "M 486 610 Q 525 700, 585 775",
+      path: "M 505 520 Q 535 650, 585 775",
       labelPos: "bottom",
       projects: "ویلاهای لوکس اختصاصی و مجتمع‌های اداری مدرن",
       systemTypes: "درب و پنجره‌های کشویی TS 143، هندریل شیشه‌ای",
@@ -84,7 +84,7 @@ export function DistributionMap() {
       province: "خوزستان",
       x: 310,
       y: 670,
-      path: "M 486 610 Q 380 620, 310 670",
+      path: "M 505 520 Q 380 580, 310 670",
       labelPos: "bottom-left",
       projects: "پروژه‌های صنعتی و ساختمانی با عایق‌بندی فوق‌العاده حرارتی",
       systemTypes: "پنجره‌های هوابند و گردوغبار‌بند با گسکت‌های EPDM اصل",
@@ -96,7 +96,7 @@ export function DistributionMap() {
       province: "هرمزگان",
       x: 820,
       y: 950,
-      path: "M 486 610 Q 670 820, 820 950",
+      path: "M 505 520 Q 660 740, 820 950",
       labelPos: "bottom-right",
       projects: "هتل‌های ساحلی و مجموعه‌های توریستی جزایر خلیج فارس",
       systemTypes: "آنودایز شامپاین و ضدشوره‌زدگی با مقاومت در برابر نمک دریایی",
@@ -108,7 +108,7 @@ export function DistributionMap() {
       province: "سواحل شمالی",
       x: 420,
       y: 220,
-      path: "M 486 610 Q 430 400, 420 220",
+      path: "M 505 520 Q 450 370, 420 220",
       labelPos: "top-left",
       projects: "ویلاهای مدرن جنگلی و ساحلی رامسر، نوشهر و رشت",
       systemTypes: "پنجره‌های قدی لیفت‌اند‌اسلاید با تلفیق ترموود فنلاندی",
@@ -120,7 +120,7 @@ export function DistributionMap() {
       province: "کرمان و جنوب شرق",
       x: 770,
       y: 710,
-      path: "M 486 610 Q 640 640, 770 710",
+      path: "M 505 520 Q 640 600, 770 710",
       labelPos: "right",
       projects: "مجتمع‌های اداری، بانکی و صنعتی",
       systemTypes: "کامپوزیت آلومینیوم ضدحریق و پنجره‌های نرمال آکپای",
@@ -132,7 +132,7 @@ export function DistributionMap() {
       province: "یزد",
       x: 620,
       y: 575,
-      path: "M 486 610 Q 560 585, 620 575",
+      path: "M 505 520 Q 560 545, 620 575",
       labelPos: "right",
       projects: "ساختمان‌های همساز با اقلیم گرم و خشک کویری",
       systemTypes: "شیشه‌های کنترل‌کننده تابش Low-E و عایق آکوستیک",
@@ -144,7 +144,7 @@ export function DistributionMap() {
       province: "کرمانشاه، همدان و کردستان",
       x: 210,
       y: 440,
-      path: "M 486 610 Q 320 520, 210 440",
+      path: "M 505 520 Q 340 470, 210 440",
       labelPos: "left",
       projects: "شعب مرکزی بانک‌ها و پروژه‌های مسکونی",
       systemTypes: "حفاظ و نرده‌های استیل و پنجره‌های لولایی دوحالته",
@@ -233,7 +233,7 @@ export function DistributionMap() {
             className="relative w-full aspect-[1200/1070] transition-transform duration-[1800ms] ease-[cubic-bezier(0.16,1,0.3,1)] select-none"
             style={{
               transform: isZoomed ? "scale(2.1)" : "scale(1)",
-              transformOrigin: "40.5% 57%", // Center of Isfahan in viewBox 0 0 1200 1070
+              transformOrigin: "42.1% 48.6%", // Exact center of Isfahan (505, 520) in viewBox 0 0 1200 1070
             }}
           >
             <svg

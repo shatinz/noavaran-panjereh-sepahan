@@ -8,6 +8,7 @@ import { Breadcrumbs } from '@/components/ui/Breadcrumbs';
 import { SpecTable } from '@/components/ui/SpecTable';
 import { CheckCircle2, ShieldCheck, Phone, Calculator, ExternalLink } from 'lucide-react';
 import { getLocalMediaFallback, withBasePath } from '@/lib/media';
+import { extractVideoInfo } from '@/lib/video';
 
 interface Props {
   params: { slug: string; };
@@ -164,9 +165,10 @@ export default async function MaterialDetailPage({ params }: Props) {
                   رندر سه‌بعدی و معرفی مقاطع
                 </h2>
                 <div className="aspect-video bg-ink-900 rounded-xl overflow-hidden border border-ink-800 metal-shadow">
-                  {material.videoUrl.includes('aparat.com') ? (
+                  {extractVideoInfo(material.videoUrl, 'aparat').embedUrl ? (
                     <iframe
-                      src={material.videoUrl}
+                      src={extractVideoInfo(material.videoUrl, 'aparat').embedUrl}
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                       allowFullScreen
                       className="w-full h-full border-none"
                       title={`ویدیو معرفی سیستم ${material.title}`}

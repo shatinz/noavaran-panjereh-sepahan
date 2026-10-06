@@ -44,6 +44,19 @@ body {
   outline-offset: 2px;
 }
 
+/* Form input base styling for high-contrast dark theme */
+input:not([type="checkbox"]):not([type="radio"]):not([type="submit"]):not([type="button"]),
+textarea,
+select {
+  background-color: #140104;
+  color: #ffffff;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #808288;
+}
+
 /* Brushed aluminum base utility */
 .bg-metal-brushed {
   background-color: #cbcccb;
@@ -84,6 +97,26 @@ body {
 
 .animate-metal-sweep {
   animation: metalSweep 6s infinite;
+}
+
+@keyframes bannerCarousel {
+  0% {
+    opacity: 0;
+    transform: translateY(18px) scale(0.96);
+    filter: blur(6px);
+  }
+  60% {
+    filter: blur(0);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+.animate-banner-carousel {
+  animation: bannerCarousel 0.65s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -63,13 +63,38 @@ export function Hero() {
             </span>
           </h1>
 
-          {/* Smooth rotating abilities carousel */}
-          <div className="mb-10 max-w-3xl mx-auto min-h-[5rem] flex items-center justify-center">
-            <h2 className="text-base sm:text-lg md:text-2xl text-steel-100 font-medium font-vazir leading-relaxed text-shadow-sm transition-all duration-700">
-              <span className="inline-block py-2 px-4 rounded-xl bg-black/40 backdrop-blur-sm border border-white/10 text-white shadow-lg">
-                {abilities[currentAbilityIndex]}
+          {/* Smooth kinetic abilities carousel */}
+          <div className="mb-10 max-w-4xl mx-auto min-h-[5.5rem] flex flex-col items-center justify-center gap-3">
+            <div className="relative inline-flex items-center gap-3 px-5 sm:px-8 py-3.5 rounded-2xl bg-gradient-to-r from-ink-950/95 via-blood-900/60 to-ink-950/95 border border-signal-500/40 backdrop-blur-xl shadow-[0_0_35px_rgba(171,0,23,0.3)]">
+              {/* Pulsing signal ruby dot */}
+              <span className="relative flex h-3 w-3 shrink-0">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-signal-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-3 w-3 bg-signal-500"></span>
               </span>
-            </h2>
+
+              <h2
+                key={currentAbilityIndex}
+                className="animate-banner-carousel text-base sm:text-xl md:text-2xl font-black font-vazir text-white tracking-wide"
+              >
+                {abilities[currentAbilityIndex]}
+              </h2>
+            </div>
+
+            {/* Micro progress indicators */}
+            <div className="flex items-center justify-center gap-1.5 pt-1">
+              {abilities.map((_, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => setCurrentAbilityIndex(idx)}
+                  className={`h-1 rounded-full transition-all duration-500 ${
+                    idx === currentAbilityIndex
+                      ? 'w-6 bg-signal-500 shadow-[0_0_8px_rgba(171,0,23,0.8)]'
+                      : 'w-1.5 bg-steel-500/40 hover:bg-steel-400'
+                  }`}
+                  aria-label={`آیتم ${idx + 1}`}
+                />
+              ))}
+            </div>
           </div>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">

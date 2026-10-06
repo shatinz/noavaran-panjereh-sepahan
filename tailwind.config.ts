@@ -36,6 +36,27 @@ const config: Config = {
           500: "#cca699",
           600: "#b38c80",
         },
+        charcoal: {
+          700: "#330009",
+          750: "#280007",
+          800: "#1e0004",
+          850: "#140104",
+          900: "#0e0002",
+          950: "#0a0002",
+        },
+        titanium: {
+          100: "#ffffff",
+          200: "#f0f0f2",
+          300: "#d0d1d4",
+          400: "#a8a9ad",
+          500: "#808288",
+          600: "#5a5c61",
+        },
+        bronze: {
+          400: "#d1001c",
+          500: "#ab0017",
+          600: "#8b0012",
+        },
       },
       fontFamily: {
         vazir: ["Vazirmatn", "Tahoma", "Arial", "system-ui", "-apple-system", "sans-serif"],
