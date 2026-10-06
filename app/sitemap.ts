@@ -18,6 +18,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { route: '/videos', priority: 0.8, changeFrequency: 'weekly' },
     { route: '/about', priority: 0.8, changeFrequency: 'monthly' },
     { route: '/contact', priority: 0.85, changeFrequency: 'monthly' },
+    { route: '/logo-motion', priority: 0.8, changeFrequency: 'monthly' },
   ];
 
   const staticPages: MetadataRoute.Sitemap = coreRoutes.map((item) => ({

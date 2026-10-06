@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>استودیوی لوگو موشن و لوگوگرافی | نوآوران پنجره سپاهان</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --brand-red: #9B2130;
+    --brand-cyan: #00AFEF;
+    --brand-ice: #96DAF8;
+    --brand-dark: #07090e;
+    --brand-card: #12151f;
+    --brand-border: rgba(255, 255, 255, 0.1);
+  }
+
+  body {
+    background: #080a0f;
+    color: #e2e8f0;
+    font-family: system-ui, -apple-system, 'Segoe UI', Tahoma, Arial, sans-serif;
+    min-height: 100vh;
+    padding: 0;
+    margin: 0;
+    overflow-x: hidden;
+  }
+
+  /* Top Navigation & Brand Header */
+  .header-bar {
+    background: rgba(18, 21, 31, 0.95);
+    border-bottom: 1px solid var(--brand-border);
+    backdrop-filter: blur(16px);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .brand-group {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .brand-logo-thumb {
+    width: 44px;
+    height: 44px;
+    object-fit: contain;
+    filter: drop-shadow(0 2px 8px rgba(0,0,0,0.5));
+  }
+
+  .brand-title {
+    font-size: 16px;
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: -0.2px;
+  }
+
+  .brand-subtitle {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.5);
+    letter-spacing: 1px;
+    direction: ltr;
+    text-align: right;
+  }
+
+  /* Main Container */
+  .main-content {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 30px 20px 80px 20px;
+  }
+
+  /* Hero Section */
+  .hero-block {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  .badge-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(155, 33, 48, 0.2);
+    border: 1px solid rgba(155, 33, 48, 0.5);
+    color: #ff6b7e;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 5px 14px;
+    border-radius: 9999px;
+    margin-bottom: 14px;
+  }
+
+  .hero-heading {
+    font-size: 32px;
+    font-weight: 900;
+    color: #ffffff;
+    margin-bottom: 10px;
+    letter-spacing: -0.5px;
+  }
+
+  .hero-desc {
+    font-size: 14px;
+    color: #94a3b8;
+    max-width: 720px;
+    margin: 0 auto;
+    line-height: 1.7;
+  }
+
+  /* Animation Selector Tabs */
+  .tabs-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+  }
+
+  .tab-item {
+    background: #151824;
+    border: 1px solid var(--brand-border);
+    color: #94a3b8;
+    padding: 10px 22px;
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .tab-item:hover {
+    background: #1c2132;
+    color: #ffffff;
+    border-color: rgba(0, 175, 239, 0.4);
+  }
+
+  .tab-item.active {
+    background: linear-gradient(135deg, #9B2130 0%, #68151f 100%);
+    color: #ffffff;
+    border-color: #ff4d64;
+    box-shadow: 0 4px 20px rgba(155, 33, 48, 0.4);
+  }
+
+  .tab-item.active.cyan {
+    background: linear-gradient(135deg, #00AFEF 0%, #0077b6 100%);
+    border-color: #38bdf8;
+    box-shadow: 0 4px 20px rgba(0, 175, 239, 0.4);
+  }
+
+  /* Live Interactive Preview Screen */
+  .preview-wrapper {
+    background: #0d1017;
+    border: 1px solid var(--brand-border);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7);
+    margin-bottom: 50px;
+  }
+
+  .preview-toolbar {
+    background: #151824;
+    border-bottom: 1px solid var(--brand-border);
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .preview-status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: bold;
+    color: #ffffff;
+  }
+
+  .status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #22c55e;
+    box-shadow: 0 0 10px #22c55e;
+  }
+
+  .toolbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .tool-btn {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #e2e8f0;
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .tool-btn:hover {
+    background: rgba(255, 255, 255, 0.14);
+    color: #ffffff;
+  }
+
+  .iframe-container {
+    width: 100%;
+    height: 640px;
+    position: relative;
+    background: #07090e;
+  }
+
+  iframe#stageFrame {
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: block;
+  }
+
+  /* Grid of 3 Cards */
+  .grid-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--brand-border);
+    padding-bottom: 12px;
+  }
+
+  .grid-title {
+    font-size: 20px;
+    font-weight: 800;
+    color: #ffffff;
+  }
+
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 24px;
+    margin-bottom: 60px;
+  }
+
+  .motion-card {
+    background: #12151f;
+    border: 1px solid var(--brand-border);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .motion-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(0, 175, 239, 0.5);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+  }
+
+  .card-banner {
+    height: 190px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(circle at center, #1e2436 0%, #0d1017 100%);
+    overflow: hidden;
+  }
+
+  .card-banner img {
+    width: 110px;
+    height: 110px;
+    object-fit: contain;
+    transition: transform 0.4s ease;
+  }
+
+  .motion-card:hover .card-banner img {
+    transform: scale(1.12);
+  }
+
+  .card-body {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+
+  .card-title {
+    font-size: 16px;
+    font-weight: 800;
+    color: #ffffff;
+    margin-bottom: 6px;
+  }
+
+  .card-tagline {
+    font-size: 11px;
+    color: #00AFEF;
+    font-weight: bold;
+    margin-bottom: 12px;
+    direction: ltr;
+    text-align: right;
+  }
+
+  .card-desc {
+    font-size: 13px;
+    color: #94a3b8;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    flex-grow: 1;
+  }
+
+  .card-footer {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .btn-play {
+    flex: 1;
+    background: #00AFEF;
+    color: #07090e;
+    font-weight: bold;
+    border: none;
+    padding: 9px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: center;
+    text-decoration: none;
+  }
+
+  .btn-play:hover {
+    background: #38bdf8;
+    box-shadow: 0 0 15px rgba(0, 175, 239, 0.5);
+  }
+
+  .btn-open {
+    background: rgba(255, 255, 255, 0.08);
+    color: #e2e8f0;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    padding: 9px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+
+  .btn-open:hover {
+    background: rgba(255, 255, 255, 0.16);
+    color: #ffffff;
+  }
+
+  /* Logography Technical Specifications Panel */
+  .logography-panel {
+    background: #12151f;
+    border: 1px solid var(--brand-border);
+    border-radius: 20px;
+    padding: 30px;
+  }
+
+  .logography-title {
+    font-size: 22px;
+    font-weight: 900;
+    color: #ffffff;
+    margin-bottom: 6px;
+  }
+
+  .logography-subtitle {
+    font-size: 13px;
+    color: #94a3b8;
+    margin-bottom: 26px;
+  }
+
+  .specs-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+  }
+
+  .spec-item {
+    background: #0d1017;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    padding: 18px;
+    border-radius: 12px;
+  }
+
+  .spec-label {
+    font-size: 12px;
+    color: #64748b;
+    margin-bottom: 8px;
+    font-weight: bold;
+  }
+
+  .color-swatches {
+    display: flex;
+    gap: 8px;
+    margin-top: 8px;
+  }
+
+  .swatch {
+    width: 38px;
+    height: 38px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 9px;
+    font-weight: bold;
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .swatch.red { background: #9B2130; }
+  .swatch.cyan { background: #00AFEF; }
+  .swatch.charcoal { background: #373435; }
+  .swatch.white { background: #FEFEFE; color: #000000; }
+</style>
+</head>
+<body>
+
+  <!-- Top Navigation Bar -->
+  <header class="header-bar">
+    <div class="brand-group">
+      <img src="../images/logo.png" alt="نوآوران پنجره سپاهان" class="brand-logo-thumb" />
+      <div>
+        <div class="brand-title">شرکت نوآوران پنجره سپاهان</div>
+        <div class="brand-subtitle">Noavaran Panjereh Sepahan</div>
+      </div>
+    </div>
+    <div>
+      <a href="/" class="tool-btn">بازگشت به وب‌سایت اصلی ↗</a>
+    </div>
+  </header>
+
+  <main class="main-content">
+    
+    <!-- Hero Block -->
+    <section class="hero-block">
+      <div class="badge-tag">
+        ✦ هویت بصری رسمی و لوگوموشن سه‌گانه
+      </div>
+      <h1 class="hero-heading">استودیوی لوگو موشن و لوگوگرافی نوآوران</h1>
+      <p class="hero-desc">
+        مجموعه ۳ سبک انیمیشن و موشن‌گرافیک بر پایه <strong>لوگوی رسمی و بدون تغییر</strong> شرکت نوآوران پنجره سپاهان؛ طراحی‌شده با فناوری‌های مدرن وب، کدهای برداری SVG، شیدرهای نوری CSS و رندرینگ سه‌بعدی.
+      </p>
+    </section>
+
+    <!-- Navigation Tabs -->
+    <div class="tabs-bar">
+      <button class="tab-item active cyan" onclick="switchTab(1, this)">
+        <span>📐</span> انیمیشن ۱: بلوپرینت و اسکن مهندسی
+      </button>
+      <button class="tab-item" onclick="switchTab(2, this)">
+        <span>🔥</span> انیمیشن ۲: کوره صنعتی و اکستروژن
+      </button>
+      <button class="tab-item" onclick="switchTab(3, this)">
+        <span>💎</span> انیمیشن ۳: هولوگرافی سه‌بعدی و شیشه
+      </button>
+    </div>
+
+    <!-- Live Preview Screen -->
+    <div class="preview-wrapper">
+      <div class="preview-toolbar">
+        <div class="preview-status">
+          <span class="status-dot"></span>
+          <span id="previewTitle">لوگو موشن ۰۱: اسکن مهندسی و بلوپرینت معماری</span>
+        </div>
+        <div class="toolbar-actions">
+          <button class="tool-btn" onclick="reloadIframe()">
+            <span>↻</span> اجرای مجدد
+          </button>
+          <a id="btnPopout" href="animation-1-blueprint.html" target="_blank" class="tool-btn">
+            تمام‌صفحه / تب مستقل ↗
+          </a>
+        </div>
+      </div>
+      <div class="iframe-container">
+        <iframe id="stageFrame" src="animation-1-blueprint.html"></iframe>
+      </div>
+    </div>
+
+    <!-- 3 Cards Showcase -->
+    <div class="grid-header">
+      <h2 class="grid-title">بررسی مشخصات ۳ سبک لوگوموشن</h2>
+      <span style="font-size: 13px; color: #64748b;">طراحی اختصاصی برای استفاده در سایت، تیزرها و پلتفرم‌های ویدیویی</span>
+    </div>
+
+    <div class="cards-grid">
+      <!-- Card 1 -->
+      <div class="motion-card">
+        <div class="card-banner" style="background: radial-gradient(circle, rgba(0,175,239,0.2) 0%, #0d1017 100%);">
+          <img src="../images/logo.png" alt="بلوپرینت" />
+        </div>
+        <div class="card-body">
+          <h3 class="card-title">۱. اسکن مهندسی و بلوپرینت معماری</h3>
+          <div class="card-tagline">Architectural CAD Laser Scan</div>
+          <p class="card-desc">
+            نمای فنی نرم‌افزارهای محاسباتی نما با خطوط اندازه‌گیری دقیق، گرید مختصات میلی‌متری و جاروب پرتو لیزر نئونی که لوگوی رسمی را از حالت دیاگرام نقشه به واقعیت متریال تبدیل می‌کند.
+          </p>
+          <div class="card-footer">
+            <button class="btn-play" onclick="switchTab(1, document.querySelectorAll('.tab-item')[0])">مشاهده در پلیر</button>
+            <a href="animation-1-blueprint.html" target="_blank" class="btn-open">مستقل ↗</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="motion-card">
+        <div class="card-banner" style="background: radial-gradient(circle, rgba(155,33,48,0.25) 0%, #0d1017 100%);">
+          <img src="../images/logo.png" alt="اکستروژن و کوره" />
+        </div>
+        <div class="card-body">
+          <h3 class="card-title">۲. کوره متالیک و اکستروژن آلومینیوم</h3>
+          <div class="card-tagline">Thermal Forge & Metal Extrusion</div>
+          <p class="card-desc">
+            فضای صنعتی با ذرات گداخته و جرقه‌های حرارتی کوره ذوب، رینگ پلاسمای دوار، انجماد آلومینیوم اختصاصی و عبور درخشش آینه‌ای کروم روی سطوح مقاطع و شیشه دوجداره.
+          </p>
+          <div class="card-footer">
+            <button class="btn-play" onclick="switchTab(2, document.querySelectorAll('.tab-item')[1])">مشاهده در پلیر</button>
+            <a href="animation-2-metallic.html" target="_blank" class="btn-open">مستقل ↗</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="motion-card">
+        <div class="card-banner" style="background: radial-gradient(circle, rgba(0,175,239,0.18) 0%, rgba(155,33,48,0.18) 100%);">
+          <img src="../images/logo.png" alt="هولوگرافی سه‌بعدی" />
+        </div>
+        <div class="card-body">
+          <h3 class="card-title">۳. هولوگرافی سه‌بعدی و شیشه دوجداره</h3>
+          <div class="card-tagline">3D Holographic Curtain-Wall</div>
+          <p class="card-desc">
+            لوح کریستالی معلق با بازتاب‌های شکست نور و پرتوهای مداری؛ با قابلیت تعاملی ژیروسکوپ سه‌بعدی تحت حرکت ماوس کاربر، سایه‌اندازی طبیعی و رقص پرتوهای منشوری روی شیشه.
+          </p>
+          <div class="card-footer">
+            <button class="btn-play" onclick="switchTab(3, document.querySelectorAll('.tab-item')[2])">مشاهده در پلیر</button>
+            <a href="animation-3-glass.html" target="_blank" class="btn-open">مستقل ↗</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Logography & Brand Identity Technical Card -->
+    <section class="logography-panel">
+      <h2 class="logography-title">شناسنامه لوگوگرافی و هویت بصری نوآوران</h2>
+      <p class="logography-subtitle">پارامترهای استاندارد گرافیک و کدبندی رنگ‌های اختصاصی برند</p>
+
+      <div class="specs-row">
+        <div class="spec-item">
+          <div class="spec-label">پالت رنگ‌های رسمی برند</div>
+          <div class="color-swatches">
+            <div class="swatch red" title="#9B2130">#9B21</div>
+            <div class="swatch cyan" title="#00AFEF">#00AF</div>
+            <div class="swatch charcoal" title="#373435">#3734</div>
+            <div class="swatch white" title="#FEFEFE">#FEFE</div>
+          </div>
+        </div>
+
+        <div class="spec-item">
+          <div class="spec-label">تایپوگرافی لوگو و نام رسمی</div>
+          <div style="font-size: 14px; font-weight: bold; color: #ffffff; margin-bottom: 4px;">P Yekan + Tahoma / Arial</div>
+          <div style="font-size: 11px; color: #94a3b8;">متن قوس بالا: شرکت نوآوران پنجره سپاهان</div>
+        </div>
+
+        <div class="spec-item">
+          <div class="spec-label">مشخصات ثبتی و حقوقی شرکت</div>
+          <div style="font-size: 13px; font-weight: bold; color: #ffffff; margin-bottom: 4px;">سهامی خاص — شماره ثبت: ۳۸۹۲</div>
+          <div style="font-size: 11px; color: #94a3b8;">دامنه رسمی: www.NoavaranPanjereh.com</div>
+        </div>
+
+        <div class="spec-item">
+          <div class="spec-label">ساختار هندسی آرم (Emblem)</div>
+          <div style="font-size: 13px; font-weight: bold; color: #ffffff; margin-bottom: 4px;">ترکیب حروف N P S و المان پنجره</div>
+          <div style="font-size: 11px; color: #94a3b8;">شیشه رفلکس اسکای بلو + فریم اختصاصی قرمز/مشکی</div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    const titles = {
+      1: "لوگو موشن ۰۱: اسکن مهندسی و بلوپرینت معماری (Architectural CAD Scan)",
+      2: "لوگو موشن ۰۲: کوره صنعتی و اکستروژن متالیک (Thermal Forge & Extrusion)",
+      3: "لوگو موشن ۰۳: هولوگرافی سه‌بعدی و شیشه دوجداره (3D Holographic Curtain-Wall)"
+    };
+
+    const files = {
+      1: "animation-1-blueprint.html",
+      2: "animation-2-metallic.html",
+      3: "animation-3-glass.html"
+    };
+
+    function switchTab(idx, btn) {
+      document.querySelectorAll('.tab-item').forEach(b => {
+        b.classList.remove('active', 'cyan');
+      });
+      btn.classList.add('active');
+      if (idx === 1 || idx === 3) btn.classList.add('cyan');
+
+      const iframe = document.getElementById('stageFrame');
+      iframe.src = files[idx];
+
+      document.getElementById('previewTitle').textContent = titles[idx];
+      document.getElementById('btnPopout').href = files[idx];
+    }
+
+    function reloadIframe() {
+      const iframe = document.getElementById('stageFrame');
+      iframe.src = iframe.src;
+    }
+  </script>
+</body>
+</html>

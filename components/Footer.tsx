@@ -88,6 +88,7 @@ export function Footer() {
               <li><Link href="/materials" className="hover:text-white transition-colors">محصولات و سیستم‌ها</Link></li>
               <li><Link href="/projects" className="hover:text-white transition-colors">پروژه‌های اجرایی</Link></li>
               <li><Link href="/articles" className="hover:text-white transition-colors">مقالات و دانشنامه</Link></li>
+              <li><Link href="/logo-motion" className="hover:text-white transition-colors flex items-center gap-1.5"><span className="w-1.5 h-1.5 rounded-full bg-signal-500 inline-block"></span>لوگو موشن و انیمیشن برند</Link></li>
             </ul>
           </div>
 

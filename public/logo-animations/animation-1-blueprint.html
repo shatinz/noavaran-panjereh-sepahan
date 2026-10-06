@@ -3,378 +3,491 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>نوآوران پنجره سپاهان — Blueprint Reveal</title>
+<title>نوآوران پنجره سپاهان — انیمیشن ۱: بلوپرینت و اسکن مهندسی</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+  :root {
+    --brand-red: #9B2130;
+    --brand-cyan: #00AFEF;
+    --brand-ice: #96DAF8;
+    --brand-dark: #07090e;
+    --brand-charcoal: #12151d;
+  }
+
   body {
-    background: #0a0e17;
+    background: var(--brand-dark);
+    color: #e2e8f0;
+    font-family: system-ui, -apple-system, 'Segoe UI', Tahoma, Arial, sans-serif;
+    min-height: 100vh;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-height: 100vh;
     overflow: hidden;
-    font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
-  }
-
-  .container {
     position: relative;
-    width: 600px;
-    height: 600px;
+    user-select: none;
   }
 
-  /* Grid background */
-  .grid-bg {
+  /* Architectural CAD Grid */
+  .cad-grid {
     position: absolute;
     inset: 0;
-    background-image:
-      linear-gradient(rgba(0,175,239,0.06) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0,175,239,0.06) 1px, transparent 1px);
-    background-size: 30px 30px;
-    animation: gridFadeIn 1.5s ease-out forwards;
-    opacity: 0;
+    background-image: 
+      linear-gradient(rgba(0, 175, 239, 0.08) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 175, 239, 0.08) 1px, transparent 1px),
+      linear-gradient(rgba(0, 175, 239, 0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 175, 239, 0.025) 1px, transparent 1px);
+    background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
+    background-position: center center;
+    pointer-events: none;
+    z-index: 1;
   }
 
-  @keyframes gridFadeIn {
-    to { opacity: 1; }
-  }
-
-  /* SVG canvas */
-  svg.logo-svg {
-    width: 100%;
-    height: 100%;
-    position: relative;
+  /* Vignette & Radial Depth */
+  .vignette {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, transparent 30%, rgba(7, 9, 14, 0.85) 85%, #07090e 100%);
+    pointer-events: none;
     z-index: 2;
   }
 
-  /* Stroke drawing animation */
-  .draw-path {
-    fill: none;
-    stroke-dasharray: var(--len);
-    stroke-dashoffset: var(--len);
-    animation: drawLine var(--dur) var(--delay) ease-out forwards;
-  }
-
-  @keyframes drawLine {
-    to { stroke-dashoffset: 0; }
-  }
-
-  /* Fill fade-in */
-  .fill-fade {
-    opacity: 0;
-    animation: fadeIn 0.8s var(--delay) ease-out forwards;
-  }
-
-  @keyframes fadeIn {
-    to { opacity: 1; }
-  }
-
-  /* Glow pulse on drawn elements */
-  .glow-pulse {
-    filter: drop-shadow(0 0 0px rgba(0,175,239,0));
-    animation: glowAnim 2s var(--delay) ease-in-out infinite;
-  }
-
-  @keyframes glowAnim {
-    0%, 100% { filter: drop-shadow(0 0 2px rgba(0,175,239,0.3)); }
-    50% { filter: drop-shadow(0 0 12px rgba(0,175,239,0.8)); }
-  }
-
-  /* Circle border drawing */
-  .circle-draw {
-    fill: none;
-    stroke: #00AFEF;
-    stroke-width: 3;
-    stroke-dasharray: 1508;
-    stroke-dashoffset: 1508;
-    animation: drawCircle 2s 0.3s ease-out forwards;
-  }
-
-  @keyframes drawCircle {
-    to { stroke-dashoffset: 0; }
-  }
-
-  /* Inner circle */
-  .circle-inner {
-    fill: none;
-    stroke: rgba(0,175,239,0.3);
-    stroke-width: 1;
-    stroke-dasharray: 1382;
-    stroke-dashoffset: 1382;
-    animation: drawCircle 1.8s 0.6s ease-out forwards;
-  }
-
-  /* Building lines group */
-  .building-line {
-    stroke: #00AFEF;
-    stroke-width: 2;
-    stroke-linecap: round;
-  }
-
-  /* N letter */
-  .letter-n {
-    stroke: #9B2130;
-    stroke-width: 3;
-    fill: none;
-  }
-
-  /* P letter */
-  .letter-p {
-    stroke: #FEFEFE;
-    stroke-width: 2.5;
-    fill: none;
-  }
-
-  /* S letter */
-  .letter-s {
-    stroke: #9B2130;
-    stroke-width: 3;
-    fill: none;
-  }
-
-  /* Window glass */
-  .glass-rect {
-    fill: none;
-    stroke: #96DAF8;
-    stroke-width: 1.5;
-  }
-
-  .glass-fill {
-    fill: rgba(150,218,248,0.15);
-    opacity: 0;
-    animation: glassFill 1s var(--delay) ease-out forwards;
-  }
-
-  @keyframes glassFill {
-    to { opacity: 1; }
-  }
-
-  /* Text reveal */
-  .brand-text {
-    opacity: 0;
-    animation: textReveal 1s var(--delay) ease-out forwards;
-  }
-
-  @keyframes textReveal {
-    0% { opacity: 0; transform: translateY(10px); }
-    100% { opacity: 1; transform: translateY(0); }
-  }
-
-  /* Scanning line */
-  .scan-line {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, #00AFEF, transparent);
+  /* Main Viewport Stage */
+  .viewport {
+    position: relative;
+    width: 620px;
+    height: 620px;
+    max-width: 92vw;
+    max-height: 92vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     z-index: 10;
-    animation: scanDown 3s 0.5s ease-in-out forwards;
-    opacity: 0;
   }
 
-  @keyframes scanDown {
-    0% { top: 5%; opacity: 0; }
-    5% { opacity: 0.8; }
-    95% { opacity: 0.8; }
-    100% { top: 95%; opacity: 0; }
-  }
-
-  /* Corner markers */
-  .corner {
+  /* Technical Compass / Circular Measurement Scales */
+  .dial-svg {
     position: absolute;
-    width: 20px;
-    height: 20px;
-    border-color: #00AFEF;
-    opacity: 0;
-    animation: cornerIn 0.5s 0.2s ease-out forwards;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 3;
+    overflow: visible;
   }
 
-  @keyframes cornerIn {
-    to { opacity: 0.6; }
+  .dial-circle-outer {
+    fill: none;
+    stroke: rgba(0, 175, 239, 0.35);
+    stroke-width: 1.5;
+    stroke-dasharray: 6 8;
+    transform-origin: center;
+    animation: rotateClockwise 60s linear infinite;
   }
 
-  .corner-tl { top: 30px; left: 30px; border-top: 2px solid; border-left: 2px solid; }
-  .corner-tr { top: 30px; right: 30px; border-top: 2px solid; border-right: 2px solid; }
-  .corner-bl { bottom: 30px; left: 30px; border-bottom: 2px solid; border-left: 2px solid; }
-  .corner-br { bottom: 30px; right: 30px; border-bottom: 2px solid; border-right: 2px solid; }
+  .dial-circle-ticks {
+    fill: none;
+    stroke: rgba(150, 218, 248, 0.25);
+    stroke-width: 2;
+    stroke-dasharray: 2 14;
+    transform-origin: center;
+    animation: rotateCounterClockwise 45s linear infinite;
+  }
 
-  /* Particles */
-  .particle {
+  .dial-reticle {
+    stroke: rgba(0, 175, 239, 0.4);
+    stroke-width: 1;
+  }
+
+  @keyframes rotateClockwise {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  @keyframes rotateCounterClockwise {
+    from { transform: rotate(360deg); }
+    to { transform: rotate(0deg); }
+  }
+
+  /* The Logo Core Container */
+  .logo-chamber {
+    position: relative;
+    width: 440px;
+    height: 440px;
+    max-width: 75vw;
+    max-height: 75vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 5;
+  }
+
+  /* Blueprint Blueprint Blueprint Layer (Blueprint Monochrome Blueprint) */
+  .logo-blueprint {
     position: absolute;
-    width: 2px;
-    height: 2px;
-    background: #00AFEF;
-    border-radius: 50%;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter: invert(1) hue-rotate(170deg) saturate(6) brightness(1.1) drop-shadow(0 0 15px rgba(0, 175, 239, 0.45));
     opacity: 0;
-    animation: particleFloat 4s var(--delay) ease-in-out infinite;
+    transform: scale(0.88);
+    animation: blueprintAppear 1.2s 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
 
-  @keyframes particleFloat {
-    0% { opacity: 0; transform: translate(0, 0) scale(0); }
-    20% { opacity: 0.8; transform: translate(var(--tx), var(--ty)) scale(1); }
-    80% { opacity: 0.4; }
-    100% { opacity: 0; transform: translate(calc(var(--tx) * 2), calc(var(--ty) * 2)) scale(0); }
+  @keyframes blueprintAppear {
+    0% {
+      opacity: 0;
+      transform: scale(0.85);
+      filter: invert(1) hue-rotate(170deg) saturate(8) brightness(2.5) blur(10px);
+    }
+    50% {
+      opacity: 0.8;
+      filter: invert(1) hue-rotate(170deg) saturate(6) brightness(1.4) blur(2px);
+    }
+    100% {
+      opacity: 0.35;
+      transform: scale(1);
+      filter: invert(1) hue-rotate(170deg) saturate(5) brightness(1.1) blur(0px);
+    }
   }
 
-  /* Replay button */
-  .replay-btn {
+  /* Official Original Full Color Logo Layer */
+  .logo-authentic {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    z-index: 6;
+    opacity: 0;
+    transform: scale(1);
+    /* Revealed via clip-path laser wipe */
+    clip-path: inset(100% 0 0 0);
+    filter: drop-shadow(0 15px 35px rgba(0, 0, 0, 0.7));
+    animation: laserRevealLogo 2.4s 1.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+
+  @keyframes laserRevealLogo {
+    0% {
+      clip-path: inset(100% 0 0 0);
+      opacity: 1;
+    }
+    100% {
+      clip-path: inset(0% 0 0 0);
+      opacity: 1;
+    }
+  }
+
+  /* Sweeping Laser Beam */
+  .laser-sweep {
+    position: absolute;
+    left: -10%;
+    width: 120%;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, #00AFEF 20%, #ffffff 50%, #00AFEF 80%, transparent);
+    box-shadow: 
+      0 0 15px #00AFEF,
+      0 0 35px #00AFEF,
+      0 0 60px #96DAF8;
+    z-index: 8;
+    opacity: 0;
+    pointer-events: none;
+    animation: laserSweepMotion 2.4s 1.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+
+  @keyframes laserSweepMotion {
+    0% {
+      top: 100%;
+      opacity: 0;
+    }
+    5% {
+      opacity: 1;
+    }
+    95% {
+      opacity: 1;
+    }
+    100% {
+      top: 0%;
+      opacity: 0;
+    }
+  }
+
+  /* Diagonal Glass Flare Sweep after assembly */
+  .glass-flare {
+    position: absolute;
+    inset: -20%;
+    background: linear-gradient(
+      125deg,
+      transparent 35%,
+      rgba(255, 255, 255, 0.05) 45%,
+      rgba(0, 175, 239, 0.35) 50%,
+      rgba(255, 255, 255, 0.7) 52%,
+      rgba(155, 33, 48, 0.3) 55%,
+      transparent 65%
+    );
+    z-index: 9;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(-100%);
+    animation: glassFlarePass 1.2s 3.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  @keyframes glassFlarePass {
+    0% {
+      transform: translateX(-120%);
+      opacity: 0;
+    }
+    30% {
+      opacity: 1;
+    }
+    100% {
+      transform: translateX(120%);
+      opacity: 0;
+    }
+  }
+
+  /* Ambient Logo Breathe Pulse after completion */
+  .logo-chamber.completed {
+    animation: finalBreathe 4s ease-in-out infinite;
+  }
+
+  @keyframes finalBreathe {
+    0%, 100% {
+      filter: drop-shadow(0 0 20px rgba(0, 175, 239, 0.25)) drop-shadow(0 0 45px rgba(155, 33, 48, 0.15));
+      transform: scale(1);
+    }
+    50% {
+      filter: drop-shadow(0 0 35px rgba(0, 175, 239, 0.45)) drop-shadow(0 0 65px rgba(155, 33, 48, 0.35));
+      transform: scale(1.015);
+    }
+  }
+
+  /* Technical Corner Brackets */
+  .corner-bracket {
+    position: absolute;
+    width: 28px;
+    height: 28px;
+    border-color: rgba(0, 175, 239, 0.6);
+    pointer-events: none;
+    z-index: 12;
+    animation: bracketFade 0.6s 0.2s ease-out forwards;
+    opacity: 0;
+  }
+
+  @keyframes bracketFade { to { opacity: 1; } }
+
+  .bracket-tl { top: 15px; left: 15px; border-top: 2px solid; border-left: 2px solid; }
+  .bracket-tr { top: 15px; right: 15px; border-top: 2px solid; border-right: 2px solid; }
+  .bracket-bl { bottom: 15px; left: 15px; border-bottom: 2px solid; border-left: 2px solid; }
+  .bracket-br { bottom: 15px; right: 15px; border-bottom: 2px solid; border-right: 2px solid; }
+
+  /* Telemetry / HUD Metadata */
+  .hud-tag {
+    position: absolute;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    color: rgba(0, 175, 239, 0.7);
+    font-family: 'Consolas', 'Courier New', monospace;
+    z-index: 12;
+    opacity: 0;
+    animation: bracketFade 0.8s 0.6s ease-out forwards;
+  }
+
+  .hud-top-left { top: 22px; left: 55px; }
+  .hud-top-right { top: 22px; right: 55px; text-align: left; direction: ltr; }
+  .hud-bottom-left { bottom: 22px; left: 55px; }
+  .hud-bottom-right { bottom: 22px; right: 55px; text-align: left; direction: ltr; }
+
+  /* Interactive Control Panel at Bottom */
+  .controls-panel {
     position: fixed;
-    bottom: 30px;
+    bottom: 25px;
     left: 50%;
     transform: translateX(-50%);
-    background: rgba(0,175,239,0.15);
-    border: 1px solid rgba(0,175,239,0.4);
-    color: #00AFEF;
-    padding: 10px 28px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(18, 21, 29, 0.85);
+    border: 1px solid rgba(0, 175, 239, 0.3);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    padding: 8px 18px;
+    border-radius: 9999px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+    z-index: 30;
+  }
+
+  .ctrl-btn {
+    background: transparent;
+    border: 1px solid rgba(0, 175, 239, 0.35);
+    color: #e2e8f0;
+    padding: 6px 14px;
+    border-radius: 9999px;
+    font-size: 12px;
     font-family: inherit;
-    transition: all 0.3s;
-    z-index: 20;
-    opacity: 0;
-    animation: fadeIn 0.5s 5s ease-out forwards;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    display: flex;
+    align-items: center;
+    gap: 6px;
   }
 
-  .replay-btn:hover {
-    background: rgba(0,175,239,0.3);
+  .ctrl-btn:hover {
+    background: rgba(0, 175, 239, 0.2);
+    border-color: #00AFEF;
+    color: #ffffff;
+    box-shadow: 0 0 12px rgba(0, 175, 239, 0.4);
+  }
+
+  .ctrl-btn.active {
+    background: #00AFEF;
+    color: #07090e;
+    font-weight: bold;
     border-color: #00AFEF;
   }
 
-  /* Watermark */
-  .watermark {
+  .title-pill {
     position: fixed;
-    bottom: 80px;
+    top: 25px;
     left: 50%;
     transform: translateX(-50%);
-    color: rgba(0,175,239,0.3);
-    font-size: 11px;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    opacity: 0;
-    animation: fadeIn 0.5s 5.5s ease-out forwards;
+    background: rgba(18, 21, 29, 0.85);
+    border: 1px solid rgba(0, 175, 239, 0.25);
+    backdrop-filter: blur(12px);
+    padding: 6px 20px;
+    border-radius: 9999px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    font-weight: bold;
+    color: #ffffff;
+    z-index: 30;
+    letter-spacing: 0.5px;
+  }
+
+  .title-pill span.dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #00AFEF;
+    box-shadow: 0 0 8px #00AFEF;
+    display: inline-block;
   }
 </style>
 </head>
 <body>
 
-<div class="container">
-  <div class="grid-bg"></div>
-  <div class="scan-line"></div>
-  <div class="corner corner-tl"></div>
-  <div class="corner corner-tr"></div>
-  <div class="corner corner-bl"></div>
-  <div class="corner corner-br"></div>
+  <!-- Background CAD Grid -->
+  <div class="cad-grid" id="cadGrid"></div>
+  <div class="vignette"></div>
 
-  <!-- Floating particles -->
-  <div class="particle" style="left:15%;top:20%;--tx:10px;--ty:-20px;--delay:1s"></div>
-  <div class="particle" style="left:80%;top:30%;--tx:-15px;--ty:10px;--delay:1.5s"></div>
-  <div class="particle" style="left:25%;top:75%;--tx:20px;--ty:-10px;--delay:2s"></div>
-  <div class="particle" style="left:70%;top:80%;--tx:-10px;--ty:-15px;--delay:2.5s"></div>
-  <div class="particle" style="left:50%;top:15%;--tx:5px;--ty:15px;--delay:3s"></div>
-  <div class="particle" style="left:40%;top:60%;--tx:-12px;--ty:8px;--delay:1.8s"></div>
+  <!-- Header Title Tag -->
+  <div class="title-pill">
+    <span class="dot"></span>
+    لوگو موشن ۰۱: اسکن مهندسی و بلوپرینت معماری (Architectural CAD Scan)
+  </div>
 
-  <svg class="logo-svg" viewBox="0 0 500 500">
-    <!-- Outer circle -->
-    <circle cx="250" cy="250" r="240" class="circle-draw" />
-    <circle cx="250" cy="220" r="220" class="circle-inner" />
+  <!-- Main Viewport -->
+  <div class="viewport" id="viewport">
+    
+    <!-- Corner Framing Brackets -->
+    <div class="corner-bracket bracket-tl"></div>
+    <div class="corner-bracket bracket-tr"></div>
+    <div class="corner-bracket bracket-bl"></div>
+    <div class="corner-bracket bracket-br"></div>
 
-    <!-- Building structure - left wing -->
-    <line x1="140" y1="350" x2="140" y2="180" class="building-line draw-path glow-pulse"
-      style="--len:170;--dur:0.8s;--delay:1.2s" />
-    <line x1="140" y1="180" x2="200" y2="145" class="building-line draw-path glow-pulse"
-      style="--len:75;--dur:0.5s;--delay:1.6s" />
-    <line x1="200" y1="145" x2="250" y2="120" class="building-line draw-path glow-pulse"
-      style="--len:55;--dur:0.4s;--delay:1.8s" />
+    <!-- HUD Telemetry Labels -->
+    <div class="hud-tag hud-top-left">SYSTEM: CURTAIN-WALL CAD v4.8<br>TOLERANCE: ±0.05mm</div>
+    <div class="hud-tag hud-top-right">SCALE: 1:1 CALIBRATED<br>ALLOY: AL-6063-T6</div>
+    <div class="hud-tag hud-bottom-left">PROJECT: NOAVARAN SEPAHAN<br>CERT: ISO 9001:2026</div>
+    <div class="hud-tag hud-bottom-right">REG: 3892 | ISFAHAN<br>STATUS: VERIFIED ✔</div>
 
-    <!-- Building structure - right wing -->
-    <line x1="360" y1="350" x2="360" y2="180" class="building-line draw-path glow-pulse"
-      style="--len:170;--dur:0.8s;--delay:1.3s" />
-    <line x1="360" y1="180" x2="300" y2="145" class="building-line draw-path glow-pulse"
-      style="--len:75;--dur:0.5s;--delay:1.7s" />
-    <line x1="300" y1="145" x2="250" y2="120" class="building-line draw-path glow-pulse"
-      style="--len:55;--dur:0.4s;--delay:1.9s" />
+    <!-- Circular Dial Scales & Compass Elements -->
+    <svg class="dial-svg" viewBox="0 0 620 620">
+      <circle cx="310" cy="310" r="280" class="dial-circle-outer" />
+      <circle cx="310" cy="310" r="260" class="dial-circle-ticks" />
+      
+      <!-- Crosshairs -->
+      <line x1="310" y1="20" x2="310" y2="40" class="dial-reticle" />
+      <line x1="310" y1="580" x2="310" y2="600" class="dial-reticle" />
+      <line x1="20" y1="310" x2="40" y2="310" class="dial-reticle" />
+      <line x1="580" y1="310" x2="600" y2="310" class="dial-reticle" />
+      
+      <!-- Diagonal 45-degree ticks -->
+      <line x1="105" y1="105" x2="120" y2="120" class="dial-reticle" />
+      <line x1="515" y1="105" x2="500" y2="120" class="dial-reticle" />
+      <line x1="105" y1="515" x2="120" y2="500" class="dial-reticle" />
+      <line x1="515" y1="515" x2="500" y2="500" class="dial-reticle" />
+    </svg>
 
-    <!-- Roof lines -->
-    <line x1="120" y1="310" x2="250" y2="240" class="building-line draw-path"
-      style="--len:150;--dur:0.6s;--delay:2.0s;stroke:#9B2130;stroke-width:2.5" />
-    <line x1="380" y1="310" x2="250" y2="240" class="building-line draw-path"
-      style="--len:150;--dur:0.6s;--delay:2.1s;stroke:#9B2130;stroke-width:2.5" />
+    <!-- Logo Display Chamber -->
+    <div class="logo-chamber" id="logoChamber">
+      <!-- 1. Blueprint Monochrome Ghost of EXACT Logo -->
+      <img src="../images/logo.png" alt="نوآوران پنجره سپاهان - بلوپرینت" class="logo-blueprint" />
 
-    <!-- Secondary roof -->
-    <line x1="150" y1="290" x2="250" y2="220" class="building-line draw-path"
-      style="--len:120;--dur:0.5s;--delay:2.3s;stroke:#9B2130;stroke-width:1.5;opacity:0.6" />
-    <line x1="350" y1="290" x2="250" y2="220" class="building-line draw-path"
-      style="--len:120;--dur:0.5s;--delay:2.4s;stroke:#9B2130;stroke-width:1.5;opacity:0.6" />
+      <!-- 2. Full Color Authentic Existing Logo -->
+      <img src="../images/logo.png" alt="شرکت نوآوران پنجره سپاهان" class="logo-authentic" id="authenticLogo" />
 
-    <!-- Floor line -->
-    <line x1="140" y1="350" x2="360" y2="350" class="building-line draw-path"
-      style="--len:220;--dur:0.6s;--delay:2.5s;stroke:#FEFEFE;stroke-width:1.5" />
+      <!-- 3. Sweeping Laser Line -->
+      <div class="laser-sweep" id="laserSweep"></div>
 
-    <!-- Window center -->
-    <rect x="230" y="240" width="40" height="80" rx="2"
-      class="glass-rect draw-path" style="--len:240;--dur:0.8s;--delay:2.6s" />
-    <rect x="232" y="242" width="36" height="76" rx="1"
-      class="glass-fill" style="--delay:3.0s" />
+      <!-- 4. Specular Glass Caustic Flare -->
+      <div class="glass-flare"></div>
+    </div>
 
-    <!-- Window left -->
-    <rect x="180" y="260" width="30" height="55" rx="2"
-      class="glass-rect draw-path" style="--len:170;--dur:0.6s;--delay:2.8s" />
-    <rect x="182" y="262" width="26" height="51" rx="1"
-      class="glass-fill" style="--delay:3.2s" />
+  </div>
 
-    <!-- Window right -->
-    <rect x="290" y="260" width="30" height="55" rx="2"
-      class="glass-rect draw-path" style="--len:170;--dur:0.6s;--delay:2.9s" />
-    <rect x="292" y="262" width="26" height="51" rx="1"
-      class="glass-fill" style="--delay:3.3s" />
+  <!-- Interactive Controls -->
+  <div class="controls-panel">
+    <button class="ctrl-btn active" id="btnReplay" onclick="restartAnimation()">
+      <span>↻</span> اجرای مجدد
+    </button>
+    <button class="ctrl-btn" id="btnGrid" onclick="toggleGrid()">
+      تغییر گرید مهندسی
+    </button>
+    <button class="ctrl-btn" id="btnWhite" onclick="toggleWhiteLogo()">
+      نسخه متالیک نقره‌ای
+    </button>
+  </div>
 
-    <!-- N Letter -->
-    <path d="M155 370 L155 335 L190 370 L190 335"
-      class="letter-n draw-path" style="--len:120;--dur:0.7s;--delay:3.2s" />
+  <script>
+    const logoChamber = document.getElementById('logoChamber');
+    const authenticLogo = document.getElementById('authenticLogo');
+    const cadGrid = document.getElementById('cadGrid');
+    let isWhite = false;
 
-    <!-- P Letter -->
-    <path d="M215 370 L215 335 L235 335 Q245 335 245 345 Q245 355 235 355 L215 355"
-      class="letter-p draw-path" style="--len:90;--dur:0.7s;--delay:3.4s" />
+    // Trigger breathe after animations settle
+    setTimeout(() => {
+      logoChamber.classList.add('completed');
+    }, 4500);
 
-    <!-- S Letter -->
-    <path d="M340 340 Q325 335 310 340 Q295 345 310 355 Q325 365 310 370 Q295 375 280 370"
-      class="letter-s draw-path" style="--len:100;--dur:0.7s;--delay:3.6s" />
+    function restartAnimation() {
+      logoChamber.classList.remove('completed');
+      const clone = logoChamber.cloneNode(true);
+      logoChamber.parentNode.replaceChild(clone, logoChamber);
+      setTimeout(() => {
+        clone.classList.add('completed');
+      }, 4500);
+    }
 
-    <!-- Company name Persian -->
-    <text x="250" y="80" text-anchor="middle" font-size="16"
-      fill="#FEFEFE" font-family="Tahoma, Arial" class="brand-text" style="--delay:4.0s">
-      شرکت نوآوران پنجره سپاهان
-    </text>
+    function toggleGrid() {
+      if (cadGrid.style.display === 'none') {
+        cadGrid.style.display = 'block';
+      } else {
+        cadGrid.style.display = 'none';
+      }
+    }
 
-    <!-- Company name English -->
-    <text x="250" y="440" text-anchor="middle" font-size="13"
-      fill="#00AFEF" font-family="'Segoe UI', Arial" letter-spacing="2" class="brand-text" style="--delay:4.2s">
-      NOAVARAN PANJEREH SEPAHAN
-    </text>
-
-    <!-- Website -->
-    <text x="250" y="465" text-anchor="middle" font-size="10"
-      fill="rgba(254,254,254,0.4)" font-family="'Segoe UI', Arial" letter-spacing="1" class="brand-text" style="--delay:4.5s">
-      www.NoavaranPanjereh.com
-    </text>
-
-    <!-- Registration -->
-    <text x="250" y="395" text-anchor="middle" font-size="9"
-      fill="rgba(254,254,254,0.35)" font-family="Tahoma, Arial" class="brand-text" style="--delay:4.3s">
-      سهامی خاص — شماره ثبت: ۳۸۹۲
-    </text>
-
-    <!-- Crosshair center mark -->
-    <line x1="245" y1="250" x2="255" y2="250" stroke="rgba(0,175,239,0.3)" stroke-width="0.5"
-      class="fill-fade" style="--delay:1s" />
-    <line x1="250" y1="245" x2="250" y2="255" stroke="rgba(0,175,239,0.3)" stroke-width="0.5"
-      class="fill-fade" style="--delay:1s" />
-  </svg>
-</div>
-
-<div class="watermark">BLUEPRINT REVEAL — ANIMATION 01</div>
-<button class="replay-btn" onclick="location.reload()">↻ Replay Animation</button>
-
+    function toggleWhiteLogo() {
+      isWhite = !isWhite;
+      const logoImgs = document.querySelectorAll('.logo-authentic, .logo-blueprint');
+      logoImgs.forEach(img => {
+        img.src = isWhite ? '../images/logo-white.png' : '../images/logo.png';
+      });
+      document.getElementById('btnWhite').classList.toggle('active', isWhite);
+    }
+  </script>
 </body>
 </html>
