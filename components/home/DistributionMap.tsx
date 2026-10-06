@@ -218,16 +218,6 @@ export function DistributionMap() {
 
         {/* Interactive Map Visual Area - Directly on page background without enclosing rectangle */}
         <div className="relative w-full max-w-[1000px] mx-auto p-2 sm:p-4">
-          
-          {/* Central Isfahan Badge on Mobile */}
-          <div className="sm:hidden mb-4 p-3 bg-ink-950/80 rounded-xl border border-signal-500/30 flex items-center justify-between text-xs font-vazir">
-            <div className="flex items-center gap-2">
-              <span className="w-2.5 h-2.5 rounded-full bg-signal-500 animate-ping" />
-              <span className="font-bold text-white">مرکز ارسال: اصفهان</span>
-            </div>
-            <span className="text-steel-400">کارخانه ۱۵۰۰ متری</span>
-          </div>
-
           {/* SVG Map Container with Camera Zoom Effect */}
           <div
             className="relative w-full aspect-[1200/1070] transition-transform duration-[1800ms] ease-[cubic-bezier(0.16,1,0.3,1)] select-none"
