@@ -120,12 +120,13 @@ export function MetallicForgeLogo({
       className={`relative inline-flex items-center justify-center select-none ${className}`}
       style={{ width: size, height: size }}
     >
-      {/* Background Thermal Halo */}
+      {/* Background Thermal Halo & Organic Ambient Fade */}
       <div 
-        className="absolute inset-0 rounded-full pointer-events-none -z-10 animate-pulse"
+        className="absolute rounded-full pointer-events-none -z-10 animate-pulse"
         style={{
-          background: "radial-gradient(circle, rgba(155, 33, 48, 0.28) 0%, rgba(255, 51, 68, 0.08) 50%, transparent 75%)",
-          filter: "blur(18px)",
+          inset: "-22%",
+          background: "radial-gradient(circle, rgba(155, 33, 48, 0.35) 0%, rgba(155, 33, 48, 0.15) 42%, rgba(255, 51, 68, 0.05) 60%, transparent 75%)",
+          filter: "blur(26px)",
         }}
       />
 
