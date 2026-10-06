@@ -5,6 +5,8 @@ import { MapPin, Phone, Mail, Instagram } from "lucide-react";
 import settingsData from "../data/settings.json";
 import { withBasePath } from "@/lib/media";
 
+import { MetallicForgeLogo } from "./MetallicForgeLogo";
+
 export function Footer() {
   const { officeAddress, factoryPhones, email, socialLinks, registrationNumber } = settingsData;
 
@@ -14,26 +16,51 @@ export function Footer() {
       <div className="absolute top-0 right-0 w-1/2 h-full bg-blood-900/10 blur-3xl rounded-full pointer-events-none" />
 
       <div className="max-w-[1440px] mx-auto px-4 md:px-8 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
-          {/* Brand */}
-          <div className="space-y-6">
-            <Link href="/" className="flex items-center gap-4 group">
-              <div className="relative w-20 h-20 sm:w-24 sm:h-24 shrink-0 transition-transform group-hover:scale-105">
-                <Image 
-                  src={withBasePath("/images/logo-white.png")} 
-                  alt="نوآوران پنجره سپاهان" 
-                  fill 
-                  className="object-contain"
-                  sizes="96px"
-                />
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-10 mb-16">
+          {/* Brand - Featuring Animation #2 (Metallic Forge & Extrusion) */}
+          <div className="lg:col-span-4 flex flex-col justify-between space-y-6">
+            <div className="flex flex-col sm:flex-row lg:flex-col items-center sm:items-start lg:items-start gap-5">
+              {/* Animation Number Two: Metallic Forge Emblem */}
+              <div className="shrink-0 flex items-center justify-center p-3 rounded-2xl bg-gradient-to-b from-ink-900/90 to-ink-950 border border-ink-800 shadow-2xl relative group">
+                <MetallicForgeLogo size={140} href="/logo-motion" />
+                <span className="absolute -bottom-2.5 right-1/2 translate-x-1/2 text-[9px] font-bold text-signal-400 bg-ink-950 px-2 py-0.5 rounded-full border border-signal-500/40 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap shadow-md">
+                  لوگو موشن کوره متالیک
+                </span>
               </div>
-              <div className="flex flex-col text-white">
-                <span className="text-xl sm:text-2xl font-black font-vazir tracking-tight">نوآوران پنجره سپاهان</span>
-                <span className="text-xs sm:text-sm text-steel-400 font-sans tracking-widest uppercase">Noavaran Panjereh</span>
+
+              {/* Brand Title & Info */}
+              <div className="flex flex-col text-center sm:text-right">
+                <Link href="/" className="group inline-block">
+                  <span className="text-xl sm:text-2xl font-black text-white font-vazir tracking-tight group-hover:text-signal-400 transition-colors">
+                    نوآوران پنجره سپاهان
+                  </span>
+                  <span className="text-xs text-steel-400 font-sans tracking-widest uppercase block mt-0.5">
+                    Noavaran Panjereh Sepahan
+                  </span>
+                </Link>
+                <p className="text-xs text-steel-300 font-vazir leading-relaxed mt-2.5 max-w-sm">
+                  طراحی محاسباتی، تولید صنعتی و اجرای تخصصی نماهای مدرن شیشه‌ای، کرتین‌وال، لامل، فریم‌لس و پنجره‌های ترمال‌بریک اختصاصی.
+                </p>
               </div>
-            </Link>
+            </div>
+
+            {/* Official Credentials & Tags to elegantly occupy the free space */}
             <div className="pt-2 flex flex-col gap-3">
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2 flex-wrap text-[11px] text-steel-300">
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-ink-900/90 border border-ink-800">
+                  <span className="w-1.5 h-1.5 rounded-full bg-signal-500" />
+                  شماره ثبت: ۳۸۹۲
+                </span>
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-ink-900/90 border border-ink-800">
+                  سهامی خاص
+                </span>
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-ink-900/90 border border-ink-800 font-mono text-[10px] text-signal-400">
+                  AL-6063-T6
+                </span>
+              </div>
+
+              {/* Social Media Channels */}
+              <div className="flex items-center gap-3 pt-1">
                 {/* Instagram */}
                 <a 
                   href={socialLinks.instagram} 
@@ -78,7 +105,7 @@ export function Footer() {
           </div>
 
           {/* Quick Links */}
-          <div className="space-y-6">
+          <div className="lg:col-span-2 space-y-6">
             <h3 className="text-white font-black text-lg font-vazir relative inline-block">
               دسترسی سریع
               <div className="absolute -bottom-2 right-0 h-0.5 bg-signal-500 w-8" />
@@ -93,7 +120,7 @@ export function Footer() {
           </div>
 
           {/* Contact */}
-          <div className="space-y-6">
+          <div className="lg:col-span-3 space-y-6">
             <h3 className="text-white font-black text-lg font-vazir relative inline-block">
               اطلاعات تماس
               <div className="absolute -bottom-2 right-0 h-0.5 bg-signal-500 w-8" />
@@ -125,7 +152,7 @@ export function Footer() {
           </div>
 
           {/* CTA */}
-          <div className="space-y-6">
+          <div className="lg:col-span-3 space-y-6">
             <h3 className="text-white font-black text-lg font-vazir relative inline-block">
               مشاوره رایگان
               <div className="absolute -bottom-2 right-0 h-0.5 bg-signal-500 w-8" />
