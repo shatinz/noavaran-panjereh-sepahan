@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { LayoutDashboard, FileText, Image, Video, Settings, LogOut, ArrowRight, Building2, Layers } from 'lucide-react';
+import { LayoutDashboard, FileText, Image, Video, Settings, LogOut, ArrowRight, Building2, Layers, MessageSquare } from 'lucide-react';
 
 export default function AdminNav() {
   const pathname = usePathname();
@@ -23,6 +23,7 @@ export default function AdminNav() {
 
   const navItems = [
     { href: '/admin', label: 'داشبورد اصلی', icon: LayoutDashboard },
+    { href: '/admin/consultations', label: 'درخواست‌های مشاوره', icon: MessageSquare },
     { href: '/admin/articles', label: 'مدیریت مقالات', icon: FileText },
     { href: '/admin/projects', label: 'مدیریت پروژه‌ها', icon: Image },
     { href: '/admin/materials', label: 'سیستم‌ها و متریال', icon: Layers },

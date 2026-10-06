@@ -25,7 +25,7 @@ export function FloatingContact() {
   if (!isVisible) return null;
 
   return (
-    <div className="fixed bottom-6 left-6 z-50 flex flex-col items-end" dir="rtl">
+    <div className="fixed bottom-6 left-6 z-30 flex flex-col items-end floating-contact-btn transition-all duration-300" dir="rtl">
       {isOpen && (
         <div className="mb-4 bg-ink-950 border border-ink-800 metal-shadow rounded-2xl p-4 w-64 animate-in slide-in-from-bottom-5 fade-in duration-300">
           <div className="flex justify-between items-center mb-4 pb-2 border-b border-ink-800">

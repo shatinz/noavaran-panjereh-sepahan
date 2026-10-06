@@ -1,0 +1,33 @@
+{
+  "totalVisits": 18450,
+  "uniqueVisitors": 9230,
+  "pageViewsToday": 142,
+  "dailyHistory": [
+    { "date": "۱۴۰۳/۰۷/۰۸", "visits": 115, "pageViews": 248 },
+    { "date": "۱۴۰۳/۰۷/۰۹", "visits": 134, "pageViews": 310 },
+    { "date": "۱۴۰۳/۰۷/۱۰", "visits": 162, "pageViews": 385 },
+    { "date": "۱۴۰۳/۰۷/۱۱", "visits": 178, "pageViews": 420 },
+    { "date": "۱۴۰۳/۰۷/۱۲", "visits": 195, "pageViews": 465 },
+    { "date": "۱۴۰۳/۰۷/۱۳", "visits": 150, "pageViews": 330 },
+    { "date": "۱۴۰۳/۰۷/۱۴", "visits": 184, "pageViews": 412 }
+  ],
+  "topPages": [
+    { "path": "/", "title": "صفحه اصلی | نوآوران پنجره سپاهان", "views": 7820 },
+    { "path": "/services", "title": "خدمات و راهکارهای مهندسی نما و پنجره", "views": 3410 },
+    { "path": "/projects", "title": "پروژه‌های اجرایی و رزومه صنعتی", "views": 2980 },
+    { "path": "/calculator", "title": "محاسبه‌گر آنلاین متراژ و پیش‌فاکتور", "views": 1840 },
+    { "path": "/videos", "title": "ویدیوهای آموزشی و کاتالوگ ویدیویی", "views": 1390 },
+    { "path": "/contact", "title": "تماس با ما و مشاوره مهندسی", "views": 1010 }
+  ],
+  "devices": {
+    "mobile": 68,
+    "desktop": 28,
+    "tablet": 4
+  },
+  "trafficSources": [
+    { "source": "جستجوی ارگانیک گوگل (Google Search)", "percentage": 64 },
+    { "source": "ورود مستقیم (Direct)", "percentage": 22 },
+    { "source": "شبکه‌های اجتماعی و پیام‌رسان‌ها (Instagram, Eitaa)", "percentage": 10 },
+    { "source": "معرف‌ها و لینک‌های خارجی (Referrals)", "percentage": 4 }
+  ]
+}

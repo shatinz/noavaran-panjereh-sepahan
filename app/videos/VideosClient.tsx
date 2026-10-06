@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { VideoItem } from '@/lib/db';
 import { extractVideoInfo } from '@/lib/video';
@@ -23,6 +23,17 @@ export function VideosClient({ videos }: { videos: VideoItem[] }) {
     const matchSearch = v.title.includes(searchQuery) || v.description.includes(searchQuery);
     return matchCat && matchSearch;
   });
+
+  useEffect(() => {
+    if (activeVideo) {
+      document.body.classList.add('video-modal-open');
+    } else {
+      document.body.classList.remove('video-modal-open');
+    }
+    return () => {
+      document.body.classList.remove('video-modal-open');
+    };
+  }, [activeVideo]);
 
   return (
     <div className="w-full max-w-[1440px] mx-auto px-4 md:px-8 py-12 space-y-12" dir="rtl">
@@ -104,7 +115,7 @@ export function VideosClient({ videos }: { videos: VideoItem[] }) {
       {/* Video Modal */}
       {activeVideo && (
         <div 
-          className="fixed inset-0 z-50 bg-[#0a0002]/95 backdrop-blur-sm flex items-center justify-center p-4"
+          className="fixed inset-0 z-[100] bg-[#0a0002]/95 backdrop-blur-sm flex items-center justify-center p-4"
           onClick={() => setActiveVideo(null)}
         >
           <div 

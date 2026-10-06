@@ -4,6 +4,7 @@ import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { FloatingContact } from '@/components/FloatingContact';
 import { GoogleAnalytics } from '@/components/GoogleAnalytics';
+import AnalyticsTracker from '@/components/AnalyticsTracker';
 import settingsData from '@/data/settings.json';
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://noavaranpanjereh.vercel.app';
@@ -254,6 +255,7 @@ export default function RootLayout({
           پرش به محتوای اصلی
         </a>
         <GoogleAnalytics />
+        <AnalyticsTracker />
         <Header />
         <main id="main-content" className="flex-grow">
           {children}

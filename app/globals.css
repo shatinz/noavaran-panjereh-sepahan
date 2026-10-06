@@ -151,3 +151,10 @@ textarea::placeholder {
   opacity: 1;
   transform: translateY(0);
 }
+
+/* Ensure floating contact button drops behind or hides during video playback / modal */
+body.video-modal-open .floating-contact-btn {
+  opacity: 0 !important;
+  pointer-events: none !important;
+  z-index: -10 !important;
+}

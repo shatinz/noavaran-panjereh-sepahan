@@ -3,13 +3,15 @@
 import React, { useState, useEffect } from 'react';
 import AdminNav from '@/components/AdminNav';
 import { VideoItem } from '@/lib/db';
-import { Plus, Edit2, Trash2, X, Play, Video as VideoIcon } from 'lucide-react';
+import { Plus, Edit2, Trash2, X, Play, Video as VideoIcon, Upload, Sparkles, Image as ImageIcon } from 'lucide-react';
 
 export default function AdminVideosPage() {
   const [videos, setVideos] = useState<VideoItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
   const [editingVideo, setEditingVideo] = useState<VideoItem | null>(null);
+  const [isUploading, setIsUploading] = useState(false);
+  const [isFetchingCover, setIsFetchingCover] = useState(false);
 
   const [form, setForm] = useState({
     title: '',
@@ -80,6 +82,52 @@ export default function AdminVideosPage() {
       setVideos(videos.filter((v) => v.id !== id));
     } catch (e) {
       alert('خطا در حذف ویدیو');
+    }
+  };
+
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setIsUploading(true);
+    try {
+      const data = new FormData();
+      data.append('file', file);
+      const res = await fetch('/api/admin/upload', {
+        method: 'POST',
+        body: data,
+      });
+      const result = await res.json();
+      if (result.success && result.url) {
+        setForm((prev) => ({ ...prev, thumbnail: result.url }));
+      } else {
+        alert(result.error || 'خطا در بارگذاری تصویر');
+      }
+    } catch (err) {
+      alert('خطا در ارتباط با سرور هنگام آپلود');
+    } finally {
+      setIsUploading(false);
+    }
+  };
+
+  const handleAutoFetchCover = async () => {
+    if (!form.videoUrl) {
+      alert('لطفاً ابتدا آدرس یا کد ویدیو را وارد نمایید.');
+      return;
+    }
+    setIsFetchingCover(true);
+    try {
+      const res = await fetch(`/api/admin/videos/cover?url=${encodeURIComponent(form.videoUrl)}&platform=${form.platform}`);
+      const data = await res.json();
+      if (data.success && data.coverUrl) {
+        setForm((prev) => ({ ...prev, thumbnail: data.coverUrl }));
+      } else {
+        alert('کاور اصلی ویدیو یافت نشد.');
+      }
+    } catch (err) {
+      alert('خطا در دریافت کاور از سرور ویدیو');
+    } finally {
+      setIsFetchingCover(false);
     }
   };
 
@@ -296,14 +344,52 @@ export default function AdminVideosPage() {
                   />
                 </div>
                 <div>
-                  <label className="text-titanium-300 block mb-1 font-medium">عکس کاور (Thumbnail URL):</label>
+                  <div className="flex items-center justify-between mb-1">
+                    <label className="text-titanium-300 font-medium">عکس کاور (Thumbnail):</label>
+                    <div className="flex items-center gap-2">
+                      <button
+                        type="button"
+                        onClick={handleAutoFetchCover}
+                        disabled={isFetchingCover}
+                        className="text-[10px] text-amber-400 hover:text-amber-300 flex items-center gap-1 bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20 transition-colors"
+                        title="استخراج خودکار کاور اصلی ویدیو از آپارات یا یوتیوب"
+                      >
+                        <Sparkles className="w-3 h-3" />
+                        <span>{isFetchingCover ? 'دریافت...' : 'کاور اصلی ویدیو'}</span>
+                      </button>
+                      <label className="text-[10px] text-bronze-400 hover:text-bronze-300 flex items-center gap-1 bg-bronze-500/10 px-2 py-0.5 rounded border border-bronze-500/20 cursor-pointer transition-colors">
+                        <Upload className="w-3 h-3" />
+                        <span>{isUploading ? 'آپلود...' : 'آپلود کاور'}</span>
+                        <input
+                          type="file"
+                          accept="image/*"
+                          className="hidden"
+                          onChange={handleFileUpload}
+                          disabled={isUploading}
+                        />
+                      </label>
+                    </div>
+                  </div>
                   <input
                     type="text"
                     value={form.thumbnail}
                     onChange={(e) => setForm({ ...form, thumbnail: e.target.value })}
-                    placeholder="اختیاری (برای یوتیوب خودکار گرفته می‌شود)"
+                    placeholder="آدرس کاور یا استفاده از دکمه‌های بالا"
                     className="w-full p-2.5 rounded-xl bg-charcoal-850 border border-charcoal-700 text-white font-mono focus:border-bronze-500 focus:outline-none"
                   />
+                  {form.thumbnail && (
+                    <div className="mt-2 flex items-center gap-2 p-1.5 rounded-lg bg-charcoal-900 border border-charcoal-800">
+                      <img
+                        src={form.thumbnail}
+                        alt="پیش‌نمایش کاور"
+                        className="w-16 h-10 object-cover rounded border border-charcoal-700 shrink-0"
+                      />
+                      <span className="text-[10px] text-titanium-400 font-mono truncate">{form.thumbnail}</span>
+                    </div>
+                  )}
+                  <span className="text-[10px] text-titanium-500 block mt-1">
+                    در صورت خالی گذاشتن، سیستم به طور خودکار کاور اصلی را از آپارات/یوتیوب استخراج می‌کند.
+                  </span>
                 </div>
               </div>
 

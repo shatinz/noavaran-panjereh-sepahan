@@ -7,14 +7,47 @@ export async function GET() {
   return NextResponse.json(videos);
 }
 
+async function resolveCover(url: string, platform: 'aparat' | 'youtube' | 'direct', currentThumbnail?: string) {
+  if (currentThumbnail && currentThumbnail.trim()) {
+    return currentThumbnail.trim();
+  }
+
+  const info = extractVideoInfo(url, platform);
+
+  if (platform === 'youtube' && info.videoId) {
+    return `https://img.youtube.com/vi/${info.videoId}/hqdefault.jpg`;
+  }
+
+  if (info.videoId) {
+    try {
+      const res = await fetch(`https://www.aparat.com/etc/api/video/videohash/${info.videoId}`, {
+        headers: { 'User-Agent': 'Mozilla/5.0' },
+        signal: AbortSignal.timeout(3000),
+      });
+      if (res.ok) {
+        const data = await res.json();
+        const poster = data?.video?.big_poster || data?.video?.small_poster;
+        if (poster) return poster;
+      }
+    } catch (e) {
+      // Fallback
+    }
+  }
+
+  return info.thumbnail || '/images/hero/hero-poster.webp';
+}
+
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const info = extractVideoInfo(body.videoUrl || '', body.platform || 'aparat');
+    const platform = body.platform || 'aparat';
+    const info = extractVideoInfo(body.videoUrl || '', platform);
+    const resolvedThumbnail = await resolveCover(body.videoUrl || '', platform, body.thumbnail);
+
     const newVideo = {
       ...body,
       videoId: info.videoId || body.videoId,
-      thumbnail: body.thumbnail || info.thumbnail,
+      thumbnail: resolvedThumbnail,
     };
     const created = await createVideo(newVideo);
     return NextResponse.json(created, { status: 201 });
@@ -26,11 +59,12 @@ export async function POST(request: Request) {
 export async function PUT(request: Request) {
   try {
     const { id, ...updates } = await request.json();
-    if (updates.videoUrl && updates.platform) {
-      const info = extractVideoInfo(updates.videoUrl, updates.platform);
+    if (updates.videoUrl) {
+      const platform = updates.platform || 'aparat';
+      const info = extractVideoInfo(updates.videoUrl, platform);
       updates.videoId = info.videoId || updates.videoId;
-      if (!updates.thumbnail && info.thumbnail) {
-        updates.thumbnail = info.thumbnail;
+      if (!updates.thumbnail) {
+        updates.thumbnail = await resolveCover(updates.videoUrl, platform, updates.thumbnail);
       }
     }
     const updated = await updateVideo(id, updates);

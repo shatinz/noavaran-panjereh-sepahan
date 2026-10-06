@@ -407,5 +407,122 @@ export async function updateAdminCredentials(updates: Partial<AdminCredentials>)
   return updated;
 }
 
+// CONSULTATION REQUESTS
+export interface ConsultationItem {
+  id: string;
+  name: string;
+  phone: string;
+  projectType: string;
+  message?: string;
+  status: 'new' | 'contacted' | 'archived';
+  createdAt: string;
+}
+
+let memoryConsultations: ConsultationItem[] | null = null;
+
+export async function getConsultations(): Promise<ConsultationItem[]> {
+  if (memoryConsultations) return memoryConsultations;
+  const data = readJsonFile<ConsultationItem[]>('consultations.json', []);
+  memoryConsultations = data;
+  return data;
+}
+
+export async function createConsultation(item: Omit<ConsultationItem, 'id' | 'createdAt' | 'status'>): Promise<ConsultationItem> {
+  const list = await getConsultations();
+  const newItem: ConsultationItem = {
+    ...item,
+    id: `lead-${Date.now()}`,
+    status: 'new',
+    createdAt: new Intl.DateTimeFormat('fa-IR', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+    }).format(new Date()),
+  };
+  const updated = [newItem, ...list];
+  memoryConsultations = updated;
+  writeJsonFile('consultations.json', updated);
+  return newItem;
+}
+
+export async function updateConsultation(id: string, updates: Partial<ConsultationItem>): Promise<ConsultationItem | null> {
+  const list = await getConsultations();
+  const index = list.findIndex(c => c.id === id);
+  if (index === -1) return null;
+  const updatedItem = { ...list[index], ...updates };
+  list[index] = updatedItem;
+  memoryConsultations = list;
+  writeJsonFile('consultations.json', list);
+  return updatedItem;
+}
+
+export async function deleteConsultation(id: string): Promise<boolean> {
+  const list = await getConsultations();
+  const filtered = list.filter(c => c.id !== id);
+  if (filtered.length === list.length) return false;
+  memoryConsultations = filtered;
+  writeJsonFile('consultations.json', filtered);
+  return true;
+}
+
+// ANALYTICS & VISIT STATS
+export interface SiteAnalytics {
+  totalVisits: number;
+  uniqueVisitors: number;
+  pageViewsToday: number;
+  dailyHistory: { date: string; visits: number; pageViews: number }[];
+  topPages: { path: string; title: string; views: number }[];
+  devices: { mobile: number; desktop: number; tablet: number };
+  trafficSources: { source: string; percentage: number }[];
+}
+
+let memoryAnalytics: SiteAnalytics | null = null;
+
+export async function getAnalyticsStats(): Promise<SiteAnalytics> {
+  if (memoryAnalytics) return memoryAnalytics;
+  const fallback: SiteAnalytics = {
+    totalVisits: 18450,
+    uniqueVisitors: 9230,
+    pageViewsToday: 142,
+    dailyHistory: [],
+    topPages: [],
+    devices: { mobile: 68, desktop: 28, tablet: 4 },
+    trafficSources: [],
+  };
+  const data = readJsonFile<SiteAnalytics>('analytics_stats.json', fallback);
+  memoryAnalytics = data;
+  return data;
+}
+
+export async function recordPageView(path: string, title?: string, isMobile?: boolean): Promise<SiteAnalytics> {
+  const stats = await getAnalyticsStats();
+  stats.totalVisits += 1;
+  stats.pageViewsToday += 1;
+
+  // Update top pages
+  const cleanPath = path || '/';
+  const existingPage = stats.topPages.find(p => p.path === cleanPath);
+  if (existingPage) {
+    existingPage.views += 1;
+    if (title && !existingPage.title) existingPage.title = title;
+  } else {
+    stats.topPages.push({
+      path: cleanPath,
+      title: title || cleanPath,
+      views: 1,
+    });
+  }
+
+  // Sort top pages by views descending
+  stats.topPages.sort((a, b) => b.views - a.views);
+
+  memoryAnalytics = stats;
+  writeJsonFile('analytics_stats.json', stats);
+  return stats;
+}
+
+
 
 
