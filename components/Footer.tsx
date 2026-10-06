@@ -18,7 +18,7 @@ export function Footer() {
       <div className="max-w-[1440px] mx-auto px-4 md:px-8 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-10 mb-16">
           {/* Brand - Metallic Forge Logo & Socials */}
-          <div className="lg:col-span-4 flex flex-col items-center sm:items-start justify-center space-y-6">
+          <div className="lg:col-span-3 flex flex-col items-center sm:items-start justify-center space-y-6">
             {/* The Logo (Organic fade to existing background, no rectangle box) */}
             <div className="relative flex items-center justify-center">
               <MetallicForgeLogo size={185} href="/logo-motion" />
@@ -68,18 +68,17 @@ export function Footer() {
             </div>
           </div>
 
-          {/* Quick Links */}
-          <div className="lg:col-span-2 space-y-6">
+          {/* Quick Links (Fast Access) */}
+          <div className="lg:col-span-3 space-y-6">
             <h3 className="text-white font-black text-lg font-vazir relative inline-block">
               دسترسی سریع
               <div className="absolute -bottom-2 right-0 h-0.5 bg-signal-500 w-8" />
             </h3>
-            <ul className="space-y-3 text-steel-300 text-sm font-vazir">
+            <ul className="space-y-3.5 text-steel-300 text-sm font-vazir">
               <li><Link href="/services" className="hover:text-white transition-colors">خدمات و راهکارها</Link></li>
               <li><Link href="/materials" className="hover:text-white transition-colors">محصولات و سیستم‌ها</Link></li>
               <li><Link href="/projects" className="hover:text-white transition-colors">پروژه‌های اجرایی</Link></li>
               <li><Link href="/articles" className="hover:text-white transition-colors">مقالات و دانشنامه</Link></li>
-              <li><Link href="/logo-motion" className="hover:text-white transition-colors flex items-center gap-1.5"><span className="w-1.5 h-1.5 rounded-full bg-signal-500 inline-block"></span>لوگو موشن و انیمیشن برند</Link></li>
             </ul>
           </div>
 
