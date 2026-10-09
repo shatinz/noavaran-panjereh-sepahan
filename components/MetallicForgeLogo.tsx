@@ -170,7 +170,7 @@ export function MetallicForgeLogo({
       {/* Logo Link & Chamber */}
       <Link
         href={href}
-        className="relative z-10 block group overflow-hidden rounded-full transition-transform duration-300 hover:scale-[1.03]"
+        className="relative z-10 block group transition-transform duration-300 hover:scale-[1.03]"
         style={{ width: size * 0.88, height: size * 0.88 }}
         title="نوآوران پنجره سپاهان — استودیوی لوگو موشن"
       >
