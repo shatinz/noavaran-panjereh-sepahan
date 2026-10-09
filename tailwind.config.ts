@@ -60,6 +60,7 @@ const config: Config = {
       },
       fontFamily: {
         vazir: ["Vazirmatn", "Tahoma", "Arial", "system-ui", "-apple-system", "sans-serif"],
+        lalezar: ["Lalezar", "Vazirmatn", "Tahoma", "Arial", "system-ui", "-apple-system", "sans-serif"],
         inter: ["Inter", "system-ui", "-apple-system", "sans-serif"],
       },
       backgroundImage: {

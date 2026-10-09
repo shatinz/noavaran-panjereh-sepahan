@@ -51,7 +51,7 @@ export function Header() {
           <Link href="/" className="flex items-center gap-2.5 sm:gap-3 group shrink-0">
             <div className="relative w-10 h-10 sm:w-12 sm:h-12 shrink-0 group-hover:scale-105 transition-transform">
               <Image
-                src={withBasePath("/images/icon.svg")}
+                src={withBasePath("/images/logo.png")}
                 alt="نوآوران پنجره سپاهان"
                 fill
                 className="object-contain"

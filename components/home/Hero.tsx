@@ -56,9 +56,9 @@ export function Hero() {
 
       <div className="relative z-10 max-w-[1440px] w-full mx-auto px-4 sm:px-6 text-center mt-8 md:mt-16">
         <Reveal>
-          <h1 className="text-4xl sm:text-6xl md:text-8xl font-black text-white mb-6 font-vazir drop-shadow-2xl">
+          <h1 className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-normal text-white mb-6 font-lalezar drop-shadow-2xl tracking-normal">
             نوآوران پنجره سپاهان
-            <span className="block text-xl sm:text-2xl md:text-3xl text-signal-500 font-bold mt-3">
+            <span className="block text-xl sm:text-2xl md:text-3xl text-signal-500 font-bold font-vazir mt-4">
               طراحی و تولید کننده صنعتی
             </span>
           </h1>

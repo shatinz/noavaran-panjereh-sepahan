@@ -162,7 +162,7 @@ export function MetallicForgeLogo({
         style={{
           width: size * 1.15,
           height: size * 1.15,
-          border: "1px dashed rgba(255, 255, 255, 0.18)",
+          border: "1px dashed rgba(155, 33, 48, 0.25)",
           animation: "forgeRingReverse 32s linear infinite",
         }}
       />
@@ -174,10 +174,10 @@ export function MetallicForgeLogo({
         style={{ width: size * 0.88, height: size * 0.88 }}
         title="نوآوران پنجره سپاهان — استودیوی لوگو موشن"
       >
-        {/* Authentic Original Logo */}
-        <div className="relative w-full h-full filter drop-shadow-[0_12px_24px_rgba(0,0,0,0.85)] group-hover:drop-shadow-[0_0_25px_rgba(155,33,48,0.7)] transition-all">
+        {/* Authentic Main Logo */}
+        <div className="relative w-full h-full filter drop-shadow-[0_8px_16px_rgba(0,0,0,0.7)] group-hover:drop-shadow-[0_0_20px_rgba(155,33,48,0.6)] transition-all">
           <Image
-            src={withBasePath("/images/logo-white.png")}
+            src={withBasePath("/images/logo.png")}
             alt="شرکت نوآوران پنجره سپاهان"
             fill
             className="object-contain"
@@ -185,24 +185,6 @@ export function MetallicForgeLogo({
             priority={false}
           />
         </div>
-
-        {/* Diagonal Chrome Glint Flare Sweep */}
-        <div
-          className="absolute inset-0 pointer-events-none overflow-hidden rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
-          style={{
-            background: "linear-gradient(115deg, transparent 38%, rgba(255, 255, 255, 0.85) 50%, rgba(255, 100, 100, 0.3) 54%, transparent 64%)",
-            animation: "chromeSweepPass 3.8s cubic-bezier(0.16, 1, 0.3, 1) infinite",
-          }}
-        />
-
-        {/* Subtle Idle Chrome Glint Sweep (Continuous) */}
-        <div
-          className="absolute inset-0 pointer-events-none overflow-hidden rounded-full"
-          style={{
-            background: "linear-gradient(115deg, transparent 40%, rgba(255, 255, 255, 0.55) 50%, transparent 60%)",
-            animation: "chromeSweepPass 4.5s 1.5s cubic-bezier(0.16, 1, 0.3, 1) infinite",
-          }}
-        />
       </Link>
 
       <style jsx>{`
@@ -213,23 +195,6 @@ export function MetallicForgeLogo({
         @keyframes forgeRingReverse {
           0% { transform: rotate(360deg); }
           100% { transform: rotate(0deg); }
-        }
-        @keyframes chromeSweepPass {
-          0% {
-            transform: translateX(-150%) skewX(-20deg);
-            opacity: 0;
-          }
-          15% {
-            opacity: 1;
-          }
-          45% {
-            transform: translateX(150%) skewX(-20deg);
-            opacity: 0;
-          }
-          100% {
-            transform: translateX(150%) skewX(-20deg);
-            opacity: 0;
-          }
         }
       `}</style>
     </div>
