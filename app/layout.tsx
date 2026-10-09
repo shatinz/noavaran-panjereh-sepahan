@@ -2,7 +2,6 @@ import type { Metadata } from 'next';
 import './globals.css';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
-import { FloatingContact } from '@/components/FloatingContact';
 import { GoogleAnalytics } from '@/components/GoogleAnalytics';
 import AnalyticsTracker from '@/components/AnalyticsTracker';
 import settingsData from '@/data/settings.json';
@@ -152,7 +151,6 @@ export default function RootLayout({
     ],
     sameAs: [
       settingsData.socialLinks.instagram,
-      settingsData.socialLinks.whatsapp,
       (settingsData.socialLinks as any).eitaa || 'https://eitaa.com/noavaranpanjereh',
       settingsData.socialLinks.telegram,
       settingsData.socialLinks.aparat,
@@ -261,7 +259,6 @@ export default function RootLayout({
           {children}
         </main>
         <Footer />
-        <FloatingContact />
       </body>
     </html>
   );
