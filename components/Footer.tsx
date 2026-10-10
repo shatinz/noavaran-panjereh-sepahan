@@ -124,8 +124,6 @@ export function Footer() {
             <span>شماره ثبت: <span className="font-sans ml-1">{registrationNumber}</span></span>
             <span className="w-1 h-1 bg-ink-950 rounded-full" />
             <span>سهامی خاص</span>
-            <span className="w-1 h-1 bg-ink-950 rounded-full" />
-            <span className="font-sans" dir="ltr">www.NoavaranPanjereh.com</span>
           </div>
           <div className="flex items-center gap-3 flex-wrap justify-center font-sans">
             <span>© {new Date().getFullYear()} کلیه حقوق محفوظ است.</span>

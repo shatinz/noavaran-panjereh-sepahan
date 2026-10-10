@@ -40,13 +40,13 @@ export function Hero() {
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
         <Image
-          src={withBasePath("/projects/proj-47.webp")}
-          alt="نمای ساختمان مدرن اجرا شده توسط نوآوران پنجره سپاهان"
+          src={withBasePath("/images/noavaran_poster_layout.svg")}
+          alt="طراحی و تولید انواع درب، پنجره و نماهای مدرن ساختمانی — نوآوران پنجره سپاهان"
           fill
           priority
+          unoptimized
           sizes="100vw"
-          quality={90}
-          className="object-cover object-top opacity-85"
+          className="object-cover object-center opacity-85"
         />
         {/* Lighter, translucent overlay allowing the architectural building to be clearly visible */}
         <div className="absolute inset-0 bg-gradient-to-b from-[#0a0002]/40 via-[#1e0004]/50 to-[#0a0002]/85" />
