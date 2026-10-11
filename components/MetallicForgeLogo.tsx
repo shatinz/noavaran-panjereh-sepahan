@@ -174,10 +174,10 @@ export function MetallicForgeLogo({
         style={{ width: size * 0.88, height: size * 0.88 }}
         title="نوآوران پنجره سپاهان — استودیوی لوگو موشن"
       >
-        {/* Authentic Main Logo */}
-        <div className="relative w-full h-full filter drop-shadow-[0_8px_16px_rgba(0,0,0,0.7)] group-hover:drop-shadow-[0_0_20px_rgba(155,33,48,0.6)] transition-all">
+        {/* Authentic Main Logo in Thermal Forge Chamber */}
+        <div className="relative w-full h-full filter drop-shadow-[0_10px_20px_rgba(0,0,0,0.85)] drop-shadow-[0_0_18px_rgba(155,33,48,0.5)] group-hover:drop-shadow-[0_0_25px_rgba(255,51,68,0.7)] transition-all">
           <Image
-            src={withBasePath("/images/logo.png")}
+            src={withBasePath("/images/logo-white.png")}
             alt="شرکت نوآوران پنجره سپاهان"
             fill
             className="object-contain"
@@ -185,6 +185,15 @@ export function MetallicForgeLogo({
             priority={false}
           />
         </div>
+
+        {/* Diagonal Chrome Glint Flare Sweep from Animation #2 */}
+        <div
+          className="absolute inset-0 pointer-events-none overflow-hidden rounded-full"
+          style={{
+            background: "linear-gradient(115deg, transparent 38%, rgba(255, 255, 255, 0.75) 50%, rgba(255, 100, 100, 0.35) 54%, transparent 64%)",
+            animation: "chromeSweepPass 4.2s cubic-bezier(0.16, 1, 0.3, 1) infinite",
+          }}
+        />
       </Link>
 
       <style jsx>{`
@@ -195,6 +204,23 @@ export function MetallicForgeLogo({
         @keyframes forgeRingReverse {
           0% { transform: rotate(360deg); }
           100% { transform: rotate(0deg); }
+        }
+        @keyframes chromeSweepPass {
+          0% {
+            transform: translateX(-150%) skewX(-20deg);
+            opacity: 0;
+          }
+          15% {
+            opacity: 0.9;
+          }
+          45% {
+            transform: translateX(150%) skewX(-20deg);
+            opacity: 0;
+          }
+          100% {
+            transform: translateX(150%) skewX(-20deg);
+            opacity: 0;
+          }
         }
       `}</style>
     </div>
