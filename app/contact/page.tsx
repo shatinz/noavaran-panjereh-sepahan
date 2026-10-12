@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import { PageHero } from '@/components/ui/PageHero';
 import { Breadcrumbs } from '@/components/ui/Breadcrumbs';
 import { ContactFormClient } from '@/components/contact/ContactFormClient';
+import { ContactMap } from '@/components/contact/ContactMap';
 import { MapPin, Phone, Clock, ShieldCheck, FileCheck } from 'lucide-react';
 import { getSettings } from '@/lib/db';
 
@@ -170,11 +171,12 @@ export default async function ContactPage() {
               </div>
             </div>
 
-            {/* Map Placeholder */}
-            <div className="aspect-[4/3] w-full bg-ink-900 rounded-xl border border-ink-800 overflow-hidden metal-shadow flex flex-col items-center justify-center text-steel-500">
-              <MapPin className="w-10 h-10 mb-2 opacity-50" />
-              <span className="font-vazir text-sm font-bold">نقشه مسیریابی کارخانه اصفهان</span>
-            </div>
+            {/* Interactive Factory Location & Navigation Map */}
+            <ContactMap 
+              address={settingsData.officialCompanyAddress || settingsData.factoryAddress}
+              lat={32.7161}
+              lng={51.5942}
+            />
           </div>
         </div>
       </div>
