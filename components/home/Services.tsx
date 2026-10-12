@@ -3,9 +3,10 @@ import { SectionHeading } from "../ui/SectionHeading";
 import { NumberCard } from "../ui/NumberCard";
 import { Reveal } from "../ui/Reveal";
 import { getLocalMediaFallback } from "@/lib/media";
-import servicesData from "../../data/services.json";
+import { getServices } from "@/lib/db";
 
-export function Services() {
+export async function Services() {
+  const servicesData = await getServices();
   return (
     <section id="services" className="py-16 md:py-24 max-w-[1440px] mx-auto px-4 sm:px-6 relative z-10" dir="rtl">
       <Reveal>

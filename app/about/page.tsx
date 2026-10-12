@@ -7,7 +7,7 @@ import Link from 'next/link';
 
 import type { Metadata } from 'next';
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://noavaranpanjereh.vercel.app';
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://noavaranpanjereh.com';
 
 export const metadata: Metadata = {
   title: 'درباره ما | کارخانه نوآوران پنجره سپاهان و پیشینه ۳۰ ساله',
@@ -144,7 +144,7 @@ export default async function AboutPage() {
             <div className="bg-ink-950 p-6 space-y-2">
               <span className="text-steel-400 font-vazir text-xs block">تلفن کارخانه و دفتر:</span>
               <span className="text-white font-black font-mono inline-block text-xl tracking-widest text-right" dir="ltr">
-                <bdi dir="ltr" style={{ unicodeBidi: 'isolate' }}>031-33687755</bdi>
+                <bdi dir="ltr" style={{ unicodeBidi: 'isolate' }}>{settings.phone}</bdi>
               </span>
             </div>
           </div>

@@ -5,7 +5,7 @@ import { PageHero } from '@/components/ui/PageHero';
 import { Breadcrumbs } from '@/components/ui/Breadcrumbs';
 import { ProjectsListClient } from './ProjectsListClient';
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://noavaranpanjereh.vercel.app';
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://noavaranpanjereh.com';
 
 export const metadata: Metadata = {
   title: 'پروژه‌های شاخص و نمونه‌کارهای اجرایی نما و پنجره | نوآوران پنجره سپاهان',

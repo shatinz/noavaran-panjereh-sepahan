@@ -4,11 +4,13 @@ import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { GoogleAnalytics } from '@/components/GoogleAnalytics';
 import AnalyticsTracker from '@/components/AnalyticsTracker';
-import settingsData from '@/data/settings.json';
+import { getSettings } from '@/lib/db';
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://noavaranpanjereh.vercel.app';
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://noavaranpanjereh.com';
 
-export const metadata: Metadata = {
+export async function generateMetadata(): Promise<Metadata> {
+  const settingsData = await getSettings();
+  return {
   metadataBase: new URL(siteUrl),
   title: {
     default: 'نوآوران پنجره سپاهان | طراحی و تولید نمای مدرن و پنجره ترمال‌بریک',
@@ -96,12 +98,14 @@ export const metadata: Metadata = {
     google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || 'google6b6e2b2e45f40ad7',
   },
 };
+}
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const settingsData = await getSettings();
   const organizationLd = {
     '@context': 'https://schema.org',
     '@type': ['Organization', 'LocalBusiness', 'HomeAndConstructionBusiness'],
@@ -254,7 +258,7 @@ export default function RootLayout({
         </a>
         <GoogleAnalytics />
         <AnalyticsTracker />
-        <Header />
+        <Header phone={settingsData.factoryPhones?.[0] || settingsData.phone} />
         <main id="main-content" className="flex-grow">
           {children}
         </main>

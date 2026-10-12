@@ -1,6 +1,7 @@
 import React from 'react';
 import { notFound } from 'next/navigation';
-import { getProjects } from '@/lib/db';
+import { getProjects, getSettings } from '@/lib/db';
+import { telHref } from '@/lib/phone';
 import { PageHero } from '@/components/ui/PageHero';
 import { Breadcrumbs } from '@/components/ui/Breadcrumbs';
 import { Gallery } from '@/components/ui/Gallery';
@@ -12,7 +13,7 @@ interface Props {
   params: { id: string; };
 }
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://noavaranpanjereh.vercel.app';
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://noavaranpanjereh.com';
 
 export async function generateMetadata({ params }: Props) {
   const projects = await getProjects();
@@ -21,7 +22,7 @@ export async function generateMetadata({ params }: Props) {
   const fullImgUrl = project.image.startsWith('http') ? project.image : `${siteUrl}${project.image}`;
 
   return {
-    title: `${project.title} (${project.location || 'اصفهان'}) | پروژه‌های نوآوران پنجره`,
+    title: `${project.title} (${project.location || 'اصفهان'})`,
     description: `پروژه ${project.title} واقع در ${project.location || 'اصفهان'} با اجرای ${project.systemsUsed?.join(' و ')}`,
     alternates: {
       canonical: `/projects/${project.id}`,
@@ -47,6 +48,7 @@ export async function generateStaticParams() {
 }
 
 export default async function ProjectDetailPage({ params }: Props) {
+  const settings = await getSettings();
   const projects = await getProjects();
   const project = projects.find(p => p.id === params.id);
   if (!project) notFound();
@@ -170,9 +172,9 @@ export default async function ProjectDetailPage({ params }: Props) {
               </div>
               
               <div className="space-y-3 pt-2">
-                <a href="tel:03133687755" className="flex items-center justify-center gap-2 w-full py-3 bg-signal-500 hover:bg-signal-400 text-white font-bold rounded-lg transition-colors font-sans">
+                <a href={`tel:${telHref(settings.phone)}`} className="flex items-center justify-center gap-2 w-full py-3 bg-signal-500 hover:bg-signal-400 text-white font-bold rounded-lg transition-colors font-sans">
                   <Phone className="w-5 h-5" />
-                  <bdi dir="ltr" style={{ unicodeBidi: 'isolate' }}>031-33687755</bdi>
+                  <bdi dir="ltr" style={{ unicodeBidi: 'isolate' }}>{settings.phone}</bdi>
                 </a>
                 <Link href="/contact" className="flex items-center justify-center gap-2 w-full py-3 bg-ink-950 hover:bg-ink-800 text-white font-bold rounded-lg border border-ink-800 transition-colors font-vazir">
                   <MessageSquare className="w-5 h-5 text-signal-500" />

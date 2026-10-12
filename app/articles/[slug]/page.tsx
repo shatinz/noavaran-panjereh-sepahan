@@ -2,7 +2,8 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
-import { getArticleBySlug, getArticles } from '@/lib/db';
+import { getArticleBySlug, getArticles, getSettings } from '@/lib/db';
+import { telHref } from '@/lib/phone';
 import { PageHero } from '@/components/ui/PageHero';
 import { Breadcrumbs } from '@/components/ui/Breadcrumbs';
 import { Calendar, User, Tag, Share2, ShieldCheck, Phone } from 'lucide-react';
@@ -12,7 +13,7 @@ interface Props {
   params: { slug: string; };
 }
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://noavaranpanjereh.vercel.app';
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://noavaranpanjereh.com';
 
 const toIsoDate = (persianDateStr: string) => {
   const map: Record<string, string> = {
@@ -31,7 +32,7 @@ export async function generateMetadata({ params }: Props) {
   const fullImgUrl = imgSrc.startsWith('http') ? imgSrc : `${siteUrl}${imgSrc}`;
 
   return {
-    title: `${article.title} | دانشنامه نوآوران پنجره سپاهان`,
+    title: article.title,
     description: article.excerpt,
     alternates: {
       canonical: `/articles/${article.slug}`,
@@ -60,6 +61,7 @@ export async function generateStaticParams() {
 }
 
 export default async function ArticleDetailPage({ params }: Props) {
+  const settings = await getSettings();
   const article = await getArticleBySlug(params.slug);
   if (!article) notFound();
 
@@ -191,9 +193,9 @@ export default async function ArticleDetailPage({ params }: Props) {
                 <p className="text-sm text-steel-300 font-vazir mt-1">جهت استعلام قیمت یا اطلاعات بیشتر با مهندسی فروش تماس بگیرید.</p>
               </div>
             </div>
-            <a href="tel:03133687755" className="px-8 py-3 bg-signal-500 hover:bg-signal-400 text-white font-bold rounded-lg transition-colors font-sans flex items-center gap-2 shrink-0 w-full md:w-auto justify-center">
+            <a href={`tel:${telHref(settings.phone)}`} className="px-8 py-3 bg-signal-500 hover:bg-signal-400 text-white font-bold rounded-lg transition-colors font-sans flex items-center gap-2 shrink-0 w-full md:w-auto justify-center">
               <Phone className="w-5 h-5" />
-              <bdi dir="ltr" style={{ unicodeBidi: 'isolate' }}>031-33687755</bdi>
+              <bdi dir="ltr" style={{ unicodeBidi: 'isolate' }}>{settings.phone}</bdi>
             </a>
           </div>
 

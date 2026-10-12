@@ -3,8 +3,10 @@ import type { Metadata } from 'next';
 import { PageHero } from '@/components/ui/PageHero';
 import { Breadcrumbs } from '@/components/ui/Breadcrumbs';
 import { CalculatorClient } from '@/components/calculator/CalculatorClient';
+import { getSettings } from '@/lib/db';
+import { whatsappNumber } from '@/lib/phone';
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://noavaranpanjereh.vercel.app';
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://noavaranpanjereh.com';
 
 export const metadata: Metadata = {
   title: 'محاسبه آنلاین قیمت پنجره ترمال‌بریک و کرتین‌وال | نوآوران پنجره سپاهان',
@@ -19,7 +21,8 @@ export const metadata: Metadata = {
   },
 };
 
-export default function CalculatorPage() {
+export default async function CalculatorPage() {
+  const settings = await getSettings();
   const toolLd = {
     '@context': 'https://schema.org',
     '@type': 'WebApplication',
@@ -72,7 +75,7 @@ export default function CalculatorPage() {
       />
 
       <div className="w-full max-w-[1440px] mx-auto px-4 md:px-8 py-16 md:py-24 space-y-12" dir="rtl">
-        <CalculatorClient />
+        <CalculatorClient whatsappNumber={whatsappNumber(settings.whatsapp || settings.mobile)} />
       </div>
     </>
   );

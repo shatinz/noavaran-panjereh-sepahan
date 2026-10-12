@@ -7,12 +7,10 @@ import { Menu, X, ChevronDown, Phone } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { Button } from "./ui/Button";
 import { withBasePath } from "@/lib/media";
-import settingsData from "@/data/settings.json";
 
-export function Header() {
+export function Header({ phone }: { phone: string }) {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
-  const phone = settingsData.factoryPhones[0];
 
   React.useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {

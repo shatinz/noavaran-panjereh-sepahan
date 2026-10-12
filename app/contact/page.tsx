@@ -4,9 +4,9 @@ import { PageHero } from '@/components/ui/PageHero';
 import { Breadcrumbs } from '@/components/ui/Breadcrumbs';
 import { ContactFormClient } from '@/components/contact/ContactFormClient';
 import { MapPin, Phone, Clock, ShieldCheck, FileCheck } from 'lucide-react';
-import settingsData from '@/data/settings.json';
+import { getSettings } from '@/lib/db';
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://noavaranpanjereh.vercel.app';
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://noavaranpanjereh.com';
 
 export const metadata: Metadata = {
   title: 'تماس با ما | مشاوره تخصصی و استعلام قیمت نما و پنجره ترمال‌بریک',
@@ -21,7 +21,8 @@ export const metadata: Metadata = {
   },
 };
 
-export default function ContactPage() {
+export default async function ContactPage() {
+  const settingsData = await getSettings();
   const contactLd = {
     '@context': 'https://schema.org',
     '@type': 'ContactPage',

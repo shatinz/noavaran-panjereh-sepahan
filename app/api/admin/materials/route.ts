@@ -1,6 +1,9 @@
 import { NextResponse } from 'next/server';
 import { getMaterials, createMaterial, updateMaterial, deleteMaterial } from '@/lib/db';
 
+// Never prerender: these handlers read/write live data and must run on every request.
+export const dynamic = 'force-dynamic';
+
 export async function GET() {
   const materials = await getMaterials();
   return NextResponse.json(materials);

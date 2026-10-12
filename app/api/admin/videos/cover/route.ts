@@ -1,6 +1,9 @@
 import { NextResponse } from 'next/server';
 import { extractVideoInfo } from '@/lib/video';
 
+// Never prerender: these handlers read/write live data and must run on every request.
+export const dynamic = 'force-dynamic';
+
 export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);

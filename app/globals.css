@@ -120,6 +120,21 @@ textarea::placeholder {
   animation: bannerCarousel 0.65s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
+/* Hero kinetic parallax layer hardware acceleration */
+.hero-parallax-layer {
+  will-change: transform;
+  backface-visibility: hidden;
+  transform: translate3d(0, 0, 0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-parallax-layer {
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
+
 @media (prefers-reduced-motion: reduce) {
   html, body {
     scroll-behavior: auto;

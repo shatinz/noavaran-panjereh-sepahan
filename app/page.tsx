@@ -8,6 +8,7 @@ import { FeaturedProjects } from "@/components/home/FeaturedProjects";
 import { Process } from "@/components/home/Process";
 import { DistributionMap } from "@/components/home/DistributionMap";
 import { CtaBand } from "@/components/home/CtaBand";
+import { getProjects, getSettings } from "@/lib/db";
 
 export const metadata: Metadata = {
   title: "نوآوران پنجره سپاهان | طراحی و تولید نمای مدرن و پنجره ترمال‌بریک",
@@ -17,7 +18,8 @@ export const metadata: Metadata = {
   },
 };
 
-export default function Home() {
+export default async function Home() {
+  const [settings, projects] = await Promise.all([getSettings(), getProjects()]);
   const faqLd = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -71,7 +73,7 @@ export default function Home() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }}
       />
-      <Hero />
+      <Hero establishedYear={settings.establishedYear} factoryArea={String(settings.factoryArea)} projectCount={projects.length} />
       <ProofStrip />
       
       <div className="relative mt-12 md:mt-16">

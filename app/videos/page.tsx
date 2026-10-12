@@ -5,7 +5,7 @@ import { PageHero } from '@/components/ui/PageHero';
 import { Breadcrumbs } from '@/components/ui/Breadcrumbs';
 import { VideosClient } from './VideosClient';
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://noavaranpanjereh.vercel.app';
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://noavaranpanjereh.com';
 
 export const metadata: Metadata = {
   title: 'ویدیوهای آموزشی، مراحل نصب و انیمیشن مقاطع | نوآوران پنجره سپاهان',

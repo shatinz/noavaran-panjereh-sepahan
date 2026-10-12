@@ -2,6 +2,9 @@ import { NextResponse } from 'next/server';
 import { getConsultations, createConsultation, updateConsultation, deleteConsultation } from '@/lib/db';
 import { sendConsultationEmail } from '@/lib/email';
 
+// Never prerender: these handlers read/write live data and must run on every request.
+export const dynamic = 'force-dynamic';
+
 export async function GET() {
   try {
     const list = await getConsultations();

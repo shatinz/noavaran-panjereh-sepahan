@@ -2,9 +2,10 @@ import React from "react";
 import type { Metadata } from "next";
 import { LogoMotionClient } from "./LogoMotionClient";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://noavaranpanjereh.vercel.app";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://noavaranpanjereh.com";
 
 export const metadata: Metadata = {
+  robots: { index: false, follow: false },
   title: "لوگو موشن و انیمیشن رسمی | نوآوران پنجره سپاهان",
   description: "استودیوی ۳ انیمیشن و لوگوگرافی رسمی شرکت نوآوران پنجره سپاهان؛ شامل موشن اسکن مهندسی بلوپرینت، کوره متالیک اکستروژن و هولوگرافی سه‌بعدی شیشه دوجداره.",
   alternates: {

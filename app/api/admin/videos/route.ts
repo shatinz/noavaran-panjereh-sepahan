@@ -2,6 +2,9 @@ import { NextResponse } from 'next/server';
 import { getVideos, createVideo, updateVideo, deleteVideo } from '@/lib/db';
 import { extractVideoInfo } from '@/lib/video';
 
+// Never prerender: these handlers read/write live data and must run on every request.
+export const dynamic = 'force-dynamic';
+
 export async function GET() {
   const videos = await getVideos();
   return NextResponse.json(videos);

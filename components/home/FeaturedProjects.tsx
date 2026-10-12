@@ -4,11 +4,12 @@ import Link from "next/link";
 import { SectionHeading } from "../ui/SectionHeading";
 import { Reveal } from "../ui/Reveal";
 import { Button } from "../ui/Button";
-import projectsData from "../../data/projects.json";
+import { getProjects } from "@/lib/db";
 import { SteelPanel } from "../ui/SteelPanel";
 import { withBasePath } from "@/lib/media";
 
-export function FeaturedProjects() {
+export async function FeaturedProjects() {
+  const projectsData = await getProjects();
   const featured = projectsData.slice(0, 4);
   const mainProject = featured[0];
   const sideProjects = featured.slice(1);

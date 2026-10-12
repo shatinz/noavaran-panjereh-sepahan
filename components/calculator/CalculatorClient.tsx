@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { CheckCircle2, MessageSquare } from 'lucide-react';
 import { trackCalculatorCalculation, trackWhatsAppClick } from '@/lib/analytics';
 
-export function CalculatorClient() {
+export function CalculatorClient({ whatsappNumber = '989301545858' }: { whatsappNumber?: string }) {
   const [systemType, setSystemType] = useState('thermal-break');
   const [width, setWidth] = useState<number>(3);
   const [height, setHeight] = useState<number>(2.4);
@@ -222,7 +222,7 @@ export function CalculatorClient() {
           </div>
 
           <a
-            href={`https://wa.me/989301545858?text=${generateWhatsAppMessage()}`}
+            href={`https://wa.me/${whatsappNumber}?text=${generateWhatsAppMessage()}`}
             onClick={handleWhatsAppClick}
             target="_blank"
             rel="noreferrer"

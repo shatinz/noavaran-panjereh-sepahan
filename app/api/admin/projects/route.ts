@@ -1,6 +1,9 @@
 import { NextResponse } from 'next/server';
 import { getProjects, createProject, updateProject, deleteProject } from '@/lib/db';
 
+// Never prerender: these handlers read/write live data and must run on every request.
+export const dynamic = 'force-dynamic';
+
 export async function GET() {
   const projects = await getProjects();
   return NextResponse.json(projects);

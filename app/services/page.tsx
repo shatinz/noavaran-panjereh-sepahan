@@ -8,7 +8,7 @@ import { ArrowLeft, CheckCircle2 } from 'lucide-react';
 import { getLocalMediaFallback } from '@/lib/media';
 import Image from 'next/image';
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://noavaranpanjereh.vercel.app';
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://noavaranpanjereh.com';
 
 export const metadata: Metadata = {
   title: 'سبد محصولات و خدمات مهندسی نما و پنجره | نوآوران پنجره سپاهان',

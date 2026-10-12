@@ -9,7 +9,7 @@ import { getLocalMediaFallback, withBasePath } from '@/lib/media';
 
 import type { Metadata } from 'next';
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://noavaranpanjereh.vercel.app';
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://noavaranpanjereh.com';
 
 export const metadata: Metadata = {
   title: 'کاتالوگ پروفیل‌های آلومینیوم اختصاصی و مقاطع مهندسی | نوآوران پنجره سپاهان',

@@ -1,5 +1,5 @@
 import nodemailer from 'nodemailer';
-import settingsData from '@/data/settings.json';
+import { getSettings } from '@/lib/db';
 
 export interface EmailPayload {
   name: string;
@@ -10,7 +10,8 @@ export interface EmailPayload {
 }
 
 export async function sendConsultationEmail(data: EmailPayload): Promise<{ success: boolean; message: string }> {
-  const companyEmail = process.env.COMPANY_NOTIFICATION_EMAIL || settingsData.email || 'info@noavaranpanjereh.ir';
+  const settingsData = await getSettings();
+  const companyEmail = process.env.COMPANY_NOTIFICATION_EMAIL || settingsData.email || 'info@noavaranpanjereh.com';
   const smtpHost = process.env.SMTP_HOST;
   const smtpUser = process.env.SMTP_USER;
   const smtpPass = process.env.SMTP_PASS;

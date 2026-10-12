@@ -2,12 +2,13 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { MapPin, Phone, Mail, Instagram } from "lucide-react";
-import settingsData from "../data/settings.json";
+import { getSettings } from "@/lib/db";
 import { withBasePath } from "@/lib/media";
 
 import { MetallicForgeLogo } from "./MetallicForgeLogo";
 
-export function Footer() {
+export async function Footer() {
+  const settingsData = await getSettings();
   const { officeAddress, factoryPhones, email, socialLinks, registrationNumber } = settingsData;
 
   return (

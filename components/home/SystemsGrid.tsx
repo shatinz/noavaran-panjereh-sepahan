@@ -3,9 +3,10 @@ import { SectionHeading } from "../ui/SectionHeading";
 import { MetalCard } from "../ui/MetalCard";
 import { Reveal } from "../ui/Reveal";
 import { Button } from "../ui/Button";
-import materialsData from "../../data/materials.json";
+import { getMaterials } from "@/lib/db";
 
-export function SystemsGrid() {
+export async function SystemsGrid() {
+  const materialsData = await getMaterials();
   return (
     <section className="py-16 md:py-24 max-w-[1440px] mx-auto px-4 sm:px-6 relative" dir="rtl">
       {/* Background decoration */}
