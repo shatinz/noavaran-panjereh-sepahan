@@ -20,10 +20,26 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
     if (hasLocalAuth || hasCookieAuth) {
       setAuthorized(true);
-    } else {
-      setAuthorized(false);
-      router.replace('/admin/login');
+      return;
     }
+
+    // Fallback: verify session with server if client storage is empty
+    fetch('/api/admin/auth')
+      .then((res) => {
+        if (res.ok) {
+          if (typeof window !== 'undefined') {
+            localStorage.setItem('noavaran_admin_session', 'authenticated');
+          }
+          setAuthorized(true);
+        } else {
+          setAuthorized(false);
+          router.replace('/admin/login');
+        }
+      })
+      .catch(() => {
+        setAuthorized(false);
+        router.replace('/admin/login');
+      });
   }, [pathname, router]);
 
   if (pathname === '/admin/login') {

@@ -57,7 +57,12 @@ export default function AdminSettingsPage() {
     setCredError('');
     setCredSaved(false);
 
-    if (newPassword && newPassword !== confirmPassword) {
+    if (!newPassword || newPassword.trim().length < 8) {
+      setCredError('رمز عبور جدید باید حداقل ۸ کاراکتر باشد.');
+      return;
+    }
+
+    if (newPassword !== confirmPassword) {
       setCredError('رمز عبور جدید و تکرار آن یکسان نیستند.');
       return;
     }
@@ -412,7 +417,7 @@ export default function AdminSettingsPage() {
                   required
                   value={newPassword}
                   onChange={(e) => setNewPassword(e.target.value)}
-                  placeholder="حداقل ۴ کاراکتر"
+                  placeholder="حداقل ۸ کاراکتر"
                   className="w-full p-2.5 rounded-xl bg-charcoal-850 border border-charcoal-700 text-white font-mono focus:border-rose-500 focus:outline-none"
                 />
               </div>

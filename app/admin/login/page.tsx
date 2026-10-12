@@ -25,32 +25,27 @@ export default function AdminLoginPage() {
         body: JSON.stringify({ username, password }),
       });
 
-      if (res.ok) {
-        const data = await res.json();
-        if (data.success) {
-          if (typeof window !== 'undefined') {
-            localStorage.setItem('noavaran_admin_session', 'authenticated');
-          }
-          router.push('/admin');
-          router.refresh();
-          return;
-        }
-      }
-    } catch (err) {
-      // In static GitHub Pages deployment, server API returns 404 or fails
-    }
+      const data = await res.json().catch(() => ({}));
 
-    // Client-side fallback for static export (GitHub Pages)
-    if (username === 'admin' && password === 'noavaran2026') {
-      if (typeof window !== 'undefined') {
-        localStorage.setItem('noavaran_admin_session', 'authenticated');
+      if (res.ok && data.success) {
+        if (typeof window !== 'undefined') {
+          localStorage.setItem('noavaran_admin_session', 'authenticated');
+        }
+        if (data.mustChangePassword) {
+          router.push('/admin/change-password');
+        } else {
+          router.push('/admin');
+        }
+        router.refresh();
+        return;
       }
-      router.push('/admin');
-      router.refresh();
-    } else {
-      setError('نام کاربری یا رمز عبور اشتباه است.');
+
+      setError(data.error || 'نام کاربری یا رمز عبور اشتباه است.');
+    } catch (err) {
+      setError('خطا در برقراری ارتباط با سرور.');
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   return (
@@ -112,9 +107,6 @@ export default function AdminLoginPage() {
                 className="w-full pl-3 pr-10 py-3 rounded-xl bg-charcoal-850 border border-charcoal-700 text-white text-xs font-mono focus:border-bronze-500 focus:outline-none"
               />
             </div>
-            <span className="text-[10px] text-titanium-500 block mt-1">
-              پیش‌فرض: admin / noavaran2026
-            </span>
           </div>
 
           <button

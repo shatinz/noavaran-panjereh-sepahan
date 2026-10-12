@@ -1,5 +1,7 @@
 import fs from 'fs';
 import path from 'path';
+import crypto from 'crypto';
+import { revalidatePath } from 'next/cache';
 
 export interface ServiceItem {
   id: string;
@@ -121,38 +123,52 @@ export interface CompanySettings {
 
 const dataDir = path.join(process.cwd(), 'data');
 
+// Content layout:
+//   data/<name>.json                  seed content, tracked in git
+//   data/runtime/content/<name>.json  copy written by the admin panel, git-ignored
+// Reads prefer the runtime copy, so `git reset --hard` deploys no longer wipe
+// admin edits. To push new seed content for a collection that was already
+// edited in the panel, delete its runtime copy.
+const contentDir = path.join(dataDir, 'runtime', 'content');
+
 function readJsonFile<T>(filename: string, fallback: T): T {
-  try {
-    const filePath = path.join(dataDir, filename);
-    if (fs.existsSync(filePath)) {
-      const raw = fs.readFileSync(filePath, 'utf-8');
-      return JSON.parse(raw) as T;
+  for (const dir of [contentDir, dataDir]) {
+    try {
+      const filePath = path.join(dir, filename);
+      if (fs.existsSync(filePath)) {
+        return JSON.parse(fs.readFileSync(filePath, 'utf-8')) as T;
+      }
+    } catch (error) {
+      console.error(`Error reading ${filename} from ${dir}:`, error);
     }
-  } catch (error) {
-    console.error(`Error reading ${filename}:`, error);
   }
   return fallback;
 }
 
+// Public pages are statically generated; purge them after content changes so
+// admin edits show up without a rebuild (leads are private, so they skip this).
+const PRIVATE_FILES = new Set(['consultations.json']);
+
 function writeJsonFile<T>(filename: string, data: T): boolean {
   try {
-    if (!fs.existsSync(dataDir)) {
-      fs.mkdirSync(dataDir, { recursive: true });
+    fs.mkdirSync(contentDir, { recursive: true });
+    const filePath = path.join(contentDir, filename);
+    const tmp = `${filePath}.${process.pid}.tmp`;
+    fs.writeFileSync(tmp, JSON.stringify(data, null, 2), 'utf-8');
+    fs.renameSync(tmp, filePath);
+    if (!PRIVATE_FILES.has(filename)) {
+      try {
+        revalidatePath('/', 'layout');
+      } catch {
+        // not inside a request context (e.g. a script): nothing to purge
+      }
     }
-    const filePath = path.join(dataDir, filename);
-    fs.writeFileSync(filePath, JSON.stringify(data, null, 2), 'utf-8');
     return true;
   } catch (error) {
     console.error(`Error writing ${filename}:`, error);
     return false;
   }
 }
-
-// In-memory cache for Vercel read-only serverless environments
-let memoryArticles: ArticleItem[] | null = null;
-let memoryProjects: ProjectItem[] | null = null;
-let memoryVideos: VideoItem[] | null = null;
-let memorySettings: CompanySettings | null = null;
 
 // SERVICES
 export async function getServices(): Promise<ServiceItem[]> {
@@ -166,9 +182,7 @@ export async function getServiceBySlug(slug: string): Promise<ServiceItem | null
 
 // PROJECTS
 export async function getProjects(): Promise<ProjectItem[]> {
-  if (memoryProjects) return memoryProjects;
   const data = readJsonFile<ProjectItem[]>('projects.json', []);
-  memoryProjects = data;
   return data;
 }
 
@@ -179,7 +193,6 @@ export async function createProject(project: Omit<ProjectItem, 'id'>): Promise<P
     id: `proj-${Date.now()}`
   };
   list.unshift(newItem);
-  memoryProjects = list;
   writeJsonFile('projects.json', list);
   return newItem;
 }
@@ -189,7 +202,6 @@ export async function updateProject(id: string, updates: Partial<ProjectItem>): 
   const index = list.findIndex(p => p.id === id);
   if (index === -1) return null;
   list[index] = { ...list[index], ...updates };
-  memoryProjects = list;
   writeJsonFile('projects.json', list);
   return list[index];
 }
@@ -198,16 +210,13 @@ export async function deleteProject(id: string): Promise<boolean> {
   const list = await getProjects();
   const filtered = list.filter(p => p.id !== id);
   if (filtered.length === list.length) return false;
-  memoryProjects = filtered;
   writeJsonFile('projects.json', filtered);
   return true;
 }
 
 // ARTICLES
 export async function getArticles(): Promise<ArticleItem[]> {
-  if (memoryArticles) return memoryArticles;
   const data = readJsonFile<ArticleItem[]>('articles.json', []);
-  memoryArticles = data;
   return data;
 }
 
@@ -223,7 +232,6 @@ export async function createArticle(article: Omit<ArticleItem, 'id'>): Promise<A
     id: `art-${Date.now()}`
   };
   list.unshift(newItem);
-  memoryArticles = list;
   writeJsonFile('articles.json', list);
   return newItem;
 }
@@ -233,7 +241,6 @@ export async function updateArticle(id: string, updates: Partial<ArticleItem>): 
   const index = list.findIndex(a => a.id === id || a.slug === id);
   if (index === -1) return null;
   list[index] = { ...list[index], ...updates };
-  memoryArticles = list;
   writeJsonFile('articles.json', list);
   return list[index];
 }
@@ -242,16 +249,13 @@ export async function deleteArticle(id: string): Promise<boolean> {
   const list = await getArticles();
   const filtered = list.filter(a => a.id !== id && a.slug !== id);
   if (filtered.length === list.length) return false;
-  memoryArticles = filtered;
   writeJsonFile('articles.json', filtered);
   return true;
 }
 
 // VIDEOS
 export async function getVideos(): Promise<VideoItem[]> {
-  if (memoryVideos) return memoryVideos;
   const data = readJsonFile<VideoItem[]>('videos.json', []);
-  memoryVideos = data;
   return data;
 }
 
@@ -262,7 +266,6 @@ export async function createVideo(video: Omit<VideoItem, 'id'>): Promise<VideoIt
     id: `vid-${Date.now()}`
   };
   list.unshift(newItem);
-  memoryVideos = list;
   writeJsonFile('videos.json', list);
   return newItem;
 }
@@ -272,7 +275,6 @@ export async function updateVideo(id: string, updates: Partial<VideoItem>): Prom
   const index = list.findIndex(v => v.id === id);
   if (index === -1) return null;
   list[index] = { ...list[index], ...updates };
-  memoryVideos = list;
   writeJsonFile('videos.json', list);
   return list[index];
 }
@@ -281,14 +283,12 @@ export async function deleteVideo(id: string): Promise<boolean> {
   const list = await getVideos();
   const filtered = list.filter(v => v.id !== id);
   if (filtered.length === list.length) return false;
-  memoryVideos = filtered;
   writeJsonFile('videos.json', filtered);
   return true;
 }
 
 // SETTINGS
 export async function getSettings(): Promise<CompanySettings> {
-  if (memorySettings) return memorySettings;
   const fallback: CompanySettings = {
     companyName: "نوآوران پنجره سپاهان",
     companyNameEn: "Noavaran Panjereh Sepahan",
@@ -318,25 +318,20 @@ export async function getSettings(): Promise<CompanySettings> {
     }
   };
   const data = readJsonFile<CompanySettings>('settings.json', fallback);
-  memorySettings = data;
   return data;
 }
 
 export async function updateSettings(updates: Partial<CompanySettings>): Promise<CompanySettings> {
   const current = await getSettings();
   const updated = { ...current, ...updates };
-  memorySettings = updated;
   writeJsonFile('settings.json', updated);
   return updated;
 }
 
 // MATERIALS
-let memoryMaterials: MaterialItem[] | null = null;
 
 export async function getMaterials(): Promise<MaterialItem[]> {
-  if (memoryMaterials) return memoryMaterials;
   const data = readJsonFile<MaterialItem[]>('materials.json', []);
-  memoryMaterials = data;
   return data;
 }
 
@@ -353,7 +348,6 @@ export async function createMaterial(material: Omit<MaterialItem, 'id'> & { id?:
     id: generatedId,
   };
   list.unshift(newItem);
-  memoryMaterials = list;
   writeJsonFile('materials.json', list);
   return newItem;
 }
@@ -363,7 +357,6 @@ export async function updateMaterial(id: string, updates: Partial<MaterialItem>)
   const index = list.findIndex(m => m.id === id || m.code.toLowerCase() === id.toLowerCase());
   if (index === -1) return null;
   list[index] = { ...list[index], ...updates };
-  memoryMaterials = list;
   writeJsonFile('materials.json', list);
   return list[index];
 }
@@ -372,39 +365,115 @@ export async function deleteMaterial(id: string): Promise<boolean> {
   const list = await getMaterials();
   const filtered = list.filter(m => m.id !== id && m.code.toLowerCase() !== id.toLowerCase());
   if (filtered.length === list.length) return false;
-  memoryMaterials = filtered;
   writeJsonFile('materials.json', filtered);
   return true;
 }
 
 // ADMIN CREDENTIALS
+// Stored hashed (scrypt) in data/runtime/ which is git-ignored, so deploys
+// (`git reset --hard`) never reset or leak the password.
+//
+// Default seed password is 'noavaran2026' with mustChangePassword: true.
+// The admin must change both username and password upon first login.
+// ADMIN_PASSWORD environment variable may optionally override the initial seed value.
 export interface AdminCredentials {
   username: string;
-  password: string;
+  passwordHash: string;
+  mustChangePassword?: boolean;
+  updatedAt?: number;
 }
 
-let memoryAdminAuth: AdminCredentials | null = null;
+const runtimeDir = path.join(dataDir, 'runtime');
+const adminAuthFile = path.join(runtimeDir, 'admin_auth.json');
+const DEFAULT_ADMIN_PASSWORD = 'noavaran2026';
+
+function hashPassword(password: string, saltHex?: string): string {
+  const salt = saltHex ? Buffer.from(saltHex, 'hex') : crypto.randomBytes(16);
+  const derived = crypto.scryptSync(password, salt, 32);
+  return `scrypt$${salt.toString('hex')}$${derived.toString('hex')}`;
+}
+
+function verifyPassword(password: string, stored: string): boolean {
+  const [scheme, saltHex, hashHex] = stored.split('$');
+  if (scheme !== 'scrypt' || !saltHex || !hashHex) return false;
+  const expected = Buffer.from(hashHex, 'hex');
+  const actual = Buffer.from(hashPassword(password, saltHex).split('$')[2], 'hex');
+  return expected.length === actual.length && crypto.timingSafeEqual(expected, actual);
+}
+
+function safeEqualStrings(a: string, b: string): boolean {
+  const ab = Buffer.from(a);
+  const bb = Buffer.from(b);
+  return ab.length === bb.length && crypto.timingSafeEqual(ab, bb);
+}
+
+function readStoredCredentials(): AdminCredentials | null {
+  try {
+    if (fs.existsSync(adminAuthFile)) {
+      const parsed = JSON.parse(fs.readFileSync(adminAuthFile, 'utf-8')) as Partial<AdminCredentials>;
+      if (parsed.username && parsed.passwordHash) {
+        return {
+          username: parsed.username,
+          passwordHash: parsed.passwordHash,
+          mustChangePassword: Boolean(parsed.mustChangePassword),
+          updatedAt: typeof parsed.updatedAt === 'number' ? parsed.updatedAt : undefined,
+        };
+      }
+    }
+  } catch (error) {
+    console.error('Error reading admin credentials:', error);
+  }
+  return null;
+}
 
 export async function getAdminCredentials(): Promise<AdminCredentials> {
-  if (memoryAdminAuth) return memoryAdminAuth;
-  const fallback: AdminCredentials = {
+  const stored = readStoredCredentials();
+  if (stored) return stored;
+
+  const envPassword = process.env.ADMIN_PASSWORD;
+  const seedPassword = envPassword && envPassword.length >= 8 ? envPassword : DEFAULT_ADMIN_PASSWORD;
+
+  // First run with no stored credentials: seed default credentials with mustChangePassword: true.
+  const creds: AdminCredentials = {
     username: process.env.ADMIN_USERNAME || 'admin',
-    password: process.env.ADMIN_PASSWORD || 'noavaran2026',
+    passwordHash: hashPassword(seedPassword),
+    mustChangePassword: true,
+    updatedAt: Date.now(),
   };
-  const data = readJsonFile<AdminCredentials>('admin_auth.json', fallback);
-  memoryAdminAuth = data;
-  return data;
+
+  try {
+    fs.mkdirSync(runtimeDir, { recursive: true });
+    const tmp = `${adminAuthFile}.${process.pid}.tmp`;
+    fs.writeFileSync(tmp, JSON.stringify(creds, null, 2), { encoding: 'utf-8', mode: 0o600 });
+    fs.renameSync(tmp, adminAuthFile);
+    return creds;
+  } catch (error: any) {
+    if (error?.code === 'EEXIST') return readStoredCredentials() || creds;
+    console.error('[admin] Could not persist seed credentials:', error);
+    return creds;
+  }
 }
 
-export async function updateAdminCredentials(updates: Partial<AdminCredentials>): Promise<AdminCredentials> {
+export async function verifyAdminLogin(username: string, password: string): Promise<boolean> {
+  const creds = await getAdminCredentials();
+  const userOk = safeEqualStrings(String(username || ''), creds.username);
+  const passOk = verifyPassword(String(password || ''), creds.passwordHash);
+  return userOk && passOk;
+}
+
+export async function updateAdminCredentials(updates: { username?: string; password?: string }): Promise<{ username: string }> {
   const current = await getAdminCredentials();
   const updated: AdminCredentials = {
     username: updates.username?.trim() || current.username,
-    password: updates.password?.trim() || current.password,
+    passwordHash: updates.password?.trim() ? hashPassword(updates.password.trim()) : current.passwordHash,
+    mustChangePassword: false,
+    updatedAt: Date.now(),
   };
-  memoryAdminAuth = updated;
-  writeJsonFile('admin_auth.json', updated);
-  return updated;
+  fs.mkdirSync(runtimeDir, { recursive: true });
+  const tmp = `${adminAuthFile}.${process.pid}.tmp`;
+  fs.writeFileSync(tmp, JSON.stringify(updated, null, 2), { encoding: 'utf-8', mode: 0o600 });
+  fs.renameSync(tmp, adminAuthFile);
+  return { username: updated.username };
 }
 
 // CONSULTATION REQUESTS
@@ -418,12 +487,9 @@ export interface ConsultationItem {
   createdAt: string;
 }
 
-let memoryConsultations: ConsultationItem[] | null = null;
 
 export async function getConsultations(): Promise<ConsultationItem[]> {
-  if (memoryConsultations) return memoryConsultations;
   const data = readJsonFile<ConsultationItem[]>('consultations.json', []);
-  memoryConsultations = data;
   return data;
 }
 
@@ -442,7 +508,6 @@ export async function createConsultation(item: Omit<ConsultationItem, 'id' | 'cr
     }).format(new Date()),
   };
   const updated = [newItem, ...list];
-  memoryConsultations = updated;
   writeJsonFile('consultations.json', updated);
   return newItem;
 }
@@ -453,7 +518,6 @@ export async function updateConsultation(id: string, updates: Partial<Consultati
   if (index === -1) return null;
   const updatedItem = { ...list[index], ...updates };
   list[index] = updatedItem;
-  memoryConsultations = list;
   writeJsonFile('consultations.json', list);
   return updatedItem;
 }
@@ -462,67 +526,6 @@ export async function deleteConsultation(id: string): Promise<boolean> {
   const list = await getConsultations();
   const filtered = list.filter(c => c.id !== id);
   if (filtered.length === list.length) return false;
-  memoryConsultations = filtered;
   writeJsonFile('consultations.json', filtered);
   return true;
 }
-
-// ANALYTICS & VISIT STATS
-export interface SiteAnalytics {
-  totalVisits: number;
-  uniqueVisitors: number;
-  pageViewsToday: number;
-  dailyHistory: { date: string; visits: number; pageViews: number }[];
-  topPages: { path: string; title: string; views: number }[];
-  devices: { mobile: number; desktop: number; tablet: number };
-  trafficSources: { source: string; percentage: number }[];
-}
-
-let memoryAnalytics: SiteAnalytics | null = null;
-
-export async function getAnalyticsStats(): Promise<SiteAnalytics> {
-  if (memoryAnalytics) return memoryAnalytics;
-  const fallback: SiteAnalytics = {
-    totalVisits: 18450,
-    uniqueVisitors: 9230,
-    pageViewsToday: 142,
-    dailyHistory: [],
-    topPages: [],
-    devices: { mobile: 68, desktop: 28, tablet: 4 },
-    trafficSources: [],
-  };
-  const data = readJsonFile<SiteAnalytics>('analytics_stats.json', fallback);
-  memoryAnalytics = data;
-  return data;
-}
-
-export async function recordPageView(path: string, title?: string, isMobile?: boolean): Promise<SiteAnalytics> {
-  const stats = await getAnalyticsStats();
-  stats.totalVisits += 1;
-  stats.pageViewsToday += 1;
-
-  // Update top pages
-  const cleanPath = path || '/';
-  const existingPage = stats.topPages.find(p => p.path === cleanPath);
-  if (existingPage) {
-    existingPage.views += 1;
-    if (title && !existingPage.title) existingPage.title = title;
-  } else {
-    stats.topPages.push({
-      path: cleanPath,
-      title: title || cleanPath,
-      views: 1,
-    });
-  }
-
-  // Sort top pages by views descending
-  stats.topPages.sort((a, b) => b.views - a.views);
-
-  memoryAnalytics = stats;
-  writeJsonFile('analytics_stats.json', stats);
-  return stats;
-}
-
-
-
-
