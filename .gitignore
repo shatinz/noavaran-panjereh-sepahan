@@ -28,15 +28,16 @@ yarn-error.log*
 .env
 gsc-credentials.json
 
-# vercel
-.vercel
-
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-.vercel
 
 # VCP runtime files
 /.gemini/
 FEEDBACK_PROMPT.md
 agent_inbox.md
+
+# runtime state written by the app (survives `git reset --hard` deploys)
+/data/runtime/
+/data/consultations.json
+/public/uploads/

@@ -1,10 +1,9 @@
-name: CI / CD to Vercel
+name: CI
 
 on:
   push:
-    branches: [main, master]
+    branches-ignore: [redblack]   # redblack is built + deployed by deploy-server.yml
   pull_request:
-    branches: [main, master]
 
 jobs:
   build:
@@ -26,8 +25,12 @@ jobs:
       - name: Install Dependencies
         run: pnpm install --no-frozen-lockfile
 
+      - name: Type check
+        run: npx tsc --noEmit
+
       - name: Build Project
         run: pnpm run build
         env:
           ADMIN_USERNAME: ${{ secrets.ADMIN_USERNAME || 'admin' }}
-          ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD || 'noavaran2026' }}
+          ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD || 'change-me-ci-only' }}
+          ADMIN_SESSION_SECRET: ci-build-only-secret-not-used-in-production
