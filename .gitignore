@@ -41,3 +41,8 @@ agent_inbox.md
 /data/runtime/
 /data/consultations.json
 /public/uploads/
+
+# Local agent scratch & assistant files
+.claudeweb/
+claudeweb.md
+tasks/

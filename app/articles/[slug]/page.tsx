@@ -109,7 +109,7 @@ export default async function ArticleDetailPage({ params }: Props) {
       name: 'نوآوران پنجره سپاهان',
       logo: {
         '@type': 'ImageObject',
-        url: `${siteUrl}/images/logo-white.png`,
+        url: `${siteUrl}/images/logo.png`,
       },
     },
     mainEntityOfPage: {
