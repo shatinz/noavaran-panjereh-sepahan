@@ -174,15 +174,16 @@ export function MetallicForgeLogo({
         style={{ width: size * 0.88, height: size * 0.88 }}
         title="نوآوران پنجره سپاهان — استودیوی لوگو موشن"
       >
-        {/* Authentic Main Logo in Thermal Forge Chamber */}
+        {/* Authentic Original Logo in Thermal Forge Chamber */}
         <div className="relative w-full h-full filter drop-shadow-[0_10px_20px_rgba(0,0,0,0.85)] drop-shadow-[0_0_18px_rgba(155,33,48,0.5)] group-hover:drop-shadow-[0_0_25px_rgba(255,51,68,0.7)] transition-all">
           <Image
-            src={withBasePath("/images/logo-white.png")}
+            src={withBasePath("/images/logo.png")}
             alt="شرکت نوآوران پنجره سپاهان"
             fill
             className="object-contain"
             sizes={`${size}px`}
-            priority={false}
+            unoptimized
+            priority
           />
         </div>
 
