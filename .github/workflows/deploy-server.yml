@@ -5,6 +5,9 @@ on:
     branches: [redblack]
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   build:
     name: Build & Verify (CI)
@@ -41,18 +44,23 @@ jobs:
     steps:
       - name: Deploy via SSH
         uses: appleboy/ssh-action@v1.2.0
+        env:
+          GH_TOKEN: ${{ github.token }}
         with:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_SSH_KEY }}
           port: ${{ secrets.SERVER_PORT || 22 }}
+          envs: GH_TOKEN
           timeout: 120s
           command_timeout: 15m
           script: |
             set -e
             echo "=== Syncing repository on server ==="
             cd /var/www/noavaran
-            git fetch origin redblack
+            AUTH=$(printf 'x-access-token:%s' "$GH_TOKEN" | base64 -w0)
+            git -c http.extraheader="Authorization: Basic $AUTH" fetch origin redblack
+            unset AUTH
             git reset --hard origin/redblack
 
             echo "=== Installing dependencies ==="
