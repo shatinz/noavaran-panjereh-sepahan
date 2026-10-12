@@ -24,9 +24,32 @@ export const trackPageView = (url: string, title?: string) => {
   });
 };
 
+// First-party event labels (shown in the admin dashboard click stats)
+const FIRST_PARTY_LABELS: Record<string, string> = {
+  generate_lead: 'contact_form',
+  calculator_estimate_generated: 'calculator',
+};
+
+const sendFirstPartyClick = (label: string) => {
+  if (typeof window === 'undefined') return;
+  try {
+    fetch('/api/analytics/track', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ type: 'click', label, path: window.location.pathname }),
+      keepalive: true,
+    }).catch(() => {});
+  } catch {
+    // never break the page for analytics
+  }
+};
+
 // Generic event tracker
 export const trackEvent = (action: string, params: Record<string, any> = {}) => {
-  if (typeof window === 'undefined' || !window.gtag || !GA_TRACKING_ID) return;
+  if (typeof window === 'undefined') return;
+  const label = FIRST_PARTY_LABELS[action];
+  if (label) sendFirstPartyClick(label);
+  if (!window.gtag || !GA_TRACKING_ID) return;
   window.gtag('event', action, params);
 };
 
