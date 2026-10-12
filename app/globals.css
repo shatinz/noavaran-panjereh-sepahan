@@ -2,18 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Lalezar&family=Vazirmatn:wght@300;400;500;600;700;800;900&family=Inter:wght@400;500;600;700;800;900&display=swap');
-
-:root {
-  --font-vazir: 'Vazirmatn', Tahoma, Arial, system-ui, -apple-system, sans-serif;
-  --font-lalezar: 'Lalezar', 'Vazirmatn', Tahoma, Arial, system-ui, -apple-system, sans-serif;
-  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
-}
-
 html, body {
   background-color: #0a0002;
   color: #fefefe;
-  font-family: var(--font-vazir);
+  font-family: var(--font-vazir), 'Vazirmatn', Tahoma, Arial, system-ui, -apple-system, sans-serif;
   font-size: 17px;
   line-height: 1.9;
   overflow-x: hidden;

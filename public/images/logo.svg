@@ -70,7 +70,7 @@ viewBox="-124.00 -220.00 4440.00 4440.00"
     .fil8 {fill:#9B2130}
     .fil6 {fill:#373435;fill-rule:nonzero}
     .fil4 {fill:#373435;fill-rule:nonzero}
-    .fil10 {fill:#373435;fill-rule:nonzero}
+    .fil10 {fill:#ffffff;fill-rule:nonzero}
     .fil7 {fill:url(#id0)}
     .fil2 {fill:url(#id1)}
     .fil3 {fill:url(#id2)}

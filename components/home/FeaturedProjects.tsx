@@ -43,6 +43,7 @@ export async function FeaturedProjects() {
                       alt={mainProject.title}
                       fill
                       className="object-cover group-hover:scale-105 transition-transform duration-700"
+                      sizes="(min-width: 1024px) 66vw, 100vw"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-ink-950/80 to-transparent" />
                     <div className="absolute bottom-6 right-6 text-white pr-4 border-r-4 border-signal-500">
@@ -65,6 +66,7 @@ export async function FeaturedProjects() {
                     alt={project.title}
                     fill
                     className="object-cover group-hover:scale-110 transition-transform duration-500"
+                    sizes="(min-width: 1024px) 33vw, 100vw"
                   />
                   <div className="absolute inset-0 bg-ink-950/60 group-hover:bg-ink-950/40 transition-colors" />
                   <div className="absolute inset-0 p-4 flex flex-col justify-end border-r-2 border-signal-500/0 group-hover:border-signal-500 transition-colors">

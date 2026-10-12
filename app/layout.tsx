@@ -1,10 +1,32 @@
 import type { Metadata } from 'next';
+import { Vazirmatn, Lalezar, Inter } from 'next/font/google';
 import './globals.css';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { GoogleAnalytics } from '@/components/GoogleAnalytics';
 import AnalyticsTracker from '@/components/AnalyticsTracker';
 import { getSettings } from '@/lib/db';
+
+const vazirmatn = Vazirmatn({
+  subsets: ['arabic', 'latin'],
+  weight: ['400', '500', '600', '700', '800', '900'],
+  variable: '--font-vazir',
+  display: 'swap',
+});
+
+const lalezar = Lalezar({
+  subsets: ['arabic', 'latin'],
+  weight: ['400'],
+  variable: '--font-lalezar',
+  display: 'swap',
+});
+
+const inter = Inter({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700', '800', '900'],
+  variable: '--font-inter',
+  display: 'swap',
+});
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://noavaranpanjereh.com';
 
@@ -87,8 +109,6 @@ export async function generateMetadata(): Promise<Metadata> {
       { url: '/icon-48.png', type: 'image/png', sizes: '48x48' },
       { url: '/icon-96.png', type: 'image/png', sizes: '96x96' },
       { url: '/icon-192.png', type: 'image/png', sizes: '192x192' },
-      { url: '/icon-512.png', type: 'image/png', sizes: '512x512' },
-      { url: '/icon.svg', type: 'image/svg+xml' },
     ],
     apple: [
       { url: '/apple-touch-icon.png', sizes: '180x180' },
@@ -99,6 +119,11 @@ export async function generateMetadata(): Promise<Metadata> {
   },
 };
 }
+
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+};
 
 export default async function RootLayout({
   children,
@@ -238,9 +263,8 @@ export default async function RootLayout({
   };
 
   return (
-    <html lang="fa" dir="rtl">
+    <html lang="fa" dir="rtl" className={`${vazirmatn.variable} ${lalezar.variable} ${inter.variable}`}>
       <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
         <link rel="describedby" href="/llms.txt" type="text/markdown" />
         <script dangerouslySetInnerHTML={{ __html: `document.documentElement.classList.add('js');` }} />
         <script

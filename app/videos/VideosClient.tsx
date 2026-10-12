@@ -75,6 +75,7 @@ export function VideosClient({ videos }: { videos: VideoItem[] }) {
                   alt={v.title}
                   fill
                   className="object-cover group-hover:scale-105 transition-transform duration-500 opacity-80 group-hover:opacity-100"
+                  sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
                 />
                 <div className="absolute inset-0 flex items-center justify-center">
                   <div className="w-14 h-14 bg-signal-500/90 rounded-full flex items-center justify-center text-white backdrop-blur shadow-[0_0_20px_rgba(171,0,23,0.5)] group-hover:scale-110 transition-transform">

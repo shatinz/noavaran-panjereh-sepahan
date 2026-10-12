@@ -168,7 +168,9 @@ export function LogoMotionClient() {
                         src={withBasePath("/images/logo.png")}
                         alt={item.title}
                         fill
+                        sizes="96px"
                         className="object-contain"
+                        unoptimized
                       />
                     </div>
                     <span className="absolute top-3 right-3 text-[10px] font-bold px-2 py-0.5 rounded-full bg-ink-950/80 border border-steel-700 text-slate-300">

@@ -201,7 +201,7 @@ export function Hero({ establishedYear, factoryArea: factoryAreaRaw, projectCoun
           alt="طراحی محاسباتی و تولید صنعتی نماهای مدرن ساختمانی، کرتین‌وال و پنجره‌های ترمال‌بریک — نوآوران پنجره سپاهان"
           fill
           priority
-          quality={90}
+          quality={80}
           sizes="100vw"
           className="object-cover object-center opacity-90"
         />
@@ -317,18 +317,22 @@ export function Hero({ establishedYear, factoryArea: factoryAreaRaw, projectCoun
             </div>
 
             {/* Micro progress indicators */}
-            <div className="flex items-center justify-center gap-1.5 pt-1">
+            <div className="flex items-center justify-center gap-1 pt-1">
               {abilities.map((_, idx) => (
                 <button
                   key={idx}
                   onClick={() => setCurrentAbilityIndex(idx)}
-                  className={`h-1 rounded-full transition-all duration-500 ${
-                    idx === currentAbilityIndex
-                      ? 'w-6 bg-signal-500 shadow-[0_0_8px_rgba(171,0,23,0.8)]'
-                      : 'w-1.5 bg-steel-500/40 hover:bg-steel-400'
-                  }`}
+                  className="min-w-[28px] min-h-[28px] flex items-center justify-center p-1 focus:outline-none"
                   aria-label={`آیتم ${idx + 1}`}
-                />
+                >
+                  <span
+                    className={`h-1 rounded-full transition-all duration-500 ${
+                      idx === currentAbilityIndex
+                        ? 'w-6 bg-signal-500 shadow-[0_0_8px_rgba(171,0,23,0.8)]'
+                        : 'w-1.5 bg-steel-500/40 hover:bg-steel-400'
+                    }`}
+                  />
+                </button>
               ))}
             </div>
           </div>

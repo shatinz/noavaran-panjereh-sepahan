@@ -90,6 +90,7 @@ export default async function ArticlesPage() {
                     alt={a.title}
                     fill
                     className="object-cover group-hover:scale-105 transition-transform duration-500 opacity-80 group-hover:opacity-100"
+                    sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-ink-950 via-transparent to-transparent opacity-80" />
                   <div className="absolute top-3 right-3 px-2.5 py-1 bg-signal-500 text-white text-[10px] font-bold rounded-lg border border-signal-500">

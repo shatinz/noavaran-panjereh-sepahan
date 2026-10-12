@@ -59,9 +59,9 @@ const config: Config = {
         },
       },
       fontFamily: {
-        vazir: ["Vazirmatn", "Tahoma", "Arial", "system-ui", "-apple-system", "sans-serif"],
-        lalezar: ["Lalezar", "Vazirmatn", "Tahoma", "Arial", "system-ui", "-apple-system", "sans-serif"],
-        inter: ["Inter", "system-ui", "-apple-system", "sans-serif"],
+        vazir: ["var(--font-vazir)", "Vazirmatn", "Tahoma", "Arial", "system-ui", "-apple-system", "sans-serif"],
+        lalezar: ["var(--font-lalezar)", "Lalezar", "Vazirmatn", "Tahoma", "Arial", "system-ui", "-apple-system", "sans-serif"],
+        inter: ["var(--font-inter)", "Inter", "system-ui", "-apple-system", "sans-serif"],
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',

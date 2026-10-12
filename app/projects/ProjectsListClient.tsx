@@ -18,11 +18,12 @@ export function ProjectsListClient({ projects }: { projects: ProjectItem[] }) {
             className="group bg-ink-950 border border-ink-800 rounded-xl overflow-hidden metal-shadow hover:border-signal-500/50 transition-colors flex flex-col h-full"
           >
             <div className="relative aspect-[4/3] w-full bg-ink-900 overflow-hidden">
-              <Image 
-                src={withBasePath(p.image)} 
+              <Image
+                src={withBasePath(p.image)}
                 alt={p.title}
                 fill
                 className="object-cover group-hover:scale-105 transition-transform duration-500"
+                sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-ink-950 via-transparent to-transparent opacity-80" />
               <div className="absolute top-3 right-3 px-2.5 py-1 bg-ink-900/80 backdrop-blur text-white text-[10px] font-bold rounded-lg border border-white/10">

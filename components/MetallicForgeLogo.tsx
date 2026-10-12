@@ -187,14 +187,26 @@ export function MetallicForgeLogo({
           />
         </div>
 
-        {/* Diagonal Chrome Glint Flare Sweep from Animation #2 */}
+        {/* Stationary Circular Clipping Mask: Strictly clips glass sheen inside the circular perimeter of the logo */}
         <div
-          className="absolute inset-0 pointer-events-none overflow-hidden rounded-full"
+          className="absolute inset-0 pointer-events-none rounded-full overflow-hidden"
           style={{
-            background: "linear-gradient(115deg, transparent 38%, rgba(255, 255, 255, 0.75) 50%, rgba(255, 100, 100, 0.35) 54%, transparent 64%)",
-            animation: "chromeSweepPass 4.2s cubic-bezier(0.16, 1, 0.3, 1) infinite",
+            borderRadius: "50%",
+            WebkitMaskImage: "-webkit-radial-gradient(white, black)",
+            isolation: "isolate",
           }}
-        />
+        >
+          {/* Diagonal Chrome Glint Flare Sweep passing ONLY through the stationary circle */}
+          <div
+            className="absolute inset-[-40%] pointer-events-none will-change-transform"
+            style={{
+              background:
+                "linear-gradient(115deg, transparent 38%, rgba(255, 255, 255, 0.08) 46%, rgba(255, 255, 255, 0.85) 50%, rgba(255, 120, 130, 0.4) 53%, transparent 62%)",
+              mixBlendMode: "screen",
+              animation: "chromeSweepPass 4.2s cubic-bezier(0.16, 1, 0.3, 1) infinite",
+            }}
+          />
+        </div>
       </Link>
 
       <style jsx>{`
@@ -208,18 +220,18 @@ export function MetallicForgeLogo({
         }
         @keyframes chromeSweepPass {
           0% {
-            transform: translateX(-150%) skewX(-20deg);
+            transform: translateX(-160%) skewX(-20deg);
             opacity: 0;
           }
-          15% {
-            opacity: 0.9;
+          14% {
+            opacity: 0.95;
           }
-          45% {
-            transform: translateX(150%) skewX(-20deg);
+          44% {
+            transform: translateX(160%) skewX(-20deg);
             opacity: 0;
           }
           100% {
-            transform: translateX(150%) skewX(-20deg);
+            transform: translateX(160%) skewX(-20deg);
             opacity: 0;
           }
         }

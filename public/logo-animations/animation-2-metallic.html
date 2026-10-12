@@ -190,10 +190,22 @@
     }
   }
 
+  /* Circular Mask: strictly clips glint inside the circle of logo */
+  .glint-mask {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    overflow: hidden;
+    z-index: 12;
+    pointer-events: none;
+    -webkit-mask-image: -webkit-radial-gradient(white, black);
+    isolation: isolate;
+  }
+
   /* Specular Chrome Light Glint Sweep */
   .chrome-glint {
     position: absolute;
-    inset: -25%;
+    inset: -35%;
     background: linear-gradient(
       115deg,
       transparent 38%,
@@ -203,7 +215,7 @@
       transparent 62%
     );
     z-index: 12;
-    transform: translateX(-140%);
+    transform: translateX(-150%);
     pointer-events: none;
     opacity: 0;
     animation: chromeSweep 1.6s 3.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
@@ -347,8 +359,10 @@
       <!-- 2. Solidified Official Logo -->
       <img src="../images/logo.png" alt="شرکت نوآوران پنجره سپاهان" class="logo-solid" id="solidLogo" />
 
-      <!-- 3. Diagonal Chrome Sweep Flare -->
-      <div class="chrome-glint"></div>
+      <!-- 3. Diagonal Chrome Sweep Flare masked strictly to circle -->
+      <div class="glint-mask">
+        <div class="chrome-glint"></div>
+      </div>
     </div>
 
     <div class="forge-meta">THERMAL-BREAK EXTRUSION // BILLET 6063 // ISFAHAN PLANT</div>

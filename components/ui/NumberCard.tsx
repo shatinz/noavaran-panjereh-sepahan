@@ -23,6 +23,7 @@ export function NumberCard({ number, title, description, image, href, className 
             alt={title}
             fill
             className="object-cover transition-transform duration-700 group-hover:scale-105 opacity-60 group-hover:opacity-90"
+            sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
           />
         )}
       </div>

@@ -18,6 +18,7 @@ Language of the site and of searchers: **Persian (fa-IR, RTL)**. Production doma
 4. Do not use the Indexing API for normal pages (Google only supports it for JobPosting/BroadcastEvent). Submit the
    sitemap instead: `node scripts/seo_report.mjs --submit-sitemap`.
 5. Never change a URL/slug without adding a 301 redirect. Never keyword-stuff; write for Persian readers first.
+6. **Performance & mobile experience are ranking factors**: Core Web Vitals and mobile-first indexing are part of every SEO review. All performance and Lighthouse numbers must come from an actual Lighthouse run in the session; never invent or guess them.
 
 ## Where the real numbers come from
 | Need | How |
@@ -62,8 +63,42 @@ Optionally pin the property with `GSC_SITE_URL`. On the server, `gsc-credentials
 ```bash
 npx tsc --noEmit && npx next build
 node scripts/seo_check.mjs --base http://127.0.0.1:3000   # after `next start`
+node scripts/seo_check.mjs --base http://127.0.0.1:3000 --perf --lighthouse
 ```
-Fix every ERROR it prints (missing/wrong canonical, noindex in sitemap, dead llms.txt links, retired domain, bad JSON-LD).
+Fix every ERROR it prints (missing/wrong canonical, noindex in sitemap, dead llms.txt links, retired domain, bad JSON-LD, perf regressions).
+
+## Performance & mobile (ranking factor) - always check
+Core Web Vitals (LCP, CLS, INP/TBT) and mobile usability are official Google ranking factors under mobile-first indexing. Slow pages lead to higher bounce rates, lower crawl efficiency, and demoted rankings.
+
+### Pass criteria
+- **Mobile Lighthouse**:
+  - Performance score >= 85
+  - LCP (Largest Contentful Paint) <= 2.5 s
+  - CLS (Cumulative Layout Shift) <= 0.1
+  - TBT (Total Blocking Time) <= 200 ms
+  - Accessibility score >= 90 including `target-size` (minimum 24x24 px tap targets) passing
+- **Images**: No raw/unoptimized huge images above the fold; every `next/image` using `fill` must specify responsive `sizes`.
+- **Viewport**: Exactly one `<meta name="viewport">` tag (`width=device-width, initial-scale=1`, no zoom blocking).
+- **Fonts**: Self-hosted via `next/font/google` with `display: 'swap'`; no render-blocking CSS `@import` from fonts.googleapis.com.
+- **Icons**: Favicon/icon files <= 20 KB.
+- **Caching**: Static assets (`/images/*`, `/projects/*`) cached for >= 30 days (`max-age=2592000, stale-while-revalidate=86400`).
+- **Edge Cacheability**: HTML edge-cacheable via Cloudflare Cache Rules.
+
+### Commands to run
+```bash
+# Fast technical header & tag audit
+node scripts/seo_check.mjs --base <url> --perf
+
+# Full automated Lighthouse mobile audit
+node scripts/seo_check.mjs --base <url> --perf --lighthouse
+```
+
+### Known manual item
+- **Cloudflare Cache Rule**: HTML must be cached at the Cloudflare edge (respect origin / edge TTL; bypass for `/admin`, `/api`). Without this rule, `cf-cache-status` is `DYNAMIC` and TTFB is ~1.1 s in lab testing.
+
+### Baseline & Reports
+- **Baseline (2026-10-12)**: Mobile Performance: 77 / Desktop: 63; Mobile LCP: 5.2 s / Desktop LCP: 4.2 s; Accessibility: 96 (failed `target-size` on hero dots).
+- **Lighthouse JSON storage**: Saved under `.claudeweb/perf/` (`lh-mobile.json`, `lh-desktop.json`, etc.).
 
 ## Reference
 General Google Search Central / GEO knowledge (robots, sitemaps, canonicals, JS SEO, structured data, Core Web Vitals):

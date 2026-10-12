@@ -49,11 +49,12 @@ export function Header({ phone }: { phone: string }) {
           <Link href="/" className="flex items-center gap-2.5 sm:gap-3 group shrink-0">
             <div className="relative w-10 h-10 sm:w-12 sm:h-12 shrink-0 group-hover:scale-105 transition-transform">
               <Image
-                src={withBasePath("/images/logo.png")}
+                src={withBasePath("/images/logo-header.webp")}
                 alt="نوآوران پنجره سپاهان"
                 fill
                 className="object-contain"
                 priority
+                sizes="48px"
               />
             </div>
             <div className="flex flex-col text-ink-950 leading-tight min-w-0">

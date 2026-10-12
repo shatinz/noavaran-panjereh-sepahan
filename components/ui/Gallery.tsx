@@ -19,11 +19,12 @@ export function Gallery({ images, title }: { images: string[], title: string }) 
             onClick={() => setLightboxIndex(idx)}
             className="relative aspect-square rounded-xl overflow-hidden group border border-ink-800 metal-shadow"
           >
-            <Image 
-              src={withBasePath(src)} 
-              alt={`${title} - تصویر ${idx + 1}`} 
-              fill 
+            <Image
+              src={withBasePath(src)}
+              alt={`${title} - تصویر ${idx + 1}`}
+              fill
               className="object-cover group-hover:scale-105 transition-transform duration-500"
+              sizes="(min-width: 768px) 33vw, 50vw"
             />
             <div className="absolute inset-0 bg-ink-950/0 group-hover:bg-ink-950/20 transition-colors" />
           </button>
@@ -49,11 +50,12 @@ export function Gallery({ images, title }: { images: string[], title: string }) 
           )}
 
           <div className="relative w-full max-w-5xl aspect-video p-4">
-            <Image 
-              src={withBasePath(images[lightboxIndex])} 
-              alt={`${title} - تصویر بزرگ`} 
-              fill 
+            <Image
+              src={withBasePath(images[lightboxIndex])}
+              alt={`${title} - تصویر بزرگ`}
+              fill
               className="object-contain"
+              sizes="100vw"
             />
           </div>
 

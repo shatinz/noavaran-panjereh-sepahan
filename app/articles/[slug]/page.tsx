@@ -159,10 +159,11 @@ export default async function ArticleDetailPage({ params }: Props) {
           </header>
 
           <div className="relative aspect-video w-full bg-ink-900 rounded-xl overflow-hidden metal-shadow border border-ink-800">
-            <Image 
-              src={imgSrc} 
+            <Image
+              src={imgSrc}
               alt={article.title}
               fill
+              sizes="(min-width: 1024px) 896px, 100vw"
               className="object-cover"
             />
           </div>
