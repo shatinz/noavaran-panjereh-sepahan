@@ -9,7 +9,18 @@ import { withBasePath } from "@/lib/media";
 
 export function Hero({ establishedYear, factoryArea: factoryAreaRaw, projectCount }: { establishedYear: number; factoryArea: string; projectCount: number }) {
   const sectionRef = useRef<HTMLElement>(null);
-  const [scrollY, setScrollY] = useState(0);
+  const bgRef = useRef<HTMLDivElement>(null);
+  const layer1Ref = useRef<HTMLDivElement>(null);
+  const layer2Ref = useRef<HTMLDivElement>(null);
+  const layer3Ref = useRef<HTMLDivElement>(null);
+  const layer4Ref = useRef<HTMLDivElement>(null);
+  const layer5Ref = useRef<HTMLDivElement>(null);
+  const layer6Ref = useRef<HTMLDivElement>(null);
+
+  const targetScrollRef = useRef(0);
+  const currentScrollRef = useRef(0);
+  const rafIdRef = useRef<number | null>(null);
+  const isHeroInViewRef = useRef(true);
 
   const abilities = [
     "انواع درب و پنجره‌های دوجداره آلومینیوم ترمال‌بریک و نرمال",
@@ -29,7 +40,7 @@ export function Hero({ establishedYear, factoryArea: factoryAreaRaw, projectCoun
     return () => clearInterval(interval);
   }, [abilities.length]);
 
-  // Scroll-reactive parallax throttled by requestAnimationFrame
+  // Smooth lerp parallax driven via requestAnimationFrame directly on layer element refs (zero React re-renders)
   useEffect(() => {
     const heroEl = sectionRef.current;
     if (!heroEl) return;
@@ -38,30 +49,136 @@ export function Hero({ establishedYear, factoryArea: factoryAreaRaw, projectCoun
       return;
     }
 
-    let ticking = false;
-    let isHeroInView = true;
+    const LERP_FACTOR = 0.11;
+
+    const applyTransforms = (scrollPos: number) => {
+      const isMobile = window.innerWidth < 768;
+      const m = isMobile ? 0.6 : 1.0;
+
+      // Background building parallax: translateY 0 -> -6%, scale 1 -> 1.054
+      if (bgRef.current) {
+        const y = (scrollPos * -0.06 * m).toFixed(2);
+        const s = (1.0 + Math.min(scrollPos * 0.00009 * m, 0.06)).toFixed(4);
+        bgRef.current.style.transform = `translate3d(0, ${y}px, 0) scale(${s})`;
+      }
+
+      // Layer 1: Top-Left Outer Translucent Glass Panel
+      if (layer1Ref.current) {
+        const y = (scrollPos * -0.36 * m).toFixed(2);
+        const x = (scrollPos * -0.05 * m).toFixed(2);
+        const r = (scrollPos * -0.004 * m).toFixed(3);
+        const s = (1.0 + Math.min(scrollPos * 0.00013 * m, 0.08)).toFixed(4);
+        layer1Ref.current.style.transform = `translate3d(${x}px, ${y}px, 0) rotate(${r}deg) scale(${s})`;
+      }
+
+      // Layer 2: Top-Left Core Brushed Aluminium / Titanium Geometric Plate
+      if (layer2Ref.current) {
+        const y = (scrollPos * -0.42 * m).toFixed(2);
+        const x = (scrollPos * 0.06 * m).toFixed(2);
+        const r = (scrollPos * 0.005 * m).toFixed(3);
+        const s = (1.0 + Math.min(scrollPos * 0.00018 * m, 0.11)).toFixed(4);
+        layer2Ref.current.style.transform = `translate3d(${x}px, ${y}px, 0) rotate(${r}deg) scale(${s})`;
+      }
+
+      // Layer 3: Top-Right Architectural Horizon Accent Bar
+      if (layer3Ref.current) {
+        const y = (scrollPos * -0.22 * m).toFixed(2);
+        const x = (scrollPos * -0.04 * m).toFixed(2);
+        const s = (1.0 + Math.min(scrollPos * 0.00008 * m, 0.05)).toFixed(4);
+        layer3Ref.current.style.transform = `translate3d(${x}px, ${y}px, 0) scale(${s})`;
+      }
+
+      // Layer 4: Right Wing Architectural Curtain-Wall Translucent Facet
+      if (layer4Ref.current) {
+        const y = (scrollPos * -0.12 * m).toFixed(2);
+        const x = (scrollPos * 0.03 * m).toFixed(2);
+        const op = Math.max(0.45, 1.0 - scrollPos * 0.0006 * m).toFixed(3);
+        layer4Ref.current.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+        layer4Ref.current.style.opacity = op;
+      }
+
+      // Layer 5: Right Vertical Precision Aluminium Mullion Ribbon
+      if (layer5Ref.current) {
+        const y = (scrollPos * -0.28 * m).toFixed(2);
+        const x = (scrollPos * -0.025 * m).toFixed(2);
+        const s = (1.0 + Math.min(scrollPos * 0.0001 * m, 0.06)).toFixed(4);
+        layer5Ref.current.style.transform = `translate3d(${x}px, ${y}px, 0) scale(${s})`;
+      }
+
+      // Layer 6: Mid-Left Floating Translucent Shard
+      if (layer6Ref.current) {
+        const y = (scrollPos * -0.32 * m).toFixed(2);
+        const x = (scrollPos * 0.045 * m).toFixed(2);
+        const r = (scrollPos * -0.004 * m).toFixed(3);
+        const s = (1.0 + Math.min(scrollPos * 0.00012 * m, 0.07)).toFixed(4);
+        layer6Ref.current.style.transform = `translate3d(${x}px, ${y}px, 0) rotate(${r}deg) scale(${s})`;
+      }
+    };
+
+    const tick = () => {
+      if (!isHeroInViewRef.current) {
+        rafIdRef.current = null;
+        return;
+      }
+
+      const target = targetScrollRef.current;
+      const current = currentScrollRef.current;
+      const diff = target - current;
+
+      if (Math.abs(diff) < 0.1) {
+        currentScrollRef.current = target;
+        applyTransforms(target);
+        rafIdRef.current = null;
+        return;
+      }
+
+      const next = current + diff * LERP_FACTOR;
+      currentScrollRef.current = next;
+      applyTransforms(next);
+
+      rafIdRef.current = requestAnimationFrame(tick);
+    };
+
+    const startLoop = () => {
+      if (rafIdRef.current === null && isHeroInViewRef.current) {
+        rafIdRef.current = requestAnimationFrame(tick);
+      }
+    };
+
+    const onScroll = () => {
+      targetScrollRef.current = window.scrollY;
+      startLoop();
+    };
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        isHeroInView = entry.isIntersecting;
+        isHeroInViewRef.current = entry.isIntersecting;
+        if (entry.isIntersecting) {
+          targetScrollRef.current = window.scrollY;
+          startLoop();
+        } else if (rafIdRef.current !== null) {
+          cancelAnimationFrame(rafIdRef.current);
+          rafIdRef.current = null;
+        }
       },
       { threshold: 0 }
     );
     observer.observe(heroEl);
 
-    const onScroll = () => {
-      if (!isHeroInView || ticking) return;
-      ticking = true;
-      window.requestAnimationFrame(() => {
-        setScrollY(window.scrollY);
-        ticking = false;
-      });
-    };
+    // Initial alignment
+    targetScrollRef.current = window.scrollY;
+    currentScrollRef.current = window.scrollY;
+    applyTransforms(window.scrollY);
 
     window.addEventListener("scroll", onScroll, { passive: true });
+
     return () => {
       window.removeEventListener("scroll", onScroll);
       observer.disconnect();
+      if (rafIdRef.current !== null) {
+        cancelAnimationFrame(rafIdRef.current);
+        rafIdRef.current = null;
+      }
     };
   }, []);
 
@@ -71,23 +188,14 @@ export function Hero({ establishedYear, factoryArea: factoryAreaRaw, projectCoun
 
   const toFa = (num: number | string) => Number(num).toLocaleString('fa-IR');
 
-  // Parallax offsets for geometric layers
-  const p1 = Math.round(scrollY * -0.2); // Top-left outer floating ruby square
-  const p2 = Math.round(scrollY * -0.32); // Top-left nested ruby core square
-  const p3 = Math.round(scrollY * -0.14); // Top-right crimson accent block
-  const p4 = Math.round(scrollY * -0.08); // Right wing architectural tint panel
-  const p5 = Math.round(scrollY * -0.16); // Right vertical ruby ribbon
-  const p6 = Math.round(scrollY * -0.24); // Mid-left architectural accent
-  const s2 = (1 + Math.min(scrollY * 0.0003, 0.1)).toFixed(4);
-
   return (
     <section
       ref={sectionRef}
       className="relative h-[100svh] min-h-[580px] md:min-h-[720px] w-full flex items-center justify-center overflow-hidden"
       dir="rtl"
     >
-      {/* Background Image: High-resolution optimized architectural building without poster text */}
-      <div className="absolute inset-0 z-0">
+      {/* Background Image: High-resolution architectural building with slow depth parallax */}
+      <div ref={bgRef} className="hero-parallax-layer hero-bg-parallax absolute inset-0 z-0" data-layer="bg">
         <Image
           src={withBasePath("/images/hero/hero-building-1920.webp")}
           alt="طراحی محاسباتی و تولید صنعتی نماهای مدرن ساختمانی، کرتین‌وال و پنجره‌های ترمال‌بریک — نوآوران پنجره سپاهان"
@@ -103,43 +211,83 @@ export function Hero({ establishedYear, factoryArea: factoryAreaRaw, projectCoun
         <div className="absolute inset-0 opacity-15 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIj48ZmlsdGVyIGlkPSJuIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iMC44NSIgbnVtT2N0YXZlcz0iMyIgc3RpdGNoVGlsZXM9InN0aXRjaCIvPjwvZmlsdGVyPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbHRlcj0idXJsKCNuKSIgb3BhY2l0eT0iMC40Ii8+PC9zdmc+')] mix-blend-overlay pointer-events-none" />
       </div>
 
-      {/* Kinetic Geometric Effect Layers (Floating Ruby Architectural Elements) */}
+      {/* Kinetic Geometric Effect Layers (Translucent Glass & Brushed Aluminium Architectural Reflections) */}
       <div className="absolute inset-0 z-[2] pointer-events-none overflow-hidden" aria-hidden="true">
-        {/* Layer 1: Top-Left Floating Ruby Square */}
+        {/* Layer 1: Top-Left Floating Architectural Glass Panel (Foreground) */}
         <div
-          className="hero-parallax-layer absolute top-0 left-[4%] w-[22vw] max-w-[320px] aspect-[15/25] bg-gradient-to-br from-[#ad1c21]/75 via-[#8a0012]/70 to-[#50000a]/75 border border-signal-500/25 backdrop-blur-[2px] shadow-[0_0_35px_rgba(171,0,23,0.25)] transition-transform duration-75 ease-out"
-          style={{ transform: `translate3d(0, ${p1}px, 0)` }}
-        />
+          ref={layer1Ref}
+          data-layer="1"
+          className="hero-parallax-layer absolute top-0 left-[4%] w-[22vw] max-w-[320px] aspect-[15/25]"
+        >
+          <div className="hero-ambient-1 w-full h-full relative rounded-sm backdrop-blur-[6px] bg-gradient-to-br from-titanium-200/14 via-steel-500/8 to-ink-950/45 border border-titanium-200/20 shadow-[0_8px_32px_rgba(0,0,0,0.36)]">
+            {/* Hairline precision signal accent along top edge (<15% area, opacity <= 0.35) */}
+            <div className="absolute top-0 inset-x-0 h-[1.5px] bg-gradient-to-r from-transparent via-signal-500/35 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/[0.04] to-transparent pointer-events-none" />
+          </div>
+        </div>
 
-        {/* Layer 2: Top-Left Nested Ruby Core Square */}
+        {/* Layer 2: Top-Left Brushed Aluminium / Titanium Geometric Plate (Core Midground) */}
         <div
-          className="hero-parallax-layer absolute top-[6%] left-[11%] w-[15vw] max-w-[210px] aspect-square bg-gradient-to-br from-[#c8001e]/80 to-[#70000e]/85 border border-signal-400/35 shadow-[0_0_25px_rgba(200,0,30,0.3)] transition-transform duration-75 ease-out"
-          style={{ transform: `translate3d(0, ${p2}px, 0) scale(${s2})` }}
-        />
+          ref={layer2Ref}
+          data-layer="2"
+          className="hero-parallax-layer absolute top-[6%] left-[11%] w-[15vw] max-w-[210px] aspect-square"
+        >
+          <div className="hero-ambient-2 w-full h-full relative rounded-sm bg-gradient-to-br from-titanium-300/18 via-steel-500/10 to-charcoal-800/35 border border-steel-300/25 backdrop-blur-[4px] shadow-[0_4px_24px_rgba(0,0,0,0.32)]">
+            {/* Corner precision hairline accent */}
+            <div className="absolute top-0 right-0 w-8 h-[1.5px] bg-signal-400/30" />
+            <div className="absolute top-0 right-0 w-[1.5px] h-8 bg-signal-400/30" />
+            <div className="absolute inset-0 bg-gradient-to-br from-white/[0.08] via-transparent to-black/20 pointer-events-none" />
+          </div>
+        </div>
 
-        {/* Layer 3: Top-Right Crimson Architectural Accent Block */}
+        {/* Layer 3: Top-Right Architectural Translucent Horizon Bar */}
         <div
-          className="hero-parallax-layer absolute top-0 right-[5%] w-[30vw] max-w-[420px] h-[60px] bg-gradient-to-l from-[#a81c22]/85 via-[#8a0012]/75 to-transparent border-b border-signal-500/30 transition-transform duration-75 ease-out"
-          style={{ transform: `translate3d(0, ${p3}px, 0)` }}
-        />
+          ref={layer3Ref}
+          data-layer="3"
+          className="hero-parallax-layer absolute top-0 right-[5%] w-[30vw] max-w-[420px] h-[55px]"
+        >
+          <div className="hero-ambient-3 w-full h-full relative bg-gradient-to-l from-titanium-200/14 via-steel-400/8 to-transparent border-b border-titanium-200/20 backdrop-blur-[3px] shadow-[0_2px_16px_rgba(0,0,0,0.22)]">
+            {/* Hairline subtle ruby glow line (<15% area) */}
+            <div className="absolute bottom-0 right-0 w-32 h-[1px] bg-gradient-to-l from-signal-500/30 to-transparent" />
+          </div>
+        </div>
 
-        {/* Layer 4: Right Wing Architectural Translucent Glass Panel */}
+        {/* Layer 4: Right Wing Architectural Curtain-Wall Translucent Glass Panel */}
         <div
-          className="hero-parallax-layer absolute top-[10%] right-0 w-[32vw] max-w-[450px] h-[72vh] bg-gradient-to-b from-[#8a0012]/30 via-[#ab0017]/25 to-[#4a0008]/45 mix-blend-multiply border-l border-signal-500/20 transition-transform duration-75 ease-out"
-          style={{ transform: `translate3d(0, ${p4}px, 0)` }}
-        />
+          ref={layer4Ref}
+          data-layer="4"
+          className="hero-parallax-layer absolute top-[8%] right-0 w-[32vw] max-w-[450px] h-[72vh]"
+        >
+          <div className="hero-ambient-4 w-full h-full relative bg-gradient-to-b from-titanium-100/10 via-steel-500/5 to-ink-950/35 border-l border-titanium-200/15 backdrop-blur-[3px] mix-blend-overlay shadow-[0_4px_30px_rgba(0,0,0,0.18)]">
+            {/* Subtle mullion reflection division lines */}
+            <div className="absolute inset-y-0 right-1/3 w-[1px] bg-white/[0.05]" />
+            <div className="absolute inset-y-0 right-2/3 w-[1px] bg-white/[0.03]" />
+          </div>
+        </div>
 
-        {/* Layer 5: Right Vertical Ruby Accent Ribbon */}
+        {/* Layer 5: Right Vertical Precision Aluminium Mullion Ribbon */}
         <div
-          className="hero-parallax-layer absolute top-[10%] right-[2%] w-[2vw] max-w-[30px] h-[72vh] bg-signal-500/40 shadow-[0_0_20px_rgba(171,0,23,0.35)] transition-transform duration-75 ease-out"
-          style={{ transform: `translate3d(0, ${p5}px, 0)` }}
-        />
+          ref={layer5Ref}
+          data-layer="5"
+          className="hero-parallax-layer absolute top-[10%] right-[2%] w-[2vw] max-w-[24px] h-[72vh]"
+        >
+          <div className="hero-ambient-5 w-full h-full relative bg-gradient-to-b from-steel-200/20 via-titanium-400/12 to-ink-900/40 border-r border-titanium-300/25 shadow-[0_0_16px_rgba(0,0,0,0.25)]">
+            {/* Delicate hairline accent (<15% area) */}
+            <div className="absolute inset-y-0 left-0 w-[1px] bg-gradient-to-b from-signal-500/25 via-signal-400/20 to-transparent" />
+          </div>
+        </div>
 
-        {/* Layer 6: Mid-Left Architectural Ruby Strip */}
+        {/* Layer 6: Mid-Left Floating Translucent Shard */}
         <div
-          className="hero-parallax-layer absolute bottom-[26%] left-[4%] w-[16vw] max-w-[220px] h-[34px] bg-gradient-to-r from-signal-600/75 to-blood-900/85 border border-signal-400/25 shadow-[0_0_20px_rgba(171,0,23,0.25)] transition-transform duration-75 ease-out"
-          style={{ transform: `translate3d(0, ${p6}px, 0)` }}
-        />
+          ref={layer6Ref}
+          data-layer="6"
+          className="hero-parallax-layer absolute bottom-[26%] left-[4%] w-[16vw] max-w-[220px] h-[36px]"
+        >
+          <div className="hero-ambient-6 w-full h-full relative rounded-sm bg-gradient-to-r from-titanium-200/16 via-steel-300/10 to-charcoal-800/30 border border-titanium-200/20 backdrop-blur-[4px] shadow-[0_4px_16px_rgba(0,0,0,0.25)]">
+            {/* Fine hairline red bottom edge */}
+            <div className="absolute bottom-0 inset-x-0 h-[1px] bg-gradient-to-r from-signal-500/30 via-signal-400/20 to-transparent" />
+          </div>
+        </div>
       </div>
 
       <div className="relative z-10 max-w-[1440px] w-full mx-auto px-4 sm:px-6 text-center mt-4 md:mt-8 pb-16 sm:pb-20">
@@ -207,4 +355,3 @@ export function Hero({ establishedYear, factoryArea: factoryAreaRaw, projectCoun
     </section>
   );
 }
-

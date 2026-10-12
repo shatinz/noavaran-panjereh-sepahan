@@ -14,7 +14,6 @@ const CLICK_LABELS: Record<string, string> = {
   email: 'ایمیل',
   file_download: 'دانلود فایل / کاتالوگ',
   contact_form: 'ثبت فرم تماس',
-  calculator: 'محاسبه‌گر قیمت',
 };
 
 const safeDecode = (v: string) => {

@@ -122,15 +122,70 @@ textarea::placeholder {
 
 /* Hero kinetic parallax layer hardware acceleration */
 .hero-parallax-layer {
-  will-change: transform;
+  will-change: transform, opacity;
   backface-visibility: hidden;
   transform: translate3d(0, 0, 0);
 }
+
+/* Ambient idle drift animations for Hero inner layers (8-16s alternate) */
+@keyframes heroAmbient1 {
+  0% { transform: translate3d(0, 0, 0) rotate(0deg); }
+  50% { transform: translate3d(6px, -10px, 0) rotate(0.8deg); }
+  100% { transform: translate3d(-5px, 8px, 0) rotate(-0.5deg); }
+}
+
+@keyframes heroAmbient2 {
+  0% { transform: translate3d(0, 0, 0) rotate(0deg); }
+  50% { transform: translate3d(-8px, 12px, 0) rotate(-1deg); }
+  100% { transform: translate3d(6px, -7px, 0) rotate(0.8deg); }
+}
+
+@keyframes heroAmbient3 {
+  0% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(10px, -6px, 0); }
+  100% { transform: translate3d(-7px, 5px, 0); }
+}
+
+@keyframes heroAmbient4 {
+  0% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(-6px, 8px, 0); }
+  100% { transform: translate3d(5px, -9px, 0); }
+}
+
+@keyframes heroAmbient5 {
+  0% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(0, 12px, 0); }
+  100% { transform: translate3d(0, -9px, 0); }
+}
+
+@keyframes heroAmbient6 {
+  0% { transform: translate3d(0, 0, 0) rotate(0deg); }
+  50% { transform: translate3d(8px, -8px, 0) rotate(0.6deg); }
+  100% { transform: translate3d(-6px, 6px, 0) rotate(-0.7deg); }
+}
+
+.hero-ambient-1 { animation: heroAmbient1 11s ease-in-out infinite alternate; will-change: transform; }
+.hero-ambient-2 { animation: heroAmbient2 14s ease-in-out infinite alternate; will-change: transform; }
+.hero-ambient-3 { animation: heroAmbient3 16s ease-in-out infinite alternate; will-change: transform; }
+.hero-ambient-4 { animation: heroAmbient4 13s ease-in-out infinite alternate; will-change: transform; }
+.hero-ambient-5 { animation: heroAmbient5 9s ease-in-out infinite alternate; will-change: transform; }
+.hero-ambient-6 { animation: heroAmbient6 12s ease-in-out infinite alternate; will-change: transform; }
 
 @media (prefers-reduced-motion: reduce) {
   .hero-parallax-layer {
     transform: none !important;
     transition: none !important;
+    will-change: auto !important;
+  }
+  .hero-ambient-1,
+  .hero-ambient-2,
+  .hero-ambient-3,
+  .hero-ambient-4,
+  .hero-ambient-5,
+  .hero-ambient-6 {
+    animation: none !important;
+    transform: none !important;
+    will-change: auto !important;
   }
 }
 

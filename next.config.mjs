@@ -6,6 +6,17 @@ const nextConfig = {
   reactStrictMode: true,
   ...(isStaticExport ? { output: 'export' } : {}),
   ...(basePath ? { basePath } : {}),
+  ...(!isStaticExport ? {
+    async redirects() {
+      return [
+        {
+          source: '/calculator',
+          destination: '/contact',
+          permanent: true,
+        },
+      ];
+    },
+  } : {}),
   images: {
     unoptimized: isStaticExport,
     remotePatterns: [

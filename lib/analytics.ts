@@ -27,7 +27,6 @@ export const trackPageView = (url: string, title?: string) => {
 // First-party event labels (shown in the admin dashboard click stats)
 const FIRST_PARTY_LABELS: Record<string, string> = {
   generate_lead: 'contact_form',
-  calculator_estimate_generated: 'calculator',
 };
 
 const sendFirstPartyClick = (label: string) => {
@@ -59,20 +58,6 @@ export const trackContactFormSubmit = (serviceName?: string) => {
     event_category: 'engagement',
     event_label: serviceName || 'General Inquiry',
     service_requested: serviceName,
-  });
-};
-
-export const trackCalculatorCalculation = (data: {
-  systemType: string;
-  dimensions: string;
-  estimatedPrice: number;
-}) => {
-  trackEvent('calculator_estimate_generated', {
-    event_category: 'quote_calculation',
-    system_type: data.systemType,
-    dimensions: data.dimensions,
-    value: data.estimatedPrice,
-    currency: 'IRR',
   });
 };
 

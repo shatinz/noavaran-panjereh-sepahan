@@ -43,7 +43,7 @@ Optionally pin the property with `GSC_SITE_URL`. On the server, `gsc-credentials
    - **lowCtrPages** (>=50 impressions, CTR < 2%): rewrite title + meta description to match the query intent.
    - **cannibalized**: one query served by several pages -> consolidate or differentiate; set clear canonical/internal links.
 3. Cross-check with first-party data: pages with many impressions but few on-site views/clicks indicate a snippet or
-   landing-page problem; click events (`phone_call`, `whatsapp`, `contact_form`, `calculator`) show conversion.
+   landing-page problem; click events (`phone_call`, `whatsapp`, `contact_form`) show conversion.
 4. Map findings to files (below), implement, then run `npx tsc --noEmit`, build, and `seo_check.mjs`.
 5. Summarise with before/after metrics and tell the user when to re-check (2-4 weeks).
 

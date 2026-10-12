@@ -84,7 +84,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { route: '/services', priority: 0.9, changeFrequency: 'monthly', lastModified: mtimes.services },
     { route: '/materials', priority: 0.9, changeFrequency: 'monthly', lastModified: mtimes.materials },
     { route: '/projects', priority: 0.9, changeFrequency: 'weekly', lastModified: mtimes.projects },
-    { route: '/calculator', priority: 0.85, changeFrequency: 'monthly', lastModified: latest },
     { route: '/articles', priority: 0.8, changeFrequency: 'weekly', lastModified: mtimes.articles },
     { route: '/videos', priority: 0.8, changeFrequency: 'monthly', lastModified: contentMtime('videos.json') },
     { route: '/about', priority: 0.8, changeFrequency: 'yearly', lastModified: contentMtime('settings.json') },
