@@ -52,7 +52,15 @@ export default async function AboutPage() {
     url: `${siteUrl}/about`,
     mainEntity: {
       '@type': 'Organization',
-      name: settings.companyName,
+      name: 'نوآوران پنجره',
+      legalName: settings.companyName,
+      alternateName: [
+        'نوآوران پنجره سپاهان',
+        'نواروان پنجره',
+        'نواروان پنجره سپاهان',
+        'Noavaran Panjereh',
+        'Noavaran Panjereh Sepahan',
+      ],
       foundingDate: '2006',
       taxID: settings.nationalId,
       address: {
@@ -130,8 +138,8 @@ export default async function AboutPage() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-px bg-ink-800 text-right">
             <div className="bg-ink-950 p-6 space-y-2">
-              <span className="text-steel-400 font-vazir text-xs block">نام رسمی شرکت:</span>
-              <span className="text-white font-black font-vazir block">نوآوران پنجره سپاهان</span>
+              <span className="text-steel-400 font-vazir text-xs block">نام رسمی و برند تجاری:</span>
+              <span className="text-white font-black font-vazir block text-sm sm:text-base">نوآوران پنجره (سپاهان)</span>
             </div>
             <div className="bg-ink-950 p-6 space-y-2">
               <span className="text-steel-400 font-vazir text-xs block">شماره ثبت رسمی:</span>

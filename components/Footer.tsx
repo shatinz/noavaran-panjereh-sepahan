@@ -124,6 +124,8 @@ export async function Footer() {
       <div className="bg-metal-brushed border-t border-steel-300 py-4">
         <div className="max-w-[1440px] mx-auto px-4 md:px-8 flex flex-col md:flex-row items-center justify-between gap-4 text-ink-950 font-vazir text-xs font-bold">
           <div className="flex items-center gap-4 flex-wrap justify-center">
+            <span>نوآوران پنجره (شرکت نوآوران پنجره سپاهان)</span>
+            <span className="w-1 h-1 bg-ink-950 rounded-full" />
             <span>شماره ثبت: <span className="font-sans ml-1">{registrationNumber}</span></span>
             <span className="w-1 h-1 bg-ink-950 rounded-full" />
             <span>سهامی خاص</span>

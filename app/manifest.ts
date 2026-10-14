@@ -2,7 +2,7 @@ import { MetadataRoute } from 'next';
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: 'نوآوران پنجره سپاهان | طراحی و تولید نمای مدرن و پنجره ترمال‌بریک',
+    name: 'نوآوران پنجره | شرکت نوآوران پنجره سپاهان',
     short_name: 'نوآوران پنجره',
     description: 'تولیدکننده صنعتی و اختصاصی انواع درب و پنجره دوجداره آلومینیوم ترمال‌بریک، نمای شیشه‌ای کرتین‌وال، فریم‌لس، جام‌بالکنی و پنل کامپوزیت.',
     start_url: '/',
