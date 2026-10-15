@@ -26,6 +26,16 @@ export function extractVideoInfo(url: string, platform?: 'aparat' | 'youtube' | 
 
   const cleanUrl = url.trim();
 
+  if (platform === 'direct' || cleanUrl.toLowerCase().endsWith('.m4v') || cleanUrl.toLowerCase().endsWith('.mp4') || cleanUrl.includes('dl.akpairan.com')) {
+    return {
+      videoId: '',
+      isDirect: true,
+      directUrl: cleanUrl,
+      embedUrl: '',
+      thumbnail: '',
+    };
+  }
+
   if (platform === 'youtube' || cleanUrl.includes('youtube.com') || cleanUrl.includes('youtu.be')) {
     let videoId = '';
     const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
@@ -39,16 +49,6 @@ export function extractVideoInfo(url: string, platform?: 'aparat' | 'youtube' | 
       directUrl: '',
       embedUrl: videoId ? `https://www.youtube-nocookie.com/embed/${videoId}` : cleanUrl,
       thumbnail: videoId ? `https://img.youtube.com/vi/${videoId}/hqdefault.jpg` : '',
-    };
-  }
-
-  if (platform === 'direct' && (cleanUrl.toLowerCase().endsWith('.m4v') || cleanUrl.toLowerCase().endsWith('.mp4'))) {
-    return {
-      videoId: '',
-      isDirect: true,
-      directUrl: cleanUrl,
-      embedUrl: cleanUrl,
-      thumbnail: '',
     };
   }
 
