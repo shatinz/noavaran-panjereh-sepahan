@@ -86,11 +86,10 @@ export function LanguageSwitcher({ className = '', variant = 'header' }: Languag
         aria-expanded={isOpen}
         aria-haspopup="true"
         aria-label="Change Language / تغییر زبان"
-        className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-bold font-sans bg-ink-950/80 hover:bg-ink-900 text-white border border-steel-400/40 hover:border-signal-500/60 shadow-sm transition-all focus:outline-none focus:ring-1 focus:ring-signal-500"
+        className="w-10 h-10 rounded-full flex items-center justify-center text-xs font-black uppercase text-white bg-ink-950/80 hover:bg-ink-900 border border-steel-400/40 hover:border-signal-500/60 shadow-sm transition-all focus:outline-none focus:ring-1 focus:ring-signal-500 shrink-0"
+        title="Change Language / تغییر زبان"
       >
-        <Globe className="w-3.5 h-3.5 text-signal-500 shrink-0" />
-        <span className="tracking-wide uppercase font-black">{current.shortCode}</span>
-        <ChevronDown className={`w-3 h-3 text-steel-400 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
+        <span className="tracking-tight">{current.shortCode}</span>
       </button>
 
       {/* Dropdown Menu */}
