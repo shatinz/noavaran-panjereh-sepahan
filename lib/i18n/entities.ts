@@ -1,5 +1,5 @@
 import { SupportedLocale } from './types';
-import { MaterialItem, ProjectItem, ServiceItem } from '../db';
+import { MaterialItem, ProjectItem, ServiceItem, ArticleItem } from '../db';
 
 export function formatSpecValue(val: string | number, locale: SupportedLocale): string {
   if (val === undefined || val === null) return '';
@@ -73,6 +73,118 @@ export function formatSpecValue(val: string | number, locale: SupportedLocale): 
   }
 
   return str;
+}
+
+export const ARTICLE_TRANSLATIONS: Record<string, {
+  en: { title: string; category: string; excerpt: string; author: string; tags: string[]; content: string };
+  ar: { title: string; category: string; excerpt: string; author: string; tags: string[]; content: string };
+}> = {
+  "benefits-of-double-glazed-windows": {
+    en: {
+      title: "What Are the Benefits of Thermal Break Double-Glazed Windows?",
+      category: "Knowledge & Buying Guide",
+      excerpt: "Eliminating urban noise is not the only advantage of double-glazed windows; thermal bridge mitigation and reducing cooling and heating costs by over 45% make this a sound investment.",
+      author: "Noavaran Panjereh Engineering Team",
+      tags: ["Double-Glazed", "Thermal Break", "Energy Saving", "Acoustic Insulation", "Isfahan"],
+      content: "In modern architecture, a window is not merely an opening for light, but the primary protective barrier of the interior space against acoustic pollution, thermal loss, and climatic weathering.\n\nStandard aluminium double-glazed windows with polyamide strips (Thermal Break) reduce heat transfer through the metal body to near zero. By injecting inert argon gas between double glass panes with 90% purity, the thermal transmittance coefficient drops below 1.3 W/m²K.\n\nKey advantages of Noavaran Panjereh Sepahan double-glazed windows:\n1. Dramatic acoustic noise reduction up to 42 dB near highways and busy traffic streets.\n2. Mitigation of thermal and cooling loss, preventing condensation or frost on glass in winter.\n3. High mechanical strength and zero erosion against intense sunlight and desert temperature swings.\n4. Lasting beauty through European anodized finishes and wear-resistant electrostatic powder coatings."
+    },
+    ar: {
+      title: "ما هي فوائد نوافذ الثيرمال بريك المزدوجة لمنزلك؟",
+      category: "معرفة ودليل الشراء",
+      excerpt: "إن القضاء على الضوضاء الحضرية ليس الميزة الوحيدة للنوافذ المزدوجة؛ بل إن الحد من الجسور الحرارية وخفض تكاليف التدفئة والتبريد بأكثر من 45٪ يجعل هذا الاستثمار مجدياً للغاية.",
+      author: "فريق نوآوران الهندسي",
+      tags: ["زجاج مزدوج", "ثيرمال بريك", "توفير الطاقة", "عزل صوتي", "أصفهان"],
+      content: "في العمارة الحديثة، لم تعد النافذة مجرد فتحة للضوء، بل هي الحاجز الوقائي الأساسي للفضاء الداخلي ضد التلوث الصوتي، التبادل الحراري والعوامل المناخية.\n\nتتميز نوافذ الألمنيوم المزدوجة المعزولة (Thermal Break) بشرائح البولياميد التي تخفض انتقال الحرارة عبر الإطار إلى الصفر تقريباً. ومع حقن غاز الأرجون الخامل بين طبقتي الزجاج بنقاء 90٪، يصل معامل التوصيل الحراري إلى أقل من 1.3 واط/م²كلوين.\n\nالمزايا الرئيسية لنوافذ نوآوران پنجره سپاهان:\n1. خفض هائل في التلوث الصوتي حتى 42 ديسيبل بالقرب من الطرق السريعة والشوارع المزدحمة.\n2. منع الفقد الحراري والبرودي وتجنب تكثف الرطوبة أو الصقيع على الزجاج شتاءً.\n3. متانة ميكانيكية عالية وعدم تأثر بالتشمس الشديد وتقلبات درجات الحرارة.\n4. جمال دائم بفضل التشطيبات الأوروبية (Anodized) والطلاءات الإلکتروستاتيكية المقاومة للتآكل."
+    }
+  },
+  "steel-window-security-and-durability": {
+    en: {
+      title: "Enhancing Building Security & Durability with Steel Guards and Safety Glass",
+      category: "Technical & Safety Standards",
+      excerpt: "Expert guide on selecting structural steel guards and railings using 304 and 316 stainless steel grades, shear resistance, and impact durability.",
+      author: "Noavaran R&D Department",
+      tags: ["Steel Guard", "Glass Balustrade", "Building Security", "Stainless Steel 304", "Handrail"],
+      content: "Using steel guards and railings for life and property safety in residential, villa, and corporate buildings has become a mandatory requirement in national building codes.\n\nWhen purchasing steel guards, alloy specification is critical. Grade 201 stainless steel turns rusty and dull outdoors after a few months, whereas Noavaran Panjereh Sepahan exclusively uses AISI 304 and AISI 316 non-magnetic stainless steel, ensuring 100% resistance against moisture, acid rain, and detergents.\n\nFurthermore, in modern embedded and spigot glass balustrades, utilizing double-laminated tempered glass with robust PVB interlayers ensures that even under potential breakage, glass shards remain securely in place, bringing fall hazards to zero."
+    },
+    ar: {
+      title: "تعزيز أمان ومتانة المباني باستخدام الحواجز الفولاذية والزجاج الآمن",
+      category: "المعايير الفنية والسلامة",
+      excerpt: "دليل متخصص حول اختيار الحواجز والدرابزينات الفولاذية باستخدام درجات الفولاذ المقاوم للصدأ 304 و316، ومقاومة القص والصدمات.",
+      author: "قسم البحث والتطوير في نوآوران",
+      tags: ["درابزين ستانلس", "حاجز زجاجي", "أمان المباني", "ستانلس ستيل 304", "هندریل"],
+      content: "أصبح استخدام الحواجز والدرابزينات الفولاذية لحماية الأرواح والممتلكات في المباني السكنية والفلل والمكاتب مطلباً أساسياً في كودات البناء الوطنية.\n\nعند شراء الحواجز الفولاذية، تعتبر نوعية السبائك أمراً بالغ الأهمية. فالستانلس ستيل درجة 201 يصدأ ويفقد بريقه في الهواء الطلق بعد أشهر، بينما تستخدم شركة نوآوران پنجره سپاهان حصرياً الفولاذ غير المغناطيسي AISI 304 وAISI 316 المقاوم تماماً للرطوبة والأمطار الحمضية.\n\nبالإضافة إلى ذلك، في أنظمة الدرابزينات الزجاجية الحديثة المدمجة، فإن استخدام الزجاج المصفح المزدوج مع طبقات PVB المقاومة يضمن بقاء أجزاء الزجاج متماسكة تماماً حتى في حال الكسر المحتمل، مما يجعل خطر السقوط صفراً."
+    }
+  },
+  "most-beautiful-glass-buildings-world": {
+    en: {
+      title: "World's Most Stunning Glass Architectural Masterpieces and Lessons for Iran's Façades",
+      category: "Architecture & Innovation",
+      excerpt: "Examining curtain wall technology in London's Shard, Prague's Dancing House, and modern glass structures and how to implement these patterns in Iran's climate.",
+      author: "Noavaran Design Team",
+      tags: ["Glass Façade", "Curtain Wall", "Modern Architecture", "The Shard", "Lamella"],
+      content: "Glass facades are symbols of transparency, dynamism, and technology in 21st-century architecture. Structures like the Louvre Pyramid in Paris or The Shard in London prove that glass is not a weak element, but an intelligent structural skin.\n\nIn Iran's climate, which faces extreme weather diversity (scorching summers and cold winters), the secret to glass facade success lies in selecting proper aluminium lamella profiles with adequate moment of inertia and using sun-energy control and Low-E glass.\n\nWith years of experience executing frameless and curtain wall facades in prominent urban projects, Noavaran Panjereh Sepahan enables the execution of such complex and transparent volumes while fully complying with national building energy codes."
+    },
+    ar: {
+      title: "أروع التحف المعمارية الزجاجية في العالم ودروس مستفادة لواجهات المباني في إيران",
+      category: "العمارة والابتكار",
+      excerpt: "استعراض تقنية كورتن وول في برج شارد لندن، البيت الرقصان في براغ والهياكل الزجاجية الحديثة وكيفية تطبيق هذه الأنماط في مناخ إيران.",
+      author: "فريق التصميم والعمارة في نوآوران",
+      tags: ["واجهة زجاجية", "كورتن وول", "عمارة حديثة", "برج شارد", "لامل"],
+      content: "تعتبر الواجهات الزجاجية رمزاً للشفافية والحيوية والتكنولوجيا في عمارة القرن الحادي والعشرين. أثبتت هياكل مثل هرم اللوفر في باريس أو برج شارد في لندن أن الزجاج ليس عنصراً ضعيفاً، بل هو غلاف إنشائي ذكي.\n\nفي مناخ إيران الذي يواجه تنوعاً مناخياً شديداً (صيف حارق وشتاء بارد)، يكمن سر نجاح الواجهات الزجاجية في اختيار مقاطع لامل الألمنيوم المناسبة ذات عزم القصور الذاتي الكافي، واستخدام زجاج التحكم في الطاقة الشمسية وLow-E.\n\nبفضل سنوات الخبرة في تنفيذ الواجهات الزجاجية (فريملس وكورتن وول) في المشاريع الحضرية البارزة، توفر شركة نوآوران پنجره سپاهان إمكانية تنفيذ هذه الأحجام المعقدة والشفافة مع الالتزام التام بكودات كفاءة الطاقة في البناء."
+    }
+  },
+  "lift-and-slide-vs-normal-sliding": {
+    en: {
+      title: "Technical Comparison: Lift & Slide Windows vs. Conventional Sliding Systems",
+      category: "Technical Comparison",
+      excerpt: "Why large villa and floor-to-ceiling sliding windows suffer from friction and dust, while Lift & Slide glides with a touch and locks securely.",
+      author: "Noavaran Senior Production Engineer",
+      tags: ["Lift & Slide", "Sliding Window", "Thermal Break", "German Hardware"],
+      content: "In conventional sliding windows, the sash rests continuously on rubber seals or felt brush strips. This creates two major issues: high friction when opening heavy sashes, and imperfect sealing against strong winds and dust ingress.\n\nIn the Lift & Slide system, turning the handle activates roller bogies that lift the window sash by approximately 6 millimeters ('Lift'). In this state, the sash glides with minimal friction and astonishing smoothness even up to 400 kg weight ('Slide'). When the handle is turned down, the sash lowers to rest firmly on compressed EPDM gaskets, establishing complete air and water locking."
+    },
+    ar: {
+      title: "مقارنة فنية: نوافذ ليفت آند سلايد مقابل أنظمة السحب العادية",
+      category: "مقارنة فنية للأنظمة",
+      excerpt: "لماذا تعاني النوافذ السحابية الكبيرة في الفلل من الاحتكاك والغبار، بينما ينزلق نظام ليفت آند سلايد بلمسة واحدة ويغلق بإحكام تام؟",
+      author: "مهندس الإنتاج الأول في نوآوران",
+      tags: ["ليفت آند سلايد", "نافذة سحاب", "ثيرمال بريك", "إكسسوار ألماني"],
+      content: "في نوافذ السحب العادية، تستقر ضلفة النافذة باستمرار على الجوانات أو شرائح الفرشاة، مما يسبب مشكلتين رئيسيتين: احتكاك عالٍ عند فتح الضلف الثقيلة، وعدم إحكام الإغلاق الكامل ضد الرياح العاتية والغبار.\n\nفي نظام ليفت آند سلايد (Lift & Slide)، يؤدي إدارة المقبض إلى تشغيل عربات الرولمان بلي التي ترفع ضلفة النافذة بنحو 6 ملم ('Lift'). في هذه الحالة، تنزلق الضلفة بأقل احتكاك وبسلاسة مذهلة حتى أوزان 400 كغ ('Slide'). وعند إعادة المقبض للأسفل، تنخفض الضلفة لتستقر بثبات تام على جوانات EPDM المضغوطة، مما يحقق إغلاقاً محكماً ضد الماء والهواء."
+    }
+  }
+};
+
+export function getLocalizedArticle(article: ArticleItem, locale: SupportedLocale) {
+  if (locale === 'fa') {
+    return {
+      title: article.title,
+      category: article.category,
+      excerpt: article.excerpt,
+      author: article.author,
+      tags: article.tags,
+      content: article.content,
+    };
+  }
+
+  const trans = ARTICLE_TRANSLATIONS[article.slug] || ARTICLE_TRANSLATIONS[article.id];
+  if (trans && trans[locale]) {
+    return {
+      title: trans[locale].title,
+      category: trans[locale].category,
+      excerpt: trans[locale].excerpt,
+      author: trans[locale].author,
+      tags: trans[locale].tags,
+      content: trans[locale].content,
+    };
+  }
+
+  return {
+    title: article.title,
+    category: article.category,
+    excerpt: article.excerpt,
+    author: article.author,
+    tags: article.tags,
+    content: article.content,
+  };
 }
 
 export const MATERIAL_TRANSLATIONS: Record<string, {

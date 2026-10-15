@@ -6,6 +6,7 @@ import { Breadcrumbs } from '@/components/ui/Breadcrumbs';
 import { Calendar, User, Tag, ShieldCheck, Phone } from 'lucide-react';
 import { telHref } from '@/lib/phone';
 import { useLanguage } from '@/lib/i18n/context';
+import { getLocalizedArticle } from '@/lib/i18n/entities';
 import { ArticleItem, CompanySettings } from '@/lib/db';
 
 interface ArticleDetailClientProps {
@@ -16,25 +17,26 @@ interface ArticleDetailClientProps {
 
 export function ArticleDetailClient({ article, settings, imgSrc }: ArticleDetailClientProps) {
   const { dict, locale, dir, isRTL } = useLanguage();
+  const locArt = getLocalizedArticle(article, locale);
 
   return (
     <div dir={dir}>
       <Breadcrumbs items={[
         { label: dict.nav.articles, href: '/articles' },
-        { label: article.title }
+        { label: locArt.title }
       ]} />
-      
+
       <div className={`w-full max-w-[1440px] mx-auto px-4 md:px-8 py-12 md:py-16 ${isRTL ? 'text-right' : 'text-left'}`}>
         <div className="max-w-4xl mx-auto space-y-8">
-          
+
           <header className="space-y-4 text-center">
             <div className="inline-flex items-center justify-center gap-2 mb-4">
               <span className="px-3 py-1 bg-signal-500/10 text-signal-500 text-xs font-bold rounded-lg border border-signal-500/20">
-                {article.category}
+                {locArt.category}
               </span>
             </div>
             <h1 className="text-3xl md:text-5xl font-black text-white font-vazir leading-tight">
-              {article.title}
+              {locArt.title}
             </h1>
             <div className="flex flex-wrap items-center justify-center gap-6 text-sm text-steel-400 font-vazir pt-4">
               <div className="flex items-center gap-2">
@@ -43,7 +45,7 @@ export function ArticleDetailClient({ article, settings, imgSrc }: ArticleDetail
               </div>
               <div className="flex items-center gap-2">
                 <User className="w-4 h-4 text-signal-500" />
-                <span>{article.author || (locale === 'en' ? 'Noavaran Engineering Team' : (locale === 'ar' ? 'فريق نوآوران الهندسي' : 'تیم مهندسی نوآوران'))}</span>
+                <span>{locArt.author || (locale === 'en' ? 'Noavaran Engineering Team' : (locale === 'ar' ? 'فريق نوآوران الهندسي' : 'تیم مهندسی نوآوران'))}</span>
               </div>
             </div>
           </header>
@@ -51,7 +53,7 @@ export function ArticleDetailClient({ article, settings, imgSrc }: ArticleDetail
           <div className="relative aspect-video w-full bg-ink-900 rounded-xl overflow-hidden metal-shadow border border-ink-800">
             <Image
               src={imgSrc}
-              alt={article.title}
+              alt={locArt.title}
               fill
               sizes="(min-width: 1024px) 896px, 100vw"
               className="object-cover"
@@ -60,13 +62,13 @@ export function ArticleDetailClient({ article, settings, imgSrc }: ArticleDetail
 
           <div className="bg-ink-950 border border-ink-800 rounded-xl p-6 md:p-12 metal-shadow">
             <div className={`prose prose-invert prose-lg max-w-none font-vazir leading-loose text-steel-300 ${isRTL ? 'text-justify' : 'text-left'} prose-headings:font-black prose-headings:text-white prose-headings:font-vazir ${isRTL ? 'prose-h2:border-r-4 prose-h2:pr-4' : 'prose-h2:border-l-4 prose-h2:pl-4'} prose-h2:border-signal-500 prose-h2:mb-6 prose-p:mb-6 prose-strong:text-white prose-li:text-steel-300 prose-a:text-signal-500`}>
-              <div dangerouslySetInnerHTML={{ __html: article.content }} />
+              <div dangerouslySetInnerHTML={{ __html: locArt.content }} />
             </div>
 
-            {article.tags && article.tags.length > 0 && (
+            {locArt.tags && locArt.tags.length > 0 && (
               <div className="mt-12 pt-8 border-t border-ink-800 flex flex-wrap items-center gap-2">
                 <Tag className={`w-5 h-5 text-signal-500 ${isRTL ? 'ml-2' : 'mr-2'}`} />
-                {article.tags.map(tag => (
+                {locArt.tags.map((tag: string) => (
                   <span key={tag} className="px-3 py-1 bg-ink-900 border border-ink-800 text-steel-400 text-xs font-bold rounded-lg hover:text-white transition-colors cursor-pointer">
                     #{tag}
                   </span>
