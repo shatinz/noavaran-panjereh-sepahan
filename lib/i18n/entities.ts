@@ -1,6 +1,80 @@
 import { SupportedLocale } from './types';
 import { MaterialItem, ProjectItem, ServiceItem } from '../db';
 
+export function formatSpecValue(val: string | number, locale: SupportedLocale): string {
+  if (val === undefined || val === null) return '';
+  let str = String(val);
+
+  if (locale === 'en') {
+    // Convert Persian / Arabic digits to English digits
+    str = str
+      .replace(/[۰-۹]/g, d => String('۰۱۲۳۴۵۶۷۸۹'.indexOf(d)))
+      .replace(/[٠-٩]/g, d => String('٠١٢٣٤٥٦٧٨٩'.indexOf(d)));
+
+    // Translate common Persian/Arabic units and terms to English
+    str = str
+      .replace(/میلی‌متر|میلیمتر|ملم/g, 'mm')
+      .replace(/سانتی‌متر|سانتیمتر|سنتیمتر/g, 'cm')
+      .replace(/الی|تا/g, 'to')
+      .replace(/کیلوگرم بر متر طول/g, 'kg/m')
+      .replace(/کیلوگرم/g, 'kg')
+      .replace(/متر طول/g, 'linear meter')
+      .replace(/دوجداره و سه‌جداره/g, 'Double & Triple Glazed')
+      .replace(/دوجداره/g, 'Double Glazed')
+      .replace(/سه‌جداره/g, 'Triple Glazed')
+      .replace(/سیستم نرمال/g, 'Normal System')
+      .replace(/ترمال‌بریک/g, 'Thermal Break')
+      .replace(/گونیای پانچی \/ پرچی/g, 'Punch / Pin Corner Cleat')
+      .replace(/گونیای پانچی/g, 'Punch Corner Cleat')
+      .replace(/گونیای آلنی/g, 'Allen Screw Corner Cleat')
+      .replace(/تخت و صاف/g, 'Flat & Clean')
+      .replace(/کرو و قوس‌دار/g, 'Curved')
+      .replace(/ندارد \(سیستم نرمال\)/g, 'None (Normal System)')
+      .replace(/ندارد/g, 'None')
+      .replace(/دارد/g, 'Yes')
+      .replace(/با شیشه/g, 'with glass')
+      .replace(/از نمای بیرونی و داخلی/g, 'from exterior & interior')
+      .replace(/گسکت‌های هوابندی و آب‌بندی/g, 'Weatherseals & Gaskets')
+      .replace(/فوق سنگین/g, 'Heavy Duty')
+      .replace(/استاندارد صنعتی/g, 'Industrial Standard')
+      .replace(/مقرون‌به‌صرفه/g, 'Cost-Effective')
+      .replace(/سیستم نرمال مونوریل/g, 'Normal Monorail System')
+      .replace(/پروفیل پوسته/g, 'Shell Profile')
+      .replace(/پروفیل ریل و کلیپس قالب‌دار/g, 'Rail & Molded Clip Profile')
+      .replace(/نخ‌های کولار مقاوم در برابر سایش و کشش/g, 'Abrasion & Tension Resistant Kevlar Cords')
+      .replace(/تور پلی‌استر مش ۲۲ مقاوم در برابر فرابنفش/g, 'UV-Resistant Mesh 22 Polyester Screen')
+      .replace(/مقاوم در برابر حرارت تابستان و سرمای زمستان/g, 'Summer Heat & Winter Cold Resistant')
+      .replace(/پروفیل‌های اختصاصی آلومینیومی رنگ پودری الکترواستاتیک/g, 'Proprietary Powder-Coated Aluminium Profiles')
+      .replace(/گوشه‌های پلی‌آمید و کلیپس‌های قفل‌شونده/g, 'Polyamide Corners & Locking Clips')
+      .replace(/نوار مگنتی سرتاسری و لاستیک‌های درزبند/g, 'Continuous Magnetic Strip & Weather Gaskets')
+      .replace(/مکانیزم بازشوی آکاردئونی با فنربندی ملایم و روان/g, 'Smooth Accordion Opening Mechanism')
+      .replace(/بازشوی افقی یک‌طرفه، دوطرفه سنترال و عمودی/g, 'Horizontal Single, Central Double & Vertical Opening')
+      .replace(/پایه شیشه‌گیر پایه سنگین/g, 'Heavy Duty Glass Base Profile')
+      .replace(/پروفیل یوچنل/g, 'U-Channel Profile')
+      .replace(/کاور آلومینیومی آندایز/g, 'Anodized Aluminum Cover')
+      .replace(/آلومینیوم سازه‌ای اکسترود/g, 'Extruded Structural Aluminum')
+      .replace(/گوه‌های پلیمری فشرده ترازکننده شیشه/g, 'Compact Polymer Glass Alignment Wedges')
+      .replace(/شیشه لمینت سکوریت/g, 'Laminated Tempered Glass')
+      .replace(/با طلق/g, 'with interlayers')
+      .replace(/ایستایی استاتیکی و دینامیکی کلاس ساختمانی/g, 'Architectural Static & Dynamic Stability')
+      .replace(/نمای کاملاً شفاف تمام‌شیشه بدون دست‌انداز مزاحم دید/g, 'Fully Transparent All-Glass View')
+      .replace(/انکربولت‌های فولادی صنعتی به بتن سازه/g, 'Industrial Steel Anchor Bolts to Structure')
+      .replace(/گسکت‌های ضربه‌گیر و محافظ تحت فشار EPDM/g, 'EPDM Impact & Pressure Protective Gaskets')
+      .replace(/هندریل روی شیشه آلومینیومی، استیل ۳۰۴ یا بدون هندریل/g, 'Aluminum, Steel 304 or Handrail-free Glass Top')
+      .replace(/حفاظ ثابت ایمن جان‌پناه بالکن، تراس، بام سبز و ویدهای تجاری/g, 'Secure Balcony, Terrace, Green Roof & Atrium Guardrail')
+      .replace(/گسکت‌های هوابندی و آب‌بندی از جنس EPDM چندمرحله‌ای/g, 'Multi-stage EPDM Weatherseals & Gaskets')
+      .replace(/گسکت‌های هوابندی و آب‌بندی/g, 'Weatherseals & Gaskets')
+      .replace(/گونیای آلنی \(Gunia TAlni\)/g, 'Allen Corner Cleat');
+  } else if (locale === 'ar') {
+    str = str
+      .replace(/میلی‌متر|میلیمتر/g, 'ملم')
+      .replace(/سانتی‌متر|سانتیمتر/g, 'سم')
+      .replace(/الی/g, 'إلى');
+  }
+
+  return str;
+}
+
 export const MATERIAL_TRANSLATIONS: Record<string, {
   en: { title: string; category: string; summary: string };
   ar: { title: string; category: string; summary: string };
