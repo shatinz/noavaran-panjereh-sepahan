@@ -57,7 +57,7 @@ export default async function AboutPage() {
         'Noavaran Panjereh',
         'Noavaran Panjereh Sepahan',
       ],
-      foundingDate: '2006',
+      foundingDate: '2002',
       taxID: settings.nationalId,
       address: {
         '@type': 'PostalAddress',

@@ -509,7 +509,7 @@ export const dictionaries: Record<SupportedLocale, Dictionary> = {
     about: {
       pageTitle: "نوآوران پنجره سپاهان",
       pageSubtitle: "رزومه، تاریخچه و مشخصات ثبتی کارخانه",
-      intro: "بیش از سه دهه تجربه در طراحی محاسباتی، نقشه‌کشی فاز ۲، ساخت دقیق کارخانه‌ای و اجرای در محل پروژه‌های مدرن نما و درب و پنجره‌های اختصاصی.",
+      intro: "با بیش از ۳۰ سال تجربه در صنعت ساختمان، ما با تکیه بر تخصص، کیفیت و نوآوری، در زمینه تولید درب و پنجره آلومینیومی و اجرای سیستم‌های مدرن نمای ساختمان فعالیت می‌کنیم. خدمات ما شامل نمای لامل (کرتین‌وال)، فریم‌لس، نمای چوب و کامپوزیت، نرده‌های استیل و شیشه‌ای و انواع سازه‌ها و محصولات آلومینیومی است. هدف ما ارائه راهکارهایی ماندگار، زیبا و استاندارد است که با تلفیق هنر، مهندسی و کیفیت، انتظارات مشتریان را فراتر از حد انتظار برآورده سازد.",
       legalBannerTitle: "مشخصات ثبتی و حقوقی شرکت",
       legalMember: "عضو رسمی اتحادیه صنایع آلومینیوم ایران",
       nationalIdLabel: "شناسه ملی:",
@@ -526,19 +526,19 @@ export const dictionaries: Record<SupportedLocale, Dictionary> = {
       timelineTitle: "مسیر توسعه و پیشرفت ما",
       timeline: [
         {
-          year: "۱۳۹۰",
-          title: "تاسیس کارگاه طراحی نصب و پیمانکاری",
+          year: "۱۳۸۱",
+          title: "شروع فعالیت",
           description: "شروع به عنوان یک گروه کوچک در زمینه مشاوره، طراحی و نصب پروژه‌های نما و پنجره.",
         },
         {
-          year: "۱۳۹۳",
+          year: "۱۳۹۰",
           title: "خرید دستگاه‌های نیمه‌اتوماتیک",
           description: "ورود به عرصه تولید کارگاهی و مجهز شدن به دستگاه‌های برش دقیق و پرس‌های کارگاهی.",
         },
         {
-          year: "۱۴۰۰",
-          title: "احداث کارخانه در منطقه صنعتی",
-          description: "توسعه فاز تولید و انتقال به فضای صنعتی بزرگتر با تجهیز به خط مونتاژ پیشرفته.",
+          year: "۱۳۹۵",
+          title: "توسعه تولید",
+          description: "بروز رسانی سیستم‌های بهینه‌سازی پروفیل و خرید دستگاه‌های بروز تولید تمام صنعتی.",
         },
         {
           year: "اکنون",
@@ -911,7 +911,7 @@ export const dictionaries: Record<SupportedLocale, Dictionary> = {
     about: {
       pageTitle: "Noavaran Panjereh Sepahan",
       pageSubtitle: "Corporate Heritage, Factory Specifications & Legal Credentials",
-      intro: "Over three decades of excellence in computational engineering, phase-2 shop drawings, automated plant manufacturing, and on-site certified execution of premium modern facades and thermal break systems.",
+      intro: "With over 30 years of experience in the construction industry, we specialize in manufacturing premium aluminum doors and windows and executing modern architectural facade systems, driven by expertise, quality, and innovation. Our comprehensive services encompass curtain wall lamella facades, frameless glass systems, wood and aluminum composite cladding, stainless steel and architectural glass railings, and bespoke engineered aluminum structures. Our mission is to deliver enduring, aesthetic, and standards-compliant solutions that combine art, engineering, and superior craftsmanship to exceed our clients' expectations.",
       legalBannerTitle: "Official Corporate & Legal Registration",
       legalMember: "Certified Member of the Iran Aluminium Industry Association",
       nationalIdLabel: "National ID:",
@@ -928,19 +928,19 @@ export const dictionaries: Record<SupportedLocale, Dictionary> = {
       timelineTitle: "Our Evolutionary Milestones",
       timeline: [
         {
-          year: "2011",
-          title: "Founding of Design & Contracting Workshop",
+          year: "2002",
+          title: "Commencement of Operations",
           description: "Initiated as a focused engineering group consulting, designing, and installing facade and window projects.",
         },
         {
-          year: "2014",
+          year: "2011",
           title: "Acquisition of Semi-Automated Machinery",
           description: "Expanded into specialized fabrication with high-precision cutting machines and industrial crimping presses.",
         },
         {
-          year: "2021",
-          title: "Establishment of Industrial Factory",
-          description: "Scaled production to an expansive 1,500 m² facility with automated assembly lines and digital QC stations.",
+          year: "2016",
+          title: "Production Expansion",
+          description: "Upgraded profile optimization systems and procured state-of-the-art fully industrial manufacturing machinery.",
         },
         {
           year: "Now",
@@ -1313,7 +1313,7 @@ export const dictionaries: Record<SupportedLocale, Dictionary> = {
     about: {
       pageTitle: "نوآوران پنجره سباهان",
       pageSubtitle: "نبذة عن الشركة، التاريخ الصناعي والاعتمادات الرسمية للمصنع",
-      intro: "أكثر من ثلاثة عقود من الخبرة في التصميم الحسابي للواجهات، إعداد المخططات التنفيذية، والتصنيع الصناعي والتركيب الميداني المعتمد لأفخم الواجهات والنوافذ.",
+      intro: "مع أكثر من ۳۰ عاماً من الخبرة في صناعة البناء والتشييد، نعمل بالاعتماد على الخبرة الهندسية والجودة والابتكار في مجال تصنيع الأبواب والنوافذ الألومنيوم وتنفيذ أحدث أنظمة واجهات المباني المعمارية. تشمل خدماتنا واجهات الكرتين وال (اللامل)، الواجهات الفريملس الزجاجية، واجهات الخشب والألومنيوم كومبوزيت، درابزينات الستانلس ستيل والزجاج، ومختلف الهياكل والمنتجات الألومنيوم المتطورة. هدفنا هو تقديم حلول معمارية مستدامة وأنيقة تجمع بين الفن والهندسة والجودة الفائقة لتتجاوز تطلعات عملائنا.",
       legalBannerTitle: "البيانات الرسمية والقانونية للشركة",
       legalMember: "عضو رسمي في اتحاد صناعات الألمنيوم",
       nationalIdLabel: "الرقم الوطني:",
@@ -1330,19 +1330,19 @@ export const dictionaries: Record<SupportedLocale, Dictionary> = {
       timelineTitle: "مسار التطور والنمو",
       timeline: [
         {
-          year: "٢٠١١",
-          title: "تأسيس ورشة التصميم والمقاولات",
+          year: "٢٠٠٢",
+          title: "انطلاق النشاط والبداية",
           description: "البداية كفريق هندسي متخصص في استشارات وتصميم وتركيب مشاريع الواجهات والنوافذ.",
         },
         {
-          year: "٢٠١٤",
-          title: "تحديث الآلات النصف أوتوماتيكية",
+          year: "٢٠١١",
+          title: "شراء الآلات النصف أوتوماتيكية",
           description: "التوسع نحو الإنتاج الصناعي وتجهيز الورشة بآلات القص الدقيقة والمكابس الصناعية.",
         },
         {
-          year: "٢٠٢١",
-          title: "إنشاء المصنع في المدينة الصناعية",
-          description: "توسيع الإنتاج والانتقال إلى منشأة بمساحة ١٥٠٠ م² مع خطوط تجميع متقدمة.",
+          year: "٢٠١٦",
+          title: "تطوير خطوط الإنتاج",
+          description: "تحديث أنظمة تحسين وهندسة قطاعات الألومنيوم وشراء أحدث معدات الإنتاج الصناعي المتكامل.",
         },
         {
           year: "الآن",

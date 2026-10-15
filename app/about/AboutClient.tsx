@@ -25,9 +25,9 @@ export function AboutClient({ settings }: AboutClientProps) {
       <div className={`w-full max-w-[1440px] mx-auto px-4 md:px-8 py-16 md:py-24 space-y-12 ${isRTL ? 'text-right' : 'text-left'}`}>
         
         {/* Intro */}
-        <section className="max-w-3xl text-center mx-auto space-y-6">
+        <section className="max-w-4xl text-center mx-auto space-y-6">
           <ShieldCheck className="w-12 h-12 text-signal-500 mx-auto" />
-          <p className="text-lg text-steel-300 leading-relaxed font-vazir">
+          <p className="text-base sm:text-lg text-steel-300 leading-relaxed sm:leading-8 font-vazir">
             {dict.about.intro}
           </p>
         </section>
