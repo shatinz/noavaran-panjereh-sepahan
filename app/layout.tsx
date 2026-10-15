@@ -5,6 +5,7 @@ import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { GoogleAnalytics } from '@/components/GoogleAnalytics';
 import AnalyticsTracker from '@/components/AnalyticsTracker';
+import { LanguageProvider } from '@/lib/i18n/context';
 import { getSettings } from '@/lib/db';
 
 const vazirmatn = Vazirmatn({
@@ -291,7 +292,23 @@ export default async function RootLayout({
     <html lang="fa" dir="rtl" className={`${vazirmatn.variable} ${lalezar.variable} ${inter.variable}`}>
       <head>
         <link rel="describedby" href="/llms.txt" type="text/markdown" />
-        <script dangerouslySetInnerHTML={{ __html: `document.documentElement.classList.add('js');` }} />
+        <script dangerouslySetInnerHTML={{ __html: `
+          document.documentElement.classList.add('js');
+          try {
+            var l = localStorage.getItem('noavaran_locale');
+            if (l === 'en') {
+              document.documentElement.lang = 'en';
+              document.documentElement.dir = 'ltr';
+              document.documentElement.classList.add('lang-en');
+            } else if (l === 'ar') {
+              document.documentElement.lang = 'ar';
+              document.documentElement.dir = 'rtl';
+              document.documentElement.classList.add('lang-ar');
+            } else {
+              document.documentElement.classList.add('lang-fa');
+            }
+          } catch(e){}
+        ` }} />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationLd) }}
@@ -305,13 +322,15 @@ export default async function RootLayout({
         <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:p-4 focus:bg-signal-500 focus:text-white">
           پرش به محتوای اصلی
         </a>
-        <GoogleAnalytics />
-        <AnalyticsTracker />
-        <Header phone={settingsData.factoryPhones?.[0] || settingsData.phone} />
-        <main id="main-content" className="flex-grow">
-          {children}
-        </main>
-        <Footer />
+        <LanguageProvider>
+          <GoogleAnalytics />
+          <AnalyticsTracker />
+          <Header phone={settingsData.factoryPhones?.[0] || settingsData.phone} />
+          <main id="main-content" className="flex-grow">
+            {children}
+          </main>
+          <Footer />
+        </LanguageProvider>
       </body>
     </html>
   );

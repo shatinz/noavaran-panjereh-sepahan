@@ -2,10 +2,12 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import { Reveal } from "../ui/Reveal";
+import { useLanguage } from "@/lib/i18n/context";
 
 export function ProofStrip() {
   const [isInView, setIsInView] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+  const { dict, dir, isRTL } = useLanguage();
 
   useEffect(() => {
     // If user prefers reduced motion or already scrolled past
@@ -40,17 +42,19 @@ export function ProofStrip() {
   }, []);
 
   const stats = [
-    { value: <bdi dir="ltr">+۳۰</bdi>, label: "سال تجربه درخشان" },
-    { value: <bdi dir="ltr">+۲۰۰۰</bdi>, label: "پروژه اجرایی موفق" },
-    { value: <bdi dir="ltr">+۲۵</bdi>, label: "پروژه در دست اجرا" },
+    { value: <bdi dir="ltr">{dict.proofStrip.stat1Value}</bdi>, label: dict.proofStrip.stat1Label },
+    { value: <bdi dir="ltr">{dict.proofStrip.stat2Value}</bdi>, label: dict.proofStrip.stat2Label },
+    { value: <bdi dir="ltr">{dict.proofStrip.stat3Value}</bdi>, label: dict.proofStrip.stat3Label },
   ];
 
   return (
-    <section className="relative z-20 -mt-16 w-full max-w-[1440px] mx-auto px-4 sm:px-6" dir="rtl">
+    <section className="relative z-20 -mt-16 w-full max-w-[1440px] mx-auto px-4 sm:px-6" dir={dir}>
       <Reveal delay={200}>
         <div 
           ref={containerRef}
-          className="bg-metal-brushed metal-shadow rounded-2xl p-6 sm:p-10 grid grid-cols-1 sm:grid-cols-3 gap-8 sm:gap-4 divide-y sm:divide-y-0 sm:divide-x sm:divide-x-reverse divide-steel-300 overflow-hidden"
+          className={`bg-metal-brushed metal-shadow rounded-2xl p-6 sm:p-10 grid grid-cols-1 sm:grid-cols-3 gap-8 sm:gap-4 divide-y sm:divide-y-0 ${
+            isRTL ? 'sm:divide-x sm:divide-x-reverse' : 'sm:divide-x'
+          } divide-steel-300 overflow-hidden`}
         >
           {stats.map((stat, idx) => (
             <div key={idx} className="flex flex-col items-center justify-center text-center px-4 overflow-hidden">

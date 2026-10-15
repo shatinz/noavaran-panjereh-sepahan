@@ -1,8 +1,6 @@
 import React from 'react';
 import type { Metadata } from 'next';
 import { getVideos } from '@/lib/db';
-import { PageHero } from '@/components/ui/PageHero';
-import { Breadcrumbs } from '@/components/ui/Breadcrumbs';
 import { VideosClient } from './VideosClient';
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://noavaranpanjereh.com';
@@ -69,11 +67,6 @@ export default async function VideosPage() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(videoListLd) }}
-      />
-      <Breadcrumbs items={[{ label: 'پرتال ویدیوها' }]} />
-      <PageHero 
-        title="کتابخانه ویدیوهای تخصصی و انیمیشن مقاطع" 
-        subtitle="آموزش‌های فنی و رندرهای سه‌بعدی سیستم‌ها"
       />
       <VideosClient videos={videos} />
     </>

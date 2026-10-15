@@ -19,17 +19,50 @@ const env = {
   NEXT_PUBLIC_BASE_PATH: '/noavaran-panjereh-sepahan',
 };
 
-// 3. Run next build
-console.log('📦 Executing Next.js static export with basePath: /noavaran-panjereh-sepahan ...');
-execSync('npx next build', {
-  stdio: 'inherit',
-  env,
-});
+// 3. Temporarily stash dynamic server routes during static HTML export
+const stashes = [
+  { src: path.join('app', 'api'), tmp: path.join('.api_gh_pages_tmp'), moved: false },
+  { src: path.join('app', 'uploads'), tmp: path.join('.uploads_gh_pages_tmp'), moved: false },
+  { src: path.join('app', 'sitemap.ts'), tmp: path.join('.sitemap_gh_pages_tmp.ts'), moved: false },
+  { src: path.join('app', 'admin'), tmp: path.join('.admin_gh_pages_tmp'), moved: false },
+];
 
-// 4. Ensure .nojekyll
+for (const s of stashes) {
+  if (fs.existsSync(s.src)) {
+    try {
+      fs.renameSync(s.src, s.tmp);
+      s.moved = true;
+    } catch (err) {
+      console.warn(`⚠️ Could not move ${s.src}:`, err);
+    }
+  }
+}
+
+try {
+  // 4. Run next build
+  console.log('📦 Executing Next.js static export with basePath: /noavaran-panjereh-sepahan ...');
+  execSync('npx next build', {
+    stdio: 'inherit',
+    env,
+  });
+} finally {
+  // Restore server route directories
+  for (const s of stashes) {
+    if (s.moved && fs.existsSync(s.tmp)) {
+      try {
+        fs.renameSync(s.tmp, s.src);
+        console.log(`✅ Restored ${s.src} directory`);
+      } catch (err) {
+        console.error(`❌ Failed to restore ${s.src} directory:`, err);
+      }
+    }
+  }
+}
+
+// 5. Ensure .nojekyll
 fs.writeFileSync(path.join('out', '.nojekyll'), '# Disable Jekyll for GitHub Pages\n');
 
-// 5. Post-process HTML files in out to ensure all root-relative asset paths are prefixed
+// 6. Post-process HTML files in out to ensure all root-relative asset paths are prefixed
 console.log('🔍 Post-processing exported files for GitHub Pages subpath compatibility...');
 
 function processDir(dir) {
@@ -58,33 +91,8 @@ function processDir(dir) {
       for (const pattern of assetPatterns) {
         if (pattern.test(content)) {
           content = content.replace(pattern, (match, attr) => {
-            const quote = match.charAt(match.length - (match.endsWith("'") || match.endsWith('"') ? 1 : match.indexOf('/') > 0 ? 0 : 1));
-            const isFullMatch = match.endsWith('"') || match.endsWith("'");
-            if (isFullMatch) {
-              const filename = match.slice(attr.length + 2, -1);
-              return `${attr}="/noavaran-panjereh-sepahan${filename}"`;
-            }
-            return `${attr}="/noavaran-panjereh-sepahan/${match.split('/')[1]}/`;
+            return `${attr}="/noavaran-panjereh-sepahan/${match.slice(attr.length + 2)}`;
           });
-          modified = true;
-        }
-      }
-
-      // Exact replacements for preload links
-      const preloadReplacements = [
-        ['href="/images/', 'href="/noavaran-panjereh-sepahan/images/'],
-        ['href="/projects/', 'href="/noavaran-panjereh-sepahan/projects/'],
-        ['src="/images/', 'src="/noavaran-panjereh-sepahan/images/'],
-        ['src="/projects/', 'src="/noavaran-panjereh-sepahan/projects/'],
-        ['href="/favicon.ico"', 'href="/noavaran-panjereh-sepahan/favicon.ico"'],
-        ['href="/apple-icon.png"', 'href="/noavaran-panjereh-sepahan/apple-icon.png"'],
-        ['href="/icon.svg"', 'href="/noavaran-panjereh-sepahan/icon.svg"'],
-        ['href="/llms.txt"', 'href="/noavaran-panjereh-sepahan/llms.txt"'],
-      ];
-
-      for (const [from, to] of preloadReplacements) {
-        if (content.includes(from)) {
-          content = content.replaceAll(from, to);
           modified = true;
         }
       }
@@ -96,6 +104,8 @@ function processDir(dir) {
   }
 }
 
-processDir('out');
+if (fs.existsSync('out')) {
+  processDir('out');
+}
 
-console.log('✅ GitHub Pages build complete in out/ directory!');
+console.log('🎉 GitHub Pages export completed successfully in ./out');

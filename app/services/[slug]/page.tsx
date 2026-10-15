@@ -1,14 +1,8 @@
 import React from 'react';
-import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { getServiceBySlug, getServices, getSettings } from '@/lib/db';
-import { telHref } from '@/lib/phone';
-import { PageHero } from '@/components/ui/PageHero';
-import { Breadcrumbs } from '@/components/ui/Breadcrumbs';
-import { SpecTable } from '@/components/ui/SpecTable';
-import { CheckCircle2, ShieldCheck, Phone } from 'lucide-react';
-import Image from 'next/image';
 import { getLocalMediaFallback } from '@/lib/media';
+import { ServiceDetailClient } from './ServiceDetailClient';
 
 interface Props {
   params: { slug: string; };
@@ -109,85 +103,7 @@ export default async function ServiceDetailPage({ params }: Props) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceLd) }}
       />
-      <Breadcrumbs items={[
-        { label: 'خدمات و راهکارها', href: '/services' },
-        { label: service.title }
-      ]} />
-      
-      <PageHero 
-        title={service.title}
-        subtitle={service.titleEn}
-        bgImage={imgSrc}
-      />
-
-      <div className="w-full max-w-[1440px] mx-auto px-4 md:px-8 py-16 md:py-24 space-y-12" dir="rtl">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
-          {/* Main Content */}
-          <div className="lg:col-span-2 space-y-12">
-            <section className="space-y-6">
-              <h2 className="text-2xl font-black text-white font-vazir border-r-4 border-signal-500 pr-4">
-                معرفی سیستم
-              </h2>
-              <p className="text-steel-300 leading-relaxed font-vazir text-justify text-lg">
-                {service.summary}
-              </p>
-              
-              <div className="bg-ink-900 border border-ink-800 rounded-xl p-6 md:p-8 space-y-6">
-                <h3 className="text-lg font-bold text-white font-vazir">ویژگی‌ها و مزایای برجسته</h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {service.features.map((feat, idx) => (
-                    <div key={idx} className="flex items-start gap-3 text-steel-300 font-vazir">
-                      <CheckCircle2 className="w-5 h-5 text-signal-500 shrink-0 mt-0.5" />
-                      <span className="leading-relaxed">{feat}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </section>
-
-            {service.subcategories && service.subcategories.length > 0 && (
-              <section className="space-y-6">
-                <h2 className="text-2xl font-black text-white font-vazir border-r-4 border-signal-500 pr-4">
-                  انواع سیستم‌ها و زیرمجموعه‌ها
-                </h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {service.subcategories.map((sub, idx) => (
-                    <div key={idx} className="bg-ink-950 border border-ink-800 rounded-xl p-6 space-y-3 metal-shadow hover:border-signal-500/30 transition-colors">
-                      <h3 className="text-lg font-bold text-white font-vazir">{sub.name}</h3>
-                      <p className="text-sm text-steel-400 leading-relaxed font-vazir">{sub.description}</p>
-                    </div>
-                  ))}
-                </div>
-              </section>
-            )}
-          </div>
-
-          {/* Sidebar */}
-          <div className="space-y-8 relative">
-            {service.technicalSpecs && (
-              <SpecTable specs={service.technicalSpecs} />
-            )}
-
-            <div className="bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blood-900/20 via-ink-900 to-ink-950 border border-signal-500/20 rounded-xl p-6 md:p-8 space-y-6 text-center metal-shadow sticky top-24">
-              <ShieldCheck className="w-12 h-12 text-signal-500 mx-auto" />
-              <div className="space-y-2">
-                <h4 className="text-xl font-black text-white font-vazir">مشاوره تخصصی رایگان</h4>
-                <p className="text-sm text-steel-300 leading-relaxed font-vazir">
-                  تیم مهندسی ما آماده ارائه مشاوره، برآورد متراژ و پیش‌فاکتور دقیق برای پروژه شماست.
-                </p>
-              </div>
-              
-              <div className="space-y-3 pt-2">
-                <a href={`tel:${telHref(settings.phone)}`} className="flex items-center justify-center gap-2 w-full py-3 bg-signal-500 hover:bg-signal-400 text-white font-bold rounded-lg transition-colors font-sans">
-                  <Phone className="w-5 h-5" />
-                  <bdi dir="ltr" style={{ unicodeBidi: 'isolate' }}>{settings.phone}</bdi>
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <ServiceDetailClient service={service} settings={settings} imgSrc={imgSrc} />
     </>
   );
 }
- 

@@ -1,38 +1,27 @@
+"use client";
+
 import React from "react";
 import { SectionHeading } from "../ui/SectionHeading";
 import { Reveal } from "../ui/Reveal";
-import { PenTool, Cog, Factory, Hammer, ShieldCheck } from "lucide-react";
+import { PenTool, Factory, Hammer, ShieldCheck } from "lucide-react";
+import { useLanguage } from "@/lib/i18n/context";
 
 export function Process() {
-  const steps = [
-    {
-      title: "طراحی و محاسبات",
-      desc: "تهیه نقشه‌های شاپ‌دراوینگ، محاسبات استاتیکی ممان اینرسی و انتخاب سیستم مناسب.",
-      icon: PenTool,
-    },
-    {
-      title: "ساخت و تولید",
-      desc: "تولید صنعتی و مونتاژ دقیق در کارخانه ۱۵۰۰ متری مجهز به ماشین‌آلات پیشرفته دیجیتال.",
-      icon: Factory,
-    },
-    {
-      title: "نصب و تحویل",
-      desc: "حمل ایمن، نصب مهندسی، رگلاژ دقیق، تست هوابندی و آب‌بندی و تحویل رسمی پروژه.",
-      icon: Hammer,
-    },
-    {
-      title: "پشتیبانی و گارانتی",
-      desc: "ارائه خدمات پس از فروش مداوم، تامین قطعات و ضمانت‌نامه کتبی کیفیت اجرا.",
-      icon: ShieldCheck,
-    },
-  ];
+  const { dict, dir, isRTL } = useLanguage();
+
+  const icons = [PenTool, Factory, Hammer, ShieldCheck];
+
+  const steps = dict.process.steps.map((step, idx) => ({
+    ...step,
+    icon: icons[idx] || PenTool,
+  }));
 
   return (
-    <section className="py-16 md:py-24 max-w-[1440px] mx-auto px-4 sm:px-6 relative z-10" dir="rtl">
+    <section className="py-16 md:py-24 max-w-[1440px] mx-auto px-4 sm:px-6 relative z-10" dir={dir}>
       <Reveal>
         <SectionHeading 
-          title="فرآیند مهندسی و اجرای پروژه‌ها" 
-          subtitle="از طراحی معماری تا نصب نهایی" 
+          title={dict.process.headingTitle} 
+          subtitle={dict.process.headingSubtitle} 
           centered={true}
         />
       </Reveal>
@@ -51,7 +40,7 @@ export function Process() {
                     <div className="absolute inset-0 bg-signal-500/0 group-hover:bg-signal-500/10 transition-colors" />
                     <Icon className="w-10 h-10 text-signal-500" />
                     {/* Number badge */}
-                    <div className="absolute top-2 right-2 w-6 h-6 rounded-full bg-ink-950 text-white flex items-center justify-center text-xs font-black">
+                    <div className={`absolute top-2 ${isRTL ? 'right-2' : 'left-2'} w-6 h-6 rounded-full bg-ink-950 text-white flex items-center justify-center text-xs font-black`}>
                       {idx + 1}
                     </div>
                   </div>

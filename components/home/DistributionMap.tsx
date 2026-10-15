@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import iranProvinces from "@/data/iran_provinces.json";
 import { MapPin, Building, ShieldCheck, Truck, Navigation } from "lucide-react";
+import { useLanguage } from "@/lib/i18n/context";
 
 interface CityNode {
   id: string;
@@ -18,6 +19,7 @@ interface CityNode {
 }
 
 export function DistributionMap() {
+  const { dict, dir, isRTL } = useLanguage();
   const [inView, setInView] = useState(false);
   const [isZoomed, setIsZoomed] = useState(true);
   const [animationPhase, setAnimationPhase] = useState<"idle" | "zooming" | "flowing">("idle");
@@ -26,131 +28,107 @@ export function DistributionMap() {
   const sectionRef = useRef<HTMLElement>(null);
 
   // Center coordinate of Isfahan Hub (exact center of Isfahan province)
-  const ISFAHAN = { x: 505, y: 520, name: "اصفهان", label: "کارخانه مرکزی و دفتر مهندسی" };
+  const ISFAHAN = {
+    x: 505,
+    y: 520,
+    name: dict.distribution.hubName,
+    label: dict.distribution.hubLabel,
+  };
 
-  // Key nationwide distribution destinations
-  const CITIES: CityNode[] = [
+  // Raw geometric and trajectory nodes
+  const RAW_CITIES = [
     {
       id: "tehran",
-      name: "تهران و البرز",
-      province: "استان تهران و البرز",
       x: 495,
       y: 345,
       path: "M 505 520 Q 498 430, 495 345",
-      labelPos: "top",
-      projects: "بیش از ۱۸ برج اداری، سفارت و مجتمع مسکونی لوکس",
-      systemTypes: "کرتین‌وال لامل، پنجره‌های ترمال‌بریک TH 68 و فریم‌لس",
+      labelPos: "top" as const,
       delay: 0.2,
     },
     {
       id: "mashhad",
-      name: "مشهد",
-      province: "خراسان رضوی",
       x: 955,
       y: 310,
       path: "M 505 520 Q 730 390, 955 310",
-      labelPos: "top-right",
-      projects: "۸ مجتمع بزرگ هتلی و مراکز تجاری شاخص",
-      systemTypes: "نمای شیشه‌ای یکپارچه، ترمال‌بریک لیفت‌اند‌اسلاید",
+      labelPos: "top-right" as const,
       delay: 0.4,
     },
     {
       id: "tabriz",
-      name: "تبریز",
-      province: "آذربایجان شرقی و غربی",
       x: 195,
       y: 155,
       path: "M 505 520 Q 340 330, 195 155",
-      labelPos: "top-left",
-      projects: "سیستم‌های دوجداره مهندسی مقاوم در برابر برودت کوهستانی",
-      systemTypes: "پروفیل‌های اختصاصی با پلی‌آمید ۲۴ میلی‌متری و گاز آرگون",
+      labelPos: "top-left" as const,
       delay: 0.3,
     },
     {
       id: "shiraz",
-      name: "شیراز",
-      province: "فارس و بوشهر",
       x: 585,
       y: 775,
       path: "M 505 520 Q 535 650, 585 775",
-      labelPos: "bottom",
-      projects: "ویلاهای لوکس اختصاصی و مجتمع‌های اداری مدرن",
-      systemTypes: "درب و پنجره‌های کشویی TS 143، هندریل شیشه‌ای",
+      labelPos: "bottom" as const,
       delay: 0.5,
     },
     {
       id: "ahvaz",
-      name: "اهواز",
-      province: "خوزستان",
       x: 310,
       y: 670,
       path: "M 505 520 Q 380 580, 310 670",
-      labelPos: "bottom-left",
-      projects: "پروژه‌های صنعتی و ساختمانی با عایق‌بندی فوق‌العاده حرارتی",
-      systemTypes: "پنجره‌های هوابند و گردوغبار‌بند با گسکت‌های EPDM اصل",
+      labelPos: "bottom-left" as const,
       delay: 0.6,
     },
     {
       id: "bandar_abbas",
-      name: "بندرعباس و کیش",
-      province: "هرمزگان",
       x: 820,
       y: 950,
       path: "M 505 520 Q 660 740, 820 950",
-      labelPos: "bottom-right",
-      projects: "هتل‌های ساحلی و مجموعه‌های توریستی جزایر خلیج فارس",
-      systemTypes: "آنودایز شامپاین و ضدشوره‌زدگی با مقاومت در برابر نمک دریایی",
+      labelPos: "bottom-right" as const,
       delay: 0.7,
     },
     {
       id: "north",
-      name: "مازندران و گیلان",
-      province: "سواحل شمالی",
       x: 420,
       y: 220,
       path: "M 505 520 Q 450 370, 420 220",
-      labelPos: "top-left",
-      projects: "ویلاهای مدرن جنگلی و ساحلی رامسر، نوشهر و رشت",
-      systemTypes: "پنجره‌های قدی لیفت‌اند‌اسلاید با تلفیق ترموود فنلاندی",
+      labelPos: "top-left" as const,
       delay: 0.5,
     },
     {
       id: "kerman",
-      name: "کرمان",
-      province: "کرمان و جنوب شرق",
       x: 770,
       y: 710,
       path: "M 505 520 Q 640 600, 770 710",
-      labelPos: "right",
-      projects: "مجتمع‌های اداری، بانکی و صنعتی",
-      systemTypes: "کامپوزیت آلومینیوم ضدحریق و پنجره‌های نرمال آکپای",
+      labelPos: "right" as const,
       delay: 0.8,
     },
     {
       id: "yazd",
-      name: "یزد",
-      province: "یزد",
       x: 620,
       y: 575,
       path: "M 505 520 Q 560 545, 620 575",
-      labelPos: "right",
-      projects: "ساختمان‌های همساز با اقلیم گرم و خشک کویری",
-      systemTypes: "شیشه‌های کنترل‌کننده تابش Low-E و عایق آکوستیک",
+      labelPos: "right" as const,
       delay: 0.9,
     },
     {
       id: "kermanshah",
-      name: "کرمانشاه و غرب",
-      province: "کرمانشاه، همدان و کردستان",
       x: 210,
       y: 440,
       path: "M 505 520 Q 340 470, 210 440",
-      labelPos: "left",
-      projects: "شعب مرکزی بانک‌ها و پروژه‌های مسکونی",
-      systemTypes: "حفاظ و نرده‌های استیل و پنجره‌های لولایی دوحالته",
+      labelPos: "left" as const,
       delay: 0.6,
     },
   ];
+
+  const CITIES: CityNode[] = RAW_CITIES.map((c) => {
+    const data = dict.distribution.cities[c.id];
+    return {
+      ...c,
+      name: data?.name || c.id,
+      province: data?.province || "",
+      projects: data?.projects || "",
+      systemTypes: data?.systemTypes || "",
+    };
+  });
 
   // Trigger camera zoom-out when user scrolls to section
   useEffect(() => {
@@ -200,7 +178,7 @@ export function DistributionMap() {
       ref={sectionRef}
       id="distribution"
       className="relative w-full py-20 md:py-28 overflow-hidden bg-gradient-to-b from-[#0a0002] via-[#160005] to-[#0a0002] text-white border-t border-[#ab0017]/20"
-      dir="rtl"
+      dir={dir}
     >
       {/* Background radial glow */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_45%,_rgba(171,0,23,0.18)_0%,_transparent_65%)] pointer-events-none" />
@@ -209,10 +187,10 @@ export function DistributionMap() {
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto space-y-4 mb-10 md:mb-14">
           <h2 className="text-3xl sm:text-5xl font-black font-vazir text-white tracking-tight">
-            DISTRIBUTION
+            {dict.distribution.heading}
           </h2>
           <p className="text-base sm:text-lg text-steel-200 font-vazir leading-relaxed">
-            طراحی مهندسی و ساخت صنعتی در کارخانه اصفهان؛ ارسال و اجرای تخصصی در سراسر ایران
+            {dict.distribution.subtitle}
           </p>
         </div>
 
@@ -459,7 +437,7 @@ export function DistributionMap() {
                         x={dx}
                         y={dy}
                         textAnchor={textAnchor}
-                        direction="rtl"
+                        direction={isRTL ? "rtl" : "ltr"}
                         fill="#000000"
                         stroke="#000000"
                         strokeWidth="3.5"
@@ -475,7 +453,7 @@ export function DistributionMap() {
                         x={dx}
                         y={dy}
                         textAnchor={textAnchor}
-                        direction="rtl"
+                        direction={isRTL ? "rtl" : "ltr"}
                         fill={isHovered ? "#ff2a4b" : "#ffffff"}
                         fontSize="15"
                         fontWeight="900"
@@ -533,14 +511,14 @@ export function DistributionMap() {
                     x="0"
                     y="5"
                     textAnchor="middle"
-                    direction="rtl"
+                    direction={isRTL ? "rtl" : "ltr"}
                     fill="#ffffff"
                     fontSize="16"
                     fontWeight="900"
                     fontFamily="Vazirmatn, Tahoma, sans-serif"
                     className="drop-shadow-md select-none"
                   >
-                    اصفهان
+                    {ISFAHAN.name}
                   </text>
                 </g>
               </g>
@@ -568,25 +546,25 @@ export function DistributionMap() {
                   </p>
                 </div>
               </div>
-              <div className="text-right sm:text-left shrink-0 self-start sm:self-center">
+              <div className={`${isRTL ? 'text-right sm:text-left' : 'text-left sm:text-right'} shrink-0 self-start sm:self-center`}>
                 <span className="text-[11px] text-signal-400 font-vazir font-bold block">
-                  ارسال مستقیم از کارخانه نجف‌آباد
+                  {dict.distribution.directShipment}
                 </span>
                 <span className="text-[10px] text-steel-400 font-vazir block">
-                  بسته‌بندی ایمن بر پالت چوبی استاندارد
+                  {dict.distribution.safePackaging}
                 </span>
               </div>
             </div>
           )}
 
           {/* Bottom Highlights Strip */}
-          <div className="mt-8 pt-6 border-t border-[#ab0017]/20 grid grid-cols-1 sm:grid-cols-3 gap-4 text-right">
+          <div className={`mt-8 pt-6 border-t border-[#ab0017]/20 grid grid-cols-1 sm:grid-cols-3 gap-4 ${isRTL ? 'text-right' : 'text-left'}`}>
             <div className="flex items-start gap-3 p-3 rounded-xl bg-ink-950/50 border border-white/5">
               <Building className="w-5 h-5 text-signal-500 shrink-0 mt-0.5" />
               <div>
-                <div className="text-xs font-bold text-white font-vazir">مرکز ثقل تولید</div>
+                <div className="text-xs font-bold text-white font-vazir">{dict.distribution.pillar1Title}</div>
                 <div className="text-[11px] text-steel-400 font-vazir leading-relaxed mt-0.5">
-                  کارخانه ۱۵۰۰ متری مجهز به ماشین‌آلات برش دقیق و خط مونتاژ صنعتی
+                  {dict.distribution.pillar1Desc}
                 </div>
               </div>
             </div>
@@ -594,9 +572,9 @@ export function DistributionMap() {
             <div className="flex items-start gap-3 p-3 rounded-xl bg-ink-950/50 border border-white/5">
               <Truck className="w-5 h-5 text-signal-500 shrink-0 mt-0.5" />
               <div>
-                <div className="text-xs font-bold text-white font-vazir">لجستیک اختصاصی سراسری</div>
+                <div className="text-xs font-bold text-white font-vazir">{dict.distribution.pillar2Title}</div>
                 <div className="text-[11px] text-steel-400 font-vazir leading-relaxed mt-0.5">
-                  حمل ایمن شیشه‌های دوجداره جام‌ویژه و پروفیل‌های آنودایز بدون کوچکترین خط و خش
+                  {dict.distribution.pillar2Desc}
                 </div>
               </div>
             </div>
@@ -604,9 +582,9 @@ export function DistributionMap() {
             <div className="flex items-start gap-3 p-3 rounded-xl bg-ink-950/50 border border-white/5">
               <ShieldCheck className="w-5 h-5 text-signal-500 shrink-0 mt-0.5" />
               <div>
-                <div className="text-xs font-bold text-white font-vazir">تیم‌های نصب آموزش‌دیده</div>
+                <div className="text-xs font-bold text-white font-vazir">{dict.distribution.pillar3Title}</div>
                 <div className="text-[11px] text-steel-400 font-vazir leading-relaxed mt-0.5">
-                  اعزام نصاب‌های متخصص جهت اجرای محاسباتی کرتین‌وال و پنجره‌های ترمال‌بریک
+                  {dict.distribution.pillar3Desc}
                 </div>
               </div>
             </div>

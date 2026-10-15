@@ -6,6 +6,7 @@ import { Button } from "../ui/Button";
 import { Reveal } from "../ui/Reveal";
 import { ChevronDown } from "lucide-react";
 import { withBasePath } from "@/lib/media";
+import { useLanguage } from "@/lib/i18n/context";
 
 export function Hero({ establishedYear, factoryArea: factoryAreaRaw, projectCount }: { establishedYear: number; factoryArea: string; projectCount: number }) {
   const sectionRef = useRef<HTMLElement>(null);
@@ -22,16 +23,14 @@ export function Hero({ establishedYear, factoryArea: factoryAreaRaw, projectCoun
   const rafIdRef = useRef<number | null>(null);
   const isHeroInViewRef = useRef(true);
 
-  const abilities = [
-    "انواع درب و پنجره‌های دوجداره آلومینیوم ترمال‌بریک و نرمال",
-    "نماهای مدرن شیشه‌ای کرتین‌وال (لامل و فریم‌لس)",
-    "سیستم مدرن جام‌بالکنی (شیشه بالکن ریلی و تاشو آکاردئونی)",
-    "نمای پانل کامپوزیت آلومینیوم و لوورهای دوکی شیدری",
-    "سازه‌های مهندسی شیشه‌ای اسپایدر و اسکای‌لایت نورگیر",
-    "نرده و هندریل‌های اختصاصی تمام‌شیشه‌ای و حفاظ استیل ضدزنگ",
-  ];
+  const { t, dict, locale, dir, isRTL } = useLanguage();
+  const abilities = dict.hero.abilities;
 
   const [currentAbilityIndex, setCurrentAbilityIndex] = useState(0);
+
+  useEffect(() => {
+    setCurrentAbilityIndex(0);
+  }, [locale]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -192,7 +191,7 @@ export function Hero({ establishedYear, factoryArea: factoryAreaRaw, projectCoun
     <section
       ref={sectionRef}
       className="relative h-[100svh] min-h-[580px] md:min-h-[720px] w-full flex items-center justify-center overflow-hidden"
-      dir="rtl"
+      dir={dir}
     >
       {/* Background Image: High-resolution architectural building with slow depth parallax */}
       <div ref={bgRef} className="hero-parallax-layer hero-bg-parallax absolute inset-0 z-0" data-layer="bg">
@@ -292,10 +291,12 @@ export function Hero({ establishedYear, factoryArea: factoryAreaRaw, projectCoun
 
       <div className="relative z-10 max-w-[1440px] w-full mx-auto px-4 sm:px-6 text-center mt-4 md:mt-8 pb-16 sm:pb-20">
         <Reveal>
-          <h1 className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-normal text-white mb-6 font-lalezar drop-shadow-2xl tracking-normal">
-            نوآوران پنجره سپاهان
+          <h1 className={`text-4xl sm:text-6xl md:text-8xl lg:text-9xl font-normal text-white mb-6 drop-shadow-2xl tracking-normal ${
+            locale === 'fa' ? 'font-lalezar' : (locale === 'ar' ? 'font-vazir font-black' : 'font-sans font-black tracking-tight')
+          }`}>
+            {t('hero.headline')}
             <span className="block text-xl sm:text-2xl md:text-3xl text-signal-500 font-bold font-vazir mt-4">
-              طراحی و تولید کننده صنعتی
+              {t('hero.subtitle')}
             </span>
           </h1>
 
@@ -309,7 +310,7 @@ export function Hero({ establishedYear, factoryArea: factoryAreaRaw, projectCoun
               </span>
 
               <h2
-                key={currentAbilityIndex}
+                key={`${locale}-${currentAbilityIndex}`}
                 className="animate-banner-carousel text-base sm:text-xl md:text-2xl font-black font-vazir text-white tracking-wide"
               >
                 {abilities[currentAbilityIndex]}
@@ -323,7 +324,7 @@ export function Hero({ establishedYear, factoryArea: factoryAreaRaw, projectCoun
                   key={idx}
                   onClick={() => setCurrentAbilityIndex(idx)}
                   className="min-w-[28px] min-h-[28px] flex items-center justify-center p-1 focus:outline-none"
-                  aria-label={`آیتم ${idx + 1}`}
+                  aria-label={`Item ${idx + 1}`}
                 >
                   <span
                     className={`h-1 rounded-full transition-all duration-500 ${
@@ -339,10 +340,10 @@ export function Hero({ establishedYear, factoryArea: factoryAreaRaw, projectCoun
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Button variant="primary" href="/contact" className="w-full sm:w-auto text-lg px-10 py-4 shadow-xl rounded-lg">
-              درخواست مشاوره
+              {t('hero.ctaConsultation')}
             </Button>
             <Button variant="steel" href="/projects" className="w-full sm:w-auto text-lg px-10 py-4 shadow-xl rounded-lg">
-              مشاهده پروژه‌ها
+              {t('hero.ctaProjects')}
             </Button>
           </div>
         </Reveal>
@@ -352,7 +353,7 @@ export function Hero({ establishedYear, factoryArea: factoryAreaRaw, projectCoun
       <a
         href="#services"
         className="absolute bottom-8 sm:bottom-12 left-1/2 -translate-x-1/2 flex items-center justify-center w-12 h-12 rounded-full bg-black/40 border border-white/10 opacity-80 hover:opacity-100 transition-all hover:bg-black/60 focus-visible z-20"
-        aria-label="رفتن به بخش خدمات"
+        aria-label={t('hero.scrollAria')}
       >
         <ChevronDown className="w-6 h-6 text-signal-500 animate-bounce" />
       </a>

@@ -1,8 +1,13 @@
+"use client";
+
 import React from 'react';
 import Link from 'next/link';
-import { ChevronLeft, Home } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Home } from 'lucide-react';
+import { useLanguage } from '@/lib/i18n/context';
 
 export function Breadcrumbs({ items }: { items: { label: string, href?: string }[] }) {
+  const { dict, isRTL, dir } = useLanguage();
+
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -10,7 +15,7 @@ export function Breadcrumbs({ items }: { items: { label: string, href?: string }
       {
         "@type": "ListItem",
         "position": 1,
-        "name": "خانه",
+        "name": dict.common.home,
         "item": "https://noavaranpanjereh.com/"
       },
       ...items.map((item, index) => ({
@@ -22,17 +27,19 @@ export function Breadcrumbs({ items }: { items: { label: string, href?: string }
     ]
   };
 
+  const Chevron = isRTL ? ChevronLeft : ChevronRight;
+
   return (
-    <nav aria-label="Breadcrumb" className="w-full bg-ink-950 border-b border-white/5 py-3">
+    <nav aria-label="Breadcrumb" className="w-full bg-ink-950 border-b border-white/5 py-3" dir={dir}>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <div className="max-w-[1440px] mx-auto px-4 md:px-8 flex items-center gap-2 text-xs font-vazir text-steel-400 overflow-x-auto whitespace-nowrap">
         <Link href="/" className="hover:text-white transition-colors flex items-center gap-1 shrink-0">
           <Home className="w-3.5 h-3.5" />
-          <span className="sr-only">خانه</span>
+          <span className="sr-only">{dict.common.home}</span>
         </Link>
         {items.map((item, index) => (
           <React.Fragment key={index}>
-            <ChevronLeft className="w-3.5 h-3.5 shrink-0 opacity-50" />
+            <Chevron className="w-3.5 h-3.5 shrink-0 opacity-50" />
             {item.href ? (
               <Link href={item.href} className="hover:text-white transition-colors shrink-0">
                 {item.label}

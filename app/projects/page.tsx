@@ -1,8 +1,6 @@
 import React from 'react';
 import type { Metadata } from 'next';
 import { getProjects } from '@/lib/db';
-import { PageHero } from '@/components/ui/PageHero';
-import { Breadcrumbs } from '@/components/ui/Breadcrumbs';
 import { ProjectsListClient } from './ProjectsListClient';
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://noavaranpanjereh.com';
@@ -63,10 +61,6 @@ export default async function ProjectsPage() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListLd) }}
-      />
-      <Breadcrumbs items={[{ label: 'پروژه‌های اجرا شده' }]} />
-      <PageHero 
-        title="پروژه‌های شاخص و نمونه‌کارهای اجرایی" 
       />
       <ProjectsListClient projects={projects} />
     </>
