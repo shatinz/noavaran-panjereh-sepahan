@@ -1,9 +1,9 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import AdminNav from '@/components/AdminNav';
 import { ArticleItem } from '@/lib/db';
-import { Plus, Edit2, Trash2, X, Check, FileText, Upload, Image as ImageIcon, Loader2 } from 'lucide-react';
+import { Plus, Edit2, Trash2, X, Check, FileText, Upload, Image as ImageIcon, Loader2, ExternalLink } from 'lucide-react';
 import ImageUploadField from '@/components/admin/ImageUploadField';
 
 export default function AdminArticlesPage() {
@@ -12,6 +12,7 @@ export default function AdminArticlesPage() {
   const [modalOpen, setModalOpen] = useState(false);
   const [editingArticle, setEditingArticle] = useState<ArticleItem | null>(null);
   const [contentUploading, setContentUploading] = useState(false);
+  const [cursorPos, setCursorPos] = useState<number | null>(null);
   const contentFileInputRef = useRef<HTMLInputElement>(null);
 
   const [form, setForm] = useState({
@@ -89,11 +90,22 @@ export default function AdminArticlesPage() {
       });
       const data = await res.json();
       if (res.ok && data.url) {
-        const imageTag = `\n\n<figure class="my-6 text-center"><img src="${data.url}" alt="${form.title || 'تصویر مقاله'}" class="rounded-xl mx-auto max-h-96 object-contain" /><figcaption class="text-xs text-steel-400 mt-2">تصویر: ${form.title || ''}</figcaption></figure>\n\n`;
-        setForm((prev) => ({
-          ...prev,
-          content: prev.content ? `${prev.content}${imageTag}` : imageTag.trim(),
-        }));
+        const imageTag = `\n\n<figure class="my-6 text-center"><img src="${data.url}" alt="${form.title || 'تصویر مقاله'}" class="rounded-xl mx-auto max-h-96 object-contain shadow-lg" /><figcaption class="text-xs text-steel-400 mt-2">تصویر: ${form.title || 'توضیحات تصویر'}</figcaption></figure>\n\n`;
+        setForm((prev) => {
+          const pos = cursorPos;
+          if (pos !== null && pos >= 0 && pos <= prev.content.length) {
+            const before = prev.content.slice(0, pos);
+            const after = prev.content.slice(pos);
+            return {
+              ...prev,
+              content: `${before}${imageTag}${after}`,
+            };
+          }
+          return {
+            ...prev,
+            content: prev.content ? `${prev.content}${imageTag}` : imageTag.trim(),
+          };
+        });
       } else {
         alert(data.error || 'خطا در بارگذاری تصویر');
       }
@@ -103,6 +115,58 @@ export default function AdminArticlesPage() {
     } finally {
       setContentUploading(false);
       if (contentFileInputRef.current) contentFileInputRef.current.value = '';
+    }
+  };
+
+  // Extract all image URLs currently embedded in article content
+  const contentImages = useMemo(() => {
+    if (!form.content) return [];
+    const imgRegex = /<img[^>]+src=["']([^"']+)["'][^>]*>/gi;
+    const mdRegex = /!\[.*?\]\((.*?)\)/gi;
+    const found: string[] = [];
+    let match;
+    while ((match = imgRegex.exec(form.content)) !== null) {
+      if (!found.includes(match[1])) found.push(match[1]);
+    }
+    while ((match = mdRegex.exec(form.content)) !== null) {
+      if (!found.includes(match[1])) found.push(match[1]);
+    }
+    return found;
+  }, [form.content]);
+
+  // Delete an embedded image from both article content and server storage
+  const handleDeleteContentImage = async (targetUrl: string) => {
+    if (!confirm('آیا از حذف این تصویر از متن مقاله و سرور اطمینان دارید؟')) return;
+
+    let updatedContent = form.content;
+    const escapedUrl = targetUrl.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+    // Remove <figure> wrapping this image
+    const figureRegex = new RegExp(`\\s*<figure[^>]*>\\s*<img[^>]*src=["']${escapedUrl}["'][^>]*>(?:(?!<\\/figure>).)*<\\/figure>\\s*`, 'gis');
+    updatedContent = updatedContent.replace(figureRegex, '\n\n');
+
+    // Remove standalone <img>
+    const standaloneImgRegex = new RegExp(`\\s*<img[^>]*src=["']${escapedUrl}["'][^>]*>\\s*`, 'gi');
+    updatedContent = updatedContent.replace(standaloneImgRegex, '\n');
+
+    // Remove markdown image ![...](...)
+    const mdRegex = new RegExp(`\\s*!\\[[^\\]]*\\]\\(${escapedUrl}\\)\\s*`, 'gi');
+    updatedContent = updatedContent.replace(mdRegex, '\n');
+
+    // Clean up excessive newlines
+    updatedContent = updatedContent.replace(/\n{3,}/g, '\n\n').trim();
+
+    setForm((prev) => ({ ...prev, content: updatedContent }));
+
+    // Delete the file from the server if it was locally uploaded to /uploads/
+    if (targetUrl.startsWith('/uploads/')) {
+      try {
+        await fetch(`/api/admin/upload?url=${encodeURIComponent(targetUrl)}`, {
+          method: 'DELETE',
+        });
+      } catch (err) {
+        console.error('Failed to delete file from disk:', err);
+      }
     }
   };
 
@@ -331,15 +395,22 @@ export default function AdminArticlesPage() {
               </div>
 
               <div>
-                <div className="flex items-center justify-between mb-1">
-                  <label className="text-titanium-300 font-medium">متن کامل مقاله:</label>
+                <div className="flex items-center justify-between mb-1.5">
+                  <label className="text-titanium-300 font-medium flex items-center gap-2">
+                    <span>متن کامل مقاله:</span>
+                    {contentImages.length > 0 && (
+                      <span className="px-2 py-0.5 rounded-full bg-bronze-500/20 text-bronze-400 text-[10px] font-mono font-bold">
+                        {contentImages.length} تصویر درج‌شده
+                      </span>
+                    )}
+                  </label>
                   <div className="flex items-center gap-2">
                     <button
                       type="button"
                       onClick={() => contentFileInputRef.current?.click()}
                       disabled={contentUploading}
                       className="text-[11px] text-bronze-400 hover:text-bronze-300 flex items-center gap-1.5 bg-bronze-500/10 hover:bg-bronze-500/20 px-2.5 py-1 rounded-lg border border-bronze-500/30 transition-colors"
-                      title="آپلود تصویر و قرارگیری خودکار در انتهای متن مقاله"
+                      title="آپلود تصویر و قرارگیری در متن مقاله"
                     >
                       {contentUploading ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Upload className="w-3.5 h-3.5" />}
                       <span>{contentUploading ? 'درحال آپلود...' : 'افزودن تصویر به متن مقاله'}</span>
@@ -358,8 +429,75 @@ export default function AdminArticlesPage() {
                   required
                   value={form.content}
                   onChange={(e) => setForm({ ...form, content: e.target.value })}
+                  onSelect={(e) => setCursorPos((e.target as HTMLTextAreaElement).selectionStart)}
+                  onKeyUp={(e) => setCursorPos((e.target as HTMLTextAreaElement).selectionStart)}
+                  onClick={(e) => setCursorPos((e.target as HTMLTextAreaElement).selectionStart)}
+                  placeholder="متن مقاله را اینجا بنویسید یا با استفاده از دکمه بالا تصویر درج نمایید..."
                   className="w-full p-2.5 rounded-xl bg-charcoal-850 border border-charcoal-700 text-white leading-relaxed focus:border-bronze-500 focus:outline-none"
                 />
+
+                {/* List of embedded images with direct delete option */}
+                {contentImages.length > 0 && (
+                  <div className="mt-2.5 p-3 rounded-2xl bg-charcoal-950/90 border border-charcoal-800 space-y-2">
+                    <div className="flex items-center justify-between">
+                      <span className="text-[11px] font-bold text-titanium-300 flex items-center gap-1.5">
+                        <ImageIcon className="w-3.5 h-3.5 text-bronze-400" />
+                        <span>تصاویر درج‌شده در متن این مقاله ({contentImages.length}):</span>
+                      </span>
+                      <span className="text-[10px] text-titanium-500">
+                        جهت حذف هر عکس از متن مقاله و سرور، دکمه «حذف تصویر» را بزنید
+                      </span>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 max-h-56 overflow-y-auto pr-1">
+                      {contentImages.map((imgUrl, idx) => {
+                        const filename = imgUrl.split('/').pop() || imgUrl;
+                        return (
+                          <div
+                            key={`${imgUrl}-${idx}`}
+                            className="flex items-center gap-2.5 p-2 rounded-xl bg-charcoal-900 border border-charcoal-800 hover:border-charcoal-700 transition-colors"
+                          >
+                            <div className="w-14 h-12 rounded-lg bg-charcoal-950 overflow-hidden border border-charcoal-750 shrink-0">
+                              <img
+                                src={imgUrl}
+                                alt="Article photo"
+                                className="w-full h-full object-cover"
+                              />
+                            </div>
+
+                            <div className="flex-1 min-w-0 text-right">
+                              <p className="text-[11px] text-white font-mono truncate" dir="ltr" title={imgUrl}>
+                                {filename}
+                              </p>
+                              <div className="flex items-center gap-1.5 mt-1.5">
+                                <a
+                                  href={imgUrl}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="text-[10px] text-titanium-400 hover:text-white flex items-center gap-0.5 bg-charcoal-800 px-2 py-0.5 rounded transition-colors"
+                                  title="مشاهده اندازه اصلی"
+                                >
+                                  <ExternalLink className="w-3 h-3" />
+                                  <span>نمایش</span>
+                                </a>
+
+                                <button
+                                  type="button"
+                                  onClick={() => handleDeleteContentImage(imgUrl)}
+                                  className="text-[10px] text-rose-400 hover:text-rose-300 flex items-center gap-0.5 bg-rose-500/10 hover:bg-rose-500/20 px-2 py-0.5 rounded border border-rose-500/20 transition-colors mr-auto"
+                                  title="حذف کامل این تصویر از متن مقاله و سرور"
+                                >
+                                  <Trash2 className="w-3 h-3" />
+                                  <span>حذف تصویر</span>
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
               </div>
 
               <div className="flex justify-end gap-3 pt-4 border-t border-charcoal-800">

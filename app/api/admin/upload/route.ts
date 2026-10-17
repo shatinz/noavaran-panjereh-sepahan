@@ -47,3 +47,41 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'خطا در بارگذاری فایل' }, { status: 500 });
   }
 }
+
+export async function DELETE(request: Request) {
+  try {
+    const { searchParams } = new URL(request.url);
+    const url = searchParams.get('url') || searchParams.get('filename') || searchParams.get('path');
+
+    if (!url) {
+      return NextResponse.json({ error: 'آدرس یا نام فایل ارسال نشده است.' }, { status: 400 });
+    }
+
+    const clean = url.split('?')[0].split('#')[0];
+    const safeBase = path.basename(clean);
+
+    // Verify allowed extensions to prevent arbitrary file deletion
+    const ext = path.extname(safeBase).toLowerCase();
+    if (!['.jpg', '.jpeg', '.png', '.webp', '.gif'].includes(ext)) {
+      return NextResponse.json({ error: 'فرمت فایل نامعتبر است.' }, { status: 400 });
+    }
+
+    const uploadsDir = path.join(process.cwd(), 'public', 'uploads');
+    const targetPath = path.join(uploadsDir, safeBase);
+
+    // Ensure target path is strictly inside uploadsDir
+    if (!targetPath.startsWith(uploadsDir + path.sep) && targetPath !== uploadsDir) {
+      return NextResponse.json({ error: 'دسترسی غیرمجاز به مسیر فایل' }, { status: 403 });
+    }
+
+    if (fs.existsSync(targetPath)) {
+      fs.unlinkSync(targetPath);
+      return NextResponse.json({ success: true, message: 'فایل با موفقیت از سرور حذف شد.', filename: safeBase });
+    }
+
+    return NextResponse.json({ success: true, message: 'فایل در حافظه سرور یافت نشد.', filename: safeBase });
+  } catch (error) {
+    console.error('Delete upload error:', error);
+    return NextResponse.json({ error: 'خطا در حذف فایل از سرور' }, { status: 500 });
+  }
+}

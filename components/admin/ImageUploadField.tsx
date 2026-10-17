@@ -98,10 +98,22 @@ export default function ImageUploadField({
     }
   };
 
-  const handleRemove = (e: React.MouseEvent) => {
+  const handleRemove = async (e: React.MouseEvent) => {
     e.stopPropagation();
+    const currentUrl = value;
     onChange('');
     setErrorMessage('');
+
+    // If the image was uploaded locally to /uploads/, remove it from server storage
+    if (currentUrl && currentUrl.startsWith('/uploads/')) {
+      try {
+        await fetch(`/api/admin/upload?url=${encodeURIComponent(currentUrl)}`, {
+          method: 'DELETE',
+        });
+      } catch (err) {
+        console.error('Failed to delete file from server:', err);
+      }
+    }
   };
 
   return (
