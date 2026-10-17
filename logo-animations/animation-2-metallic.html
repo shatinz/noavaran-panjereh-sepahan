@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>نوآوران پنجره سپاهان — انیمیشن ۲: کوره صنعتی و اکستروژن آلومینیوم</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --brand-red: #9B2130;
+    --brand-ember: #ff3344;
+    --brand-gold: #ffaa44;
+    --brand-dark: #0a090b;
+    --brand-steel: #232226;
+  }
+
+  body {
+    background: radial-gradient(circle at center, #181114 0%, #0c0a0c 60%, #050506 100%);
+    color: #f1f5f9;
+    font-family: system-ui, -apple-system, 'Segoe UI', Tahoma, Arial, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+    user-select: none;
+  }
+
+  /* Brushed Steel Texture Overlay */
+  .metal-texture {
+    position: absolute;
+    inset: 0;
+    background-image: 
+      radial-gradient(ellipse at 50% 50%, rgba(155, 33, 48, 0.15) 0%, transparent 65%),
+      repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.015) 0px, rgba(255, 255, 255, 0.015) 1px, transparent 1px, transparent 4px);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  /* Canvas for Live Rising Embers & Sparks */
+  canvas#emberCanvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 3;
+    pointer-events: none;
+  }
+
+  /* Stage Viewport */
+  .stage {
+    position: relative;
+    width: 600px;
+    height: 600px;
+    max-width: 90vw;
+    max-height: 90vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+  }
+
+  /* Molten Circular Crucible Ring */
+  .crucible-ring {
+    position: absolute;
+    width: 480px;
+    height: 480px;
+    border-radius: 50%;
+    border: 3px solid transparent;
+    border-top: 3px solid var(--brand-ember);
+    border-right: 3px solid var(--brand-red);
+    box-shadow: 
+      0 0 35px rgba(155, 33, 48, 0.5),
+      inset 0 0 25px rgba(255, 68, 68, 0.25);
+    z-index: 4;
+    opacity: 0;
+    transform: scale(0.85) rotate(0deg);
+    animation: crucibleSpinIn 2s 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  @keyframes crucibleSpinIn {
+    0% {
+      opacity: 0;
+      transform: scale(0.7) rotate(-180deg);
+      filter: blur(8px) brightness(3);
+    }
+    60% {
+      opacity: 1;
+      transform: scale(1.02) rotate(15deg);
+      filter: blur(1px) brightness(2);
+    }
+    100% {
+      opacity: 0.85;
+      transform: scale(1) rotate(0deg);
+      filter: blur(0px) brightness(1.2);
+    }
+  }
+
+  /* Secondary Industrial Ring */
+  .secondary-ring {
+    position: absolute;
+    width: 510px;
+    height: 510px;
+    border-radius: 50%;
+    border: 1px dashed rgba(255, 255, 255, 0.15);
+    z-index: 4;
+    opacity: 0;
+    animation: ringFade 1.2s 0.6s ease-out forwards, slowRotate 40s linear infinite;
+  }
+
+  @keyframes ringFade { to { opacity: 0.6; } }
+  @keyframes slowRotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+  /* Logo Chamber */
+  .logo-chamber {
+    position: relative;
+    width: 440px;
+    height: 440px;
+    max-width: 78vw;
+    max-height: 78vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 8;
+  }
+
+  /* Hot Thermal Molten Logo Layer */
+  .logo-thermal {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter: brightness(2) contrast(1.5) drop-shadow(0 0 45px #ff2233) drop-shadow(0 0 90px #9B2130);
+    opacity: 0;
+    transform: scale(0.9);
+    animation: thermalHeatIn 2.2s 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  @keyframes thermalHeatIn {
+    0% {
+      opacity: 0;
+      transform: scale(0.8);
+      filter: brightness(3.5) contrast(2) drop-shadow(0 0 60px #ffaa00) blur(12px);
+    }
+    40% {
+      opacity: 1;
+      transform: scale(1.02);
+      filter: brightness(2.5) contrast(1.8) drop-shadow(0 0 50px #ff2233) blur(4px);
+    }
+    100% {
+      opacity: 0;
+      transform: scale(1);
+      filter: brightness(1) drop-shadow(0 0 20px #9B2130) blur(0px);
+    }
+  }
+
+  /* Authentic Exact Logo Layer (Solidifies from Heat) */
+  .logo-solid {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    z-index: 9;
+    opacity: 0;
+    transform: scale(0.95);
+    filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.85));
+    animation: solidMetalIn 1.8s 1.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  @keyframes solidMetalIn {
+    0% {
+      opacity: 0;
+      transform: scale(0.95);
+      filter: brightness(1.8) drop-shadow(0 0 35px #9B2130);
+    }
+    50% {
+      opacity: 0.9;
+      transform: scale(1.01);
+      filter: brightness(1.2) drop-shadow(0 15px 30px rgba(0, 0, 0, 0.7));
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1);
+      filter: brightness(1) drop-shadow(0 20px 45px rgba(0, 0, 0, 0.9));
+    }
+  }
+
+  /* Circular Mask: strictly clips glint inside the circle of logo */
+  .glint-mask {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    overflow: hidden;
+    z-index: 12;
+    pointer-events: none;
+    -webkit-mask-image: -webkit-radial-gradient(white, black);
+    isolation: isolate;
+  }
+
+  /* Specular Chrome Light Glint Sweep */
+  .chrome-glint {
+    position: absolute;
+    inset: -35%;
+    background: linear-gradient(
+      115deg,
+      transparent 38%,
+      rgba(255, 255, 255, 0.08) 46%,
+      rgba(255, 255, 255, 0.85) 50%,
+      rgba(255, 100, 100, 0.4) 53%,
+      transparent 62%
+    );
+    z-index: 12;
+    transform: translateX(-150%);
+    pointer-events: none;
+    opacity: 0;
+    animation: chromeSweep 1.6s 3.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  @keyframes chromeSweep {
+    0% {
+      transform: translateX(-140%) skewX(-20deg);
+      opacity: 0;
+    }
+    30% {
+      opacity: 1;
+    }
+    100% {
+      transform: translateX(140%) skewX(-20deg);
+      opacity: 0;
+    }
+  }
+
+  /* Continuous Subtle Hearth Pulse */
+  .logo-chamber.settled {
+    animation: hearthPulse 4s ease-in-out infinite;
+  }
+
+  @keyframes hearthPulse {
+    0%, 100% {
+      filter: drop-shadow(0 0 25px rgba(155, 33, 48, 0.3)) drop-shadow(0 20px 40px rgba(0, 0, 0, 0.8));
+    }
+    50% {
+      filter: drop-shadow(0 0 45px rgba(155, 33, 48, 0.6)) drop-shadow(0 25px 50px rgba(0, 0, 0, 0.95));
+    }
+  }
+
+  /* Title Tag */
+  .title-pill {
+    position: fixed;
+    top: 25px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(24, 17, 20, 0.88);
+    border: 1px solid rgba(155, 33, 48, 0.45);
+    backdrop-filter: blur(14px);
+    padding: 6px 20px;
+    border-radius: 9999px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    font-weight: bold;
+    color: #ffffff;
+    z-index: 30;
+    box-shadow: 0 4px 20px rgba(155, 33, 48, 0.25);
+  }
+
+  .title-pill span.flame-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #ff3344;
+    box-shadow: 0 0 10px #ff3344;
+  }
+
+  /* Industrial Stamp at Bottom */
+  .forge-meta {
+    position: absolute;
+    bottom: 25px;
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: rgba(255, 255, 255, 0.4);
+    font-family: 'Consolas', monospace;
+    text-transform: uppercase;
+    direction: ltr;
+    z-index: 15;
+  }
+
+  /* Control Panel */
+  .controls-panel {
+    position: fixed;
+    bottom: 25px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(24, 17, 20, 0.85);
+    border: 1px solid rgba(155, 33, 48, 0.45);
+    backdrop-filter: blur(16px);
+    padding: 8px 18px;
+    border-radius: 9999px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+    z-index: 30;
+  }
+
+  .ctrl-btn {
+    background: transparent;
+    border: 1px solid rgba(155, 33, 48, 0.4);
+    color: #f1f5f9;
+    padding: 6px 14px;
+    border-radius: 9999px;
+    font-size: 12px;
+    font-family: inherit;
+    cursor: pointer;
+    transition: all 0.25s ease;
+  }
+
+  .ctrl-btn:hover {
+    background: rgba(155, 33, 48, 0.35);
+    border-color: #ff3344;
+    color: #ffffff;
+    box-shadow: 0 0 15px rgba(155, 33, 48, 0.6);
+  }
+
+  .ctrl-btn.active {
+    background: #9B2130;
+    color: #ffffff;
+    font-weight: bold;
+    border-color: #ff3344;
+  }
+</style>
+</head>
+<body>
+
+  <div class="metal-texture"></div>
+  <canvas id="emberCanvas"></canvas>
+
+  <div class="title-pill">
+    <span class="flame-dot"></span>
+    لوگو موشن ۰۲: کوره صنعتی و اکستروژن متالیک (Thermal Forge & Extrusion)
+  </div>
+
+  <div class="stage">
+    <!-- Spinning Crucible Plasma Ring -->
+    <div class="crucible-ring"></div>
+    <div class="secondary-ring"></div>
+
+    <!-- Logo Chamber with EXACT Authentic Website Logo -->
+    <div class="logo-chamber" id="logoChamber">
+      <!-- 1. Molten Heat State of Logo -->
+      <img src="../images/logo.png" alt="نوآوران پنجره - کوره حرارتی" class="logo-thermal" />
+
+      <!-- 2. Solidified Official Logo -->
+      <img src="../images/logo.png" alt="شرکت نوآوران پنجره سپاهان" class="logo-solid" id="solidLogo" />
+
+      <!-- 3. Diagonal Chrome Sweep Flare masked strictly to circle -->
+      <div class="glint-mask">
+        <div class="chrome-glint"></div>
+      </div>
+    </div>
+
+    <div class="forge-meta">THERMAL-BREAK EXTRUSION // BILLET 6063 // ISFAHAN PLANT</div>
+  </div>
+
+  <!-- Interactive Controls -->
+  <div class="controls-panel">
+    <button class="ctrl-btn active" id="btnReplay" onclick="restartAnimation()">
+      <span>↻</span> اجرای مجدد
+    </button>
+    <button class="ctrl-btn" id="btnSparks" onclick="toggleSparks()">
+      شدت جرقه‌ها: زیاد
+    </button>
+    <button class="ctrl-btn" id="btnWhite" onclick="toggleWhiteLogo()">
+      نسخه متالیک نقره‌ای
+    </button>
+  </div>
+
+  <script>
+    const logoChamber = document.getElementById('logoChamber');
+    let isWhite = false;
+    let sparkHigh = true;
+
+    // Canvas Sparks System
+    const canvas = document.getElementById('emberCanvas');
+    const ctx = canvas.getContext('2d');
+    let W, H;
+    const particles = [];
+
+    function resize() {
+      W = canvas.width = window.innerWidth;
+      H = canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    class Ember {
+      constructor() {
+        this.reset();
+      }
+      reset() {
+        this.x = W / 2 + (Math.random() - 0.5) * 380;
+        this.y = H / 2 + 150 + Math.random() * 80;
+        this.vx = (Math.random() - 0.5) * 1.8;
+        this.vy = -(1.5 + Math.random() * 3.5);
+        this.size = Math.random() * 2.8 + 0.8;
+        this.life = 1;
+        this.decay = 0.008 + Math.random() * 0.015;
+        this.color = Math.random() > 0.3 ? '#ff3344' : '#ffaa33';
+      }
+      update() {
+        this.x += this.vx;
+        this.y += this.vy;
+        this.vx += (Math.random() - 0.5) * 0.2;
+        this.life -= this.decay;
+        if (this.life <= 0) this.reset();
+      }
+      draw() {
+        ctx.save();
+        ctx.globalAlpha = Math.max(0, this.life);
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fillStyle = this.color;
+        ctx.shadowColor = this.color;
+        ctx.shadowBlur = 10;
+        ctx.fill();
+        ctx.restore();
+      }
+    }
+
+    const count = 75;
+    for (let i = 0; i < count; i++) {
+      particles.push(new Ember());
+    }
+
+    function renderEmbers() {
+      ctx.clearRect(0, 0, W, H);
+      const activeCount = sparkHigh ? particles.length : Math.floor(particles.length / 3);
+      for (let i = 0; i < activeCount; i++) {
+        particles[i].update();
+        particles[i].draw();
+      }
+      requestAnimationFrame(renderEmbers);
+    }
+    renderEmbers();
+
+    setTimeout(() => {
+      logoChamber.classList.add('settled');
+    }, 4200);
+
+    function restartAnimation() {
+      logoChamber.classList.remove('settled');
+      const clone = logoChamber.cloneNode(true);
+      logoChamber.parentNode.replaceChild(clone, logoChamber);
+      setTimeout(() => {
+        clone.classList.add('settled');
+      }, 4200);
+    }
+
+    function toggleSparks() {
+      sparkHigh = !sparkHigh;
+      document.getElementById('btnSparks').textContent = sparkHigh ? 'شدت جرقه‌ها: زیاد' : 'شدت جرقه‌ها: ملایم';
+    }
+
+    function toggleWhiteLogo() {
+      isWhite = !isWhite;
+      const logoImgs = document.querySelectorAll('.logo-solid, .logo-thermal');
+      logoImgs.forEach(img => {
+        img.src = isWhite ? '../images/logo-white.png' : '../images/logo.png';
+      });
+      document.getElementById('btnWhite').classList.toggle('active', isWhite);
+    }
+  </script>
+</body>
+</html>

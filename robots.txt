@@ -1,6 +1,22 @@
 User-Agent: *
 Allow: /
 Disallow: /admin
-Disallow: /api/admin/
+Disallow: /admin/*
+Disallow: /api/admin
+Disallow: /api/admin/*
 
+User-Agent: GPTBot
+User-Agent: PerplexityBot
+User-Agent: ClaudeBot
+User-Agent: Google-Extended
+User-Agent: Applebot
+User-Agent: CCBot
+User-Agent: DeepSeekBot
+Allow: /
+Disallow: /admin
+Disallow: /admin/*
+Disallow: /api/admin
+Disallow: /api/admin/*
+
+Host: https://noavaranpanjereh.com
 Sitemap: https://noavaranpanjereh.com/sitemap.xml

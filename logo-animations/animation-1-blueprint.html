@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>نوآوران پنجره سپاهان — انیمیشن ۱: بلوپرینت و اسکن مهندسی</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+  :root {
+    --brand-red: #9B2130;
+    --brand-cyan: #00AFEF;
+    --brand-ice: #96DAF8;
+    --brand-dark: #07090e;
+    --brand-charcoal: #12151d;
+  }
+
+  body {
+    background: var(--brand-dark);
+    color: #e2e8f0;
+    font-family: system-ui, -apple-system, 'Segoe UI', Tahoma, Arial, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+    user-select: none;
+  }
+
+  /* Architectural CAD Grid */
+  .cad-grid {
+    position: absolute;
+    inset: 0;
+    background-image: 
+      linear-gradient(rgba(0, 175, 239, 0.08) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 175, 239, 0.08) 1px, transparent 1px),
+      linear-gradient(rgba(0, 175, 239, 0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 175, 239, 0.025) 1px, transparent 1px);
+    background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
+    background-position: center center;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  /* Vignette & Radial Depth */
+  .vignette {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, transparent 30%, rgba(7, 9, 14, 0.85) 85%, #07090e 100%);
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  /* Main Viewport Stage */
+  .viewport {
+    position: relative;
+    width: 620px;
+    height: 620px;
+    max-width: 92vw;
+    max-height: 92vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+  }
+
+  /* Technical Compass / Circular Measurement Scales */
+  .dial-svg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 3;
+    overflow: visible;
+  }
+
+  .dial-circle-outer {
+    fill: none;
+    stroke: rgba(0, 175, 239, 0.35);
+    stroke-width: 1.5;
+    stroke-dasharray: 6 8;
+    transform-origin: center;
+    animation: rotateClockwise 60s linear infinite;
+  }
+
+  .dial-circle-ticks {
+    fill: none;
+    stroke: rgba(150, 218, 248, 0.25);
+    stroke-width: 2;
+    stroke-dasharray: 2 14;
+    transform-origin: center;
+    animation: rotateCounterClockwise 45s linear infinite;
+  }
+
+  .dial-reticle {
+    stroke: rgba(0, 175, 239, 0.4);
+    stroke-width: 1;
+  }
+
+  @keyframes rotateClockwise {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  @keyframes rotateCounterClockwise {
+    from { transform: rotate(360deg); }
+    to { transform: rotate(0deg); }
+  }
+
+  /* The Logo Core Container */
+  .logo-chamber {
+    position: relative;
+    width: 440px;
+    height: 440px;
+    max-width: 75vw;
+    max-height: 75vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 5;
+  }
+
+  /* Blueprint Blueprint Blueprint Layer (Blueprint Monochrome Blueprint) */
+  .logo-blueprint {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter: invert(1) hue-rotate(170deg) saturate(6) brightness(1.1) drop-shadow(0 0 15px rgba(0, 175, 239, 0.45));
+    opacity: 0;
+    transform: scale(0.88);
+    animation: blueprintAppear 1.2s 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  @keyframes blueprintAppear {
+    0% {
+      opacity: 0;
+      transform: scale(0.85);
+      filter: invert(1) hue-rotate(170deg) saturate(8) brightness(2.5) blur(10px);
+    }
+    50% {
+      opacity: 0.8;
+      filter: invert(1) hue-rotate(170deg) saturate(6) brightness(1.4) blur(2px);
+    }
+    100% {
+      opacity: 0.35;
+      transform: scale(1);
+      filter: invert(1) hue-rotate(170deg) saturate(5) brightness(1.1) blur(0px);
+    }
+  }
+
+  /* Official Original Full Color Logo Layer */
+  .logo-authentic {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    z-index: 6;
+    opacity: 0;
+    transform: scale(1);
+    /* Revealed via clip-path laser wipe */
+    clip-path: inset(100% 0 0 0);
+    filter: drop-shadow(0 15px 35px rgba(0, 0, 0, 0.7));
+    animation: laserRevealLogo 2.4s 1.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+
+  @keyframes laserRevealLogo {
+    0% {
+      clip-path: inset(100% 0 0 0);
+      opacity: 1;
+    }
+    100% {
+      clip-path: inset(0% 0 0 0);
+      opacity: 1;
+    }
+  }
+
+  /* Sweeping Laser Beam */
+  .laser-sweep {
+    position: absolute;
+    left: -10%;
+    width: 120%;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, #00AFEF 20%, #ffffff 50%, #00AFEF 80%, transparent);
+    box-shadow: 
+      0 0 15px #00AFEF,
+      0 0 35px #00AFEF,
+      0 0 60px #96DAF8;
+    z-index: 8;
+    opacity: 0;
+    pointer-events: none;
+    animation: laserSweepMotion 2.4s 1.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+
+  @keyframes laserSweepMotion {
+    0% {
+      top: 100%;
+      opacity: 0;
+    }
+    5% {
+      opacity: 1;
+    }
+    95% {
+      opacity: 1;
+    }
+    100% {
+      top: 0%;
+      opacity: 0;
+    }
+  }
+
+  /* Diagonal Glass Flare Sweep after assembly */
+  .glass-flare {
+    position: absolute;
+    inset: -20%;
+    background: linear-gradient(
+      125deg,
+      transparent 35%,
+      rgba(255, 255, 255, 0.05) 45%,
+      rgba(0, 175, 239, 0.35) 50%,
+      rgba(255, 255, 255, 0.7) 52%,
+      rgba(155, 33, 48, 0.3) 55%,
+      transparent 65%
+    );
+    z-index: 9;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(-100%);
+    animation: glassFlarePass 1.2s 3.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  @keyframes glassFlarePass {
+    0% {
+      transform: translateX(-120%);
+      opacity: 0;
+    }
+    30% {
+      opacity: 1;
+    }
+    100% {
+      transform: translateX(120%);
+      opacity: 0;
+    }
+  }
+
+  /* Ambient Logo Breathe Pulse after completion */
+  .logo-chamber.completed {
+    animation: finalBreathe 4s ease-in-out infinite;
+  }
+
+  @keyframes finalBreathe {
+    0%, 100% {
+      filter: drop-shadow(0 0 20px rgba(0, 175, 239, 0.25)) drop-shadow(0 0 45px rgba(155, 33, 48, 0.15));
+      transform: scale(1);
+    }
+    50% {
+      filter: drop-shadow(0 0 35px rgba(0, 175, 239, 0.45)) drop-shadow(0 0 65px rgba(155, 33, 48, 0.35));
+      transform: scale(1.015);
+    }
+  }
+
+  /* Technical Corner Brackets */
+  .corner-bracket {
+    position: absolute;
+    width: 28px;
+    height: 28px;
+    border-color: rgba(0, 175, 239, 0.6);
+    pointer-events: none;
+    z-index: 12;
+    animation: bracketFade 0.6s 0.2s ease-out forwards;
+    opacity: 0;
+  }
+
+  @keyframes bracketFade { to { opacity: 1; } }
+
+  .bracket-tl { top: 15px; left: 15px; border-top: 2px solid; border-left: 2px solid; }
+  .bracket-tr { top: 15px; right: 15px; border-top: 2px solid; border-right: 2px solid; }
+  .bracket-bl { bottom: 15px; left: 15px; border-bottom: 2px solid; border-left: 2px solid; }
+  .bracket-br { bottom: 15px; right: 15px; border-bottom: 2px solid; border-right: 2px solid; }
+
+  /* Telemetry / HUD Metadata */
+  .hud-tag {
+    position: absolute;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    color: rgba(0, 175, 239, 0.7);
+    font-family: 'Consolas', 'Courier New', monospace;
+    z-index: 12;
+    opacity: 0;
+    animation: bracketFade 0.8s 0.6s ease-out forwards;
+  }
+
+  .hud-top-left { top: 22px; left: 55px; }
+  .hud-top-right { top: 22px; right: 55px; text-align: left; direction: ltr; }
+  .hud-bottom-left { bottom: 22px; left: 55px; }
+  .hud-bottom-right { bottom: 22px; right: 55px; text-align: left; direction: ltr; }
+
+  /* Interactive Control Panel at Bottom */
+  .controls-panel {
+    position: fixed;
+    bottom: 25px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(18, 21, 29, 0.85);
+    border: 1px solid rgba(0, 175, 239, 0.3);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    padding: 8px 18px;
+    border-radius: 9999px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+    z-index: 30;
+  }
+
+  .ctrl-btn {
+    background: transparent;
+    border: 1px solid rgba(0, 175, 239, 0.35);
+    color: #e2e8f0;
+    padding: 6px 14px;
+    border-radius: 9999px;
+    font-size: 12px;
+    font-family: inherit;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .ctrl-btn:hover {
+    background: rgba(0, 175, 239, 0.2);
+    border-color: #00AFEF;
+    color: #ffffff;
+    box-shadow: 0 0 12px rgba(0, 175, 239, 0.4);
+  }
+
+  .ctrl-btn.active {
+    background: #00AFEF;
+    color: #07090e;
+    font-weight: bold;
+    border-color: #00AFEF;
+  }
+
+  .title-pill {
+    position: fixed;
+    top: 25px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(18, 21, 29, 0.85);
+    border: 1px solid rgba(0, 175, 239, 0.25);
+    backdrop-filter: blur(12px);
+    padding: 6px 20px;
+    border-radius: 9999px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    font-weight: bold;
+    color: #ffffff;
+    z-index: 30;
+    letter-spacing: 0.5px;
+  }
+
+  .title-pill span.dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #00AFEF;
+    box-shadow: 0 0 8px #00AFEF;
+    display: inline-block;
+  }
+</style>
+</head>
+<body>
+
+  <!-- Background CAD Grid -->
+  <div class="cad-grid" id="cadGrid"></div>
+  <div class="vignette"></div>
+
+  <!-- Header Title Tag -->
+  <div class="title-pill">
+    <span class="dot"></span>
+    لوگو موشن ۰۱: اسکن مهندسی و بلوپرینت معماری (Architectural CAD Scan)
+  </div>
+
+  <!-- Main Viewport -->
+  <div class="viewport" id="viewport">
+    
+    <!-- Corner Framing Brackets -->
+    <div class="corner-bracket bracket-tl"></div>
+    <div class="corner-bracket bracket-tr"></div>
+    <div class="corner-bracket bracket-bl"></div>
+    <div class="corner-bracket bracket-br"></div>
+
+    <!-- HUD Telemetry Labels -->
+    <div class="hud-tag hud-top-left">SYSTEM: CURTAIN-WALL CAD v4.8<br>TOLERANCE: ±0.05mm</div>
+    <div class="hud-tag hud-top-right">SCALE: 1:1 CALIBRATED<br>ALLOY: AL-6063-T6</div>
+    <div class="hud-tag hud-bottom-left">PROJECT: NOAVARAN SEPAHAN<br>CERT: ISO 9001:2026</div>
+    <div class="hud-tag hud-bottom-right">REG: 3892 | ISFAHAN<br>STATUS: VERIFIED ✔</div>
+
+    <!-- Circular Dial Scales & Compass Elements -->
+    <svg class="dial-svg" viewBox="0 0 620 620">
+      <circle cx="310" cy="310" r="280" class="dial-circle-outer" />
+      <circle cx="310" cy="310" r="260" class="dial-circle-ticks" />
+      
+      <!-- Crosshairs -->
+      <line x1="310" y1="20" x2="310" y2="40" class="dial-reticle" />
+      <line x1="310" y1="580" x2="310" y2="600" class="dial-reticle" />
+      <line x1="20" y1="310" x2="40" y2="310" class="dial-reticle" />
+      <line x1="580" y1="310" x2="600" y2="310" class="dial-reticle" />
+      
+      <!-- Diagonal 45-degree ticks -->
+      <line x1="105" y1="105" x2="120" y2="120" class="dial-reticle" />
+      <line x1="515" y1="105" x2="500" y2="120" class="dial-reticle" />
+      <line x1="105" y1="515" x2="120" y2="500" class="dial-reticle" />
+      <line x1="515" y1="515" x2="500" y2="500" class="dial-reticle" />
+    </svg>
+
+    <!-- Logo Display Chamber -->
+    <div class="logo-chamber" id="logoChamber">
+      <!-- 1. Blueprint Monochrome Ghost of EXACT Logo -->
+      <img src="../images/logo.png" alt="نوآوران پنجره سپاهان - بلوپرینت" class="logo-blueprint" />
+
+      <!-- 2. Full Color Authentic Existing Logo -->
+      <img src="../images/logo.png" alt="شرکت نوآوران پنجره سپاهان" class="logo-authentic" id="authenticLogo" />
+
+      <!-- 3. Sweeping Laser Line -->
+      <div class="laser-sweep" id="laserSweep"></div>
+
+      <!-- 4. Specular Glass Caustic Flare -->
+      <div class="glass-flare"></div>
+    </div>
+
+  </div>
+
+  <!-- Interactive Controls -->
+  <div class="controls-panel">
+    <button class="ctrl-btn active" id="btnReplay" onclick="restartAnimation()">
+      <span>↻</span> اجرای مجدد
+    </button>
+    <button class="ctrl-btn" id="btnGrid" onclick="toggleGrid()">
+      تغییر گرید مهندسی
+    </button>
+    <button class="ctrl-btn" id="btnWhite" onclick="toggleWhiteLogo()">
+      نسخه متالیک نقره‌ای
+    </button>
+  </div>
+
+  <script>
+    const logoChamber = document.getElementById('logoChamber');
+    const authenticLogo = document.getElementById('authenticLogo');
+    const cadGrid = document.getElementById('cadGrid');
+    let isWhite = false;
+
+    // Trigger breathe after animations settle
+    setTimeout(() => {
+      logoChamber.classList.add('completed');
+    }, 4500);
+
+    function restartAnimation() {
+      logoChamber.classList.remove('completed');
+      const clone = logoChamber.cloneNode(true);
+      logoChamber.parentNode.replaceChild(clone, logoChamber);
+      setTimeout(() => {
+        clone.classList.add('completed');
+      }, 4500);
+    }
+
+    function toggleGrid() {
+      if (cadGrid.style.display === 'none') {
+        cadGrid.style.display = 'block';
+      } else {
+        cadGrid.style.display = 'none';
+      }
+    }
+
+    function toggleWhiteLogo() {
+      isWhite = !isWhite;
+      const logoImgs = document.querySelectorAll('.logo-authentic, .logo-blueprint');
+      logoImgs.forEach(img => {
+        img.src = isWhite ? '../images/logo-white.png' : '../images/logo.png';
+      });
+      document.getElementById('btnWhite').classList.toggle('active', isWhite);
+    }
+  </script>
+</body>
+</html>
