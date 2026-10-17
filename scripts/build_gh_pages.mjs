@@ -79,6 +79,7 @@ function processDir(dir) {
       const assetPatterns = [
         /(href|src)=["']\/images\//g,
         /(href|src)=["']\/projects\//g,
+        /(href|src)=["']\/uploads\//g,
         /(href|src)=["']\/favicon\.ico["']/g,
         /(href|src)=["']\/apple-icon\.png["']/g,
         /(href|src)=["']\/apple-touch-icon\.png["']/g,

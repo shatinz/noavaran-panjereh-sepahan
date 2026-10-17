@@ -1,15 +1,18 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import AdminNav from '@/components/AdminNav';
 import { ArticleItem } from '@/lib/db';
-import { Plus, Edit2, Trash2, X, Check, FileText } from 'lucide-react';
+import { Plus, Edit2, Trash2, X, Check, FileText, Upload, Image as ImageIcon, Loader2 } from 'lucide-react';
+import ImageUploadField from '@/components/admin/ImageUploadField';
 
 export default function AdminArticlesPage() {
   const [articles, setArticles] = useState<ArticleItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
   const [editingArticle, setEditingArticle] = useState<ArticleItem | null>(null);
+  const [contentUploading, setContentUploading] = useState(false);
+  const contentFileInputRef = useRef<HTMLInputElement>(null);
 
   const [form, setForm] = useState({
     title: '',
@@ -17,7 +20,7 @@ export default function AdminArticlesPage() {
     category: 'دانشنامه و راهنمای خرید',
     date: '۱۴۰۳/۰۶/۰۱',
     author: 'واحد مهندسی نوآوران پنجره سپاهان',
-    image: 'https://arvinpanjereh.com/upload/blog-post/3d5921da-5f6e-47b0-b6da-2739d48f7863.webp',
+    image: '',
     excerpt: '',
     tags: 'پنجره دوجداره, ترمال بریک, اصفهان',
     content: '',
@@ -47,7 +50,7 @@ export default function AdminArticlesPage() {
       category: 'دانشنامه و راهنمای خرید',
       date: new Intl.DateTimeFormat('fa-IR').format(new Date()),
       author: 'واحد مهندسی نوآوران پنجره سپاهان',
-      image: 'https://arvinpanjereh.com/upload/blog-post/3d5921da-5f6e-47b0-b6da-2739d48f7863.webp',
+      image: '',
       excerpt: '',
       tags: 'پنجره دوجداره, ترمال بریک, اصفهان',
       content: '',
@@ -71,6 +74,38 @@ export default function AdminArticlesPage() {
     setModalOpen(true);
   };
 
+  const handleContentImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append('file', file);
+
+    setContentUploading(true);
+    try {
+      const res = await fetch('/api/admin/upload', {
+        method: 'POST',
+        body: formData,
+      });
+      const data = await res.json();
+      if (res.ok && data.url) {
+        const imageTag = `\n\n<figure class="my-6 text-center"><img src="${data.url}" alt="${form.title || 'تصویر مقاله'}" class="rounded-xl mx-auto max-h-96 object-contain" /><figcaption class="text-xs text-steel-400 mt-2">تصویر: ${form.title || ''}</figcaption></figure>\n\n`;
+        setForm((prev) => ({
+          ...prev,
+          content: prev.content ? `${prev.content}${imageTag}` : imageTag.trim(),
+        }));
+      } else {
+        alert(data.error || 'خطا در بارگذاری تصویر');
+      }
+    } catch (err) {
+      console.error('Content image upload error:', err);
+      alert('خطا در ارتباط با سرور هنگام آپلود');
+    } finally {
+      setContentUploading(false);
+      if (contentFileInputRef.current) contentFileInputRef.current.value = '';
+    }
+  };
+
   const handleDelete = async (id: string) => {
     if (!confirm('آیا از حذف این مقاله اطمینان دارید؟')) return;
     try {
@@ -83,6 +118,10 @@ export default function AdminArticlesPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!form.image || !form.image.trim()) {
+      alert('لطفاً تصویر شاخص مقاله را آپلود کرده یا آدرس آن را وارد نمایید.');
+      return;
+    }
     const payload = {
       ...form,
       tags: form.tags.split(',').map((t) => t.trim()).filter(Boolean),
@@ -143,6 +182,7 @@ export default function AdminArticlesPage() {
             <table className="w-full text-right text-xs text-titanium-300">
               <thead className="bg-charcoal-850 text-titanium-400 uppercase font-bold border-b border-charcoal-800">
                 <tr>
+                  <th className="py-3 px-4">تصویر</th>
                   <th className="py-3 px-4">عنوان مقاله</th>
                   <th className="py-3 px-4">دسته‌بندی</th>
                   <th className="py-3 px-4">تاریخ</th>
@@ -153,19 +193,30 @@ export default function AdminArticlesPage() {
               <tbody className="divide-y divide-charcoal-800">
                 {loading ? (
                   <tr>
-                    <td colSpan={5} className="py-8 text-center text-titanium-500">
+                    <td colSpan={6} className="py-8 text-center text-titanium-500">
                       در حال بارگذاری مقالات...
                     </td>
                   </tr>
                 ) : articles.length === 0 ? (
                   <tr>
-                    <td colSpan={5} className="py-8 text-center text-titanium-500">
+                    <td colSpan={6} className="py-8 text-center text-titanium-500">
                       مقاله‌ای ثبت نشده است.
                     </td>
                   </tr>
                 ) : (
                   articles.map((a) => (
                     <tr key={a.id} className="hover:bg-charcoal-850/50 transition-colors">
+                      <td className="py-2 px-4">
+                        <div className="w-12 h-12 rounded-lg bg-charcoal-800 overflow-hidden">
+                          {a.image ? (
+                            <img src={a.image} alt={a.title} className="w-full h-full object-cover" />
+                          ) : (
+                            <div className="w-full h-full flex items-center justify-center text-titanium-500">
+                              <ImageIcon className="w-5 h-5" />
+                            </div>
+                          )}
+                        </div>
+                      </td>
                       <td className="py-3 px-4 font-semibold text-white max-w-xs truncate">
                         {a.title}
                       </td>
@@ -249,16 +300,14 @@ export default function AdminArticlesPage() {
                 </div>
               </div>
 
-              <div>
-                <label className="text-titanium-300 block mb-1 font-medium">آدرس تصویر شاخص:</label>
-                <input
-                  type="text"
-                  required
-                  value={form.image}
-                  onChange={(e) => setForm({ ...form, image: e.target.value })}
-                  className="w-full p-2.5 rounded-xl bg-charcoal-850 border border-charcoal-700 text-white font-mono focus:border-bronze-500 focus:outline-none"
-                />
-              </div>
+              <ImageUploadField
+                label="تصویر شاخص مقاله"
+                required
+                value={form.image}
+                onChange={(url) => setForm({ ...form, image: url })}
+                hint="تصویر کاور مقاله با نسبت استاندارد ۱۶:۹ (افقی)"
+                aspectRatioClass="aspect-video"
+              />
 
               <div>
                 <label className="text-titanium-300 block mb-1 font-medium">خلاصه مقاله (Excerpt):</label>
@@ -282,7 +331,28 @@ export default function AdminArticlesPage() {
               </div>
 
               <div>
-                <label className="text-titanium-300 block mb-1 font-medium">متن کامل مقاله:</label>
+                <div className="flex items-center justify-between mb-1">
+                  <label className="text-titanium-300 font-medium">متن کامل مقاله:</label>
+                  <div className="flex items-center gap-2">
+                    <button
+                      type="button"
+                      onClick={() => contentFileInputRef.current?.click()}
+                      disabled={contentUploading}
+                      className="text-[11px] text-bronze-400 hover:text-bronze-300 flex items-center gap-1.5 bg-bronze-500/10 hover:bg-bronze-500/20 px-2.5 py-1 rounded-lg border border-bronze-500/30 transition-colors"
+                      title="آپلود تصویر و قرارگیری خودکار در انتهای متن مقاله"
+                    >
+                      {contentUploading ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Upload className="w-3.5 h-3.5" />}
+                      <span>{contentUploading ? 'درحال آپلود...' : 'افزودن تصویر به متن مقاله'}</span>
+                    </button>
+                    <input
+                      ref={contentFileInputRef}
+                      type="file"
+                      accept="image/jpeg,image/png,image/webp,image/gif"
+                      onChange={handleContentImageUpload}
+                      className="hidden"
+                    />
+                  </div>
+                </div>
                 <textarea
                   rows={8}
                   required

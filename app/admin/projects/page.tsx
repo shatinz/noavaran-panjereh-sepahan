@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import AdminNav from '@/components/AdminNav';
 import { ProjectItem } from '@/lib/db';
 import { Plus, Edit2, Trash2, X, Image as ImageIcon } from 'lucide-react';
+import ImageUploadField from '@/components/admin/ImageUploadField';
 
 export default function AdminProjectsPage() {
   const [projects, setProjects] = useState<ProjectItem[]>([]);
@@ -45,7 +46,7 @@ export default function AdminProjectsPage() {
       category: 'تجاری و اداری',
       client: '',
       location: 'اصفهان',
-      image: 'https://arvinpanjereh.com/upload/portfolio/39eae76c-6fa6-4d89-9fb8-e55153f7528c.webp?w=270&h=380&mode=crop&scale=both',
+      image: '',
       description: '',
       year: '۱۴۰۳',
       systemsUsed: 'پنجره دوجداره ترمال‌بریک, نمای کرتین وال لامل',
@@ -80,6 +81,10 @@ export default function AdminProjectsPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!form.image || !form.image.trim()) {
+      alert('لطفاً تصویر پروژه را آپلود کرده یا آدرس آن را وارد نمایید.');
+      return;
+    }
     const payload = {
       ...form,
       systemsUsed: form.systemsUsed.split(',').map((s) => s.trim()).filter(Boolean),
@@ -273,16 +278,14 @@ export default function AdminProjectsPage() {
                 </div>
               </div>
 
-              <div>
-                <label className="text-titanium-300 block mb-1 font-medium">آدرس عکس پروژه (URL):</label>
-                <input
-                  type="text"
-                  required
-                  value={form.image}
-                  onChange={(e) => setForm({ ...form, image: e.target.value })}
-                  className="w-full p-2.5 rounded-xl bg-charcoal-850 border border-charcoal-700 text-white font-mono focus:border-bronze-500 focus:outline-none"
-                />
-              </div>
+              <ImageUploadField
+                label="تصویر اصلی پروژه"
+                required
+                value={form.image}
+                onChange={(url) => setForm({ ...form, image: url })}
+                hint="تصویر با کیفیت از پروژه اجرا شده با نسبت ابعاد ۴:۳"
+                aspectRatioClass="aspect-[4/3]"
+              />
 
               <div>
                 <label className="text-titanium-300 block mb-1 font-medium">سیستم‌های اجرا شده (با کاما):</label>
