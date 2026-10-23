@@ -1,5 +1,5 @@
 import { SupportedLocale } from './types';
-import { MaterialItem, ProjectItem, ServiceItem, ArticleItem } from '../db';
+import { MaterialItem, ProjectItem, ServiceItem, ArticleItem, CategoryItem } from '../db';
 
 export function formatSpecValue(val: string | number, locale: SupportedLocale): string {
   if (val === undefined || val === null) return '';
@@ -153,11 +153,35 @@ export const ARTICLE_TRANSLATIONS: Record<string, {
   }
 };
 
-export function getLocalizedArticle(article: ArticleItem, locale: SupportedLocale) {
+export const ARTICLE_CATEGORY_TRANSLATIONS: Record<string, { en: string; ar: string }> = {
+  "دانشنامه و راهنمای خرید": { en: "Knowledge & Buying Guide", ar: "معرفة ودليل الشراء" },
+  "فنی و استانداردهای ایمنی": { en: "Technical & Safety Standards", ar: "معايير السلامة والمواصفات الفنية" },
+  "معماری و نوآوری": { en: "Architecture & Innovation", ar: "العمارة والابتكار" },
+  "مقایسه فنی سیستم‌ها": { en: "Technical Comparison", ar: "المقارنة الفنية للأنظمة" },
+};
+
+export function getLocalizedArticle(
+  article: ArticleItem,
+  locale: SupportedLocale,
+  dynamicCategories?: CategoryItem[]
+) {
+  let category = article.category;
+  if (dynamicCategories && dynamicCategories.length > 0) {
+    const found = dynamicCategories.find(c => c.nameFa === article.category || c.id === article.category);
+    if (found) {
+      category = locale === 'en' ? (found.nameEn || found.nameFa) : (locale === 'ar' ? (found.nameAr || found.nameEn || found.nameFa) : found.nameFa);
+    }
+  } else if (locale !== 'fa') {
+    const catTrans = ARTICLE_CATEGORY_TRANSLATIONS[article.category];
+    if (catTrans && catTrans[locale]) {
+      category = catTrans[locale];
+    }
+  }
+
   if (locale === 'fa') {
     return {
       title: article.title,
-      category: article.category,
+      category,
       excerpt: article.excerpt,
       author: article.author,
       tags: article.tags,
@@ -169,7 +193,7 @@ export function getLocalizedArticle(article: ArticleItem, locale: SupportedLocal
   if (trans && trans[locale]) {
     return {
       title: trans[locale].title,
-      category: trans[locale].category,
+      category: (dynamicCategories ? category : trans[locale].category) || category,
       excerpt: trans[locale].excerpt,
       author: trans[locale].author,
       tags: trans[locale].tags,
@@ -179,7 +203,7 @@ export function getLocalizedArticle(article: ArticleItem, locale: SupportedLocal
 
   return {
     title: article.title,
-    category: article.category,
+    category,
     excerpt: article.excerpt,
     author: article.author,
     tags: article.tags,
@@ -705,67 +729,137 @@ export const SYSTEM_TAG_TRANSLATIONS: Record<string, { en: string; ar: string }>
   "هندریل شیشه‌ای": { en: "Glass Handrail & Balustrade", ar: "درابزين زجاجي" },
 };
 
-export function getLocalizedProject(project: ProjectItem, locale: SupportedLocale) {
+export function formatLocalizedYear(year: string | undefined, locale: SupportedLocale): string {
+  if (!year) return '';
+  if (locale === 'en') {
+    return year
+      .replace(/[۰-۹]/g, (d) => String('۰۱۲۳۴۵۶۷۸۹'.indexOf(d)))
+      .replace(/[٠-٩]/g, (d) => String('٠١٢٣٤٥٦٧٨٩'.indexOf(d)));
+  } else if (locale === 'ar') {
+    return year
+      .replace(/[0-9]/g, (d) => '٠١٢٣٤٥٦٧٨٩'[+d])
+      .replace(/[۰-۹]/g, (d) => '٠١٢٣٤٥٦٧٨٩'['۰۱۲۳۴۵۶۷۸۹'.indexOf(d)]);
+  } else {
+    return year
+      .replace(/[0-9]/g, (d) => '۰۱۲۳۴۵۶۷۸۹'[+d])
+      .replace(/[٠-٩]/g, (d) => '۰۱۲۳۴۵۶۷۸۹'['٠١٢٣٤٥٦٧٨٩'.indexOf(d)]);
+  }
+}
+
+export function getLocalizedProject(
+  project: ProjectItem,
+  locale: SupportedLocale,
+  dynamicCategories?: CategoryItem[]
+) {
+  let category = project.category;
+  if (dynamicCategories && dynamicCategories.length > 0) {
+    const found = dynamicCategories.find(
+      (c) => c.nameFa === project.category || c.id === project.category
+    );
+    if (found) {
+      category =
+        locale === 'en'
+          ? found.nameEn || found.nameFa
+          : locale === 'ar'
+          ? found.nameAr || found.nameEn || found.nameFa
+          : found.nameFa;
+    }
+  } else if (locale !== 'fa') {
+    const catTrans = PROJECT_CATEGORY_TRANSLATIONS[project.category];
+    if (catTrans && catTrans[locale]) {
+      category = catTrans[locale];
+    }
+  }
+
+  const employer =
+    locale === 'en'
+      ? project.employerEn || project.employer || project.client
+      : locale === 'ar'
+      ? project.employerAr || project.employerEn || project.employer || project.client
+      : project.employer || project.client;
+
+  const executor =
+    locale === 'en'
+      ? project.executorEn || project.executor
+      : locale === 'ar'
+      ? project.executorAr || project.executorEn || project.executor
+      : project.executor;
+
+  const year = formatLocalizedYear(project.year, locale);
+
   if (locale === 'fa') {
     return {
-      title: project.title,
-      category: project.category,
-      location: project.location,
-      systemsUsed: project.systemsUsed,
-      description: project.description,
+      title: project.title || '',
+      category: category || '',
+      location: project.location || '',
+      systemsUsed: project.systemsUsed || [],
+      description: project.description || '',
+      employer,
+      executor,
+      year,
     };
   }
 
-  const catTrans = PROJECT_CATEGORY_TRANSLATIONS[project.category];
-  const category = (catTrans && catTrans[locale]) || project.category;
-
-  const systemsUsed = project.systemsUsed.map(sys => {
+  const systemsUsed = (project.systemsUsed || []).map((sys) => {
     const sysTrans = SYSTEM_TAG_TRANSLATIONS[sys];
     return (sysTrans && sysTrans[locale]) || sys;
   });
 
-  const location = locale === 'en'
-    ? "Isfahan & Other Metropolises"
-    : (locale === 'ar' ? "أصفهان ومختلف المحافظات" : project.location);
+  const location =
+    locale === 'en'
+      ? 'Isfahan & Other Metropolises'
+      : locale === 'ar'
+      ? 'أصفهان ومختلف المحافظات'
+      : project.location || '';
 
   // Clean, professional title formatting for EN & AR:
-  let title = project.title;
-  let description = project.description;
+  let title = project.title || '';
+  let description = project.description || '';
 
   if (locale === 'en') {
-    title = project.title
-      .replace(/ساختمان مسکونی/g, 'Residential Building')
-      .replace(/ساختمان تجاری اداری/g, 'Commercial & Office Tower')
-      .replace(/ساختمان تجاری/g, 'Commercial Complex')
-      .replace(/ساختمان اداری/g, 'Corporate Office')
-      .replace(/ساختمان بانک/g, 'Bank Building')
-      .replace(/بانک/g, 'Bank')
-      .replace(/تعاونی مسکن/g, 'Housing Cooperative')
-      .replace(/ویلای/g, 'Luxury Villa')
-      .replace(/پروژه مسکونی/g, 'Residential Project')
-      .replace(/شهرداری منطقه/g, 'Municipal Headquarters District')
-      .replace(/آقای مهندس/g, 'Eng.')
-      .replace(/خانم دکتر/g, 'Dr.')
-      .replace(/آقای دکتر/g, 'Dr.')
-      .replace(/مهندس/g, 'Eng.');
+    if (project.titleEn) {
+      title = project.titleEn;
+    } else if (project.title) {
+      title = project.title
+        .replace(/ساختمان مسکونی/g, 'Residential Building')
+        .replace(/ساختمان تجاری اداری/g, 'Commercial & Office Tower')
+        .replace(/ساختمان تجاری/g, 'Commercial Complex')
+        .replace(/ساختمان اداری/g, 'Corporate Office')
+        .replace(/ساختمان بانک/g, 'Bank Building')
+        .replace(/بانک/g, 'Bank')
+        .replace(/تعاونی مسکن/g, 'Housing Cooperative')
+        .replace(/ویلای/g, 'Luxury Villa')
+        .replace(/پروژه مسکونی/g, 'Residential Project')
+        .replace(/شهرداری منطقه/g, 'Municipal Headquarters District')
+        .replace(/آقای مهندس/g, 'Eng.')
+        .replace(/خانم دکتر/g, 'Dr.')
+        .replace(/آقای دکتر/g, 'Dr.')
+        .replace(/مهندس/g, 'Eng.');
+    }
 
     description = `Engineering design, precision fabrication and installation of architectural glass facade and thermal break systems for ${title} by Noavaran Panjereh Sepahan.`;
   } else if (locale === 'ar') {
-    title = project.title
-      .replace(/ساختمان مسکونی/g, 'مبنى سكني')
-      .replace(/ساختمان تجاری اداری/g, 'مجمع تجاري وإداري')
-      .replace(/ساختمان تجاری/g, 'مبنى تجاري')
-      .replace(/ساختمان اداری/g, 'مبنى إداري')
-      .replace(/ساختمان بانک/g, 'مبنى بنك')
-      .replace(/بانک/g, 'بنك')
-      .replace(/تعاونی مسکن/g, 'جمعية إسكان')
-      .replace(/ویلای/g, 'فيلا فاخرة')
-      .replace(/پروژه مسکونی/g, 'مشروع سكني')
-      .replace(/شهرداری منطقه/g, 'مبنى البلدية - المنطقة')
-      .replace(/آقای مهندس/g, 'المهندس')
-      .replace(/خانم دکتر/g, 'الدكتورة')
-      .replace(/آقای دکتر/g, 'الدكتور')
-      .replace(/مهندس/g, 'المهندس');
+    if (project.titleAr) {
+      title = project.titleAr;
+    } else if (project.titleEn) {
+      title = project.titleEn;
+    } else if (project.title) {
+      title = project.title
+        .replace(/ساختمان مسکونی/g, 'مبنى سكني')
+        .replace(/ساختمان تجاری اداری/g, 'مجمع تجاري وإداري')
+        .replace(/ساختمان تجاری/g, 'مبنى تجاري')
+        .replace(/ساختمان اداری/g, 'مبنى إداري')
+        .replace(/ساختمان بانک/g, 'مبنى بنك')
+        .replace(/بانک/g, 'بنك')
+        .replace(/تعاونی مسکن/g, 'جمعية إسكان')
+        .replace(/ویلای/g, 'فيلا فاخرة')
+        .replace(/پروژه مسکونی/g, 'مشروع سكني')
+        .replace(/شهرداری منطقه/g, 'مبنى البلدية - المنطقة')
+        .replace(/آقای مهندس/g, 'المهندس')
+        .replace(/خانم دکتر/g, 'الدكتورة')
+        .replace(/آقای دکتر/g, 'الدكتور')
+        .replace(/مهندس/g, 'المهندس');
+    }
 
     description = `تصميم وهندسة وتصنيع وتركيب الواجهات الزجاجية ونوافذ الثيرمال بريك لمشروع ${title} بواسطة شركة نوآوران پنجره سباهان.`;
   }
@@ -776,5 +870,8 @@ export function getLocalizedProject(project: ProjectItem, locale: SupportedLocal
     location,
     systemsUsed,
     description,
+    employer,
+    executor,
+    year,
   };
 }

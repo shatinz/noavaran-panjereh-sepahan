@@ -68,7 +68,26 @@ export default async function Home() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }}
       />
       <Hero establishedYear={settings.establishedYear} factoryArea={String(settings.factoryArea)} projectCount={projects.length} />
-      <ProofStrip />
+      <ProofStrip
+        customStats={
+          (settings as any)?.stats
+            ? [
+                {
+                  raw: (settings as any).stats.stat1Value || '+۳۰',
+                  label: (settings as any).stats.stat1Label || 'سال تجربه درخشان',
+                },
+                {
+                  raw: (settings as any).stats.stat2Value || '+۲۰۰۰',
+                  label: (settings as any).stats.stat2Label || 'پروژه اجرایی موفق',
+                },
+                {
+                  raw: (settings as any).stats.stat3Value || '۱۲۰۰',
+                  label: (settings as any).stats.stat3Label || 'مشتری راضی',
+                },
+              ]
+            : undefined
+        }
+      />
       
       <div className="relative mt-12 md:mt-16">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(171,0,23,0.25)_0%,_transparent_70%)] pointer-events-none" />

@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
+import { cookies } from 'next/headers';
+import { SESSION_COOKIE, getSession } from '@/lib/session';
 
 // SVG is intentionally not accepted: it can carry <script> and would be served
 // from our own origin (stored XSS). Types are verified from the file bytes, not
@@ -13,8 +15,19 @@ function detectImage(buf: Buffer): { ext: string } | null {
   return null;
 }
 
+async function verifyAuth(): Promise<boolean> {
+  const cookieStore = cookies();
+  const token = cookieStore.get(SESSION_COOKIE)?.value;
+  const session = await getSession(token);
+  return Boolean(session && !session.mustChangePassword);
+}
+
 export async function POST(request: Request) {
   try {
+    if (!(await verifyAuth())) {
+      return NextResponse.json({ error: 'دسترسی غیرمجاز. لطفاً وارد شوید.' }, { status: 401 });
+    }
+
     const formData = await request.formData();
     const file = formData.get('file') as File | null;
 
@@ -33,7 +46,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'فرمت فایل نامعتبر است. فقط تصاویر JPG، PNG، WebP و GIF مجاز هستند.' }, { status: 400 });
     }
 
-    const uploadsDir = path.join(process.cwd(), 'public', 'uploads');
+    const uploadsDir = path.resolve(process.cwd(), 'public', 'uploads');
     fs.mkdirSync(uploadsDir, { recursive: true });
 
     const rawBase = path.basename(file.name, path.extname(file.name));
@@ -50,27 +63,38 @@ export async function POST(request: Request) {
 
 export async function DELETE(request: Request) {
   try {
-    const { searchParams } = new URL(request.url);
-    const url = searchParams.get('url') || searchParams.get('filename') || searchParams.get('path');
+    if (!(await verifyAuth())) {
+      return NextResponse.json({ error: 'دسترسی غیرمجاز. لطفاً وارد شوید.' }, { status: 401 });
+    }
 
-    if (!url) {
+    const { searchParams } = new URL(request.url);
+    const rawUrl = searchParams.get('url') || searchParams.get('filename') || searchParams.get('path');
+
+    if (!rawUrl) {
       return NextResponse.json({ error: 'آدرس یا نام فایل ارسال نشده است.' }, { status: 400 });
     }
 
-    const clean = url.split('?')[0].split('#')[0];
-    const safeBase = path.basename(clean);
+    const clean = rawUrl.split('?')[0].split('#')[0].trim();
 
-    // Verify allowed extensions to prevent arbitrary file deletion
-    const ext = path.extname(safeBase).toLowerCase();
-    if (!['.jpg', '.jpeg', '.png', '.webp', '.gif'].includes(ext)) {
-      return NextResponse.json({ error: 'فرمت فایل نامعتبر است.' }, { status: 400 });
+    // Strict validation: Only delete files that explicitly belong to /uploads/ or are bare filenames
+    if (clean.includes('/') || clean.includes('\\')) {
+      if (!clean.startsWith('/uploads/') && !clean.startsWith('uploads/')) {
+        return NextResponse.json({ error: 'تنها فایل‌های موجود در پوشه uploads قابل حذف هستند.' }, { status: 400 });
+      }
     }
 
-    const uploadsDir = path.join(process.cwd(), 'public', 'uploads');
-    const targetPath = path.join(uploadsDir, safeBase);
+    const safeBase = path.basename(clean);
 
-    // Ensure target path is strictly inside uploadsDir
-    if (!targetPath.startsWith(uploadsDir + path.sep) && targetPath !== uploadsDir) {
+    // Verify allowed characters and image extensions to prevent arbitrary deletion
+    if (!/^[a-zA-Z0-9_-]+\.(jpg|jpeg|png|webp|gif)$/i.test(safeBase)) {
+      return NextResponse.json({ error: 'نام یا فرمت فایل نامعتبر است.' }, { status: 400 });
+    }
+
+    const uploadsDir = path.resolve(process.cwd(), 'public', 'uploads');
+    const targetPath = path.resolve(uploadsDir, safeBase);
+
+    // Path traversal guard: Ensure target path is strictly inside uploadsDir
+    if (!targetPath.startsWith(uploadsDir + path.sep)) {
       return NextResponse.json({ error: 'دسترسی غیرمجاز به مسیر فایل' }, { status: 403 });
     }
 

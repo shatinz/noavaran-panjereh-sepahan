@@ -14,6 +14,26 @@ const nextConfig = {
           destination: '/contact',
           permanent: true,
         },
+        {
+          source: '/en',
+          destination: '/?lang=en',
+          permanent: false,
+        },
+        {
+          source: '/en/:path*',
+          destination: '/:path*?lang=en',
+          permanent: false,
+        },
+        {
+          source: '/ar',
+          destination: '/?lang=ar',
+          permanent: false,
+        },
+        {
+          source: '/ar/:path*',
+          destination: '/:path*?lang=ar',
+          permanent: false,
+        },
       ];
     },
     async headers() {

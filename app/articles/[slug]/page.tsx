@@ -113,6 +113,17 @@ export default async function ArticleDetailPage({ params }: Props) {
     },
   };
 
+  const rawImages = [article.image, ...(article.images || [])].filter(Boolean);
+  const seen = new Set<string>();
+  const galleryImages: string[] = [];
+  for (const img of rawImages) {
+    const clean = img.trim().split('?')[0].split('#')[0].replace(/\/+$/, '').toLowerCase();
+    if (!seen.has(clean)) {
+      seen.add(clean);
+      galleryImages.push(img.trim());
+    }
+  }
+
   return (
     <>
       <script
@@ -123,7 +134,7 @@ export default async function ArticleDetailPage({ params }: Props) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleLd) }}
       />
-      <ArticleDetailClient article={article} settings={settings} imgSrc={imgSrc} />
+      <ArticleDetailClient article={article} settings={settings} imgSrc={imgSrc} galleryImages={galleryImages} />
     </>
   );
 }

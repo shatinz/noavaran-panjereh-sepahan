@@ -1,0 +1,54 @@
+{
+  "projects": [
+    {
+      "id": "banking-gov",
+      "nameFa": "بانکی و دولتی",
+      "nameEn": "Banking & Government",
+      "nameAr": "المصارف والقطاع الحكومي"
+    },
+    {
+      "id": "commercial-corp",
+      "nameFa": "تجاری و اداری",
+      "nameEn": "Commercial & Corporate",
+      "nameAr": "تجاري وإداري"
+    },
+    {
+      "id": "residential-villa",
+      "nameFa": "مسکونی و ویلایی",
+      "nameEn": "Residential & Luxury Villas",
+      "nameAr": "سكني وفلل فاخرة"
+    },
+    {
+      "id": "towers-coop",
+      "nameFa": "تعاونی و برج‌ها",
+      "nameEn": "Towers & Housing Cooperatives",
+      "nameAr": "أبراج وجمعيات إسكانية"
+    }
+  ],
+  "articles": [
+    {
+      "id": "knowledge-buying",
+      "nameFa": "دانشنامه و راهنمای خرید",
+      "nameEn": "Knowledge & Buying Guide",
+      "nameAr": "معرفة ودليل الشراء"
+    },
+    {
+      "id": "technical-safety",
+      "nameFa": "فنی و استانداردهای ایمنی",
+      "nameEn": "Technical & Safety Standards",
+      "nameAr": "معايير السلامة والمواصفات الفنية"
+    },
+    {
+      "id": "architecture-innovation",
+      "nameFa": "معماری و نوآوری",
+      "nameEn": "Architecture & Innovation",
+      "nameAr": "العمارة والابتكار"
+    },
+    {
+      "id": "technical-comparison",
+      "nameFa": "مقایسه فنی سیستم‌ها",
+      "nameEn": "Technical Comparison",
+      "nameAr": "المقارنة الفنية للأنظمة"
+    }
+  ]
+}

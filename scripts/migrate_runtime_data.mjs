@@ -18,7 +18,7 @@ const root = process.cwd();
 const dataDir = path.join(root, 'data');
 const runtimeDir = path.join(dataDir, 'runtime');
 const contentDir = path.join(runtimeDir, 'content');
-const COLLECTIONS = ['articles.json', 'projects.json', 'videos.json', 'materials.json', 'settings.json'];
+const COLLECTIONS = ['articles.json', 'projects.json', 'videos.json', 'materials.json', 'settings.json', 'categories.json'];
 
 const norm = (text) => {
   try {
@@ -125,4 +125,33 @@ if (fs.existsSync(target)) {
   fs.writeFileSync(target, JSON.stringify(seedCreds, null, 2), { mode: 0o600 });
   console.log('[migrate] fresh server: seeded default credentials with mustChangePassword: true');
 }
+
+// Ensure settings.json in runtime or data dir has the updated stat (1200 customers, not +25 ongoing projects)
+for (const sDir of [contentDir, dataDir]) {
+  const sPath = path.join(sDir, 'settings.json');
+  if (fs.existsSync(sPath)) {
+    try {
+      const sData = JSON.parse(fs.readFileSync(sPath, 'utf8'));
+      let modified = false;
+      if (sData.stats) {
+        if (sData.stats.stat3Value === '+۲۵' || sData.stats.stat3Value === '+25' || (sData.stats.stat3Label && sData.stats.stat3Label.includes('دست اجرا'))) {
+          sData.stats.stat3Value = '۱۲۰۰';
+          sData.stats.stat3Label = 'مشتری راضی';
+          modified = true;
+        }
+      }
+      if (sData.inProcessProjects || sData.ongoingProjects) {
+        delete sData.inProcessProjects;
+        delete sData.ongoingProjects;
+        sData.customersCount = 1200;
+        modified = true;
+      }
+      if (modified) {
+        fs.writeFileSync(sPath, JSON.stringify(sData, null, 2), 'utf8');
+        console.log(`[migrate] updated legacy stats in ${sPath} to 1200 customers`);
+      }
+    } catch {}
+  }
+}
+
 console.log('[migrate] done');

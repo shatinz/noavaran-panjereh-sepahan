@@ -1,6 +1,6 @@
 import React from 'react';
 import type { Metadata } from 'next';
-import { getProjects } from '@/lib/db';
+import { getProjects, getCategories } from '@/lib/db';
 import { ProjectsListClient } from './ProjectsListClient';
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://noavaranpanjereh.com';
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
 };
 
 export default async function ProjectsPage() {
-  const projects = await getProjects();
+  const [projects, categoriesData] = await Promise.all([getProjects(), getCategories()]);
 
   const breadcrumbsLd = {
     '@context': 'https://schema.org',
@@ -62,7 +62,7 @@ export default async function ProjectsPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListLd) }}
       />
-      <ProjectsListClient projects={projects} />
+      <ProjectsListClient projects={projects} categories={categoriesData.projects} />
     </>
   );
 }

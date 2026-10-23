@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { PageHero } from '@/components/ui/PageHero';
 import { Breadcrumbs } from '@/components/ui/Breadcrumbs';
 import { Gallery } from '@/components/ui/Gallery';
-import { MapPin, Layers, ShieldCheck, Phone, MessageSquare } from 'lucide-react';
+import { MapPin, Layers, ShieldCheck, Phone, MessageSquare, Calendar, Building2, HardHat } from 'lucide-react';
 import { telHref } from '@/lib/phone';
 import { useLanguage } from '@/lib/i18n/context';
 import { getLocalizedProject } from '@/lib/i18n/entities';
@@ -54,6 +54,44 @@ export function ProjectDetailClient({ project, settings, galleryImages }: Projec
               </h3>
               
               <div className="space-y-4 text-sm text-steel-300 font-vazir">
+                {loc.year && (
+                  <div className="flex items-start gap-3">
+                    <Calendar className="w-5 h-5 text-signal-500 shrink-0 mt-0.5" />
+                    <div>
+                      <strong className="block text-white mb-1">
+                        {locale === 'en' ? 'Year of Execution' : (locale === 'ar' ? 'سنة التنفيذ' : 'سال اجرا')}
+                      </strong>
+                      <span className="font-mono">
+                        <bdi dir="ltr">{loc.year}</bdi>
+                      </span>
+                    </div>
+                  </div>
+                )}
+
+                {loc.employer && (
+                  <div className="flex items-start gap-3">
+                    <Building2 className="w-5 h-5 text-signal-500 shrink-0 mt-0.5" />
+                    <div>
+                      <strong className="block text-white mb-1">
+                        {locale === 'en' ? 'Client / Employer' : (locale === 'ar' ? 'صاحب العمل / العميل' : 'کارفرما')}
+                      </strong>
+                      <span>{loc.employer}</span>
+                    </div>
+                  </div>
+                )}
+
+                {loc.executor && (
+                  <div className="flex items-start gap-3">
+                    <HardHat className="w-5 h-5 text-signal-500 shrink-0 mt-0.5" />
+                    <div>
+                      <strong className="block text-white mb-1">
+                        {locale === 'en' ? 'Contractor / Executor' : (locale === 'ar' ? 'الجهة المنفذة' : 'مجری پروژه')}
+                      </strong>
+                      <span>{loc.executor}</span>
+                    </div>
+                  </div>
+                )}
+
                 <div className="flex items-start gap-3">
                   <MapPin className="w-5 h-5 text-signal-500 shrink-0 mt-0.5" />
                   <div>
@@ -63,7 +101,7 @@ export function ProjectDetailClient({ project, settings, galleryImages }: Projec
                     <span>{loc.location}</span>
                   </div>
                 </div>
-                
+
                 <div className="flex items-start gap-3">
                   <Layers className="w-5 h-5 text-signal-500 shrink-0 mt-0.5" />
                   <div>

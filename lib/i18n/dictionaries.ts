@@ -1,4 +1,4 @@
-import { SupportedLocale } from './types';
+﻿import { SupportedLocale } from './types';
 
 export interface Dictionary {
   nav: {
@@ -250,8 +250,8 @@ export const dictionaries: Record<SupportedLocale, Dictionary> = {
       stat1Label: "سال تجربه درخشان",
       stat2Value: "+۲۰۰۰",
       stat2Label: "پروژه اجرایی موفق",
-      stat3Value: "+۲۵",
-      stat3Label: "پروژه در دست اجرا",
+      stat3Value: "۱۲۰۰",
+      stat3Label: "مشتری راضی",
     },
     services: {
       headingTitle: "خدمات و راهکارهای مهندسی",
@@ -652,8 +652,8 @@ export const dictionaries: Record<SupportedLocale, Dictionary> = {
       stat1Label: "Years of Proven Excellence",
       stat2Value: "+2,000",
       stat2Label: "Completed Projects",
-      stat3Value: "+25",
-      stat3Label: "Ongoing Projects",
+      stat3Value: "1,200",
+      stat3Label: "Satisfied Customers",
     },
     services: {
       headingTitle: "Engineering Services & Solutions",
@@ -1054,8 +1054,8 @@ export const dictionaries: Record<SupportedLocale, Dictionary> = {
       stat1Label: "عاماً من الخبرة والتميز",
       stat2Value: "+٢٠٠٠",
       stat2Label: "مشروع منفذ بنجاح",
-      stat3Value: "+٢٥",
-      stat3Label: "مشروع قيد التنفيذ",
+      stat3Value: "١٬٢٠٠",
+      stat3Label: "عميل راضٍ",
     },
     services: {
       headingTitle: "الخدمات والحلول الهندسية",

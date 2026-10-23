@@ -1,9 +1,9 @@
 "use client";
 
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { ArticleItem } from '@/lib/db';
+import { ArticleItem, CategoryItem } from '@/lib/db';
 import { PageHero } from '@/components/ui/PageHero';
 import { Breadcrumbs } from '@/components/ui/Breadcrumbs';
 import { Calendar, ArrowLeft, ArrowRight } from 'lucide-react';
@@ -13,11 +13,79 @@ import { getLocalizedArticle } from '@/lib/i18n/entities';
 
 interface ArticlesListClientProps {
   articles: ArticleItem[];
+  categories?: CategoryItem[];
 }
 
-export function ArticlesListClient({ articles }: ArticlesListClientProps) {
+export function ArticlesListClient({ articles, categories = [] }: ArticlesListClientProps) {
   const { dict, locale, dir, isRTL } = useLanguage();
+  const [activeCategory, setActiveCategory] = useState<string>('all');
   const Arrow = isRTL ? ArrowLeft : ArrowRight;
+
+  const filters = [
+    {
+      key: 'all',
+      label:
+        dict.projectsPage?.filterAll ||
+        (locale === 'en' ? 'All Articles' : locale === 'ar' ? 'جميع المقالات' : 'همه مقالات'),
+    },
+    ...(categories && categories.length > 0
+      ? categories.map((c) => ({
+          key: c.nameFa,
+          label:
+            locale === 'en'
+              ? c.nameEn || c.nameFa
+              : locale === 'ar'
+              ? c.nameAr || c.nameEn || c.nameFa
+              : c.nameFa,
+        }))
+      : [
+          {
+            key: 'دانشنامه و راهنمای خرید',
+            label:
+              locale === 'en'
+                ? 'Knowledge & Buying Guide'
+                : locale === 'ar'
+                ? 'معرفة ودليل الشراء'
+                : 'دانشنامه و راهنمای خرید',
+          },
+          {
+            key: 'فنی و استانداردهای ایمنی',
+            label:
+              locale === 'en'
+                ? 'Technical & Safety Standards'
+                : locale === 'ar'
+                ? 'معايير السلامة والمواصفات الفنية'
+                : 'فنی و استانداردهای ایمنی',
+          },
+          {
+            key: 'معماری و نوآوری',
+            label:
+              locale === 'en'
+                ? 'Architecture & Innovation'
+                : locale === 'ar'
+                ? 'العمارة والابتكار'
+                : 'معماری و نوآوری',
+          },
+          {
+            key: 'مقایسه فنی سیستم‌ها',
+            label:
+              locale === 'en'
+                ? 'Technical Comparison'
+                : locale === 'ar'
+                ? 'المقارنة الفنية للأنظمة'
+                : 'مقایسه فنی سیستم‌ها',
+          },
+        ]),
+  ];
+
+  const filteredArticles =
+    activeCategory === 'all'
+      ? articles
+      : articles.filter(
+          (a) =>
+            a.category === activeCategory ||
+            categories.find((c) => c.nameFa === activeCategory && c.id === a.category)
+        );
 
   return (
     <div dir={dir}>
@@ -28,8 +96,25 @@ export function ArticlesListClient({ articles }: ArticlesListClientProps) {
       />
 
       <div className={`w-full max-w-[1440px] mx-auto px-4 md:px-8 py-16 md:py-24 space-y-12 ${isRTL ? 'text-right' : 'text-left'}`}>
+        {/* Category Filter Pills */}
+        <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
+          {filters.map((f) => (
+            <button
+              key={f.key}
+              onClick={() => setActiveCategory(f.key)}
+              className={`px-4 py-2 rounded-lg text-xs md:text-sm font-bold font-vazir whitespace-nowrap transition-all ${
+                activeCategory === f.key
+                  ? 'bg-signal-500 text-white shadow-lg'
+                  : 'bg-ink-900 text-steel-400 hover:text-white border border-ink-800 hover:border-steel-400'
+              }`}
+            >
+              {f.label}
+            </button>
+          ))}
+        </div>
+
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {articles.map((a) => {
+          {filteredArticles.map((a) => {
             const locArt = getLocalizedArticle(a, locale);
             const imgSrc = withBasePath(a.image) || getLocalMediaFallback(a.slug, 'article');
             return (

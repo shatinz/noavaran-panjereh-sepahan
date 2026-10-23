@@ -3,34 +3,52 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { ProjectItem } from '@/lib/db';
+import { ProjectItem, CategoryItem } from '@/lib/db';
 import { PageHero } from '@/components/ui/PageHero';
 import { Breadcrumbs } from '@/components/ui/Breadcrumbs';
-import { ArrowLeft, ArrowRight, MapPin } from 'lucide-react';
+import { ArrowLeft, ArrowRight, MapPin, Calendar, Building2 } from 'lucide-react';
 import { withBasePath } from '@/lib/media';
 import { useLanguage } from '@/lib/i18n/context';
 import { getLocalizedProject } from '@/lib/i18n/entities';
 
 interface ProjectsListClientProps {
   projects: ProjectItem[];
+  categories?: CategoryItem[];
 }
 
-export function ProjectsListClient({ projects }: ProjectsListClientProps) {
+export function ProjectsListClient({ projects, categories = [] }: ProjectsListClientProps) {
   const { dict, locale, dir, isRTL } = useLanguage();
   const [activeCategory, setActiveCategory] = useState<string>('all');
   const Arrow = isRTL ? ArrowLeft : ArrowRight;
 
   const filters = [
     { key: 'all', label: dict.projectsPage.filterAll },
-    { key: 'بانکی و دولتی', label: dict.projectsPage.filterBanking },
-    { key: 'تجاری و اداری', label: dict.projectsPage.filterCommercial },
-    { key: 'مسکونی و ویلایی', label: dict.projectsPage.filterResidential },
-    { key: 'تعاونی و برج‌ها', label: dict.projectsPage.filterCoop },
+    ...(categories && categories.length > 0
+      ? categories.map((c) => ({
+          key: c.nameFa,
+          label:
+            locale === 'en'
+              ? c.nameEn || c.nameFa
+              : locale === 'ar'
+              ? c.nameAr || c.nameEn || c.nameFa
+              : c.nameFa,
+        }))
+      : [
+          { key: 'بانکی و دولتی', label: dict.projectsPage.filterBanking },
+          { key: 'تجاری و اداری', label: dict.projectsPage.filterCommercial },
+          { key: 'مسکونی و ویلایی', label: dict.projectsPage.filterResidential },
+          { key: 'تعاونی و برج‌ها', label: dict.projectsPage.filterCoop },
+        ]),
   ];
 
-  const filteredProjects = activeCategory === 'all'
-    ? projects
-    : projects.filter(p => p.category === activeCategory);
+  const filteredProjects =
+    activeCategory === 'all'
+      ? projects
+      : projects.filter(
+          (p) =>
+            p.category === activeCategory ||
+            categories.find((c) => c.nameFa === activeCategory && c.id === p.category)
+        );
 
   return (
     <div dir={dir}>
@@ -88,6 +106,18 @@ export function ProjectsListClient({ projects }: ProjectsListClientProps) {
                   </h2>
                   
                   <div className="space-y-2 mt-auto">
+                    {loc.year && (
+                      <div className="flex items-center gap-2 text-steel-400 text-xs font-vazir">
+                        <Calendar className="w-4 h-4 shrink-0 text-signal-500" />
+                        <span className="font-mono"><bdi dir="ltr">{loc.year}</bdi></span>
+                      </div>
+                    )}
+                    {loc.employer && (
+                      <div className="flex items-center gap-2 text-steel-400 text-xs font-vazir">
+                        <Building2 className="w-4 h-4 shrink-0 text-signal-500" />
+                        <span className="line-clamp-1">{loc.employer}</span>
+                      </div>
+                    )}
                     <div className="flex items-center gap-2 text-steel-400 text-xs font-vazir">
                       <MapPin className="w-4 h-4 shrink-0 text-signal-500" />
                       <span className="line-clamp-1">{loc.location}</span>

@@ -12,7 +12,16 @@
       "پنجره دوجداره ترمال‌بریک",
       "نمای کرتین وال لامل",
       "شیشه لمینت سکوریت"
-    ]
+    ],
+    "titleEn": "Bank Mehr Eqtesad Building",
+    "titleAr": "مبنى بنك مهر اقتصاد",
+    "employer": "بانک مهر اقصاد",
+    "employerEn": "Mehr Eqtesad Bank",
+    "employerAr": "بنك مهر اقتصاد",
+    "executor": "شرکت نوآوران پنجره سپاهان",
+    "executorEn": "Noavaran Panjereh Sepahan",
+    "executorAr": "شركة نوآوران پنجره سباهان",
+    "images": []
   },
   {
     "id": "proj-2",
@@ -27,7 +36,16 @@
       "پنجره دوجداره ترمال‌بریک",
       "نمای کرتین وال لامل",
       "شیشه لمینت سکوریت"
-    ]
+    ],
+    "titleEn": "Eng. Daryabeigi Residential Complex",
+    "titleAr": "مبنى المهندس دريابيغي السكني",
+    "employer": "مسکونی آقای مهندس دریابیگی",
+    "employerEn": "Eng. Daryabeigi",
+    "employerAr": "المهندس دريابيغي",
+    "executor": "شرکت نوآوران پنجره سپاهان",
+    "executorEn": "Noavaran Panjereh Sepahan",
+    "executorAr": "شركة نوآوران پنجره سباهان",
+    "images": []
   },
   {
     "id": "proj-3",
@@ -42,7 +60,16 @@
       "پنجره دوجداره ترمال‌بریک",
       "نمای کرتین وال لامل",
       "شیشه لمینت سکوریت"
-    ]
+    ],
+    "titleEn": "Alavijeh Business & Technology Center",
+    "titleAr": "مبنى الأعمال والتكنولوجيا علويجه",
+    "employer": "کسب و فناوری علویجه",
+    "employerEn": "Alavijeh Tech Park",
+    "employerAr": "مؤسسة علويجه للتكنولوجيا",
+    "executor": "شرکت نوآوران پنجره سپاهان",
+    "executorEn": "Noavaran Panjereh Sepahan",
+    "executorAr": "شركة نوآوران پنجره سباهان",
+    "images": []
   },
   {
     "id": "proj-4",
@@ -57,7 +84,16 @@
       "پنجره دوجداره ترمال‌بریک",
       "نمای کرتین وال لامل",
       "شیشه لمینت سکوریت"
-    ]
+    ],
+    "titleEn": "District 13 Municipality Headquarters",
+    "titleAr": "مبنى بلدية المنطقة 13",
+    "employer": "شهرداری منطقه 13",
+    "employerEn": "Isfahan District 13 Municipality",
+    "employerAr": "بلدية المنطقة 13 أصفهان",
+    "executor": "شرکت نوآوران پنجره سپاهان",
+    "executorEn": "Noavaran Panjereh Sepahan",
+    "executorAr": "شركة نوآوران پنجره سباهان",
+    "images": []
   },
   {
     "id": "proj-5",
@@ -72,7 +108,16 @@
       "پنجره دوجداره ترمال‌بریک",
       "نمای کرتین وال لامل",
       "شیشه لمینت سکوریت"
-    ]
+    ],
+    "titleEn": "Shahin Shahr City Center",
+    "titleAr": "سيتي سنتر شاهين شهر",
+    "employer": "سیتی سنتر شاهین شهر",
+    "employerEn": "City Center Development Board",
+    "employerAr": "مجلس تطوير سيتي سنتر",
+    "executor": "شرکت نوآوران پنجره سپاهان",
+    "executorEn": "Noavaran Panjereh Sepahan",
+    "executorAr": "شركة نوآوران پنجره سباهان",
+    "images": []
   },
   {
     "id": "proj-6",
@@ -87,7 +132,16 @@
       "پنجره دوجداره ترمال‌بریک",
       "نمای کرتین وال لامل",
       "شیشه لمینت سکوریت"
-    ]
+    ],
+    "titleEn": "Eng. Tavoosi Commercial Center",
+    "titleAr": "مجمع المهندس طاووسي التجاري",
+    "employer": "تجاری مهندس طاووسی",
+    "employerEn": "Eng. Tavoosi",
+    "employerAr": "المهندس طاووسي",
+    "executor": "شرکت نوآوران پنجره سپاهان",
+    "executorEn": "Noavaran Panjereh Sepahan",
+    "executorAr": "شركة نوآوران پنجره سباهان",
+    "images": []
   },
   {
     "id": "proj-7",
@@ -102,7 +156,16 @@
       "پنجره دوجداره ترمال‌بریک",
       "نمای کرتین وال لامل",
       "شیشه لمینت سکوریت"
-    ]
+    ],
+    "titleEn": "Ahmadian Commercial Building",
+    "titleAr": "مبنى أحمديان التجاري",
+    "employer": "تجاری آقای احمدیان",
+    "employerEn": "Mr. Ahmadian",
+    "employerAr": "السيد أحمديان",
+    "executor": "شرکت نوآوران پنجره سپاهان",
+    "executorEn": "Noavaran Panjereh Sepahan",
+    "executorAr": "شركة نوآوران پنجره سباهان",
+    "images": []
   },
   {
     "id": "proj-8",
@@ -117,7 +180,16 @@
       "پنجره دوجداره ترمال‌بریک",
       "نمای کرتین وال لامل",
       "شیشه لمینت سکوریت"
-    ]
+    ],
+    "titleEn": "Eng. Alirezaei Commercial Tower",
+    "titleAr": "برج المهندس عليرضائي التجاري",
+    "employer": "تجاری آقای مهندس علیرضایی",
+    "employerEn": "Eng. Alirezaei",
+    "employerAr": "المهندس عليرضائي",
+    "executor": "شرکت نوآوران پنجره سپاهان",
+    "executorEn": "Noavaran Panjereh Sepahan",
+    "executorAr": "شركة نوآوران پنجره سباهان",
+    "images": []
   },
   {
     "id": "proj-9",
@@ -132,7 +204,16 @@
       "پنجره دوجداره ترمال‌بریک",
       "نمای کرتین وال لامل",
       "شیشه لمینت سکوریت"
-    ]
+    ],
+    "titleEn": "Dr. Boveiri Residential Complex",
+    "titleAr": "مبنى الدكتورة بويري السكني",
+    "employer": "مسکونی خانم دکتر بویری",
+    "employerEn": "Dr. Boveiri",
+    "employerAr": "الدكتورة بويري",
+    "executor": "شرکت نوآوران پنجره سپاهان",
+    "executorEn": "Noavaran Panjereh Sepahan",
+    "executorAr": "شركة نوآوران پنجره سباهان",
+    "images": []
   },
   {
     "id": "proj-10",
@@ -147,7 +228,16 @@
       "پنجره دوجداره ترمال‌بریک",
       "نمای کرتین وال لامل",
       "شیشه لمینت سکوریت"
-    ]
+    ],
+    "titleEn": "Dr. Etesami Residential Building",
+    "titleAr": "مبنى الدكتور اعتصامي السكني",
+    "employer": "مسکونی آقای دکتر اعتصامی",
+    "employerEn": "Dr. Etesami",
+    "employerAr": "الدكتور اعتصامي",
+    "executor": "شرکت نوآوران پنجره سپاهان",
+    "executorEn": "Noavaran Panjereh Sepahan",
+    "executorAr": "شركة نوآوران پنجره سباهان",
+    "images": []
   },
   {
     "id": "proj-11",
@@ -162,7 +252,16 @@
       "پنجره دوجداره ترمال‌بریک",
       "نمای کرتین وال لامل",
       "شیشه لمینت سکوریت"
-    ]
+    ],
+    "titleEn": "Eng. Mohammadi Commercial Complex",
+    "titleAr": "مجمع المهندس محمدي التجاري",
+    "employer": "تجاری آقای مهندس محمدی",
+    "employerEn": "Eng. Mohammadi",
+    "employerAr": "المهندس محمدي",
+    "executor": "شرکت نوآوران پنجره سپاهان",
+    "executorEn": "Noavaran Panjereh Sepahan",
+    "executorAr": "شركة نوآوران پنجره سباهان",
+    "images": []
   },
   {
     "id": "proj-12",
@@ -177,7 +276,16 @@
       "پنجره دوجداره ترمال‌بریک",
       "نمای کرتین وال لامل",
       "شیشه لمینت سکوریت"
-    ]
+    ],
+    "titleEn": "Jey Street Residential Project",
+    "titleAr": "مشروع شارع جي السكني",
+    "employer": "مسکونی خیابان جی",
+    "employerEn": "Jey Street Development",
+    "employerAr": "تطوير مشروع شارع جي",
+    "executor": "شرکت نوآوران پنجره سپاهان",
+    "executorEn": "Noavaran Panjereh Sepahan",
+    "executorAr": "شركة نوآوران پنجره سباهان",
+    "images": []
   },
   {
     "id": "proj-13",
@@ -192,7 +300,16 @@
       "پنجره دوجداره ترمال‌بریک",
       "نمای کرتین وال لامل",
       "شیشه لمینت سکوریت"
-    ]
+    ],
+    "titleEn": "Bank Saderat Yasuj Branch",
+    "titleAr": "فرع بنك صادرات ياسوج",
+    "employer": "بانک صادرات یاسوج",
+    "employerEn": "Bank Saderat Iran",
+    "employerAr": "بنك صادرات إيران",
+    "executor": "شرکت نوآوران پنجره سپاهان",
+    "executorEn": "Noavaran Panjereh Sepahan",
+    "executorAr": "شركة نوآوران پنجره سباهان",
+    "images": []
   },
   {
     "id": "proj-14",
@@ -207,7 +324,16 @@
       "پنجره دوجداره ترمال‌بریک",
       "نمای کرتین وال لامل",
       "شیشه لمینت سکوریت"
-    ]
+    ],
+    "titleEn": "Bank Ghavamin Building",
+    "titleAr": "مبنى بنك قوامين",
+    "employer": "بانک قوامین",
+    "employerEn": "Bank Ghavamin",
+    "employerAr": "بنك قوامين",
+    "executor": "شرکت نوآوران پنجره سپاهان",
+    "executorEn": "Noavaran Panjereh Sepahan",
+    "executorAr": "شركة نوآوران پنجره سباهان",
+    "images": []
   },
   {
     "id": "proj-15",
@@ -222,7 +348,16 @@
       "پنجره دوجداره ترمال‌بریک",
       "نمای کرتین وال لامل",
       "شیشه لمینت سکوریت"
-    ]
+    ],
+    "titleEn": "Mehestan Naqsh-e Jahan Commercial Complex",
+    "titleAr": "مجمع مهستان نقش جهان التجاري والإداري",
+    "employer": "تجاری اداری مهستان نقش جهان",
+    "employerEn": "Naqsh-e Jahan Real Estate",
+    "employerAr": "شركة نقش جهان العقارية",
+    "executor": "شرکت نوآوران پنجره سپاهان",
+    "executorEn": "Noavaran Panjereh Sepahan",
+    "executorAr": "شركة نوآوران پنجره سباهان",
+    "images": []
   },
   {
     "id": "proj-16",
@@ -237,7 +372,16 @@
       "پنجره دوجداره ترمال‌بریک",
       "نمای کرتین وال لامل",
       "شیشه لمینت سکوریت"
-    ]
+    ],
+    "titleEn": "Bagh-e Rezvan Forensic Medicine Center",
+    "titleAr": "مركز الطب الشرعي باغ رضوان",
+    "employer": "پزشکی قانونی باغ رضوان",
+    "employerEn": "Isfahan Forensic Medical Organization",
+    "employerAr": "دائرة الطب الشرعي أصفهان",
+    "executor": "شرکت نوآوران پنجره سپاهان",
+    "executorEn": "Noavaran Panjereh Sepahan",
+    "executorAr": "شركة نوآوران پنجره سباهان",
+    "images": []
   },
   {
     "id": "proj-17",
@@ -252,7 +396,16 @@
       "پنجره دوجداره ترمال‌بریک",
       "نمای کرتین وال لامل",
       "شیشه لمینت سکوریت"
-    ]
+    ],
+    "titleEn": "Soordan Jey Deeds Registration Office",
+    "titleAr": "دائرة تسجيل العقارات سودان جي",
+    "employer": "سازمان ثبت اسناد سودان جی",
+    "employerEn": "State Organization for Registration of Deeds",
+    "employerAr": "دائرة تسجيل العقارات والوثائق",
+    "executor": "شرکت نوآوران پنجره سپاهان",
+    "executorEn": "Noavaran Panjereh Sepahan",
+    "executorAr": "شركة نوآوران پنجره سباهان",
+    "images": []
   },
   {
     "id": "proj-18",
@@ -267,7 +420,16 @@
       "پنجره دوجداره ترمال‌بریک",
       "نمای کرتین وال لامل",
       "شیشه لمینت سکوریت"
-    ]
+    ],
+    "titleEn": "Eng. Haj Heydari Commercial Building",
+    "titleAr": "مبنى المهندس حاج حيدري التجاري",
+    "employer": "تجاری آقای مهندس حاج حیدری",
+    "employerEn": "Eng. Haj Heydari",
+    "employerAr": "المهندس حاج حيدري",
+    "executor": "شرکت نوآوران پنجره سپاهان",
+    "executorEn": "Noavaran Panjereh Sepahan",
+    "executorAr": "شركة نوآوران پنجره سباهان",
+    "images": []
   },
   {
     "id": "proj-19",
@@ -282,7 +444,16 @@
       "پنجره دوجداره ترمال‌بریک",
       "نمای کرتین وال لامل",
       "شیشه لمینت سکوریت"
-    ]
+    ],
+    "titleEn": "Eng. Aberouei Commercial Building",
+    "titleAr": "مبنى المهندس آبرويي التجاري",
+    "employer": "تجاری آقای مهندس آبرویی",
+    "employerEn": "Eng. Aberouei",
+    "employerAr": "المهندس آبرويي",
+    "executor": "شرکت نوآوران پنجره سپاهان",
+    "executorEn": "Noavaran Panjereh Sepahan",
+    "executorAr": "شركة نوآوران پنجره سباهان",
+    "images": []
   },
   {
     "id": "proj-20",
@@ -297,7 +468,16 @@
       "پنجره دوجداره ترمال‌بریک",
       "نمای کرتین وال لامل",
       "شیشه لمینت سکوریت"
-    ]
+    ],
+    "titleEn": "Jey Deeds & Land Registration Office",
+    "titleAr": "إدارة تسجيل الأراضي والعقارات جي",
+    "employer": "ثبت اسناد سودان جی",
+    "employerEn": "Isfahan Land Deeds Organization",
+    "employerAr": "دائرة السجل العقاري جي",
+    "executor": "شرکت نوآوران پنجره سپاهان",
+    "executorEn": "Noavaran Panjereh Sepahan",
+    "executorAr": "شركة نوآوران پنجره سباهان",
+    "images": []
   },
   {
     "id": "proj-21",
@@ -312,7 +492,16 @@
       "پنجره دوجداره ترمال‌بریک",
       "نمای کرتین وال لامل",
       "شیشه لمینت سکوریت"
-    ]
+    ],
+    "titleEn": "Nezhad Sattari School",
+    "titleAr": "مدرسة نجاد ستاري",
+    "employer": "مدرسه نژاد ستاری",
+    "employerEn": "School Renovation & Development Agency",
+    "employerAr": "هيئة تجديد وتطوير المدارس",
+    "executor": "شرکت نوآوران پنجره سپاهان",
+    "executorEn": "Noavaran Panjereh Sepahan",
+    "executorAr": "شركة نوآوران پنجره سباهان",
+    "images": []
   },
   {
     "id": "proj-22",
@@ -327,7 +516,16 @@
       "پنجره دوجداره ترمال‌بریک",
       "نمای کرتین وال لامل",
       "شیشه لمینت سکوریت"
-    ]
+    ],
+    "titleEn": "District 4 Educators Housing Cooperative",
+    "titleAr": "جمعية إسكان المعلمين - المنطقة 4",
+    "employer": "تعاونی مسکن فرهنگیان ناحیه 4",
+    "employerEn": "Educators Housing Cooperative #4",
+    "employerAr": "جمعية إسكان المعلمين",
+    "executor": "شرکت نوآوران پنجره سپاهان",
+    "executorEn": "Noavaran Panjereh Sepahan",
+    "executorAr": "شركة نوآوران پنجره سباهان",
+    "images": []
   },
   {
     "id": "proj-23",
@@ -342,7 +540,16 @@
       "پنجره دوجداره ترمال‌بریک",
       "نمای کرتین وال لامل",
       "شیشه لمینت سکوریت"
-    ]
+    ],
+    "titleEn": "Eng. Hamidi Residential Building",
+    "titleAr": "مبنى المهندس حميدي السكني",
+    "employer": "مسکونی آقای مهندس حمیدی",
+    "employerEn": "Eng. Hamidi",
+    "employerAr": "المهندس حميدي",
+    "executor": "شرکت نوآوران پنجره سپاهان",
+    "executorEn": "Noavaran Panjereh Sepahan",
+    "executorAr": "شركة نوآوران پنجره سباهان",
+    "images": []
   },
   {
     "id": "proj-24",
@@ -357,7 +564,16 @@
       "پنجره دوجداره ترمال‌بریک",
       "نمای کرتین وال لامل",
       "شیشه لمینت سکوریت"
-    ]
+    ],
+    "titleEn": "Eng. Aghadadi Commercial & Corporate Center",
+    "titleAr": "مجمع المهندس آقادادي التجاري والإداري",
+    "employer": "اداری و تجاری آقای مهندس آقا دادی",
+    "employerEn": "Eng. Aghadadi",
+    "employerAr": "المهندس آقادادي",
+    "executor": "شرکت نوآوران پنجره سپاهان",
+    "executorEn": "Noavaran Panjereh Sepahan",
+    "executorAr": "شركة نوآوران پنجره سباهان",
+    "images": []
   },
   {
     "id": "proj-25",
@@ -372,7 +588,16 @@
       "پنجره دوجداره ترمال‌بریک",
       "نمای کرتین وال لامل",
       "شیشه لمینت سکوریت"
-    ]
+    ],
+    "titleEn": "Bank Melli Housing Cooperative",
+    "titleAr": "جمعية إسكان موظفي بنك ملي",
+    "employer": "تعاونی مسکن بانک ملی",
+    "employerEn": "Bank Melli Iran Cooperative",
+    "employerAr": "جمعية إسكان بنك ملي",
+    "executor": "شرکت نوآوران پنجره سپاهان",
+    "executorEn": "Noavaran Panjereh Sepahan",
+    "executorAr": "شركة نوآوران پنجره سباهان",
+    "images": []
   },
   {
     "id": "proj-26",
@@ -387,7 +612,16 @@
       "پنجره دوجداره ترمال‌بریک",
       "نمای کرتین وال لامل",
       "شیشه لمینت سکوریت"
-    ]
+    ],
+    "titleEn": "Persia Felez Housing Cooperative",
+    "titleAr": "جمعية إسكان برشيا فلز",
+    "employer": "تعاونی مسکن پرشیا فلز",
+    "employerEn": "Persia Felez Industrial Group",
+    "employerAr": "مجموعة برشيا فلز الصناعية",
+    "executor": "شرکت نوآوران پنجره سپاهان",
+    "executorEn": "Noavaran Panjereh Sepahan",
+    "executorAr": "شركة نوآوران پنجره سباهان",
+    "images": []
   },
   {
     "id": "proj-27",
@@ -402,7 +636,16 @@
       "پنجره دوجداره ترمال‌بریک",
       "نمای کرتین وال لامل",
       "شیشه لمینت سکوریت"
-    ]
+    ],
+    "titleEn": "Eng. Arfa Residential Complex",
+    "titleAr": "مبنى المهندس أرفع السكني",
+    "employer": "مسکونی آقای مهندس ارفع",
+    "employerEn": "Eng. Arfa",
+    "employerAr": "المهندس أرفع",
+    "executor": "شرکت نوآوران پنجره سپاهان",
+    "executorEn": "Noavaran Panjereh Sepahan",
+    "executorAr": "شركة نوآوران پنجره سباهان",
+    "images": []
   },
   {
     "id": "proj-28",
@@ -417,7 +660,16 @@
       "پنجره دوجداره ترمال‌بریک",
       "نمای کرتین وال لامل",
       "شیشه لمینت سکوریت"
-    ]
+    ],
+    "titleEn": "District 1 Educators Housing Cooperative",
+    "titleAr": "جمعية إسكان المعلمين - المنطقة 1",
+    "employer": "تعاونی مسکن فرهنگیان ، ناحیه 1",
+    "employerEn": "District 1 Education Cooperative",
+    "employerAr": "جمعية إسكان المعلمين المنطقة 1",
+    "executor": "شرکت نوآوران پنجره سپاهان",
+    "executorEn": "Noavaran Panjereh Sepahan",
+    "executorAr": "شركة نوآوران پنجره سباهان",
+    "images": []
   },
   {
     "id": "proj-29",
@@ -432,7 +684,16 @@
       "پنجره دوجداره ترمال‌بریک",
       "نمای کرتین وال لامل",
       "شیشه لمینت سکوریت"
-    ]
+    ],
+    "titleEn": "Agricultural Jihad Housing Cooperative",
+    "titleAr": "جمعية إسكان جهاد الزراعة",
+    "employer": "تعاونی مسکن جهاد کشاورزی",
+    "employerEn": "Ministry of Agriculture Jihad Cooperative",
+    "employerAr": "جمعية إسكان جهاد الزراعة",
+    "executor": "شرکت نوآوران پنجره سپاهان",
+    "executorEn": "Noavaran Panjereh Sepahan",
+    "executorAr": "شركة نوآوران پنجره سباهان",
+    "images": []
   },
   {
     "id": "proj-30",
@@ -447,7 +708,16 @@
       "پنجره دوجداره ترمال‌بریک",
       "نمای کرتین وال لامل",
       "شیشه لمینت سکوریت"
-    ]
+    ],
+    "titleEn": "District 4 Teachers Housing Complex",
+    "titleAr": "جمعية إسكان التربويين - المنطقة 4",
+    "employer": "تعاونی مسکن فرهنگیان ناحیه 4",
+    "employerEn": "Education Cooperative #4",
+    "employerAr": "جمعية إسكان التربويين",
+    "executor": "شرکت نوآوران پنجره سپاهان",
+    "executorEn": "Noavaran Panjereh Sepahan",
+    "executorAr": "شركة نوآوران پنجره سباهان",
+    "images": []
   },
   {
     "id": "proj-31",
@@ -462,7 +732,16 @@
       "پنجره دوجداره ترمال‌بریک",
       "نمای کرتین وال لامل",
       "شیشه لمینت سکوریت"
-    ]
+    ],
+    "titleEn": "Mollabashi Residential Complex",
+    "titleAr": "مجمع ملاباشي السكني",
+    "employer": "مسکونی ملاباشی",
+    "employerEn": "Mollabashi Development Board",
+    "employerAr": "مجلس إدارة مجمع ملاباشي",
+    "executor": "شرکت نوآوران پنجره سپاهان",
+    "executorEn": "Noavaran Panjereh Sepahan",
+    "executorAr": "شركة نوآوران پنجره سباهان",
+    "images": []
   },
   {
     "id": "proj-32",
@@ -477,7 +756,16 @@
       "پنجره دوجداره ترمال‌بریک",
       "نمای کرتین وال لامل",
       "شیشه لمینت سکوریت"
-    ]
+    ],
+    "titleEn": "Merato Army Housing Cooperative",
+    "titleAr": "جمعية إسكان الجيش مراتو",
+    "employer": "تعاونی مسکن ارتش مراتو",
+    "employerEn": "Merato Military Housing Cooperative",
+    "employerAr": "تعاونية مراتو العسكرية",
+    "executor": "شرکت نوآوران پنجره سپاهان",
+    "executorEn": "Noavaran Panjereh Sepahan",
+    "executorAr": "شركة نوآوران پنجره سباهان",
+    "images": []
   },
   {
     "id": "proj-33",
@@ -492,7 +780,16 @@
       "پنجره دوجداره ترمال‌بریک",
       "نمای کرتین وال لامل",
       "شیشه لمینت سکوریت"
-    ]
+    ],
+    "titleEn": "Eng. Farhang Commercial Center",
+    "titleAr": "مجمع المهندس فرهنگ التجاري",
+    "employer": "تجاری آقای مهندس فرهنگ",
+    "employerEn": "Eng. Farhang",
+    "employerAr": "المهندس فرهنگ",
+    "executor": "شرکت نوآوران پنجره سپاهان",
+    "executorEn": "Noavaran Panjereh Sepahan",
+    "executorAr": "شركة نوآوران پنجره سباهان",
+    "images": []
   },
   {
     "id": "proj-34",
@@ -507,7 +804,16 @@
       "پنجره دوجداره ترمال‌بریک",
       "نمای کرتین وال لامل",
       "شیشه لمینت سکوریت"
-    ]
+    ],
+    "titleEn": "Eng. Akhtarian Residential Complex",
+    "titleAr": "مبنى المهندس اختريان السكني",
+    "employer": "مسکونی آقای مهندس اختریان",
+    "employerEn": "Eng. Akhtarian",
+    "employerAr": "المهندس اختريان",
+    "executor": "شرکت نوآوران پنجره سپاهان",
+    "executorEn": "Noavaran Panjereh Sepahan",
+    "executorAr": "شركة نوآوران پنجره سباهان",
+    "images": []
   },
   {
     "id": "proj-35",
@@ -522,7 +828,16 @@
       "پنجره دوجداره ترمال‌بریک",
       "نمای کرتین وال لامل",
       "شیشه لمینت سکوریت"
-    ]
+    ],
+    "titleEn": "Eng. Fasihi Commercial Building",
+    "titleAr": "مبنى المهندس فصيحي التجاري",
+    "employer": "تجاری آقای مهندس فصیحی",
+    "employerEn": "Eng. Fasihi",
+    "employerAr": "المهندس فصيحي",
+    "executor": "شرکت نوآوران پنجره سپاهان",
+    "executorEn": "Noavaran Panjereh Sepahan",
+    "executorAr": "شركة نوآوران پنجره سباهان",
+    "images": []
   },
   {
     "id": "proj-36",
@@ -537,7 +852,16 @@
       "پنجره دوجداره ترمال‌بریک",
       "نمای کرتین وال لامل",
       "شیشه لمینت سکوریت"
-    ]
+    ],
+    "titleEn": "Eng. Hajian Corporate Office",
+    "titleAr": "مبنى المهندس حاجيان الإداري",
+    "employer": "اداری آقای مهندس حاجیان",
+    "employerEn": "Eng. Hajian",
+    "employerAr": "المهندس حاجيان",
+    "executor": "شرکت نوآوران پنجره سپاهان",
+    "executorEn": "Noavaran Panjereh Sepahan",
+    "executorAr": "شركة نوآوران پنجره سباهان",
+    "images": []
   },
   {
     "id": "proj-37",
@@ -552,7 +876,16 @@
       "پنجره دوجداره ترمال‌بریک",
       "نمای کرتین وال لامل",
       "شیشه لمینت سکوریت"
-    ]
+    ],
+    "titleEn": "Hosseinzadeh Residential Building",
+    "titleAr": "مبنى حسين زاده السكني",
+    "employer": "مسکونی آقای حسین زاده",
+    "employerEn": "Mr. Hosseinzadeh",
+    "employerAr": "السيد حسين زاده",
+    "executor": "شرکت نوآوران پنجره سپاهان",
+    "executorEn": "Noavaran Panjereh Sepahan",
+    "executorAr": "شركة نوآوران پنجره سباهان",
+    "images": []
   },
   {
     "id": "proj-38",
@@ -567,7 +900,16 @@
       "پنجره دوجداره ترمال‌بریک",
       "نمای کرتین وال لامل",
       "شیشه لمینت سکوریت"
-    ]
+    ],
+    "titleEn": "Eng. Javidan Residential Complex",
+    "titleAr": "مبنى المهندس جاودان السكني",
+    "employer": "مسکونی آقای مهندس جاودان",
+    "employerEn": "Eng. Javidan",
+    "employerAr": "المهندس جاودان",
+    "executor": "شرکت نوآوران پنجره سپاهان",
+    "executorEn": "Noavaran Panjereh Sepahan",
+    "executorAr": "شركة نوآوران پنجره سباهان",
+    "images": []
   },
   {
     "id": "proj-39",
@@ -582,7 +924,16 @@
       "پنجره دوجداره ترمال‌بریک",
       "نمای کرتین وال لامل",
       "شیشه لمینت سکوریت"
-    ]
+    ],
+    "titleEn": "Eng. Hatampour Residential Building",
+    "titleAr": "مبنى المهندس حاتم بور السكني",
+    "employer": "مسکونی آقای مهندس حاتم پور",
+    "employerEn": "Eng. Hatampour",
+    "employerAr": "المهندس حاتم بور",
+    "executor": "شرکت نوآوران پنجره سپاهان",
+    "executorEn": "Noavaran Panjereh Sepahan",
+    "executorAr": "شركة نوآوران پنجره سباهان",
+    "images": []
   },
   {
     "id": "proj-40",
@@ -597,7 +948,16 @@
       "پنجره دوجداره ترمال‌بریک",
       "نمای کرتین وال لامل",
       "شیشه لمینت سکوریت"
-    ]
+    ],
+    "titleEn": "Eng. Abbasi Commercial Building",
+    "titleAr": "مجمع المهندس عباسي التجاري",
+    "employer": "تجاری آقای مهندس عباسی",
+    "employerEn": "Eng. Abbasi",
+    "employerAr": "المهندس عباسي",
+    "executor": "شرکت نوآوران پنجره سپاهان",
+    "executorEn": "Noavaran Panjereh Sepahan",
+    "executorAr": "شركة نوآوران پنجره سباهان",
+    "images": []
   },
   {
     "id": "proj-41",
@@ -612,7 +972,16 @@
       "پنجره دوجداره ترمال‌بریک",
       "نمای کرتین وال لامل",
       "شیشه لمینت سکوریت"
-    ]
+    ],
+    "titleEn": "Eng. Tavassoli Residential Complex",
+    "titleAr": "مبنى المهندس توسلي السكني",
+    "employer": "مسکونی آقای مهندس توسلی",
+    "employerEn": "Eng. Tavassoli",
+    "employerAr": "المهندس توسلي",
+    "executor": "شرکت نوآوران پنجره سپاهان",
+    "executorEn": "Noavaran Panjereh Sepahan",
+    "executorAr": "شركة نوآوران پنجره سباهان",
+    "images": []
   },
   {
     "id": "proj-42",
@@ -627,7 +996,16 @@
       "پنجره دوجداره ترمال‌بریک",
       "نمای کرتین وال لامل",
       "شیشه لمینت سکوریت"
-    ]
+    ],
+    "titleEn": "Eng. Harandi Residential Building",
+    "titleAr": "مبنى المهندس هرندي السكني",
+    "employer": "مسکونی آقای مهندس هرندی",
+    "employerEn": "Eng. Harandi",
+    "employerAr": "المهندس هرندي",
+    "executor": "شرکت نوآوران پنجره سپاهان",
+    "executorEn": "Noavaran Panjereh Sepahan",
+    "executorAr": "شركة نوآوران پنجره سباهان",
+    "images": []
   },
   {
     "id": "proj-43",
@@ -642,7 +1020,16 @@
       "پنجره دوجداره ترمال‌بریک",
       "نمای کرتین وال لامل",
       "شیشه لمینت سکوریت"
-    ]
+    ],
+    "titleEn": "Eng. Nasr & Dr. Karimi Fard Commercial Complex",
+    "titleAr": "مجمع المهندس نصر والدكتور كريمي فرد التجاري",
+    "employer": "تجاری آقای مهندس نصر و دکتر کریمی فرد",
+    "employerEn": "Eng. Nasr & Dr. Karimi Fard",
+    "employerAr": "المهندس نصر والدكتور كريمي فرد",
+    "executor": "شرکت نوآوران پنجره سپاهان",
+    "executorEn": "Noavaran Panjereh Sepahan",
+    "executorAr": "شركة نوآوران پنجره سباهان",
+    "images": []
   },
   {
     "id": "proj-44",
@@ -657,7 +1044,16 @@
       "پنجره دوجداره ترمال‌بریک",
       "نمای کرتین وال لامل",
       "شیشه لمینت سکوریت"
-    ]
+    ],
+    "titleEn": "Eng. Mousavi Luxury Villa, Zeytoun Village",
+    "titleAr": "فيلا المهندس موسوي الفاخرة - قرية الزيتون",
+    "employer": "ویلای آقای مهندس موسوی ، دهکده زیتون",
+    "employerEn": "Eng. Mousavi",
+    "employerAr": "المهندس موسوي",
+    "executor": "شرکت نوآوران پنجره سپاهان",
+    "executorEn": "Noavaran Panjereh Sepahan",
+    "executorAr": "شركة نوآوران پنجره سباهان",
+    "images": []
   },
   {
     "id": "proj-45",
@@ -672,7 +1068,16 @@
       "پنجره دوجداره ترمال‌بریک",
       "نمای کرتین وال لامل",
       "شیشه لمینت سکوریت"
-    ]
+    ],
+    "titleEn": "Spadana Design & Build, Bank Mehr",
+    "titleAr": "شركة تصميم وتنفيذ اسبادانا - بنك مهر",
+    "employer": "شرکت طرح و اجرای اسپادانا ، بانک مهر",
+    "employerEn": "Spadana Design Co. & Bank Mehr",
+    "employerAr": "شركة اسبادانا وبنك مهر",
+    "executor": "شرکت نوآوران پنجره سپاهان",
+    "executorEn": "Noavaran Panjereh Sepahan",
+    "executorAr": "شركة نوآوران پنجره سباهان",
+    "images": []
   },
   {
     "id": "proj-46",
@@ -687,7 +1092,16 @@
       "پنجره دوجداره ترمال‌بریک",
       "نمای کرتین وال لامل",
       "شیشه لمینت سکوریت"
-    ]
+    ],
+    "titleEn": "Nasr Residential Complex",
+    "titleAr": "مبنى نصر السكني",
+    "employer": "مسکونی آقای نصر",
+    "employerEn": "Mr. Nasr",
+    "employerAr": "السيد نصر",
+    "executor": "شرکت نوآوران پنجره سپاهان",
+    "executorEn": "Noavaran Panjereh Sepahan",
+    "executorAr": "شركة نوآوران پنجره سباهان",
+    "images": []
   },
   {
     "id": "proj-47",
@@ -702,7 +1116,16 @@
       "پنجره دوجداره ترمال‌بریک",
       "نمای کرتین وال لامل",
       "شیشه لمینت سکوریت"
-    ]
+    ],
+    "titleEn": "Eng. Farhang Residential Complex",
+    "titleAr": "مبنى المهندس فرهنگ السكني",
+    "employer": "مسکونی آقای مهندس فرهنگ",
+    "employerEn": "Eng. Farhang",
+    "employerAr": "المهندس فرهنگ",
+    "executor": "شرکت نوآوران پنجره سپاهان",
+    "executorEn": "Noavaran Panjereh Sepahan",
+    "executorAr": "شركة نوآوران پنجره سباهان",
+    "images": []
   },
   {
     "id": "proj-48",
@@ -717,7 +1140,16 @@
       "پنجره دوجداره ترمال‌بریک",
       "نمای کرتین وال لامل",
       "شیشه لمینت سکوریت"
-    ]
+    ],
+    "titleEn": "Eng. Zarean Commercial Complex",
+    "titleAr": "مجمع المهندس زارعان التجاري",
+    "employer": "تجاری آقای مهندس زارعان",
+    "employerEn": "Eng. Zarean",
+    "employerAr": "المهندس زارعان",
+    "executor": "شرکت نوآوران پنجره سپاهان",
+    "executorEn": "Noavaran Panjereh Sepahan",
+    "executorAr": "شركة نوآوران پنجره سباهان",
+    "images": []
   },
   {
     "id": "proj-49",
@@ -732,7 +1164,16 @@
       "پنجره دوجداره ترمال‌بریک",
       "نمای کرتین وال لامل",
       "شیشه لمینت سکوریت"
-    ]
+    ],
+    "titleEn": "Eng. Aghadadi Commercial Building",
+    "titleAr": "مبنى المهندس آقادادي التجاري",
+    "employer": "تجاری آقای مهندس آقادادی",
+    "employerEn": "Eng. Aghadadi",
+    "employerAr": "المهندس آقادادي",
+    "executor": "شرکت نوآوران پنجره سپاهان",
+    "executorEn": "Noavaran Panjereh Sepahan",
+    "executorAr": "شركة نوآوران پنجره سباهان",
+    "images": []
   },
   {
     "id": "proj-50",
@@ -747,7 +1188,16 @@
       "پنجره دوجداره ترمال‌بریک",
       "نمای کرتین وال لامل",
       "شیشه لمینت سکوریت"
-    ]
+    ],
+    "titleEn": "Eng. Bagher Hadi Building",
+    "titleAr": "مبنى المهندس باقر هادي",
+    "employer": "آقای مهندس باقرهادی",
+    "employerEn": "Eng. Bagher Hadi",
+    "employerAr": "المهندس باقر هادي",
+    "executor": "شرکت نوآوران پنجره سپاهان",
+    "executorEn": "Noavaran Panjereh Sepahan",
+    "executorAr": "شركة نوآوران پنجره سباهان",
+    "images": []
   },
   {
     "id": "proj-51",
@@ -762,7 +1212,16 @@
       "پنجره دوجداره ترمال‌بریک",
       "نمای کرتین وال لامل",
       "شیشه لمینت سکوریت"
-    ]
+    ],
+    "titleEn": "Hazrat Abolfazl Medical Center",
+    "titleAr": "مجمع حضرة أبو الفضل الطبي",
+    "employer": "مرکزپزشکی حضرت ابوالفضل",
+    "employerEn": "Hazrat Abolfazl Charity Foundation",
+    "employerAr": "مؤسسة حضرة أبو الفضل الخيرية",
+    "executor": "شرکت نوآوران پنجره سپاهان",
+    "executorEn": "Noavaran Panjereh Sepahan",
+    "executorAr": "شركة نوآوران پنجره سباهان",
+    "images": []
   },
   {
     "id": "proj-52",
@@ -777,7 +1236,16 @@
       "پنجره دوجداره ترمال‌بریک",
       "نمای کرتین وال لامل",
       "شیشه لمینت سکوریت"
-    ]
+    ],
+    "titleEn": "Eng. Bagheri Residential Building",
+    "titleAr": "مبنى المهندس باقري السكني",
+    "employer": "مسکونی آقای مهندس باقری",
+    "employerEn": "Eng. Bagheri",
+    "employerAr": "المهندس باقري",
+    "executor": "شرکت نوآوران پنجره سپاهان",
+    "executorEn": "Noavaran Panjereh Sepahan",
+    "executorAr": "شركة نوآوران پنجره سباهان",
+    "images": []
   },
   {
     "id": "proj-53",
@@ -792,6 +1260,15 @@
       "پنجره دوجداره ترمال‌بریک",
       "نمای کرتین وال لامل",
       "شیشه لمینت سکوریت"
-    ]
+    ],
+    "titleEn": "Eng. Yaramiri Residential Complex",
+    "titleAr": "مبنى المهندس ياراميري السكني",
+    "employer": "مسکونی مهندس یارامیری",
+    "employerEn": "Eng. Yaramiri",
+    "employerAr": "المهندس ياراميري",
+    "executor": "شرکت نوآوران پنجره سپاهان",
+    "executorEn": "Noavaran Panjereh Sepahan",
+    "executorAr": "شركة نوآوران پنجره سباهان",
+    "images": []
   }
 ]

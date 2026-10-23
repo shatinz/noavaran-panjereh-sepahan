@@ -2,14 +2,18 @@
 
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import AdminNav from '@/components/AdminNav';
-import { ArticleItem } from '@/lib/db';
-import { Plus, Edit2, Trash2, X, Check, FileText, Upload, Image as ImageIcon, Loader2, ExternalLink } from 'lucide-react';
+import { ArticleItem, CategoryItem } from '@/lib/db';
+import { Plus, Edit2, Trash2, X, Check, FileText, Upload, Image as ImageIcon, Loader2, ExternalLink, FolderTree } from 'lucide-react';
 import ImageUploadField from '@/components/admin/ImageUploadField';
+import MultiImageUpload from '@/components/admin/MultiImageUpload';
+import CategoryManagerModal from '@/components/admin/CategoryManagerModal';
 
 export default function AdminArticlesPage() {
   const [articles, setArticles] = useState<ArticleItem[]>([]);
+  const [categories, setCategories] = useState<CategoryItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
+  const [catModalOpen, setCatModalOpen] = useState(false);
   const [editingArticle, setEditingArticle] = useState<ArticleItem | null>(null);
   const [contentUploading, setContentUploading] = useState(false);
   const [cursorPos, setCursorPos] = useState<number | null>(null);
@@ -22,10 +26,23 @@ export default function AdminArticlesPage() {
     date: '۱۴۰۳/۰۶/۰۱',
     author: 'واحد مهندسی نوآوران پنجره سپاهان',
     image: '',
+    images: [] as string[],
     excerpt: '',
     tags: 'پنجره دوجداره, ترمال بریک, اصفهان',
     content: '',
   });
+
+  const fetchCategories = async () => {
+    try {
+      const res = await fetch('/api/admin/categories');
+      const data = await res.json();
+      if (data.articles) {
+        setCategories(data.articles);
+      }
+    } catch (e) {
+      console.error('Error fetching categories:', e);
+    }
+  };
 
   const fetchArticles = async () => {
     try {
@@ -40,7 +57,7 @@ export default function AdminArticlesPage() {
   };
 
   useEffect(() => {
-    fetchArticles();
+    Promise.all([fetchArticles(), fetchCategories()]);
   }, []);
 
   const handleOpenAdd = () => {
@@ -48,10 +65,11 @@ export default function AdminArticlesPage() {
     setForm({
       title: '',
       slug: '',
-      category: 'دانشنامه و راهنمای خرید',
+      category: categories[0]?.nameFa || 'دانشنامه و راهنمای خرید',
       date: new Intl.DateTimeFormat('fa-IR').format(new Date()),
       author: 'واحد مهندسی نوآوران پنجره سپاهان',
       image: '',
+      images: [],
       excerpt: '',
       tags: 'پنجره دوجداره, ترمال بریک, اصفهان',
       content: '',
@@ -68,6 +86,7 @@ export default function AdminArticlesPage() {
       date: article.date,
       author: article.author,
       image: article.image,
+      images: article.images || [],
       excerpt: article.excerpt,
       tags: article.tags?.join(', ') || '',
       content: article.content,
@@ -186,8 +205,24 @@ export default function AdminArticlesPage() {
       alert('لطفاً تصویر شاخص مقاله را آپلود کرده یا آدرس آن را وارد نمایید.');
       return;
     }
+    // Deduplicate images array against cover image and within itself
+    const seen = new Set<string>();
+    const coverNorm = form.image.trim().split('?')[0].split('#')[0].toLowerCase();
+    seen.add(coverNorm);
+
+    const dedupedGallery: string[] = [];
+    for (const img of form.images || []) {
+      if (!img) continue;
+      const norm = img.trim().split('?')[0].split('#')[0].toLowerCase();
+      if (!seen.has(norm)) {
+        seen.add(norm);
+        dedupedGallery.push(img.trim());
+      }
+    }
+
     const payload = {
       ...form,
+      images: dedupedGallery,
       tags: form.tags.split(',').map((t) => t.trim()).filter(Boolean),
     };
 
@@ -228,16 +263,25 @@ export default function AdminArticlesPage() {
           <div>
             <h1 className="text-xl font-bold text-white">مدیریت مقالات و دانشنامه</h1>
             <p className="text-xs text-titanium-400 mt-1">
-              افزودن، ویرایش و حذف مقالات تخصصی و اخبار مهندسی نما و پنجره
+              افزودن، ویرایش و حذف مقالات تخصصی، دسته‌بندی‌ها و تصاویر گالری
             </p>
           </div>
-          <button
-            onClick={handleOpenAdd}
-            className="px-4 py-2.5 rounded-xl bg-bronze-500 hover:bg-bronze-400 text-charcoal-950 font-bold text-xs flex items-center gap-1.5 shadow-md shadow-bronze-500/20"
-          >
-            <Plus className="w-4 h-4 text-charcoal-950" />
-            <span>افزودن مقاله جدید</span>
-          </button>
+          <div className="flex items-center gap-2.5">
+            <button
+              onClick={() => setCatModalOpen(true)}
+              className="px-3.5 py-2.5 rounded-xl bg-charcoal-800 hover:bg-charcoal-700 border border-charcoal-700 text-titanium-200 hover:text-white font-bold text-xs flex items-center gap-1.5 transition-colors"
+            >
+              <FolderTree className="w-4 h-4 text-bronze-400" />
+              <span>مدیریت دسته‌بندی‌ها</span>
+            </button>
+            <button
+              onClick={handleOpenAdd}
+              className="px-4 py-2.5 rounded-xl bg-bronze-500 hover:bg-bronze-400 text-charcoal-950 font-bold text-xs flex items-center gap-1.5 shadow-md shadow-bronze-500/20"
+            >
+              <Plus className="w-4 h-4 text-charcoal-950" />
+              <span>افزودن مقاله جدید</span>
+            </button>
+          </div>
         </div>
 
         {/* Table */}
@@ -344,13 +388,31 @@ export default function AdminArticlesPage() {
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="text-titanium-300 block mb-1 font-medium">دسته‌بندی:</label>
-                  <input
-                    type="text"
+                  <div className="flex items-center justify-between mb-1">
+                    <label className="text-titanium-300 font-medium">دسته‌بندی:</label>
+                    <button
+                      type="button"
+                      onClick={() => setCatModalOpen(true)}
+                      className="text-[11px] text-bronze-400 hover:text-bronze-300 flex items-center gap-1"
+                    >
+                      <FolderTree className="w-3 h-3" />
+                      <span>مدیریت دسته‌ها</span>
+                    </button>
+                  </div>
+                  <select
                     value={form.category}
                     onChange={(e) => setForm({ ...form, category: e.target.value })}
                     className="w-full p-2.5 rounded-xl bg-charcoal-850 border border-charcoal-700 text-white focus:border-bronze-500 focus:outline-none"
-                  />
+                  >
+                    {categories.map((c) => (
+                      <option key={c.id} value={c.nameFa}>
+                        {c.nameFa} ({c.nameEn})
+                      </option>
+                    ))}
+                    {!categories.find((c) => c.nameFa === form.category) && (
+                      <option value={form.category}>{form.category}</option>
+                    )}
+                  </select>
                 </div>
                 <div>
                   <label className="text-titanium-300 block mb-1 font-medium">نامک (Slug):</label>
@@ -368,9 +430,17 @@ export default function AdminArticlesPage() {
                 label="تصویر شاخص مقاله"
                 required
                 value={form.image}
-                onChange={(url) => setForm({ ...form, image: url })}
+                onChange={(url) => setForm((prev) => ({ ...prev, image: url }))}
                 hint="تصویر کاور مقاله با نسبت استاندارد ۱۶:۹ (افقی)"
                 aspectRatioClass="aspect-video"
+              />
+
+              <MultiImageUpload
+                label="گالری تصاویر مقاله (نامحدود)"
+                images={form.images}
+                onChange={(urls) => setForm((prev) => ({ ...prev, images: urls }))}
+                hint="تصاویر تکمیلی مقاله جهت نمایش در انتهای مقاله و گالری لایت‌باکس"
+                excludeImages={[form.image]}
               />
 
               <div>
@@ -519,6 +589,17 @@ export default function AdminArticlesPage() {
           </div>
         </div>
       )}
+      {/* Category Manager Modal */}
+      <CategoryManagerModal
+        isOpen={catModalOpen}
+        onClose={() => setCatModalOpen(false)}
+        type="articles"
+        categories={categories}
+        onCategoriesChanged={() => {
+          fetchCategories();
+          fetchArticles();
+        }}
+      />
     </div>
   );
 }

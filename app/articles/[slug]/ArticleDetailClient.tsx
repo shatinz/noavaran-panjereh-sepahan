@@ -3,6 +3,7 @@
 import React from 'react';
 import Image from 'next/image';
 import { Breadcrumbs } from '@/components/ui/Breadcrumbs';
+import { Gallery } from '@/components/ui/Gallery';
 import { Calendar, User, Tag, ShieldCheck, Phone } from 'lucide-react';
 import { telHref } from '@/lib/phone';
 import { useLanguage } from '@/lib/i18n/context';
@@ -13,9 +14,10 @@ interface ArticleDetailClientProps {
   article: ArticleItem;
   settings: CompanySettings;
   imgSrc: string;
+  galleryImages?: string[];
 }
 
-export function ArticleDetailClient({ article, settings, imgSrc }: ArticleDetailClientProps) {
+export function ArticleDetailClient({ article, settings, imgSrc, galleryImages = [] }: ArticleDetailClientProps) {
   const { dict, locale, dir, isRTL } = useLanguage();
   const locArt = getLocalizedArticle(article, locale);
 
@@ -73,6 +75,15 @@ export function ArticleDetailClient({ article, settings, imgSrc }: ArticleDetail
                     #{tag}
                   </span>
                 ))}
+              </div>
+            )}
+
+            {((galleryImages && galleryImages.length > 1) || (article.images && article.images.length > 0)) && (
+              <div className="mt-12 pt-8 border-t border-ink-800 space-y-6">
+                <h3 className={`text-xl font-black text-white font-vazir ${isRTL ? 'border-r-4 pr-3' : 'border-l-4 pl-3'} border-signal-500`}>
+                  {locale === 'en' ? 'Article Image Gallery' : (locale === 'ar' ? 'معرض صور المقال' : 'گالری تصاویر مقاله')}
+                </h3>
+                <Gallery images={galleryImages} title={locArt.title} />
               </div>
             )}
           </div>

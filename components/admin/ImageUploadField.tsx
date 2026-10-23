@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Upload, Image as ImageIcon, Trash2, RefreshCw, ExternalLink, Link as LinkIcon, AlertCircle, Loader2, CheckCircle2 } from 'lucide-react';
 
 interface ImageUploadFieldProps {
@@ -10,6 +10,64 @@ interface ImageUploadFieldProps {
   required?: boolean;
   hint?: string;
   aspectRatioClass?: string;
+}
+
+// Client-side image downscale / compression
+async function compressImageFile(file: File): Promise<File> {
+  if (file.type === 'image/gif' || file.size < 400 * 1024) return file;
+  return new Promise((resolve) => {
+    const img = new Image();
+    const objectUrl = URL.createObjectURL(file);
+    img.onload = () => {
+      URL.revokeObjectURL(objectUrl);
+      const maxDim = 1920;
+      let { width, height } = img;
+      if (width > maxDim || height > maxDim) {
+        if (width > height) {
+          height = Math.round((height * maxDim) / width);
+          width = maxDim;
+        } else {
+          width = Math.round((width * maxDim) / height);
+          height = maxDim;
+        }
+      } else if (file.size < 1.5 * 1024 * 1024) {
+        return resolve(file);
+      }
+
+      const canvas = document.createElement('canvas');
+      canvas.width = width;
+      canvas.height = height;
+      const ctx = canvas.getContext('2d');
+      if (!ctx) return resolve(file);
+      ctx.drawImage(img, 0, 0, width, height);
+
+      // Preserve PNG format to keep transparent alpha channel intact
+      const isPng = file.type === 'image/png';
+      const targetMime = isPng ? 'image/png' : 'image/webp';
+      const ext = isPng ? '.png' : '.webp';
+      const quality = isPng ? undefined : 0.85;
+
+      canvas.toBlob(
+        (blob) => {
+          if (blob && blob.size > 0 && blob.size < file.size) {
+            const compressedFile = new File([blob], file.name.replace(/\.[^.]+$/, ext), {
+              type: targetMime,
+            });
+            resolve(compressedFile);
+          } else {
+            resolve(file);
+          }
+        },
+        targetMime,
+        quality
+      );
+    };
+    img.onerror = () => {
+      URL.revokeObjectURL(objectUrl);
+      resolve(file);
+    };
+    img.src = objectUrl;
+  });
 }
 
 export default function ImageUploadField({
@@ -23,11 +81,25 @@ export default function ImageUploadField({
   const [isUploading, setIsUploading] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const [successToast, setSuccessToast] = useState('');
+  const [previewOverride, setPreviewOverride] = useState('');
   const [showUrlInput, setShowUrlInput] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const activeObjectUrlRef = useRef<string | null>(null);
+
+  // Revoke any created object URL on unmount
+  useEffect(() => {
+    return () => {
+      if (activeObjectUrlRef.current) {
+        URL.revokeObjectURL(activeObjectUrlRef.current);
+        activeObjectUrlRef.current = null;
+      }
+    };
+  }, []);
 
   const processFile = async (file: File) => {
     setErrorMessage('');
+    setSuccessToast('');
 
     // Client-side file type verification
     const allowedTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
@@ -36,31 +108,66 @@ export default function ImageUploadField({
       return;
     }
 
-    // Client-side file size verification (10MB)
-    if (file.size > 10 * 1024 * 1024) {
-      setErrorMessage('حجم تصویر بیشتر از ۱۰ مگابایت است. لطفاً تصویری با حجم کمتر انتخاب کنید.');
+    // Client-side file size verification (15MB)
+    if (file.size > 15 * 1024 * 1024) {
+      setErrorMessage('حجم تصویر بیشتر از ۱۵ مگابایت است. لطفاً تصویری با حجم کمتر انتخاب کنید.');
       return;
     }
 
-    const formData = new FormData();
-    formData.append('file', file);
+    // Clean up any previous preview object URL
+    if (activeObjectUrlRef.current) {
+      URL.revokeObjectURL(activeObjectUrlRef.current);
+    }
+
+    // Immediate local preview so UI never lags
+    const localUrl = URL.createObjectURL(file);
+    activeObjectUrlRef.current = localUrl;
+    setPreviewOverride(localUrl);
 
     setIsUploading(true);
     try {
+      const readyFile = await compressImageFile(file);
+      const formData = new FormData();
+      formData.append('file', readyFile);
+
       const res = await fetch('/api/admin/upload', {
         method: 'POST',
         body: formData,
+        signal: AbortSignal.timeout(30000), // 30s timeout
       });
 
       const data = await res.json();
       if (res.ok && data.url) {
         onChange(data.url);
+        setSuccessToast('تصویر با موفقیت بارگذاری شد.');
+        setTimeout(() => setSuccessToast(''), 3500);
+
+        // Revoke the temporary local preview URL now that the remote URL is stored
+        if (activeObjectUrlRef.current) {
+          URL.revokeObjectURL(activeObjectUrlRef.current);
+          activeObjectUrlRef.current = null;
+        }
+        setPreviewOverride('');
       } else {
         setErrorMessage(data.error || 'خطا در بارگذاری تصویر روی سرور');
+        if (activeObjectUrlRef.current) {
+          URL.revokeObjectURL(activeObjectUrlRef.current);
+          activeObjectUrlRef.current = null;
+        }
+        setPreviewOverride('');
       }
-    } catch (err) {
+    } catch (err: any) {
       console.error('Upload request error:', err);
-      setErrorMessage('خطای شبکه در ارسال تصویر به سرور');
+      if (err?.name === 'TimeoutError' || err?.message?.includes('timeout')) {
+        setErrorMessage('خطای وقفه در ارتباط با سرور: بارگذاری تصویر بیش از حد طول کشید.');
+      } else {
+        setErrorMessage('خطای شبکه در ارسال تصویر به سرور');
+      }
+      if (activeObjectUrlRef.current) {
+        URL.revokeObjectURL(activeObjectUrlRef.current);
+        activeObjectUrlRef.current = null;
+      }
+      setPreviewOverride('');
     } finally {
       setIsUploading(false);
       if (fileInputRef.current) {
@@ -142,6 +249,13 @@ export default function ImageUploadField({
         </div>
       )}
 
+      {successToast && (
+        <div className="flex items-center gap-2 p-2.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 text-xs">
+          <CheckCircle2 className="w-4 h-4 shrink-0 text-emerald-400" />
+          <span>{successToast}</span>
+        </div>
+      )}
+
       {/* Hidden File Input */}
       <input
         ref={fileInputRef}
@@ -153,23 +267,30 @@ export default function ImageUploadField({
       />
 
       {/* Upload Zone / Preview Area */}
-      {value ? (
+      {(value || previewOverride) ? (
         <div className="relative group rounded-2xl bg-charcoal-950 border border-charcoal-700/80 p-3 overflow-hidden shadow-inner">
           <div className="flex flex-col sm:flex-row items-center gap-4">
             {/* Preview Image */}
             <div className={`relative ${aspectRatioClass} w-full sm:w-44 bg-charcoal-900 rounded-xl overflow-hidden border border-charcoal-700/60 shrink-0`}>
               <img
-                src={value}
+                src={previewOverride || value}
                 alt="Preview"
                 className="w-full h-full object-cover"
                 onError={() => {
                   setErrorMessage('تصویر بارگذاری‌شده در این آدرس قابل مشاهده نیست.');
                 }}
               />
-              <div className="absolute top-2 right-2 px-2 py-0.5 rounded-md bg-charcoal-950/80 backdrop-blur-sm border border-emerald-500/40 text-[10px] text-emerald-400 font-bold flex items-center gap-1">
-                <CheckCircle2 className="w-3 h-3 text-emerald-400" />
-                <span>آماده</span>
-              </div>
+              {isUploading ? (
+                <div className="absolute inset-0 bg-charcoal-950/70 flex flex-col items-center justify-center gap-1.5 p-2">
+                  <Loader2 className="w-6 h-6 text-bronze-400 animate-spin" />
+                  <span className="text-[10px] text-bronze-300 font-bold">درحال ارسال...</span>
+                </div>
+              ) : (
+                <div className="absolute top-2 right-2 px-2 py-0.5 rounded-md bg-charcoal-950/80 backdrop-blur-sm border border-emerald-500/40 text-[10px] text-emerald-400 font-bold flex items-center gap-1">
+                  <CheckCircle2 className="w-3 h-3 text-emerald-400" />
+                  <span>آماده</span>
+                </div>
+              )}
             </div>
 
             {/* Info and Action Buttons */}

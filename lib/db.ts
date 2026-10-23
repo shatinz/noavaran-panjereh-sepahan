@@ -19,13 +19,34 @@ export interface ServiceItem {
 export interface ProjectItem {
   id: string;
   title: string;
+  titleEn?: string;
+  titleAr?: string;
   category: string;
   client: string;
   location: string;
   image: string;
+  images?: string[];
   description: string;
   year: string;
+  employer?: string;
+  employerEn?: string;
+  employerAr?: string;
+  executor?: string;
+  executorEn?: string;
+  executorAr?: string;
   systemsUsed: string[];
+}
+
+export interface CategoryItem {
+  id: string;
+  nameFa: string;
+  nameEn: string;
+  nameAr?: string;
+}
+
+export interface CategoriesData {
+  projects: CategoryItem[];
+  articles: CategoryItem[];
 }
 
 export interface ArticleItem {
@@ -36,6 +57,7 @@ export interface ArticleItem {
   date: string;
   author: string;
   image: string;
+  images?: string[];
   excerpt: string;
   tags: string[];
   content: string;
@@ -112,6 +134,14 @@ export interface CompanySettings {
   factoryAddress: string;
   factoryAddressEn: string;
   workingHours: string;
+  stats?: {
+    stat1Value?: string;
+    stat1Label?: string;
+    stat2Value?: string;
+    stat2Label?: string;
+    stat3Value?: string;
+    stat3Label?: string;
+  };
   socialLinks: {
     instagram: string;
     telegram: string;
@@ -309,6 +339,14 @@ export async function getSettings(): Promise<CompanySettings> {
     factoryAddress: "اصفهان، خیابان امام خمینی، خیابان بسیج، کوچه ورزشگاه، بن‌بست قربانی، پلاک ۵۰",
     factoryAddressEn: "No. 50, Ghorbani Dead-end, Varzeshgah Alley, Basij St, Imam Khomeini St, Isfahan, Iran",
     workingHours: "شنبه تا چهارشنبه: ۸:۰۰ الی ۱۷:۰۰ | پنج‌شنبه‌ها: ۸:۰۰ الی ۱۳:۰۰",
+    stats: {
+      stat1Value: "+۳۰",
+      stat1Label: "سال تجربه درخشان",
+      stat2Value: "+۲۰۰۰",
+      stat2Label: "پروژه اجرایی موفق",
+      stat3Value: "۱۲۰۰",
+      stat3Label: "مشتری راضی",
+    },
     socialLinks: {
       instagram: "https://instagram.com/noavaran_panjereh_sepahan",
       telegram: "https://t.me/noavaranpanjereh",
@@ -318,6 +356,27 @@ export async function getSettings(): Promise<CompanySettings> {
     }
   };
   const data = readJsonFile<CompanySettings>('settings.json', fallback);
+
+  // Guarantee that default stats exist and legacy/stale stats cannot unintentionally override 1200 customers
+  const defaultStats = {
+    stat1Value: "+۳۰",
+    stat1Label: "سال تجربه درخشان",
+    stat2Value: "+۲۰۰۰",
+    stat2Label: "پروژه اجرایی موفق",
+    stat3Value: "۱۲۰۰",
+    stat3Label: "مشتری راضی",
+  };
+  const mergedStats = { ...defaultStats, ...(data.stats || {}) };
+  if (
+    mergedStats.stat3Value === '+۲۵' ||
+    mergedStats.stat3Value === '+25' ||
+    (mergedStats.stat3Label && mergedStats.stat3Label.includes('دست اجرا'))
+  ) {
+    mergedStats.stat3Value = '۱۲۰۰';
+    mergedStats.stat3Label = 'مشتری راضی';
+  }
+  data.stats = mergedStats;
+
   return data;
 }
 
@@ -528,4 +587,147 @@ export async function deleteConsultation(id: string): Promise<boolean> {
   if (filtered.length === list.length) return false;
   writeJsonFile('consultations.json', filtered);
   return true;
+}
+
+// CATEGORIES (Projects & Articles)
+const defaultCategories: CategoriesData = {
+  projects: [
+    { id: 'banking-gov', nameFa: 'بانکی و دولتی', nameEn: 'Banking & Government', nameAr: 'المصارف والقطاع الحكومي' },
+    { id: 'commercial-corp', nameFa: 'تجاری و اداری', nameEn: 'Commercial & Corporate', nameAr: 'تجاري وإداري' },
+    { id: 'residential-villa', nameFa: 'مسکونی و ویلایی', nameEn: 'Residential & Luxury Villas', nameAr: 'سكني وفلل فاخرة' },
+    { id: 'towers-coop', nameFa: 'تعاونی و برج‌ها', nameEn: 'Towers & Housing Cooperatives', nameAr: 'أبراج وجمعيات إسكانية' },
+  ],
+  articles: [
+    { id: 'knowledge-buying', nameFa: 'دانشنامه و راهنمای خرید', nameEn: 'Knowledge & Buying Guide', nameAr: 'معرفة ودليل الشراء' },
+    { id: 'technical-safety', nameFa: 'فنی و استانداردهای ایمنی', nameEn: 'Technical & Safety Standards', nameAr: 'معايير السلامة والمواصفات الفنية' },
+    { id: 'architecture-innovation', nameFa: 'معماری و نوآوری', nameEn: 'Architecture & Innovation', nameAr: 'العمارة والابتكار' },
+    { id: 'technical-comparison', nameFa: 'مقایسه فنی سیستم‌ها', nameEn: 'Technical Comparison', nameAr: 'المقارنة الفنية للأنظمة' },
+  ],
+};
+
+export async function getCategories(): Promise<CategoriesData> {
+  const data = readJsonFile<CategoriesData>('categories.json', defaultCategories);
+  if (!data || !data.projects || !data.articles) {
+    return defaultCategories;
+  }
+  return data;
+}
+
+export async function updateCategories(data: CategoriesData): Promise<CategoriesData> {
+  writeJsonFile('categories.json', data);
+  return data;
+}
+
+export async function saveCategory(
+  type: 'projects' | 'articles',
+  category: CategoryItem,
+  oldNameFa?: string
+): Promise<CategoryItem> {
+  const current = await getCategories();
+  const list = [...(current[type] || [])];
+  const existingIdx = list.findIndex((c) => c.id === category.id);
+
+  if (existingIdx >= 0) {
+    const prev = list[existingIdx];
+    list[existingIdx] = { ...prev, ...category };
+    const oldFa = oldNameFa || prev.nameFa;
+    if (oldFa && category.nameFa && oldFa !== category.nameFa) {
+      if (type === 'projects') {
+        const projs = await getProjects();
+        let changed = false;
+        projs.forEach((p) => {
+          if (p.category === oldFa || p.category === prev.id) {
+            p.category = category.nameFa;
+            changed = true;
+          }
+        });
+        if (changed) writeJsonFile('projects.json', projs);
+      } else {
+        const arts = await getArticles();
+        let changed = false;
+        arts.forEach((a) => {
+          if (a.category === oldFa || a.category === prev.id) {
+            a.category = category.nameFa;
+            changed = true;
+          }
+        });
+        if (changed) writeJsonFile('articles.json', arts);
+      }
+    }
+  } else {
+    list.push(category);
+  }
+
+  current[type] = list;
+  writeJsonFile('categories.json', current);
+  return category;
+}
+
+export async function deleteCategory(
+  type: 'projects' | 'articles',
+  idOrName: string,
+  reassignToName?: string
+): Promise<{ success: boolean; error?: string }> {
+  const current = await getCategories();
+  const list = current[type] || [];
+  const target = list.find((c) => c.id === idOrName || c.nameFa === idOrName);
+  if (!target) return { success: false, error: 'دسته‌بندی مورد نظر یافت نشد.' };
+
+  if (type === 'projects') {
+    const projs = await getProjects();
+    const using = projs.filter((p) => p.category === target.nameFa || p.category === target.id);
+    if (using.length > 0) {
+      if (!reassignToName) {
+        return {
+          success: false,
+          error: `این دسته‌بندی در ${using.length} پروژه استفاده شده است. لطفاً ابتدا دسته‌بندی جایگزین مشخص نمایید.`,
+        };
+      }
+      const reassignTarget = list.find(
+        (c) => (c.id === reassignToName || c.nameFa === reassignToName) && c.id !== target.id
+      );
+      if (!reassignTarget) {
+        return {
+          success: false,
+          error: 'دسته‌بندی جایگزین مشخص‌شده نامعتبر است.',
+        };
+      }
+      projs.forEach((p) => {
+        if (p.category === target.nameFa || p.category === target.id) {
+          p.category = reassignTarget.nameFa;
+        }
+      });
+      writeJsonFile('projects.json', projs);
+    }
+  } else {
+    const arts = await getArticles();
+    const using = arts.filter((a) => a.category === target.nameFa || a.category === target.id);
+    if (using.length > 0) {
+      if (!reassignToName) {
+        return {
+          success: false,
+          error: `این دسته‌بندی در ${using.length} مقاله استفاده شده است. لطفاً ابتدا دسته‌بندی جایگزین مشخص نمایید.`,
+        };
+      }
+      const reassignTarget = list.find(
+        (c) => (c.id === reassignToName || c.nameFa === reassignToName) && c.id !== target.id
+      );
+      if (!reassignTarget) {
+        return {
+          success: false,
+          error: 'دسته‌بندی جایگزین مشخص‌شده نامعتبر است.',
+        };
+      }
+      arts.forEach((a) => {
+        if (a.category === target.nameFa || a.category === target.id) {
+          a.category = reassignTarget.nameFa;
+        }
+      });
+      writeJsonFile('articles.json', arts);
+    }
+  }
+
+  current[type] = list.filter((c) => c.id !== target.id);
+  writeJsonFile('categories.json', current);
+  return { success: true };
 }

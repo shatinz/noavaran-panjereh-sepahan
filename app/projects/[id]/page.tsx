@@ -13,24 +13,25 @@ export async function generateMetadata({ params }: Props) {
   const projects = await getProjects();
   const project = projects.find(p => p.id === params.id);
   if (!project) return { title: 'Not Found' };
-  const fullImgUrl = project.image.startsWith('http') ? project.image : `${siteUrl}${project.image}`;
+  const imgPath = project.image || '/images/og-image.png';
+  const fullImgUrl = imgPath.startsWith('http') ? imgPath : `${siteUrl}${imgPath}`;
 
   return {
-    title: `${project.title} (${project.location || 'اصفهان'})`,
-    description: `پروژه ${project.title} واقع در ${project.location || 'اصفهان'} با اجرای ${project.systemsUsed?.join(' و ')}`,
+    title: `${project.title || ''} (${project.location || 'اصفهان'})`,
+    description: `پروژه ${project.title || ''} واقع در ${project.location || 'اصفهان'} با اجرای ${project.systemsUsed?.join(' و ') || ''}`,
     alternates: {
       canonical: `/projects/${project.id}`,
     },
     openGraph: {
-      title: `${project.title} | نوآوران پنجره سپاهان`,
-      description: `پروژه اجرایی ${project.title} در ${project.location || 'اصفهان'} با سیستم‌های ${project.systemsUsed?.join('، ')}`,
+      title: `${project.title || ''} | نوآوران پنجره سپاهان`,
+      description: `پروژه اجرایی ${project.title || ''} در ${project.location || 'اصفهان'} با سیستم‌های ${project.systemsUsed?.join('، ') || ''}`,
       url: `${siteUrl}/projects/${project.id}`,
-      images: [{ url: fullImgUrl, alt: project.title }],
+      images: [{ url: fullImgUrl, alt: project.title || '' }],
     },
     twitter: {
       card: 'summary_large_image',
-      title: project.title,
-      description: `پروژه اجرایی ${project.title}`,
+      title: project.title || '',
+      description: `پروژه اجرایی ${project.title || ''}`,
       images: [fullImgUrl],
     },
   };
@@ -47,9 +48,19 @@ export default async function ProjectDetailPage({ params }: Props) {
   const project = projects.find(p => p.id === params.id);
   if (!project) notFound();
 
-  // Mock secondary images for the gallery if not provided, just repeat the main image
-  const galleryImages = [project.image, project.image, project.image];
-  const fullImgUrl = project.image.startsWith('http') ? project.image : `${siteUrl}${project.image}`;
+  // Deduplicate cover image and all gallery images so photos never repeat
+  const rawImages = [project.image, ...(project.images || [])].filter(Boolean);
+  const seen = new Set<string>();
+  const galleryImages: string[] = [];
+  for (const img of rawImages) {
+    const clean = img.trim().split('?')[0].split('#')[0].replace(/\/+$/, '').toLowerCase();
+    if (!seen.has(clean)) {
+      seen.add(clean);
+      galleryImages.push(img.trim());
+    }
+  }
+  const imgPath = project.image || '/images/og-image.png';
+  const fullImgUrl = imgPath.startsWith('http') ? imgPath : `${siteUrl}${imgPath}`;
 
   const breadcrumbsLd = {
     '@context': 'https://schema.org',
