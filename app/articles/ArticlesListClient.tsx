@@ -140,7 +140,7 @@ export function ArticlesListClient({ articles, categories = [] }: ArticlesListCl
                 <div className="p-5 flex flex-col flex-grow">
                   <div className="flex items-center gap-2 text-[10px] text-steel-400 font-mono font-bold mb-3">
                     <Calendar className="w-3.5 h-3.5 text-signal-500" />
-                    <span>{a.date}</span>
+                    <span>{locArt.date}</span>
                   </div>
                   <h2 className="text-lg font-black text-white font-vazir group-hover:text-signal-500 transition-colors mb-3 line-clamp-2">
                     {locArt.title}

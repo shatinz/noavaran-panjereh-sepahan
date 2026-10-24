@@ -1,0 +1,889 @@
+{
+ "_note": "Fallback EN/AR translations for existing Persian project text. Keys are normalised Persian strings (ZWNJ->space, collapsed whitespace, Arabic ي/ك->ی/ک). Explicit per-project fields set in the admin panel always win over this file.",
+ "titles": {
+  "ساختمان بانک مهر اقصاد": {
+   "en": "Bank Mehr Eqtesad Building",
+   "ar": "مبنى بنك مهر اقتصاد"
+  },
+  "ساختمان مسکونی آقای مهندس دریابیگی": {
+   "en": "Eng. Daryabeigi Residential Complex",
+   "ar": "مبنى المهندس دريابيغي السكني"
+  },
+  "ساختمان کسب و فناوری علویجه": {
+   "en": "Alavijeh Business & Technology Center",
+   "ar": "مبنى الأعمال والتكنولوجيا علويجه"
+  },
+  "شهرداری منطقه 13": {
+   "en": "District 13 Municipality Headquarters",
+   "ar": "مبنى بلدية المنطقة 13"
+  },
+  "سیتی سنتر شاهین شهر": {
+   "en": "Shahin Shahr City Center",
+   "ar": "سيتي سنتر شاهين شهر"
+  },
+  "ساختمان تجاری مهندس طاووسی": {
+   "en": "Eng. Tavoosi Commercial Center",
+   "ar": "مجمع المهندس طاووسي التجاري"
+  },
+  "ساختمان تجاری آقای احمدیان": {
+   "en": "Ahmadian Commercial Building",
+   "ar": "مبنى أحمديان التجاري"
+  },
+  "ساختمان تجاری آقای مهندس علیرضایی": {
+   "en": "Eng. Alirezaei Commercial Tower",
+   "ar": "برج المهندس عليرضائي التجاري"
+  },
+  "ساختمان مسکونی خانم دکتر بویری": {
+   "en": "Dr. Boveiri Residential Complex",
+   "ar": "مبنى الدكتورة بويري السكني"
+  },
+  "ساختمان مسکونی آقای دکتر اعتصامی": {
+   "en": "Dr. Etesami Residential Building",
+   "ar": "مبنى الدكتور اعتصامي السكني"
+  },
+  "ساختمان تجاری آقای مهندس محمدی": {
+   "en": "Eng. Mohammadi Commercial Complex",
+   "ar": "مجمع المهندس محمدي التجاري"
+  },
+  "پروژه مسکونی خیابان جی": {
+   "en": "Jey Street Residential Project",
+   "ar": "مشروع شارع جي السكني"
+  },
+  "بانک صادرات یاسوج": {
+   "en": "Bank Saderat Yasuj Branch",
+   "ar": "فرع بنك صادرات ياسوج"
+  },
+  "ساختمان بانک قوامین": {
+   "en": "Bank Ghavamin Building",
+   "ar": "مبنى بنك قوامين"
+  },
+  "ساختمان تجاری اداری مهستان نقش جهان": {
+   "en": "Mehestan Naqsh-e Jahan Commercial Complex",
+   "ar": "مجمع مهستان نقش جهان التجاري والإداري"
+  },
+  "ساختمان پزشکی قانونی باغ رضوان": {
+   "en": "Bagh-e Rezvan Forensic Medicine Center",
+   "ar": "مركز الطب الشرعي باغ رضوان"
+  },
+  "سازمان ثبت اسناد سودان جی": {
+   "en": "Soordan Jey Deeds Registration Office",
+   "ar": "دائرة تسجيل العقارات سودان جي"
+  },
+  "ساختمان تجاری آقای مهندس حاج حیدری": {
+   "en": "Eng. Haj Heydari Commercial Building",
+   "ar": "مبنى المهندس حاج حيدري التجاري"
+  },
+  "ساختمان تجاری آقای مهندس آبرویی": {
+   "en": "Eng. Aberouei Commercial Building",
+   "ar": "مبنى المهندس آبرويي التجاري"
+  },
+  "ثبت اسناد سودان جی": {
+   "en": "Jey Deeds & Land Registration Office",
+   "ar": "إدارة تسجيل الأراضي والعقارات جي"
+  },
+  "مدرسه نژاد ستاری": {
+   "en": "Nezhad Sattari School",
+   "ar": "مدرسة نجاد ستاري"
+  },
+  "تعاونی مسکن فرهنگیان ناحیه 4": {
+   "en": "District 4 Educators Housing Cooperative",
+   "ar": "جمعية إسكان المعلمين - المنطقة 4"
+  },
+  "ساختمان مسکونی آقای مهندس حمیدی": {
+   "en": "Eng. Hamidi Residential Building",
+   "ar": "مبنى المهندس حميدي السكني"
+  },
+  "ساختمان اداری و تجاری آقای مهندس آقا دادی": {
+   "en": "Eng. Aghadadi Commercial & Corporate Center",
+   "ar": "مجمع المهندس آقادادي التجاري والإداري"
+  },
+  "تعاونی مسکن بانک ملی": {
+   "en": "Bank Melli Housing Cooperative",
+   "ar": "جمعية إسكان موظفي بنك ملي"
+  },
+  "تعاونی مسکن پرشیا فلز": {
+   "en": "Persia Felez Housing Cooperative",
+   "ar": "جمعية إسكان برشيا فلز"
+  },
+  "ساختمان مسکونی آقای مهندس ارفع": {
+   "en": "Eng. Arfa Residential Complex",
+   "ar": "مبنى المهندس أرفع السكني"
+  },
+  "تعاونی مسکن فرهنگیان ، ناحیه 1": {
+   "en": "District 1 Educators Housing Cooperative",
+   "ar": "جمعية إسكان المعلمين - المنطقة 1"
+  },
+  "تعاونی مسکن جهاد کشاورزی": {
+   "en": "Agricultural Jihad Housing Cooperative",
+   "ar": "جمعية إسكان جهاد الزراعة"
+  },
+  "ساختمان مسکونی ملاباشی": {
+   "en": "Mollabashi Residential Complex",
+   "ar": "مجمع ملاباشي السكني"
+  },
+  "تعاونی مسکن ارتش مراتو": {
+   "en": "Merato Army Housing Cooperative",
+   "ar": "جمعية إسكان الجيش مراتو"
+  },
+  "ساختمان تجاری آقای مهندس فرهنگ": {
+   "en": "Eng. Farhang Commercial Center",
+   "ar": "مجمع المهندس فرهنگ التجاري"
+  },
+  "ساختمان مسکونی آقای مهندس اختریان": {
+   "en": "Eng. Akhtarian Residential Complex",
+   "ar": "مبنى المهندس اختريان السكني"
+  },
+  "ساختمان تجاری آقای مهندس فصیحی": {
+   "en": "Eng. Fasihi Commercial Building",
+   "ar": "مبنى المهندس فصيحي التجاري"
+  },
+  "ساختمان اداری آقای مهندس حاجیان": {
+   "en": "Eng. Hajian Corporate Office",
+   "ar": "مبنى المهندس حاجيان الإداري"
+  },
+  "ساختمان مسکونی آقای حسین زاده": {
+   "en": "Hosseinzadeh Residential Building",
+   "ar": "مبنى حسين زاده السكني"
+  },
+  "ساختمان مسکونی آقای مهندس جاودان": {
+   "en": "Eng. Javidan Residential Complex",
+   "ar": "مبنى المهندس جاودان السكني"
+  },
+  "ساختمان مسکونی آقای مهندس حاتم پور": {
+   "en": "Eng. Hatampour Residential Building",
+   "ar": "مبنى المهندس حاتم بور السكني"
+  },
+  "ساختمان تجاری آقای مهندس عباسی": {
+   "en": "Eng. Abbasi Commercial Building",
+   "ar": "مجمع المهندس عباسي التجاري"
+  },
+  "ساختمان مسکونی آقای مهندس توسلی": {
+   "en": "Eng. Tavassoli Residential Complex",
+   "ar": "مبنى المهندس توسلي السكني"
+  },
+  "ساختمان مسکونی آقای مهندس هرندی": {
+   "en": "Eng. Harandi Residential Building",
+   "ar": "مبنى المهندس هرندي السكني"
+  },
+  "ساختمان تجاری آقای مهندس نصر و دکتر کریمی فرد": {
+   "en": "Eng. Nasr & Dr. Karimi Fard Commercial Complex",
+   "ar": "مجمع المهندس نصر والدكتور كريمي فرد التجاري"
+  },
+  "ویلای آقای مهندس موسوی ، دهکده زیتون": {
+   "en": "Eng. Mousavi Luxury Villa, Zeytoun Village",
+   "ar": "فيلا المهندس موسوي الفاخرة - قرية الزيتون"
+  },
+  "شرکت طرح و اجرای اسپادانا ، بانک مهر": {
+   "en": "Spadana Design & Build, Bank Mehr",
+   "ar": "شركة تصميم وتنفيذ اسبادانا - بنك مهر"
+  },
+  "ساختمان مسکونی آقای نصر": {
+   "en": "Nasr Residential Complex",
+   "ar": "مبنى نصر السكني"
+  },
+  "ساختمان مسکونی آقای مهندس فرهنگ": {
+   "en": "Eng. Farhang Residential Complex",
+   "ar": "مبنى المهندس فرهنگ السكني"
+  },
+  "ساختمان تجاری آقای مهندس زارعان": {
+   "en": "Eng. Zarean Commercial Complex",
+   "ar": "مجمع المهندس زارعان التجاري"
+  },
+  "ساختمان تجاری آقای مهندس آقادادی": {
+   "en": "Eng. Aghadadi Commercial Building",
+   "ar": "مبنى المهندس آقادادي التجاري"
+  },
+  "ساختمان آقای مهندس باقرهادی": {
+   "en": "Eng. Bagher Hadi Building",
+   "ar": "مبنى المهندس باقر هادي"
+  },
+  "مرکزپزشکی حضرت ابوالفضل": {
+   "en": "Hazrat Abolfazl Medical Center",
+   "ar": "مجمع حضرة أبو الفضل الطبي"
+  },
+  "ساختمان مسکونی آقای مهندس باقری": {
+   "en": "Eng. Bagheri Residential Building",
+   "ar": "مبنى المهندس باقري السكني"
+  },
+  "ساختمان مسکونی مهندس یارامیری": {
+   "en": "Eng. Yaramiri Residential Complex",
+   "ar": "مبنى المهندس ياراميري السكني"
+  },
+  "ساختمان اداری آقای دکتر اعتصامی": {
+   "en": "Dr. Etesami Corporate Office",
+   "ar": "مبنى الدكتور اعتصامي الإداري"
+  },
+  "پروژه مسکونی مهندس عزیزی": {
+   "en": "Eng. Azizi Residential Project",
+   "ar": "مشروع المهندس عزيزي السكني"
+  },
+  "کارخانه سنگبری زیتون": {
+   "en": "Zeytoun Stone Cutting Factory",
+   "ar": "مصنع زيتون لقص الحجر"
+  },
+  "ساختمان تجاری اداری پاسارگاد": {
+   "en": "Pasargad Commercial & Office Building",
+   "ar": "مبنى باسارغاد التجاري والإداري"
+  }
+ },
+ "employers": {
+  "مسکونی آقای مهندس دریابیگی": {
+   "en": "Eng. Daryabeigi",
+   "ar": "المهندس دريابيغي"
+  },
+  "کسب و فناوری علویجه": {
+   "en": "Alavijeh Business & Technology",
+   "ar": "علويجه للأعمال والتكنولوجيا"
+  },
+  "شهرداری منطقه 13": {
+   "en": "District 13 Municipality",
+   "ar": "بلدية المنطقة 13"
+  },
+  "سیتی سنتر شاهین شهر": {
+   "en": "Shahin Shahr City Center",
+   "ar": "سيتي سنتر شاهين شهر"
+  },
+  "آقای مهندس احمدیان": {
+   "en": "Eng. Ahmadian",
+   "ar": "المهندس أحمديان"
+  },
+  "آقای مهندس علیرضایی": {
+   "en": "Eng. Alirezaei",
+   "ar": "المهندس عليرضائي"
+  },
+  "آقای دکتر اعتصامی": {
+   "en": "Dr. Etesami",
+   "ar": "الدكتور اعتصامي"
+  },
+  "آقای مهندس محمدی": {
+   "en": "Eng. Mohammadi",
+   "ar": "المهندس محمدي"
+  },
+  "آقای مهندس عزیزی": {
+   "en": "Eng. Azizi",
+   "ar": "المهندس عزيزي"
+  },
+  "بانک صادرات یاسوج": {
+   "en": "Bank Saderat Yasuj",
+   "ar": "بنك صادرات ياسوج"
+  },
+  "بانک قوامین": {
+   "en": "Ghavamin Bank",
+   "ar": "بنك قوامين"
+  },
+  "جناب آقای مهندس اعتصامی": {
+   "en": "Eng. Etesami",
+   "ar": "المهندس اعتصامي"
+  },
+  "شرکت محترم تهران الاستیک": {
+   "en": "Tehran Elastic Company",
+   "ar": "شركة طهران إلاستيك"
+  },
+  "جناب آقای مهندس حیدری": {
+   "en": "Eng. Heydari",
+   "ar": "المهندس حيدري"
+  },
+  "آقای مهندس حاج حیدری": {
+   "en": "Eng. Haj Heydari",
+   "ar": "المهندس حاج حيدري"
+  },
+  "تجاری آقای مهندس آبرویی": {
+   "en": "Eng. Aberouei",
+   "ar": "المهندس آبرويي"
+  },
+  "اداره نوسازی مدارس اصفهان": {
+   "en": "Isfahan School Renovation Organization",
+   "ar": "إدارة تجديد المدارس في أصفهان"
+  },
+  "تعاونی مسکن فرهنگیان ناحیه 4": {
+   "en": "District 4 Educators Housing Cooperative",
+   "ar": "جمعية إسكان المعلمين - المنطقة 4"
+  },
+  "مسکونی آقای مهندس حمیدی": {
+   "en": "Eng. Hamidi",
+   "ar": "المهندس حميدي"
+  },
+  "اداری و تجاری آقای مهندس آقا دادی": {
+   "en": "Eng. Aghadadi",
+   "ar": "المهندس آقادادي"
+  },
+  "تعاونی مسکن بانک ملی": {
+   "en": "Bank Melli Housing Cooperative",
+   "ar": "جمعية إسكان بنك ملي"
+  },
+  "تعاونی مسکن پرشیا فلز": {
+   "en": "Persia Felez Housing Cooperative",
+   "ar": "جمعية إسكان برشيا فلز"
+  },
+  "مسکونی آقای مهندس ارفع": {
+   "en": "Eng. Arfa",
+   "ar": "المهندس أرفع"
+  },
+  "تعاونی مسکن فرهنگیان ، ناحیه 1": {
+   "en": "District 1 Educators Housing Cooperative",
+   "ar": "جمعية إسكان المعلمين - المنطقة 1"
+  },
+  "تعاونی مسکن جهاد کشاورزی": {
+   "en": "Agricultural Jihad Housing Cooperative",
+   "ar": "جمعية إسكان جهاد الزراعة"
+  },
+  "مسکونی ملاباشی": {
+   "en": "Mollabashi",
+   "ar": "ملاباشي"
+  },
+  "تعاونی مسکن ارتش مراتو": {
+   "en": "Merato Army Housing Cooperative",
+   "ar": "جمعية إسكان الجيش - مراتو"
+  },
+  "تجاری آقای مهندس فرهنگ": {
+   "en": "Eng. Farhang",
+   "ar": "المهندس فرهنگ"
+  },
+  "مسکونی آقای مهندس اختریان": {
+   "en": "Eng. Akhtarian",
+   "ar": "المهندس اختريان"
+  },
+  "تجاری آقای مهندس فصیحی": {
+   "en": "Eng. Fasihi",
+   "ar": "المهندس فصيحي"
+  },
+  "اداری آقای مهندس حاجیان": {
+   "en": "Eng. Hajian",
+   "ar": "المهندس حاجيان"
+  },
+  "مسکونی آقای حسین زاده": {
+   "en": "Mr. Hosseinzadeh",
+   "ar": "السيد حسين زاده"
+  },
+  "مسکونی آقای مهندس جاودان": {
+   "en": "Eng. Javidan",
+   "ar": "المهندس جاودان"
+  },
+  "مسکونی آقای مهندس حاتم پور": {
+   "en": "Eng. Hatampour",
+   "ar": "المهندس حاتم بور"
+  },
+  "تجاری آقای مهندس عباسی": {
+   "en": "Eng. Abbasi",
+   "ar": "المهندس عباسي"
+  },
+  "مسکونی آقای مهندس توسلی": {
+   "en": "Eng. Tavassoli",
+   "ar": "المهندس توسلي"
+  },
+  "مسکونی آقای مهندس هرندی": {
+   "en": "Eng. Harandi",
+   "ar": "المهندس هرندي"
+  },
+  "تجاری آقای مهندس نصر و دکتر کریمی فرد": {
+   "en": "Eng. Nasr & Dr. Karimi Fard",
+   "ar": "المهندس نصر والدكتور كريمي فرد"
+  },
+  "ویلای آقای مهندس موسوی ، دهکده زیتون": {
+   "en": "Eng. Mousavi",
+   "ar": "المهندس موسوي"
+  },
+  "شرکت طرح و اجرای اسپادانا ، بانک مهر": {
+   "en": "Spadana Design & Build Co. & Bank Mehr",
+   "ar": "شركة اسبادانا للتصميم والتنفيذ وبنك مهر"
+  },
+  "مسکونی آقای نصر": {
+   "en": "Mr. Nasr",
+   "ar": "السيد نصر"
+  },
+  "مسکونی آقای مهندس فرهنگ": {
+   "en": "Eng. Farhang",
+   "ar": "المهندس فرهنگ"
+  },
+  "تجاری آقای مهندس زارعان": {
+   "en": "Eng. Zarean",
+   "ar": "المهندس زارعان"
+  },
+  "تجاری آقای مهندس آقادادی": {
+   "en": "Eng. Aghadadi",
+   "ar": "المهندس آقادادي"
+  },
+  "آقای مهندس باقرهادی": {
+   "en": "Eng. Bagher Hadi",
+   "ar": "المهندس باقر هادي"
+  },
+  "مرکزپزشکی حضرت ابوالفضل": {
+   "en": "Hazrat Abolfazl Medical Center",
+   "ar": "مركز حضرة أبو الفضل الطبي"
+  },
+  "مسکونی آقای مهندس باقری": {
+   "en": "Eng. Bagheri",
+   "ar": "المهندس باقري"
+  },
+  "مسکونی مهندس یارامیری": {
+   "en": "Eng. Yaramiri",
+   "ar": "المهندس ياراميري"
+  },
+  "بانک مهر اقصاد": {
+   "en": "Mehr Eqtesad Bank",
+   "ar": "بنك مهر اقتصاد"
+  },
+  "تجاری مهندس طاووسی": {
+   "en": "Eng. Tavoosi",
+   "ar": "المهندس طاووسي"
+  },
+  "تجاری آقای احمدیان": {
+   "en": "Mr. Ahmadian",
+   "ar": "السيد أحمديان"
+  },
+  "تجاری آقای مهندس علیرضایی": {
+   "en": "Eng. Alirezaei",
+   "ar": "المهندس عليرضائي"
+  },
+  "مسکونی خانم دکتر بویری": {
+   "en": "Dr. Boveiri",
+   "ar": "الدكتورة بويري"
+  },
+  "مسکونی آقای دکتر اعتصامی": {
+   "en": "Dr. Etesami",
+   "ar": "الدكتور اعتصامي"
+  },
+  "تجاری آقای مهندس محمدی": {
+   "en": "Eng. Mohammadi",
+   "ar": "المهندس محمدي"
+  },
+  "مسکونی خیابان جی": {
+   "en": "Jey Street Development",
+   "ar": "تطوير مشروع شارع جي"
+  },
+  "تجاری اداری مهستان نقش جهان": {
+   "en": "Naqsh-e Jahan Real Estate",
+   "ar": "شركة نقش جهان العقارية"
+  },
+  "پزشکی قانونی باغ رضوان": {
+   "en": "Isfahan Forensic Medical Organization",
+   "ar": "دائرة الطب الشرعي أصفهان"
+  },
+  "سازمان ثبت اسناد سودان جی": {
+   "en": "State Organization for Registration of Deeds",
+   "ar": "دائرة تسجيل العقارات والوثائق"
+  },
+  "تجاری آقای مهندس حاج حیدری": {
+   "en": "Eng. Haj Heydari",
+   "ar": "المهندس حاج حيدري"
+  },
+  "ثبت اسناد سودان جی": {
+   "en": "Isfahan Land Deeds Organization",
+   "ar": "دائرة السجل العقاري جي"
+  },
+  "مدرسه نژاد ستاری": {
+   "en": "School Renovation & Development Agency",
+   "ar": "هيئة تجديد وتطوير المدارس"
+  },
+  "شرکت نوآوران پنجره سپاهان": {
+   "en": "Noavaran Panjereh Sepahan",
+   "ar": "شركة نوآوران پنجره سباهان"
+  }
+ },
+ "locations": {
+  "اصفهان و سایر استان ها": {
+   "en": "Isfahan & Other Metropolises",
+   "ar": "أصفهان ومختلف المحافظات"
+  },
+  "اصفهان": {
+   "en": "Isfahan",
+   "ar": "أصفهان"
+  },
+  "شاهین شهر خیابان فردوسی": {
+   "en": "Ferdowsi St., Shahin Shahr",
+   "ar": "شارع فردوسي، شاهين شهر"
+  },
+  "خیابان پروین": {
+   "en": "Parvin St.",
+   "ar": "شارع بروين"
+  },
+  "خیابان آمادگاه": {
+   "en": "Amadgah St.",
+   "ar": "شارع آمادگاه"
+  },
+  "شهرک فناوری": {
+   "en": "Technology Town",
+   "ar": "مدينة التكنولوجيا"
+  },
+  "شهرک ولی عصر": {
+   "en": "Vali Asr Town",
+   "ar": "مدينة ولي العصر"
+  },
+  "شاهین شهر خیابان رازی": {
+   "en": "Razi St., Shahin Shahr",
+   "ar": "شارع الرازي، شاهين شهر"
+  },
+  "شاهین شهر میدان خلیج فارس": {
+   "en": "Persian Gulf Square, Shahin Shahr",
+   "ar": "ميدان الخليج الفارسي، شاهين شهر"
+  },
+  "خمینی شهر سه شاخ": {
+   "en": "Seh Shakh, Khomeini Shahr",
+   "ar": "سه شاخ، خميني شهر"
+  },
+  "خیابان جی شهرک اریسون": {
+   "en": "Jey St., Arisun Town",
+   "ar": "شارع جي، مدينة أريسون"
+  },
+  "یاسوج خیابان طالقانی": {
+   "en": "Taleghani St., Yasuj",
+   "ar": "شارع طالقاني، ياسوج"
+  },
+  "کرج چهار راه کارخانه قند": {
+   "en": "Sugar Factory Intersection, Karaj",
+   "ar": "تقاطع مصنع السكر، كرج"
+  },
+  "جاده اصفهان _ کوهپایه بعد از باغ رضوان": {
+   "en": "Isfahan–Kouhpayeh Road, after Bagh-e Rezvan",
+   "ar": "طريق أصفهان - كوهبايه، بعد باغ رضوان"
+  },
+  "شهرک صنعتی محمود آباد": {
+   "en": "Mahmoudabad Industrial Town",
+   "ar": "مدينة محمود آباد الصناعية"
+  },
+  "شاهین شهر فلکه خلیج فارس": {
+   "en": "Persian Gulf Roundabout, Shahin Shahr",
+   "ar": "دوار الخليج الفارسي، شاهين شهر"
+  },
+  "خیابان ابونعیم": {
+   "en": "Abu Naeem St.",
+   "ar": "شارع أبو نعيم"
+  }
+ },
+ "descriptions": {
+  "طراحی و اجرای نرده های آلومینیوم پنج خط افقی دستگاه پله": {
+   "en": "Design and installation of five-line horizontal aluminium railings for the staircase.",
+   "ar": "تصميم وتنفيذ درابزين ألمنيوم بخمسة خطوط أفقية لبيت الدرج."
+  },
+  "طراحی و اجرای نرده استیل پنج خط افقی دستگاه پله": {
+   "en": "Design and installation of five-line horizontal stainless steel railings for the staircase.",
+   "ar": "تصميم وتنفيذ درابزين ستانلس ستيل بخمسة خطوط أفقية لبيت الدرج."
+  },
+  "طراحی و اجرای نرده استیل چهار خط افقی دستگاه پله": {
+   "en": "Design and installation of four-line horizontal stainless steel railings for the staircase.",
+   "ar": "تصميم وتنفيذ درابزين ستانلس ستيل بأربعة خطوط أفقية لبيت الدرج."
+  },
+  "طراحی و اجرای نرده شیشه ای 8 و 8 لمینت با PVB 1.52": {
+   "en": "Design and installation of a glass balustrade using 8+8 mm laminated glass with a 1.52 PVB interlayer.",
+   "ar": "تصميم وتنفيذ درابزين زجاجي من زجاج مصفح 8+8 مم مع طبقة PVB بسمك 1.52."
+  },
+  "طراحی و اجرای Thermowood در نمای داخل و نمای بیرون ساختمان": {
+   "en": "Design and installation of Thermowood cladding on the interior and exterior facades of the building.",
+   "ar": "تصميم وتنفيذ كسوة ثيرموود في الواجهات الداخلية والخارجية للمبنى."
+  },
+  "طراحی و اجرای سیستم نمای کرتین وال و سیستم نمای چوب": {
+   "en": "Design and installation of a curtain wall system and a timber facade system.",
+   "ar": "تصميم وتنفيذ نظام واجهة كورتن وول ونظام واجهة خشبية."
+  },
+  "طراحی و اجرای کامپوزیت در نمای ساختمان": {
+   "en": "Design and installation of composite cladding on the building facade.",
+   "ar": "تصميم وتنفيذ كسوة الكومبوزيت لواجهة المبنى."
+  },
+  "طراحی و اجرای کامپوزیت در نمای ساختمان تجاری": {
+   "en": "Design and installation of composite cladding on the commercial building facade.",
+   "ar": "تصميم وتنفيذ كسوة الكومبوزيت لواجهة المبنى التجاري."
+  },
+  "طراحی و اجرای کامپوزیت در نمای ساختمان مسکونی": {
+   "en": "Design and installation of composite cladding on the residential building facade.",
+   "ar": "تصميم وتنفيذ كسوة الكومبوزيت لواجهة المبنى السكني."
+  },
+  "طراحی و اجرای نمای شیشه ای لامل در ساختمان بانک": {
+   "en": "Design and installation of a lamella glass facade for the bank building.",
+   "ar": "تصميم وتنفيذ واجهة زجاجية لامل لمبنى البنك."
+  },
+  "طراحی و اجرای نمای شیشه ای فریم لس در ساختمان بانک": {
+   "en": "Design and installation of a frameless glass facade for the bank building.",
+   "ar": "تصميم وتنفيذ واجهة زجاجية فريملس لمبنى البنك."
+  },
+  "طراحی و اجرای سیستم نمای شیشه ای فریم لس در ساختمان تجاری اداری": {
+   "en": "Design and installation of a frameless glass facade system for the commercial and office building.",
+   "ar": "تصميم وتنفيذ نظام واجهة زجاجية فريملس للمبنى التجاري والإداري."
+  },
+  "طراحی و اجرای سیستم نمای شیشه ای فریم لس در ساختمان دولتی": {
+   "en": "Design and installation of a frameless glass facade system for the government building.",
+   "ar": "تصميم وتنفيذ نظام واجهة زجاجية فريملس للمبنى الحكومي."
+  },
+  "طراحی و اجرای سیستم نمای شیشه ای فریم لس در ساختمان اداری کارخانه سنگبری": {
+   "en": "Design and installation of a frameless glass facade system for the office building of the stone-cutting factory.",
+   "ar": "تصميم وتنفيذ نظام واجهة زجاجية فريملس للمبنى الإداري لمصنع قص الحجر."
+  },
+  "طراحی و اجرای نمای شیشه ای فریم لس در ساختمان تجاری اداری": {
+   "en": "Design and installation of a frameless glass facade for the commercial and office building.",
+   "ar": "تصميم وتنفيذ واجهة زجاجية فريملس للمبنى التجاري والإداري."
+  },
+  "طراحی اجرای درب و پنجره های دوجداره آلومینیوم با پروفیل اختصاصی با رنگ سفید": {
+   "en": "Design and installation of double-glazed aluminium doors and windows using proprietary profiles in white.",
+   "ar": "تصميم وتنفيذ أبواب ونوافذ ألمنيوم مزدوجة الزجاج بقطاعات خاصة باللون الأبيض."
+  },
+  "طراحی، ساخت و اجرای نمای شیشه ای، درب و پنجره ترمال بریک پروژه تعاونی مسکن فرهنگیان ناحیه 4 توسط تیم مهندسی نوآوران پنجره سپاهان.": {
+   "en": "Design, fabrication and installation of the glass facade and thermal break doors & windows for the District 4 Educators Housing Cooperative project by the engineering team of Noavaran Panjereh Sepahan.",
+   "ar": "تصميم وتصنيع وتركيب الواجهة الزجاجية والأبواب والنوافذ ثيرمال بريك لمشروع جمعية إسكان المعلمين - المنطقة 4 بواسطة الفريق الهندسي لشركة نوآوران پنجره سباهان."
+  },
+  "طراحی، ساخت و اجرای نمای شیشه ای، درب و پنجره ترمال بریک پروژه ساختمان مسکونی آقای مهندس حمیدی توسط تیم مهندسی نوآوران پنجره سپاهان.": {
+   "en": "Design, fabrication and installation of the glass facade and thermal break doors & windows for the Eng. Hamidi Residential Building project by the engineering team of Noavaran Panjereh Sepahan.",
+   "ar": "تصميم وتصنيع وتركيب الواجهة الزجاجية والأبواب والنوافذ ثيرمال بريك لمشروع مبنى المهندس حميدي السكني بواسطة الفريق الهندسي لشركة نوآوران پنجره سباهان."
+  },
+  "طراحی، ساخت و اجرای نمای شیشه ای، درب و پنجره ترمال بریک پروژه ساختمان اداری و تجاری آقای مهندس آقا دادی توسط تیم مهندسی نوآوران پنجره سپاهان.": {
+   "en": "Design, fabrication and installation of the glass facade and thermal break doors & windows for the Eng. Aghadadi Commercial & Corporate Center project by the engineering team of Noavaran Panjereh Sepahan.",
+   "ar": "تصميم وتصنيع وتركيب الواجهة الزجاجية والأبواب والنوافذ ثيرمال بريك لمشروع مجمع المهندس آقادادي التجاري والإداري بواسطة الفريق الهندسي لشركة نوآوران پنجره سباهان."
+  },
+  "طراحی، ساخت و اجرای نمای شیشه ای، درب و پنجره ترمال بریک پروژه تعاونی مسکن بانک ملی توسط تیم مهندسی نوآوران پنجره سپاهان.": {
+   "en": "Design, fabrication and installation of the glass facade and thermal break doors & windows for the Bank Melli Housing Cooperative project by the engineering team of Noavaran Panjereh Sepahan.",
+   "ar": "تصميم وتصنيع وتركيب الواجهة الزجاجية والأبواب والنوافذ ثيرمال بريك لمشروع جمعية إسكان موظفي بنك ملي بواسطة الفريق الهندسي لشركة نوآوران پنجره سباهان."
+  },
+  "طراحی، ساخت و اجرای نمای شیشه ای، درب و پنجره ترمال بریک پروژه تعاونی مسکن پرشیا فلز توسط تیم مهندسی نوآوران پنجره سپاهان.": {
+   "en": "Design, fabrication and installation of the glass facade and thermal break doors & windows for the Persia Felez Housing Cooperative project by the engineering team of Noavaran Panjereh Sepahan.",
+   "ar": "تصميم وتصنيع وتركيب الواجهة الزجاجية والأبواب والنوافذ ثيرمال بريك لمشروع جمعية إسكان برشيا فلز بواسطة الفريق الهندسي لشركة نوآوران پنجره سباهان."
+  },
+  "طراحی، ساخت و اجرای نمای شیشه ای، درب و پنجره ترمال بریک پروژه ساختمان مسکونی آقای مهندس ارفع توسط تیم مهندسی نوآوران پنجره سپاهان.": {
+   "en": "Design, fabrication and installation of the glass facade and thermal break doors & windows for the Eng. Arfa Residential Complex project by the engineering team of Noavaran Panjereh Sepahan.",
+   "ar": "تصميم وتصنيع وتركيب الواجهة الزجاجية والأبواب والنوافذ ثيرمال بريك لمشروع مبنى المهندس أرفع السكني بواسطة الفريق الهندسي لشركة نوآوران پنجره سباهان."
+  },
+  "طراحی، ساخت و اجرای نمای شیشه ای، درب و پنجره ترمال بریک پروژه تعاونی مسکن فرهنگیان ، ناحیه 1 توسط تیم مهندسی نوآوران پنجره سپاهان.": {
+   "en": "Design, fabrication and installation of the glass facade and thermal break doors & windows for the District 1 Educators Housing Cooperative project by the engineering team of Noavaran Panjereh Sepahan.",
+   "ar": "تصميم وتصنيع وتركيب الواجهة الزجاجية والأبواب والنوافذ ثيرمال بريك لمشروع جمعية إسكان المعلمين - المنطقة 1 بواسطة الفريق الهندسي لشركة نوآوران پنجره سباهان."
+  },
+  "طراحی، ساخت و اجرای نمای شیشه ای، درب و پنجره ترمال بریک پروژه تعاونی مسکن جهاد کشاورزی توسط تیم مهندسی نوآوران پنجره سپاهان.": {
+   "en": "Design, fabrication and installation of the glass facade and thermal break doors & windows for the Agricultural Jihad Housing Cooperative project by the engineering team of Noavaran Panjereh Sepahan.",
+   "ar": "تصميم وتصنيع وتركيب الواجهة الزجاجية والأبواب والنوافذ ثيرمال بريك لمشروع جمعية إسكان جهاد الزراعة بواسطة الفريق الهندسي لشركة نوآوران پنجره سباهان."
+  },
+  "طراحی، ساخت و اجرای نمای شیشه ای، درب و پنجره ترمال بریک پروژه ساختمان مسکونی ملاباشی توسط تیم مهندسی نوآوران پنجره سپاهان.": {
+   "en": "Design, fabrication and installation of the glass facade and thermal break doors & windows for the Mollabashi Residential Complex project by the engineering team of Noavaran Panjereh Sepahan.",
+   "ar": "تصميم وتصنيع وتركيب الواجهة الزجاجية والأبواب والنوافذ ثيرمال بريك لمشروع مجمع ملاباشي السكني بواسطة الفريق الهندسي لشركة نوآوران پنجره سباهان."
+  },
+  "طراحی، ساخت و اجرای نمای شیشه ای، درب و پنجره ترمال بریک پروژه تعاونی مسکن ارتش مراتو توسط تیم مهندسی نوآوران پنجره سپاهان.": {
+   "en": "Design, fabrication and installation of the glass facade and thermal break doors & windows for the Merato Army Housing Cooperative project by the engineering team of Noavaran Panjereh Sepahan.",
+   "ar": "تصميم وتصنيع وتركيب الواجهة الزجاجية والأبواب والنوافذ ثيرمال بريك لمشروع جمعية إسكان الجيش مراتو بواسطة الفريق الهندسي لشركة نوآوران پنجره سباهان."
+  },
+  "طراحی، ساخت و اجرای نمای شیشه ای، درب و پنجره ترمال بریک پروژه ساختمان تجاری آقای مهندس فرهنگ توسط تیم مهندسی نوآوران پنجره سپاهان.": {
+   "en": "Design, fabrication and installation of the glass facade and thermal break doors & windows for the Eng. Farhang Commercial Center project by the engineering team of Noavaran Panjereh Sepahan.",
+   "ar": "تصميم وتصنيع وتركيب الواجهة الزجاجية والأبواب والنوافذ ثيرمال بريك لمشروع مجمع المهندس فرهنگ التجاري بواسطة الفريق الهندسي لشركة نوآوران پنجره سباهان."
+  },
+  "طراحی، ساخت و اجرای نمای شیشه ای، درب و پنجره ترمال بریک پروژه ساختمان مسکونی آقای مهندس اختریان توسط تیم مهندسی نوآوران پنجره سپاهان.": {
+   "en": "Design, fabrication and installation of the glass facade and thermal break doors & windows for the Eng. Akhtarian Residential Complex project by the engineering team of Noavaran Panjereh Sepahan.",
+   "ar": "تصميم وتصنيع وتركيب الواجهة الزجاجية والأبواب والنوافذ ثيرمال بريك لمشروع مبنى المهندس اختريان السكني بواسطة الفريق الهندسي لشركة نوآوران پنجره سباهان."
+  },
+  "طراحی، ساخت و اجرای نمای شیشه ای، درب و پنجره ترمال بریک پروژه ساختمان تجاری آقای مهندس فصیحی توسط تیم مهندسی نوآوران پنجره سپاهان.": {
+   "en": "Design, fabrication and installation of the glass facade and thermal break doors & windows for the Eng. Fasihi Commercial Building project by the engineering team of Noavaran Panjereh Sepahan.",
+   "ar": "تصميم وتصنيع وتركيب الواجهة الزجاجية والأبواب والنوافذ ثيرمال بريك لمشروع مبنى المهندس فصيحي التجاري بواسطة الفريق الهندسي لشركة نوآوران پنجره سباهان."
+  },
+  "طراحی، ساخت و اجرای نمای شیشه ای، درب و پنجره ترمال بریک پروژه ساختمان اداری آقای مهندس حاجیان توسط تیم مهندسی نوآوران پنجره سپاهان.": {
+   "en": "Design, fabrication and installation of the glass facade and thermal break doors & windows for the Eng. Hajian Corporate Office project by the engineering team of Noavaran Panjereh Sepahan.",
+   "ar": "تصميم وتصنيع وتركيب الواجهة الزجاجية والأبواب والنوافذ ثيرمال بريك لمشروع مبنى المهندس حاجيان الإداري بواسطة الفريق الهندسي لشركة نوآوران پنجره سباهان."
+  },
+  "طراحی، ساخت و اجرای نمای شیشه ای، درب و پنجره ترمال بریک پروژه ساختمان مسکونی آقای حسین زاده توسط تیم مهندسی نوآوران پنجره سپاهان.": {
+   "en": "Design, fabrication and installation of the glass facade and thermal break doors & windows for the Hosseinzadeh Residential Building project by the engineering team of Noavaran Panjereh Sepahan.",
+   "ar": "تصميم وتصنيع وتركيب الواجهة الزجاجية والأبواب والنوافذ ثيرمال بريك لمشروع مبنى حسين زاده السكني بواسطة الفريق الهندسي لشركة نوآوران پنجره سباهان."
+  },
+  "طراحی، ساخت و اجرای نمای شیشه ای، درب و پنجره ترمال بریک پروژه ساختمان مسکونی آقای مهندس جاودان توسط تیم مهندسی نوآوران پنجره سپاهان.": {
+   "en": "Design, fabrication and installation of the glass facade and thermal break doors & windows for the Eng. Javidan Residential Complex project by the engineering team of Noavaran Panjereh Sepahan.",
+   "ar": "تصميم وتصنيع وتركيب الواجهة الزجاجية والأبواب والنوافذ ثيرمال بريك لمشروع مبنى المهندس جاودان السكني بواسطة الفريق الهندسي لشركة نوآوران پنجره سباهان."
+  },
+  "طراحی، ساخت و اجرای نمای شیشه ای، درب و پنجره ترمال بریک پروژه ساختمان مسکونی آقای مهندس حاتم پور توسط تیم مهندسی نوآوران پنجره سپاهان.": {
+   "en": "Design, fabrication and installation of the glass facade and thermal break doors & windows for the Eng. Hatampour Residential Building project by the engineering team of Noavaran Panjereh Sepahan.",
+   "ar": "تصميم وتصنيع وتركيب الواجهة الزجاجية والأبواب والنوافذ ثيرمال بريك لمشروع مبنى المهندس حاتم بور السكني بواسطة الفريق الهندسي لشركة نوآوران پنجره سباهان."
+  },
+  "طراحی، ساخت و اجرای نمای شیشه ای، درب و پنجره ترمال بریک پروژه ساختمان تجاری آقای مهندس عباسی توسط تیم مهندسی نوآوران پنجره سپاهان.": {
+   "en": "Design, fabrication and installation of the glass facade and thermal break doors & windows for the Eng. Abbasi Commercial Building project by the engineering team of Noavaran Panjereh Sepahan.",
+   "ar": "تصميم وتصنيع وتركيب الواجهة الزجاجية والأبواب والنوافذ ثيرمال بريك لمشروع مجمع المهندس عباسي التجاري بواسطة الفريق الهندسي لشركة نوآوران پنجره سباهان."
+  },
+  "طراحی، ساخت و اجرای نمای شیشه ای، درب و پنجره ترمال بریک پروژه ساختمان مسکونی آقای مهندس توسلی توسط تیم مهندسی نوآوران پنجره سپاهان.": {
+   "en": "Design, fabrication and installation of the glass facade and thermal break doors & windows for the Eng. Tavassoli Residential Complex project by the engineering team of Noavaran Panjereh Sepahan.",
+   "ar": "تصميم وتصنيع وتركيب الواجهة الزجاجية والأبواب والنوافذ ثيرمال بريك لمشروع مبنى المهندس توسلي السكني بواسطة الفريق الهندسي لشركة نوآوران پنجره سباهان."
+  },
+  "طراحی، ساخت و اجرای نمای شیشه ای، درب و پنجره ترمال بریک پروژه ساختمان مسکونی آقای مهندس هرندی توسط تیم مهندسی نوآوران پنجره سپاهان.": {
+   "en": "Design, fabrication and installation of the glass facade and thermal break doors & windows for the Eng. Harandi Residential Building project by the engineering team of Noavaran Panjereh Sepahan.",
+   "ar": "تصميم وتصنيع وتركيب الواجهة الزجاجية والأبواب والنوافذ ثيرمال بريك لمشروع مبنى المهندس هرندي السكني بواسطة الفريق الهندسي لشركة نوآوران پنجره سباهان."
+  },
+  "طراحی، ساخت و اجرای نمای شیشه ای، درب و پنجره ترمال بریک پروژه ساختمان تجاری آقای مهندس نصر و دکتر کریمی فرد توسط تیم مهندسی نوآوران پنجره سپاهان.": {
+   "en": "Design, fabrication and installation of the glass facade and thermal break doors & windows for the Eng. Nasr & Dr. Karimi Fard Commercial Complex project by the engineering team of Noavaran Panjereh Sepahan.",
+   "ar": "تصميم وتصنيع وتركيب الواجهة الزجاجية والأبواب والنوافذ ثيرمال بريك لمشروع مجمع المهندس نصر والدكتور كريمي فرد التجاري بواسطة الفريق الهندسي لشركة نوآوران پنجره سباهان."
+  },
+  "طراحی، ساخت و اجرای نمای شیشه ای، درب و پنجره ترمال بریک پروژه ویلای آقای مهندس موسوی ، دهکده زیتون توسط تیم مهندسی نوآوران پنجره سپاهان.": {
+   "en": "Design, fabrication and installation of the glass facade and thermal break doors & windows for the Eng. Mousavi Luxury Villa, Zeytoun Village project by the engineering team of Noavaran Panjereh Sepahan.",
+   "ar": "تصميم وتصنيع وتركيب الواجهة الزجاجية والأبواب والنوافذ ثيرمال بريك لمشروع فيلا المهندس موسوي الفاخرة - قرية الزيتون بواسطة الفريق الهندسي لشركة نوآوران پنجره سباهان."
+  },
+  "طراحی، ساخت و اجرای نمای شیشه ای، درب و پنجره ترمال بریک پروژه شرکت طرح و اجرای اسپادانا ، بانک مهر توسط تیم مهندسی نوآوران پنجره سپاهان.": {
+   "en": "Design, fabrication and installation of the glass facade and thermal break doors & windows for the Spadana Design & Build, Bank Mehr project by the engineering team of Noavaran Panjereh Sepahan.",
+   "ar": "تصميم وتصنيع وتركيب الواجهة الزجاجية والأبواب والنوافذ ثيرمال بريك لمشروع شركة تصميم وتنفيذ اسبادانا - بنك مهر بواسطة الفريق الهندسي لشركة نوآوران پنجره سباهان."
+  },
+  "طراحی، ساخت و اجرای نمای شیشه ای، درب و پنجره ترمال بریک پروژه ساختمان مسکونی آقای نصر توسط تیم مهندسی نوآوران پنجره سپاهان.": {
+   "en": "Design, fabrication and installation of the glass facade and thermal break doors & windows for the Nasr Residential Complex project by the engineering team of Noavaran Panjereh Sepahan.",
+   "ar": "تصميم وتصنيع وتركيب الواجهة الزجاجية والأبواب والنوافذ ثيرمال بريك لمشروع مبنى نصر السكني بواسطة الفريق الهندسي لشركة نوآوران پنجره سباهان."
+  },
+  "طراحی، ساخت و اجرای نمای شیشه ای، درب و پنجره ترمال بریک پروژه ساختمان مسکونی آقای مهندس فرهنگ توسط تیم مهندسی نوآوران پنجره سپاهان.": {
+   "en": "Design, fabrication and installation of the glass facade and thermal break doors & windows for the Eng. Farhang Residential Complex project by the engineering team of Noavaran Panjereh Sepahan.",
+   "ar": "تصميم وتصنيع وتركيب الواجهة الزجاجية والأبواب والنوافذ ثيرمال بريك لمشروع مبنى المهندس فرهنگ السكني بواسطة الفريق الهندسي لشركة نوآوران پنجره سباهان."
+  },
+  "طراحی، ساخت و اجرای نمای شیشه ای، درب و پنجره ترمال بریک پروژه ساختمان تجاری آقای مهندس زارعان توسط تیم مهندسی نوآوران پنجره سپاهان.": {
+   "en": "Design, fabrication and installation of the glass facade and thermal break doors & windows for the Eng. Zarean Commercial Complex project by the engineering team of Noavaran Panjereh Sepahan.",
+   "ar": "تصميم وتصنيع وتركيب الواجهة الزجاجية والأبواب والنوافذ ثيرمال بريك لمشروع مجمع المهندس زارعان التجاري بواسطة الفريق الهندسي لشركة نوآوران پنجره سباهان."
+  },
+  "طراحی، ساخت و اجرای نمای شیشه ای، درب و پنجره ترمال بریک پروژه ساختمان تجاری آقای مهندس آقادادی توسط تیم مهندسی نوآوران پنجره سپاهان.": {
+   "en": "Design, fabrication and installation of the glass facade and thermal break doors & windows for the Eng. Aghadadi Commercial Building project by the engineering team of Noavaran Panjereh Sepahan.",
+   "ar": "تصميم وتصنيع وتركيب الواجهة الزجاجية والأبواب والنوافذ ثيرمال بريك لمشروع مبنى المهندس آقادادي التجاري بواسطة الفريق الهندسي لشركة نوآوران پنجره سباهان."
+  },
+  "طراحی، ساخت و اجرای نمای شیشه ای، درب و پنجره ترمال بریک پروژه ساختمان آقای مهندس باقرهادی توسط تیم مهندسی نوآوران پنجره سپاهان.": {
+   "en": "Design, fabrication and installation of the glass facade and thermal break doors & windows for the Eng. Bagher Hadi Building project by the engineering team of Noavaran Panjereh Sepahan.",
+   "ar": "تصميم وتصنيع وتركيب الواجهة الزجاجية والأبواب والنوافذ ثيرمال بريك لمشروع مبنى المهندس باقر هادي بواسطة الفريق الهندسي لشركة نوآوران پنجره سباهان."
+  },
+  "طراحی، ساخت و اجرای نمای شیشه ای، درب و پنجره ترمال بریک پروژه مرکزپزشکی حضرت ابوالفضل توسط تیم مهندسی نوآوران پنجره سپاهان.": {
+   "en": "Design, fabrication and installation of the glass facade and thermal break doors & windows for the Hazrat Abolfazl Medical Center project by the engineering team of Noavaran Panjereh Sepahan.",
+   "ar": "تصميم وتصنيع وتركيب الواجهة الزجاجية والأبواب والنوافذ ثيرمال بريك لمشروع مجمع حضرة أبو الفضل الطبي بواسطة الفريق الهندسي لشركة نوآوران پنجره سباهان."
+  },
+  "طراحی، ساخت و اجرای نمای شیشه ای، درب و پنجره ترمال بریک پروژه ساختمان مسکونی آقای مهندس باقری توسط تیم مهندسی نوآوران پنجره سپاهان.": {
+   "en": "Design, fabrication and installation of the glass facade and thermal break doors & windows for the Eng. Bagheri Residential Building project by the engineering team of Noavaran Panjereh Sepahan.",
+   "ar": "تصميم وتصنيع وتركيب الواجهة الزجاجية والأبواب والنوافذ ثيرمال بريك لمشروع مبنى المهندس باقري السكني بواسطة الفريق الهندسي لشركة نوآوران پنجره سباهان."
+  },
+  "طراحی، ساخت و اجرای نمای شیشه ای، درب و پنجره ترمال بریک پروژه ساختمان مسکونی مهندس یارامیری توسط تیم مهندسی نوآوران پنجره سپاهان.": {
+   "en": "Design, fabrication and installation of the glass facade and thermal break doors & windows for the Eng. Yaramiri Residential Complex project by the engineering team of Noavaran Panjereh Sepahan.",
+   "ar": "تصميم وتصنيع وتركيب الواجهة الزجاجية والأبواب والنوافذ ثيرمال بريك لمشروع مبنى المهندس ياراميري السكني بواسطة الفريق الهندسي لشركة نوآوران پنجره سباهان."
+  },
+  "طراحی، ساخت و اجرای نمای شیشه ای، درب و پنجره ترمال بریک پروژه ساختمان بانک مهر اقصاد توسط تیم مهندسی نوآوران پنجره سپاهان.": {
+   "en": "Design, fabrication and installation of the glass facade and thermal break doors & windows for the Bank Mehr Eqtesad Building project by the engineering team of Noavaran Panjereh Sepahan.",
+   "ar": "تصميم وتصنيع وتركيب الواجهة الزجاجية والأبواب والنوافذ ثيرمال بريك لمشروع مبنى بنك مهر اقتصاد بواسطة الفريق الهندسي لشركة نوآوران پنجره سباهان."
+  },
+  "طراحی، ساخت و اجرای نمای شیشه ای، درب و پنجره ترمال بریک پروژه ساختمان مسکونی آقای مهندس دریابیگی توسط تیم مهندسی نوآوران پنجره سپاهان.": {
+   "en": "Design, fabrication and installation of the glass facade and thermal break doors & windows for the Eng. Daryabeigi Residential Complex project by the engineering team of Noavaran Panjereh Sepahan.",
+   "ar": "تصميم وتصنيع وتركيب الواجهة الزجاجية والأبواب والنوافذ ثيرمال بريك لمشروع مبنى المهندس دريابيغي السكني بواسطة الفريق الهندسي لشركة نوآوران پنجره سباهان."
+  },
+  "طراحی، ساخت و اجرای نمای شیشه ای، درب و پنجره ترمال بریک پروژه ساختمان کسب و فناوری علویجه توسط تیم مهندسی نوآوران پنجره سپاهان.": {
+   "en": "Design, fabrication and installation of the glass facade and thermal break doors & windows for the Alavijeh Business & Technology Center project by the engineering team of Noavaran Panjereh Sepahan.",
+   "ar": "تصميم وتصنيع وتركيب الواجهة الزجاجية والأبواب والنوافذ ثيرمال بريك لمشروع مبنى الأعمال والتكنولوجيا علويجه بواسطة الفريق الهندسي لشركة نوآوران پنجره سباهان."
+  },
+  "طراحی، ساخت و اجرای نمای شیشه ای، درب و پنجره ترمال بریک پروژه شهرداری منطقه 13 توسط تیم مهندسی نوآوران پنجره سپاهان.": {
+   "en": "Design, fabrication and installation of the glass facade and thermal break doors & windows for the District 13 Municipality Headquarters project by the engineering team of Noavaran Panjereh Sepahan.",
+   "ar": "تصميم وتصنيع وتركيب الواجهة الزجاجية والأبواب والنوافذ ثيرمال بريك لمشروع مبنى بلدية المنطقة 13 بواسطة الفريق الهندسي لشركة نوآوران پنجره سباهان."
+  },
+  "طراحی، ساخت و اجرای نمای شیشه ای، درب و پنجره ترمال بریک پروژه سیتی سنتر شاهین شهر توسط تیم مهندسی نوآوران پنجره سپاهان.": {
+   "en": "Design, fabrication and installation of the glass facade and thermal break doors & windows for the Shahin Shahr City Center project by the engineering team of Noavaran Panjereh Sepahan.",
+   "ar": "تصميم وتصنيع وتركيب الواجهة الزجاجية والأبواب والنوافذ ثيرمال بريك لمشروع سيتي سنتر شاهين شهر بواسطة الفريق الهندسي لشركة نوآوران پنجره سباهان."
+  },
+  "طراحی، ساخت و اجرای نمای شیشه ای، درب و پنجره ترمال بریک پروژه ساختمان تجاری مهندس طاووسی توسط تیم مهندسی نوآوران پنجره سپاهان.": {
+   "en": "Design, fabrication and installation of the glass facade and thermal break doors & windows for the Eng. Tavoosi Commercial Center project by the engineering team of Noavaran Panjereh Sepahan.",
+   "ar": "تصميم وتصنيع وتركيب الواجهة الزجاجية والأبواب والنوافذ ثيرمال بريك لمشروع مجمع المهندس طاووسي التجاري بواسطة الفريق الهندسي لشركة نوآوران پنجره سباهان."
+  },
+  "طراحی، ساخت و اجرای نمای شیشه ای، درب و پنجره ترمال بریک پروژه ساختمان تجاری آقای احمدیان توسط تیم مهندسی نوآوران پنجره سپاهان.": {
+   "en": "Design, fabrication and installation of the glass facade and thermal break doors & windows for the Ahmadian Commercial Building project by the engineering team of Noavaran Panjereh Sepahan.",
+   "ar": "تصميم وتصنيع وتركيب الواجهة الزجاجية والأبواب والنوافذ ثيرمال بريك لمشروع مبنى أحمديان التجاري بواسطة الفريق الهندسي لشركة نوآوران پنجره سباهان."
+  },
+  "طراحی، ساخت و اجرای نمای شیشه ای، درب و پنجره ترمال بریک پروژه ساختمان تجاری آقای مهندس علیرضایی توسط تیم مهندسی نوآوران پنجره سپاهان.": {
+   "en": "Design, fabrication and installation of the glass facade and thermal break doors & windows for the Eng. Alirezaei Commercial Tower project by the engineering team of Noavaran Panjereh Sepahan.",
+   "ar": "تصميم وتصنيع وتركيب الواجهة الزجاجية والأبواب والنوافذ ثيرمال بريك لمشروع برج المهندس عليرضائي التجاري بواسطة الفريق الهندسي لشركة نوآوران پنجره سباهان."
+  },
+  "طراحی، ساخت و اجرای نمای شیشه ای، درب و پنجره ترمال بریک پروژه ساختمان مسکونی خانم دکتر بویری توسط تیم مهندسی نوآوران پنجره سپاهان.": {
+   "en": "Design, fabrication and installation of the glass facade and thermal break doors & windows for the Dr. Boveiri Residential Complex project by the engineering team of Noavaran Panjereh Sepahan.",
+   "ar": "تصميم وتصنيع وتركيب الواجهة الزجاجية والأبواب والنوافذ ثيرمال بريك لمشروع مبنى الدكتورة بويري السكني بواسطة الفريق الهندسي لشركة نوآوران پنجره سباهان."
+  },
+  "طراحی، ساخت و اجرای نمای شیشه ای، درب و پنجره ترمال بریک پروژه ساختمان مسکونی آقای دکتر اعتصامی توسط تیم مهندسی نوآوران پنجره سپاهان.": {
+   "en": "Design, fabrication and installation of the glass facade and thermal break doors & windows for the Dr. Etesami Residential Building project by the engineering team of Noavaran Panjereh Sepahan.",
+   "ar": "تصميم وتصنيع وتركيب الواجهة الزجاجية والأبواب والنوافذ ثيرمال بريك لمشروع مبنى الدكتور اعتصامي السكني بواسطة الفريق الهندسي لشركة نوآوران پنجره سباهان."
+  },
+  "طراحی، ساخت و اجرای نمای شیشه ای، درب و پنجره ترمال بریک پروژه ساختمان تجاری آقای مهندس محمدی توسط تیم مهندسی نوآوران پنجره سپاهان.": {
+   "en": "Design, fabrication and installation of the glass facade and thermal break doors & windows for the Eng. Mohammadi Commercial Complex project by the engineering team of Noavaran Panjereh Sepahan.",
+   "ar": "تصميم وتصنيع وتركيب الواجهة الزجاجية والأبواب والنوافذ ثيرمال بريك لمشروع مجمع المهندس محمدي التجاري بواسطة الفريق الهندسي لشركة نوآوران پنجره سباهان."
+  },
+  "طراحی، ساخت و اجرای نمای شیشه ای، درب و پنجره ترمال بریک پروژه پروژه مسکونی خیابان جی توسط تیم مهندسی نوآوران پنجره سپاهان.": {
+   "en": "Design, fabrication and installation of the glass facade and thermal break doors & windows for the Jey Street Residential Project project by the engineering team of Noavaran Panjereh Sepahan.",
+   "ar": "تصميم وتصنيع وتركيب الواجهة الزجاجية والأبواب والنوافذ ثيرمال بريك لمشروع مشروع شارع جي السكني بواسطة الفريق الهندسي لشركة نوآوران پنجره سباهان."
+  },
+  "طراحی، ساخت و اجرای نمای شیشه ای، درب و پنجره ترمال بریک پروژه بانک صادرات یاسوج توسط تیم مهندسی نوآوران پنجره سپاهان.": {
+   "en": "Design, fabrication and installation of the glass facade and thermal break doors & windows for the Bank Saderat Yasuj Branch project by the engineering team of Noavaran Panjereh Sepahan.",
+   "ar": "تصميم وتصنيع وتركيب الواجهة الزجاجية والأبواب والنوافذ ثيرمال بريك لمشروع فرع بنك صادرات ياسوج بواسطة الفريق الهندسي لشركة نوآوران پنجره سباهان."
+  },
+  "طراحی، ساخت و اجرای نمای شیشه ای، درب و پنجره ترمال بریک پروژه ساختمان بانک قوامین توسط تیم مهندسی نوآوران پنجره سپاهان.": {
+   "en": "Design, fabrication and installation of the glass facade and thermal break doors & windows for the Bank Ghavamin Building project by the engineering team of Noavaran Panjereh Sepahan.",
+   "ar": "تصميم وتصنيع وتركيب الواجهة الزجاجية والأبواب والنوافذ ثيرمال بريك لمشروع مبنى بنك قوامين بواسطة الفريق الهندسي لشركة نوآوران پنجره سباهان."
+  },
+  "طراحی، ساخت و اجرای نمای شیشه ای، درب و پنجره ترمال بریک پروژه ساختمان تجاری اداری مهستان نقش جهان توسط تیم مهندسی نوآوران پنجره سپاهان.": {
+   "en": "Design, fabrication and installation of the glass facade and thermal break doors & windows for the Mehestan Naqsh-e Jahan Commercial Complex project by the engineering team of Noavaran Panjereh Sepahan.",
+   "ar": "تصميم وتصنيع وتركيب الواجهة الزجاجية والأبواب والنوافذ ثيرمال بريك لمشروع مجمع مهستان نقش جهان التجاري والإداري بواسطة الفريق الهندسي لشركة نوآوران پنجره سباهان."
+  },
+  "طراحی، ساخت و اجرای نمای شیشه ای، درب و پنجره ترمال بریک پروژه ساختمان پزشکی قانونی باغ رضوان توسط تیم مهندسی نوآوران پنجره سپاهان.": {
+   "en": "Design, fabrication and installation of the glass facade and thermal break doors & windows for the Bagh-e Rezvan Forensic Medicine Center project by the engineering team of Noavaran Panjereh Sepahan.",
+   "ar": "تصميم وتصنيع وتركيب الواجهة الزجاجية والأبواب والنوافذ ثيرمال بريك لمشروع مركز الطب الشرعي باغ رضوان بواسطة الفريق الهندسي لشركة نوآوران پنجره سباهان."
+  },
+  "طراحی، ساخت و اجرای نمای شیشه ای، درب و پنجره ترمال بریک پروژه سازمان ثبت اسناد سودان جی توسط تیم مهندسی نوآوران پنجره سپاهان.": {
+   "en": "Design, fabrication and installation of the glass facade and thermal break doors & windows for the Soordan Jey Deeds Registration Office project by the engineering team of Noavaran Panjereh Sepahan.",
+   "ar": "تصميم وتصنيع وتركيب الواجهة الزجاجية والأبواب والنوافذ ثيرمال بريك لمشروع دائرة تسجيل العقارات سودان جي بواسطة الفريق الهندسي لشركة نوآوران پنجره سباهان."
+  },
+  "طراحی، ساخت و اجرای نمای شیشه ای، درب و پنجره ترمال بریک پروژه ساختمان تجاری آقای مهندس حاج حیدری توسط تیم مهندسی نوآوران پنجره سپاهان.": {
+   "en": "Design, fabrication and installation of the glass facade and thermal break doors & windows for the Eng. Haj Heydari Commercial Building project by the engineering team of Noavaran Panjereh Sepahan.",
+   "ar": "تصميم وتصنيع وتركيب الواجهة الزجاجية والأبواب والنوافذ ثيرمال بريك لمشروع مبنى المهندس حاج حيدري التجاري بواسطة الفريق الهندسي لشركة نوآوران پنجره سباهان."
+  },
+  "طراحی، ساخت و اجرای نمای شیشه ای، درب و پنجره ترمال بریک پروژه ساختمان تجاری آقای مهندس آبرویی توسط تیم مهندسی نوآوران پنجره سپاهان.": {
+   "en": "Design, fabrication and installation of the glass facade and thermal break doors & windows for the Eng. Aberouei Commercial Building project by the engineering team of Noavaran Panjereh Sepahan.",
+   "ar": "تصميم وتصنيع وتركيب الواجهة الزجاجية والأبواب والنوافذ ثيرمال بريك لمشروع مبنى المهندس آبرويي التجاري بواسطة الفريق الهندسي لشركة نوآوران پنجره سباهان."
+  },
+  "طراحی، ساخت و اجرای نمای شیشه ای، درب و پنجره ترمال بریک پروژه ثبت اسناد سودان جی توسط تیم مهندسی نوآوران پنجره سپاهان.": {
+   "en": "Design, fabrication and installation of the glass facade and thermal break doors & windows for the Jey Deeds & Land Registration Office project by the engineering team of Noavaran Panjereh Sepahan.",
+   "ar": "تصميم وتصنيع وتركيب الواجهة الزجاجية والأبواب والنوافذ ثيرمال بريك لمشروع إدارة تسجيل الأراضي والعقارات جي بواسطة الفريق الهندسي لشركة نوآوران پنجره سباهان."
+  },
+  "طراحی، ساخت و اجرای نمای شیشه ای، درب و پنجره ترمال بریک پروژه مدرسه نژاد ستاری توسط تیم مهندسی نوآوران پنجره سپاهان.": {
+   "en": "Design, fabrication and installation of the glass facade and thermal break doors & windows for the Nezhad Sattari School project by the engineering team of Noavaran Panjereh Sepahan.",
+   "ar": "تصميم وتصنيع وتركيب الواجهة الزجاجية والأبواب والنوافذ ثيرمال بريك لمشروع مدرسة نجاد ستاري بواسطة الفريق الهندسي لشركة نوآوران پنجره سباهان."
+  }
+ },
+ "systems": {
+  "نمای کرتین وال لامل": {
+   "en": "Stick Curtain Wall Facade",
+   "ar": "واجهة كورتن وول لامل"
+  },
+  "پنجره دوجداره ترمال بریک": {
+   "en": "Thermal Break Windows",
+   "ar": "نوافذ ثيرمال بريك مزدوجة"
+  },
+  "شیشه لمینت سکوریت": {
+   "en": "Tempered Laminated Glass",
+   "ar": "زجاج سيكوريت مصفح"
+  },
+  "نمای شیشه ای فریم لس": {
+   "en": "Frameless Glass Facade",
+   "ar": "واجهة زجاجية فريملس"
+  },
+  "جام بالکنی ریلی و تاشو": {
+   "en": "Balcony Glazing System",
+   "ar": "زجاج شرفات قابل للطي"
+  },
+  "کامپوزیت آلومینیوم": {
+   "en": "Aluminium Composite Panel",
+   "ar": "كلادينج ألمنيوم كومبوزيت"
+  },
+  "هندریل شیشه ای": {
+   "en": "Glass Handrail & Balustrade",
+   "ar": "درابزين زجاجي"
+  },
+  "نمای کامپوزیت": {
+   "en": "Composite Cladding Facade",
+   "ar": "واجهة كومبوزيت"
+  },
+  "نرده استیل": {
+   "en": "Stainless Steel Railing",
+   "ar": "درابزين ستانلس ستيل"
+  },
+  "نرده آلومینیوم چهار گوش": {
+   "en": "Square-Section Aluminium Railing",
+   "ar": "درابزين ألمنيوم مربع المقطع"
+  },
+  "نرده شیشه ای": {
+   "en": "Glass Balustrade",
+   "ar": "درابزين زجاجي"
+  },
+  "نمای چوب": {
+   "en": "Timber Facade",
+   "ar": "واجهة خشبية"
+  },
+  "(Thermowood)": {
+   "en": "(Thermowood)",
+   "ar": "(Thermowood)"
+  },
+  "نمای چوب Thermowood": {
+   "en": "Thermowood Timber Facade",
+   "ar": "واجهة خشبية ثيرموود"
+  },
+  "درب و پنجره دوجداره آلومینیوم": {
+   "en": "Double-Glazed Aluminium Doors & Windows",
+   "ar": "أبواب ونوافذ ألمنيوم مزدوجة الزجاج"
+  }
+ }
+}

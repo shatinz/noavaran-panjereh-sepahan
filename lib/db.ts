@@ -35,6 +35,16 @@ export interface ProjectItem {
   executorEn?: string;
   executorAr?: string;
   systemsUsed: string[];
+  // Optional per-language overrides entered in the admin panel. When empty the
+  // site falls back to data/project-translations.json and then to the Persian text.
+  locationEn?: string;
+  locationAr?: string;
+  descriptionEn?: string;
+  descriptionAr?: string;
+  yearEn?: string;
+  yearAr?: string;
+  systemsUsedEn?: string[];
+  systemsUsedAr?: string[];
 }
 
 export interface CategoryItem {
@@ -61,6 +71,20 @@ export interface ArticleItem {
   excerpt: string;
   tags: string[];
   content: string;
+  // Optional per-language versions entered in the admin panel. They take
+  // priority over the built-in ARTICLE_TRANSLATIONS table.
+  titleEn?: string;
+  titleAr?: string;
+  excerptEn?: string;
+  excerptAr?: string;
+  authorEn?: string;
+  authorAr?: string;
+  dateEn?: string;
+  dateAr?: string;
+  tagsEn?: string[];
+  tagsAr?: string[];
+  contentEn?: string;
+  contentAr?: string;
 }
 
 export interface VideoItem {

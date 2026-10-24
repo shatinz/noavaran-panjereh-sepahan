@@ -7,6 +7,41 @@ import { Plus, Edit2, Trash2, X, Image as ImageIcon, FolderTree, Layers, Calenda
 import ImageUploadField from '@/components/admin/ImageUploadField';
 import MultiImageUpload from '@/components/admin/MultiImageUpload';
 import CategoryManagerModal from '@/components/admin/CategoryManagerModal';
+import AiTranslateButton, { AiTranslations } from '@/components/admin/AiTranslateButton';
+import { lookupProjectText } from '@/lib/i18n/project-dictionary';
+import { SYSTEM_TAG_TRANSLATIONS, formatLocalizedYear } from '@/lib/i18n/entities';
+
+const splitList = (value: string) => value.split(',').map((s) => s.trim()).filter(Boolean);
+
+// Per-language fields edited in the "translations" panel (English / Arabic).
+const emptyTranslations = {
+  locationEn: '',
+  locationAr: '',
+  descriptionEn: '',
+  descriptionAr: '',
+  yearEn: '',
+  yearAr: '',
+  systemsUsedEn: '',
+  systemsUsedAr: '',
+};
+
+type LangCode = 'en' | 'ar';
+const LANG_PANELS: { code: LangCode; label: string; dir: 'ltr' | 'rtl'; suffix: 'En' | 'Ar' }[] = [
+  { code: 'en', label: 'English', dir: 'ltr', suffix: 'En' },
+  { code: 'ar', label: 'العربية', dir: 'rtl', suffix: 'Ar' },
+];
+
+// English / Arabic text for a project's systems, but only when every tag is known.
+function translateSystems(systems: string[] | undefined, locale: LangCode): string {
+  if (!systems || systems.length === 0) return '';
+  const out: string[] = [];
+  for (const sys of systems) {
+    const hit = SYSTEM_TAG_TRANSLATIONS[sys]?.[locale] || lookupProjectText('systems', sys, locale);
+    if (!hit) return '';
+    out.push(hit);
+  }
+  return out.join(', ');
+}
 
 export default function AdminProjectsPage() {
   const [projects, setProjects] = useState<ProjectItem[]>([]);
@@ -34,6 +69,7 @@ export default function AdminProjectsPage() {
     description: '',
     year: '۱۴۰۳',
     systemsUsed: 'پنجره دوجداره ترمال‌بریک, نمای کرتین وال لامل',
+    ...emptyTranslations,
   });
 
   const fetchCategories = async () => {
@@ -84,21 +120,25 @@ export default function AdminProjectsPage() {
       description: '',
       year: '۱۴۰۳',
       systemsUsed: 'پنجره دوجداره ترمال‌بریک, نمای کرتین وال لامل',
+      ...emptyTranslations,
     });
     setModalOpen(true);
   };
 
   const handleOpenEdit = (project: ProjectItem) => {
     setEditingProject(project);
+    const employerFa = project.employer || project.client || '';
     setForm({
       title: project.title,
-      titleEn: project.titleEn || '',
-      titleAr: project.titleAr || '',
+      // Existing projects without saved translations are pre-filled from the built-in
+      // dictionary, so what the admin sees here matches what visitors see on the site.
+      titleEn: project.titleEn || lookupProjectText('titles', project.title, 'en') || '',
+      titleAr: project.titleAr || lookupProjectText('titles', project.title, 'ar') || '',
       category: project.category,
       client: project.client || '',
-      employer: project.employer || project.client || '',
-      employerEn: project.employerEn || '',
-      employerAr: project.employerAr || '',
+      employer: employerFa,
+      employerEn: project.employerEn || lookupProjectText('employers', employerFa, 'en') || '',
+      employerAr: project.employerAr || lookupProjectText('employers', employerFa, 'ar') || '',
       executor: project.executor || 'شرکت نوآوران پنجره سپاهان',
       executorEn: project.executorEn || 'Noavaran Panjereh Sepahan',
       executorAr: project.executorAr || 'شركة نوآوران پنجره سباهان',
@@ -108,8 +148,50 @@ export default function AdminProjectsPage() {
       description: project.description || '',
       year: project.year || '',
       systemsUsed: project.systemsUsed?.join(', ') || '',
+      locationEn: project.locationEn || lookupProjectText('locations', project.location, 'en') || '',
+      locationAr: project.locationAr || lookupProjectText('locations', project.location, 'ar') || '',
+      descriptionEn: project.descriptionEn || lookupProjectText('descriptions', project.description, 'en') || '',
+      descriptionAr: project.descriptionAr || lookupProjectText('descriptions', project.description, 'ar') || '',
+      yearEn: project.yearEn || formatLocalizedYear(project.year, 'en'),
+      yearAr: project.yearAr || formatLocalizedYear(project.year, 'ar'),
+      systemsUsedEn: project.systemsUsedEn?.join(', ') || translateSystems(project.systemsUsed, 'en'),
+      systemsUsedAr: project.systemsUsedAr?.join(', ') || translateSystems(project.systemsUsed, 'ar'),
     });
     setModalOpen(true);
+  };
+
+  // Collects the Persian source text for the "translate with AI" button.
+  const getTranslationSource = () => ({
+    title: form.title,
+    employer: form.employer,
+    executor: form.executor,
+    location: form.location,
+    year: form.year,
+    systems: splitList(form.systemsUsed),
+    description: form.description,
+  });
+
+  // Fills only the EMPTY English / Arabic fields, so manual translations are never overwritten.
+  const applyAiTranslations = (result: AiTranslations) => {
+    setForm((prev) => {
+      const next: Record<string, any> = { ...prev };
+      for (const { code, suffix } of LANG_PANELS) {
+        const r = result[code];
+        if (!r) continue;
+        const put = (key: string, value: string | string[] | undefined) => {
+          const text = Array.isArray(value) ? value.join(', ') : value;
+          if (text && !String(next[key] || '').trim()) next[key] = text;
+        };
+        put(`title${suffix}`, r.title);
+        put(`employer${suffix}`, r.employer);
+        put(`executor${suffix}`, r.executor);
+        put(`location${suffix}`, r.location);
+        put(`year${suffix}`, r.year);
+        put(`systemsUsed${suffix}`, r.systems);
+        put(`description${suffix}`, r.description);
+      }
+      return next as typeof prev;
+    });
   };
 
   const handleDelete = async (id: string) => {
@@ -149,7 +231,9 @@ export default function AdminProjectsPage() {
       employer: form.employer || form.client,
       client: form.client || form.employer,
       images: dedupedGallery,
-      systemsUsed: form.systemsUsed.split(',').map((s) => s.trim()).filter(Boolean),
+      systemsUsed: splitList(form.systemsUsed),
+      systemsUsedEn: splitList(form.systemsUsedEn),
+      systemsUsedAr: splitList(form.systemsUsedAr),
     };
 
     try {

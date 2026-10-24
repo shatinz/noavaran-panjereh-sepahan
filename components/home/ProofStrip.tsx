@@ -1,7 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
-import { Reveal } from "../ui/Reveal";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useLanguage } from "@/lib/i18n/context";
 
 // Parse a stat value string into { prefix, numeric, suffix, raw }
@@ -42,74 +41,25 @@ function formatCount(n: number, parsed: ReturnType<typeof parseStatValue>, local
   return prefix + numStr + suffix;
 }
 
-function useCountUp(target: number, duration: number, active: boolean) {
-  const [count, setCount] = useState(0);
-  const rafRef = useRef<number | null>(null);
-  const startRef = useRef<number | null>(null);
+const useIsoLayoutEffect = typeof window !== "undefined" ? useLayoutEffect : useEffect;
 
-  useEffect(() => {
-    if (!active) {
-      setCount(0);
-      return;
-    }
-    const ease = (t: number) => 1 - Math.pow(1 - t, 3); // ease out cubic
-
-    const animate = (ts: number) => {
-      if (startRef.current === null) startRef.current = ts;
-      const elapsed = ts - startRef.current;
-      const progress = Math.min(elapsed / duration, 1);
-      setCount(Math.round(ease(progress) * target));
-      if (progress < 1) {
-        rafRef.current = requestAnimationFrame(animate);
-      }
-    };
-
-    rafRef.current = requestAnimationFrame(animate);
-    return () => {
-      if (rafRef.current) cancelAnimationFrame(rafRef.current);
-      startRef.current = null;
-    };
-  }, [active, target, duration]);
-
-  return count;
-}
+const clamp01 = (v: number) => Math.min(1, Math.max(0, v));
+const easeOut = (t: number) => 1 - Math.pow(1 - t, 3);
 
 function StatItem({
   raw,
   label,
   locale,
-  active,
-  reducedMotion,
-  delay,
+  progress,
 }: {
   raw: string;
   label: string;
   locale: string;
-  active: boolean;
-  reducedMotion: boolean;
-  delay: number;
+  progress: number;
 }) {
   const parsed = parseStatValue(raw);
-  const [started, setStarted] = useState(false);
-
-  useEffect(() => {
-    if (reducedMotion) {
-      setStarted(true);
-      return;
-    }
-    if (!active) {
-      setStarted(false);
-      return;
-    }
-    const timer = setTimeout(() => setStarted(true), delay);
-    return () => clearTimeout(timer);
-  }, [active, reducedMotion, delay]);
-
-  const count = useCountUp(parsed.numeric, reducedMotion ? 0 : 1200, started);
-
-  const displayValue = reducedMotion || (!active && !started)
-    ? raw
-    : formatCount(count, parsed, locale);
+  const displayValue =
+    progress >= 1 ? raw : formatCount(Math.round(easeOut(progress) * parsed.numeric), parsed, locale);
 
   return (
     <div className="flex flex-col items-center justify-center text-center px-4 overflow-hidden">
@@ -132,40 +82,45 @@ interface ProofStripProps {
 }
 
 export function ProofStrip({ customStats }: ProofStripProps = {}) {
-  const [isInView, setIsInView] = useState(false);
-  const [reducedMotion, setReducedMotion] = useState(false);
-  const containerRef = useRef<HTMLDivElement>(null);
+  // Scroll-driven progress (0 -> 1). Starts at 1 so server-rendered HTML shows final values;
+  // the layout effect below replaces it with the real scroll position before first paint.
+  const [progress, setProgress] = useState(1);
+  const sectionRef = useRef<HTMLElement>(null);
   const { dict, dir, isRTL, locale } = useLanguage();
 
-  useEffect(() => {
-    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    setReducedMotion(mq.matches);
-  }, []);
-
-  useEffect(() => {
-    if (reducedMotion) {
-      setIsInView(true);
+  useIsoLayoutEffect(() => {
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduced) {
+      setProgress(1);
       return;
     }
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsInView(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.15 }
-    );
-
-    if (containerRef.current) observer.observe(containerRef.current);
-
-    const timer = setTimeout(() => setIsInView(true), 300);
-    return () => {
-      observer.disconnect();
-      clearTimeout(timer);
+    let raf = 0;
+    const update = () => {
+      raf = 0;
+      const el = sectionRef.current;
+      if (!el) return;
+      const rect = el.getBoundingClientRect();
+      const vh = window.innerHeight;
+      // 0 when the strip's top edge is just entering the viewport bottom,
+      // 1 when it has travelled up to ~55% of the viewport height.
+      const start = vh - 40;
+      const end = vh * 0.55;
+      setProgress(clamp01((start - rect.top) / (start - end)));
     };
-  }, [reducedMotion]);
+    const onScroll = () => {
+      if (!raf) raf = requestAnimationFrame(update);
+    };
+
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      if (raf) cancelAnimationFrame(raf);
+    };
+  }, []);
 
   // In English or Arabic mode, always prioritize the localized dictionary labels.
   // In Persian mode, allow customStats if valid, ensuring stale ongoing projects never override 1200 customers.
@@ -191,11 +146,17 @@ export function ProofStrip({ customStats }: ProofStripProps = {}) {
     return stat;
   });
 
+  const boxProgress = easeOut(clamp01(progress * 1.6));
+
   return (
-    <section className="relative z-20 -mt-16 w-full max-w-[1440px] mx-auto px-4 sm:px-6" dir={dir}>
-      <Reveal delay={200}>
+    <section ref={sectionRef} className="relative z-20 -mt-16 w-full max-w-[1440px] mx-auto px-4 sm:px-6" dir={dir}>
+      <div>
         <div
-          ref={containerRef}
+          style={{
+            opacity: boxProgress,
+            transform: `translateY(${(1 - boxProgress) * 48}px)`,
+            willChange: progress < 1 ? "opacity, transform" : undefined,
+          }}
           className={`bg-metal-brushed metal-shadow rounded-2xl p-6 sm:p-10 grid grid-cols-1 sm:grid-cols-3 gap-8 sm:gap-4 divide-y sm:divide-y-0 ${
             isRTL ? "sm:divide-x sm:divide-x-reverse" : "sm:divide-x"
           } divide-steel-300 overflow-hidden`}
@@ -206,13 +167,11 @@ export function ProofStrip({ customStats }: ProofStripProps = {}) {
               raw={stat.raw}
               label={stat.label}
               locale={locale}
-              active={isInView}
-              reducedMotion={reducedMotion}
-              delay={idx * 100}
+              progress={clamp01(progress * 1.4 - idx * 0.15)}
             />
           ))}
         </div>
-      </Reveal>
+      </div>
     </section>
   );
 }

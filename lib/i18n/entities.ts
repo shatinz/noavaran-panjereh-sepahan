@@ -1,5 +1,6 @@
 import { SupportedLocale } from './types';
 import { MaterialItem, ProjectItem, ServiceItem, ArticleItem, CategoryItem } from '../db';
+import { lookupProjectText } from './project-dictionary';
 
 export function formatSpecValue(val: string | number, locale: SupportedLocale): string {
   if (val === undefined || val === null) return '';
@@ -178,6 +179,10 @@ export function getLocalizedArticle(
     }
   }
 
+  const date =
+    (locale === 'en' ? article.dateEn : locale === 'ar' ? article.dateAr : undefined) ||
+    formatLocalizedYear(article.date, locale);
+
   if (locale === 'fa') {
     return {
       title: article.title,
@@ -186,28 +191,39 @@ export function getLocalizedArticle(
       author: article.author,
       tags: article.tags,
       content: article.content,
+      date,
     };
   }
+
+  // Values entered in the admin panel take priority over the built-in table below.
+  const explicit =
+    locale === 'en'
+      ? {
+          title: article.titleEn,
+          excerpt: article.excerptEn,
+          author: article.authorEn,
+          tags: article.tagsEn,
+          content: article.contentEn,
+        }
+      : {
+          title: article.titleAr,
+          excerpt: article.excerptAr,
+          author: article.authorAr,
+          tags: article.tagsAr,
+          content: article.contentAr,
+        };
 
   const trans = ARTICLE_TRANSLATIONS[article.slug] || ARTICLE_TRANSLATIONS[article.id];
-  if (trans && trans[locale]) {
-    return {
-      title: trans[locale].title,
-      category: (dynamicCategories ? category : trans[locale].category) || category,
-      excerpt: trans[locale].excerpt,
-      author: trans[locale].author,
-      tags: trans[locale].tags,
-      content: trans[locale].content,
-    };
-  }
+  const builtIn = trans && trans[locale] ? trans[locale] : undefined;
 
   return {
-    title: article.title,
-    category,
-    excerpt: article.excerpt,
-    author: article.author,
-    tags: article.tags,
-    content: article.content,
+    title: explicit.title || builtIn?.title || article.title,
+    category: builtIn && !dynamicCategories ? builtIn.category || category : category,
+    excerpt: explicit.excerpt || builtIn?.excerpt || article.excerpt,
+    author: explicit.author || builtIn?.author || article.author,
+    tags: explicit.tags && explicit.tags.length > 0 ? explicit.tags : builtIn?.tags || article.tags,
+    content: explicit.content || builtIn?.content || article.content,
+    date,
   };
 }
 
@@ -771,21 +787,30 @@ export function getLocalizedProject(
     }
   }
 
+  const employerFa = project.employer || project.client;
   const employer =
     locale === 'en'
-      ? project.employerEn || project.employer || project.client
+      ? project.employerEn || lookupProjectText('employers', employerFa, 'en') || employerFa
       : locale === 'ar'
-      ? project.employerAr || project.employerEn || project.employer || project.client
-      : project.employer || project.client;
+      ? project.employerAr ||
+        lookupProjectText('employers', employerFa, 'ar') ||
+        project.employerEn ||
+        employerFa
+      : employerFa;
 
   const executor =
     locale === 'en'
-      ? project.executorEn || project.executor
+      ? project.executorEn || lookupProjectText('employers', project.executor, 'en') || project.executor
       : locale === 'ar'
-      ? project.executorAr || project.executorEn || project.executor
+      ? project.executorAr ||
+        lookupProjectText('employers', project.executor, 'ar') ||
+        project.executorEn ||
+        project.executor
       : project.executor;
 
-  const year = formatLocalizedYear(project.year, locale);
+  const year =
+    (locale === 'en' ? project.yearEn : locale === 'ar' ? project.yearAr : undefined) ||
+    formatLocalizedYear(project.year, locale);
 
   if (locale === 'fa') {
     return {
@@ -800,25 +825,36 @@ export function getLocalizedProject(
     };
   }
 
-  const systemsUsed = (project.systemsUsed || []).map((sys) => {
-    const sysTrans = SYSTEM_TAG_TRANSLATIONS[sys];
-    return (sysTrans && sysTrans[locale]) || sys;
-  });
+  const explicitSystems = locale === 'en' ? project.systemsUsedEn : project.systemsUsedAr;
+  const systemsUsed =
+    explicitSystems && explicitSystems.length > 0
+      ? explicitSystems
+      : (project.systemsUsed || []).map((sys) => {
+          const direct = SYSTEM_TAG_TRANSLATIONS[sys];
+          if (direct && direct[locale]) return direct[locale];
+          return lookupProjectText('systems', sys, locale) || sys;
+        });
 
+  const explicitLocation = locale === 'en' ? project.locationEn : project.locationAr;
   const location =
-    locale === 'en'
+    explicitLocation ||
+    lookupProjectText('locations', project.location, locale) ||
+    (locale === 'en'
       ? 'Isfahan & Other Metropolises'
       : locale === 'ar'
       ? 'أصفهان ومختلف المحافظات'
-      : project.location || '';
+      : project.location || '');
 
   // Clean, professional title formatting for EN & AR:
   let title = project.title || '';
   let description = project.description || '';
 
   if (locale === 'en') {
+    const dictTitle = lookupProjectText('titles', project.title, 'en');
     if (project.titleEn) {
       title = project.titleEn;
+    } else if (dictTitle) {
+      title = dictTitle;
     } else if (project.title) {
       title = project.title
         .replace(/ساختمان مسکونی/g, 'Residential Building')
@@ -837,10 +873,16 @@ export function getLocalizedProject(
         .replace(/مهندس/g, 'Eng.');
     }
 
-    description = `Engineering design, precision fabrication and installation of architectural glass facade and thermal break systems for ${title} by Noavaran Panjereh Sepahan.`;
+    description =
+      project.descriptionEn ||
+      lookupProjectText('descriptions', project.description, 'en') ||
+      `Engineering design, precision fabrication and installation of architectural glass facade and thermal break systems for ${title} by Noavaran Panjereh Sepahan.`;
   } else if (locale === 'ar') {
+    const dictTitle = lookupProjectText('titles', project.title, 'ar');
     if (project.titleAr) {
       title = project.titleAr;
+    } else if (dictTitle) {
+      title = dictTitle;
     } else if (project.titleEn) {
       title = project.titleEn;
     } else if (project.title) {
@@ -861,7 +903,10 @@ export function getLocalizedProject(
         .replace(/مهندس/g, 'المهندس');
     }
 
-    description = `تصميم وهندسة وتصنيع وتركيب الواجهات الزجاجية ونوافذ الثيرمال بريك لمشروع ${title} بواسطة شركة نوآوران پنجره سباهان.`;
+    description =
+      project.descriptionAr ||
+      lookupProjectText('descriptions', project.description, 'ar') ||
+      `تصميم وهندسة وتصنيع وتركيب الواجهات الزجاجية ونوافذ الثيرمال بريك لمشروع ${title} بواسطة شركة نوآوران پنجره سباهان.`;
   }
 
   return {

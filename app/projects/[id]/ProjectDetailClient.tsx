@@ -38,6 +38,17 @@ export function ProjectDetailClient({ project, settings, galleryImages }: Projec
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
           {/* Main Content */}
           <div className="lg:col-span-2 space-y-12">
+            {loc.description && (
+              <section className="space-y-4">
+                <h2 className={`text-2xl font-black text-white font-vazir ${isRTL ? 'border-r-4 pr-4' : 'border-l-4 pl-4'} border-signal-500`}>
+                  {locale === 'en' ? 'About the Project' : (locale === 'ar' ? 'نبذة عن المشروع' : 'درباره پروژه')}
+                </h2>
+                <p className="text-base text-steel-300 leading-loose font-vazir whitespace-pre-line">
+                  {loc.description}
+                </p>
+              </section>
+            )}
+
             <section className="space-y-8">
               <h2 className={`text-2xl font-black text-white font-vazir ${isRTL ? 'border-r-4 pr-4' : 'border-l-4 pl-4'} border-signal-500`}>
                 {locale === 'en' ? 'Project Photo Gallery' : (locale === 'ar' ? 'معرض صور المشروع' : 'گالری تصاویر پروژه')}
