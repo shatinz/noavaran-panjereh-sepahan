@@ -132,6 +132,14 @@ export interface MaterialItem {
   features: string[];
 }
 
+export interface CompanyLocation {
+  lat: number;
+  lng: number;
+  neshanUrl?: string;
+  baladUrl?: string;
+  googleMapsUrl?: string;
+}
+
 export interface CompanySettings {
   companyName: string;
   companyNameEn: string;
@@ -157,6 +165,12 @@ export interface CompanySettings {
   officeAddressEn: string;
   factoryAddress: string;
   factoryAddressEn: string;
+  location?: CompanyLocation;
+  lat?: number;
+  lng?: number;
+  neshanUrl?: string;
+  baladUrl?: string;
+  googleMapsUrl?: string;
   workingHours: string;
   stats?: {
     stat1Value?: string;
@@ -360,8 +374,20 @@ export async function getSettings(): Promise<CompanySettings> {
     email: "info@noavaranpanjereh.com",
     officeAddress: "اصفهان، خیابان محتشم کاشانی، روبروی پست بانک مرکزی، ساختمان نوید، طبقه ۶",
     officeAddressEn: "6th Floor, Navid Building, Opposite Central Post Bank, Mohtasham Kashani St, Isfahan, Iran",
-    factoryAddress: "اصفهان، خیابان امام خمینی، خیابان بسیج، کوچه ورزشگاه، بن‌بست قربانی، پلاک ۵۰",
-    factoryAddressEn: "No. 50, Ghorbani Dead-end, Varzeshgah Alley, Basij St, Imam Khomeini St, Isfahan, Iran",
+    factoryAddress: "اصفهان، خیابان امام خمینی، خیابان بسیج، کوچه ۱۳۵، کوچه فردوسی (بهار)، پلاک ۱۰۰",
+    factoryAddressEn: "No. 100, Ferdowsi (Bahar) Alley, Alley 135, Basij St, Imam Khomeini St, Isfahan, Iran",
+    location: {
+      lat: 32.713257,
+      lng: 51.574965,
+      neshanUrl: "https://nshn.ir/957bZUiLNx9C5s",
+      baladUrl: "https://balad.ir/location?latitude=32.713257&longitude=51.574965",
+      googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=32.713257,51.574965"
+    },
+    lat: 32.713257,
+    lng: 51.574965,
+    neshanUrl: "https://nshn.ir/957bZUiLNx9C5s",
+    baladUrl: "https://balad.ir/location?latitude=32.713257&longitude=51.574965",
+    googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=32.713257,51.574965",
     workingHours: "شنبه تا چهارشنبه: ۸:۰۰ الی ۱۷:۰۰ | پنج‌شنبه‌ها: ۸:۰۰ الی ۱۳:۰۰",
     stats: {
       stat1Value: "+۳۰",
@@ -401,12 +427,42 @@ export async function getSettings(): Promise<CompanySettings> {
   }
   data.stats = mergedStats;
 
+  const defaultLocation: CompanyLocation = {
+    lat: 32.713257,
+    lng: 51.574965,
+    neshanUrl: 'https://nshn.ir/957bZUiLNx9C5s',
+    baladUrl: 'https://balad.ir/location?latitude=32.713257&longitude=51.574965',
+    googleMapsUrl: 'https://www.google.com/maps/search/?api=1&query=32.713257,51.574965',
+  };
+  data.location = { ...defaultLocation, ...(data.location || {}) };
+  if (data.lat === undefined) data.lat = data.location.lat;
+  if (data.lng === undefined) data.lng = data.location.lng;
+  if (!data.neshanUrl) data.neshanUrl = data.location.neshanUrl;
+  if (!data.baladUrl) data.baladUrl = data.location.baladUrl;
+  if (!data.googleMapsUrl) data.googleMapsUrl = data.location.googleMapsUrl;
+
   return data;
 }
 
 export async function updateSettings(updates: Partial<CompanySettings>): Promise<CompanySettings> {
   const current = await getSettings();
-  const updated = { ...current, ...updates };
+  const nextLocation = updates.location ? { ...updates.location } : (current.location ? { ...current.location } : undefined);
+  if (updates.lat !== undefined && nextLocation) nextLocation.lat = updates.lat;
+  if (updates.lng !== undefined && nextLocation) nextLocation.lng = updates.lng;
+  if (updates.neshanUrl !== undefined && nextLocation) nextLocation.neshanUrl = updates.neshanUrl;
+  if (updates.baladUrl !== undefined && nextLocation) nextLocation.baladUrl = updates.baladUrl;
+  if (updates.googleMapsUrl !== undefined && nextLocation) nextLocation.googleMapsUrl = updates.googleMapsUrl;
+
+  const updated: CompanySettings = {
+    ...current,
+    ...updates,
+    location: nextLocation,
+    lat: nextLocation?.lat ?? updates.lat ?? current.lat,
+    lng: nextLocation?.lng ?? updates.lng ?? current.lng,
+    neshanUrl: nextLocation?.neshanUrl ?? updates.neshanUrl ?? current.neshanUrl,
+    baladUrl: nextLocation?.baladUrl ?? updates.baladUrl ?? current.baladUrl,
+    googleMapsUrl: nextLocation?.googleMapsUrl ?? updates.googleMapsUrl ?? current.googleMapsUrl,
+  };
   writeJsonFile('settings.json', updated);
   return updated;
 }

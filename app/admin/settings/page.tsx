@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import AdminNav from '@/components/AdminNav';
 import { CompanySettings } from '@/lib/db';
-import { Settings, Save, CheckCircle2, Phone, MapPin, Building2, Globe, Lock, User, KeyRound } from 'lucide-react';
+import { Settings, Save, CheckCircle2, Phone, MapPin, Building2, Globe, Lock, User, KeyRound, Navigation, Compass } from 'lucide-react';
 
 export default function AdminSettingsPage() {
   const [settings, setSettings] = useState<CompanySettings | null>(null);
@@ -247,12 +247,22 @@ export default function AdminSettingsPage() {
             </div>
           </div>
 
-          {/* Addresses */}
+          {/* Addresses & Map Coordinates */}
           <div className="rounded-3xl bg-charcoal-900 border border-charcoal-800 p-6 sm:p-8 space-y-4">
             <h2 className="text-sm font-bold text-white flex items-center gap-2 border-r-2 border-bronze-500 pr-2">
               <MapPin className="w-4 h-4 text-bronze-400" />
-              <span>نشانی دقیق دفتر مرکزی و کارخانه</span>
+              <span>نشانی دقیق دفتر مرکزی، کارخانه و مختصات نقشه</span>
             </h2>
+
+            <div>
+              <label className="text-titanium-300 block mb-1">آدرس رسمی ثبتی کارخانه و شرکت:</label>
+              <textarea
+                rows={2}
+                value={settings.officialCompanyAddress || settings.factoryAddress}
+                onChange={(e) => setSettings({ ...settings, officialCompanyAddress: e.target.value, factoryAddress: e.target.value })}
+                className="w-full p-2.5 rounded-xl bg-charcoal-850 border border-charcoal-700 text-white focus:border-bronze-500 focus:outline-none"
+              />
+            </div>
 
             <div>
               <label className="text-titanium-300 block mb-1">آدرس دفتر مرکزی:</label>
@@ -272,6 +282,113 @@ export default function AdminSettingsPage() {
                 onChange={(e) => setSettings({ ...settings, factoryAddress: e.target.value })}
                 className="w-full p-2.5 rounded-xl bg-charcoal-850 border border-charcoal-700 text-white focus:border-bronze-500 focus:outline-none"
               />
+            </div>
+
+            <div className="pt-2 border-t border-charcoal-800">
+              <h3 className="text-xs font-bold text-titanium-200 mb-3 flex items-center gap-1.5">
+                <Compass className="w-3.5 h-3.5 text-bronze-400" />
+                <span>مختصات جغرافیایی پین نقشه کارخانه (GPS Coordinates)</span>
+              </h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="text-titanium-300 block mb-1">عرض جغرافیایی (Latitude):</label>
+                  <input
+                    type="number"
+                    step="0.000001"
+                    value={settings.location?.lat ?? settings.lat ?? 32.713257}
+                    onChange={(e) => {
+                      const val = parseFloat(e.target.value) || 0;
+                      const loc = settings.location || { lat: 32.713257, lng: 51.574965 };
+                      setSettings({
+                        ...settings,
+                        lat: val,
+                        location: { ...loc, lat: val },
+                      });
+                    }}
+                    className="w-full p-2.5 rounded-xl bg-charcoal-850 border border-charcoal-700 text-white font-mono focus:border-bronze-500 focus:outline-none"
+                  />
+                </div>
+                <div>
+                  <label className="text-titanium-300 block mb-1">طول جغرافیایی (Longitude):</label>
+                  <input
+                    type="number"
+                    step="0.000001"
+                    value={settings.location?.lng ?? settings.lng ?? 51.574965}
+                    onChange={(e) => {
+                      const val = parseFloat(e.target.value) || 0;
+                      const loc = settings.location || { lat: 32.713257, lng: 51.574965 };
+                      setSettings({
+                        ...settings,
+                        lng: val,
+                        location: { ...loc, lng: val },
+                      });
+                    }}
+                    className="w-full p-2.5 rounded-xl bg-charcoal-850 border border-charcoal-700 text-white font-mono focus:border-bronze-500 focus:outline-none"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="pt-2 border-t border-charcoal-800">
+              <h3 className="text-xs font-bold text-titanium-200 mb-3 flex items-center gap-1.5">
+                <Navigation className="w-3.5 h-3.5 text-bronze-400" />
+                <span>لینک‌های مسیریابی مستقیم اپلیکیشن‌های نقشه</span>
+              </h3>
+              <div className="space-y-3">
+                <div>
+                  <label className="text-titanium-300 block mb-1">لینک نقشه نشان (Neshan):</label>
+                  <input
+                    type="text"
+                    value={settings.location?.neshanUrl ?? settings.neshanUrl ?? 'https://nshn.ir/957bZUiLNx9C5s'}
+                    onChange={(e) => {
+                      const val = e.target.value;
+                      const loc = settings.location || { lat: 32.713257, lng: 51.574965 };
+                      setSettings({
+                        ...settings,
+                        neshanUrl: val,
+                        location: { ...loc, neshanUrl: val },
+                      });
+                    }}
+                    className="w-full p-2.5 rounded-xl bg-charcoal-850 border border-charcoal-700 text-white font-mono focus:border-bronze-500 focus:outline-none"
+                  />
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="text-titanium-300 block mb-1">لینک نقشه بلد (Balad):</label>
+                    <input
+                      type="text"
+                      value={settings.location?.baladUrl ?? settings.baladUrl ?? ''}
+                      onChange={(e) => {
+                        const val = e.target.value;
+                        const loc = settings.location || { lat: 32.713257, lng: 51.574965 };
+                        setSettings({
+                          ...settings,
+                          baladUrl: val,
+                          location: { ...loc, baladUrl: val },
+                        });
+                      }}
+                      className="w-full p-2.5 rounded-xl bg-charcoal-850 border border-charcoal-700 text-white font-mono focus:border-bronze-500 focus:outline-none"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-titanium-300 block mb-1">لینک Google Maps:</label>
+                    <input
+                      type="text"
+                      value={settings.location?.googleMapsUrl ?? settings.googleMapsUrl ?? ''}
+                      onChange={(e) => {
+                        const val = e.target.value;
+                        const loc = settings.location || { lat: 32.713257, lng: 51.574965 };
+                        setSettings({
+                          ...settings,
+                          googleMapsUrl: val,
+                          location: { ...loc, googleMapsUrl: val },
+                        });
+                      }}
+                      className="w-full p-2.5 rounded-xl bg-charcoal-850 border border-charcoal-700 text-white font-mono focus:border-bronze-500 focus:outline-none"
+                    />
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 

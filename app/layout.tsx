@@ -170,17 +170,18 @@ export default async function RootLayout({
     },
     address: {
       '@type': 'PostalAddress',
-      streetAddress: settingsData.officeAddress,
+      streetAddress: settingsData.officialCompanyAddress || settingsData.factoryAddress || settingsData.officeAddress,
       addressLocality: 'Isfahan',
       addressRegion: 'Isfahan',
       addressCountry: 'IR',
-      postalCode: settingsData.postalCode,
+      postalCode: settingsData.postalCode || '8436185503',
     },
     geo: {
       '@type': 'GeoCoordinates',
-      latitude: '32.6546',
-      longitude: '51.6680',
+      latitude: String(settingsData.location?.lat ?? settingsData.lat ?? '32.713257'),
+      longitude: String(settingsData.location?.lng ?? settingsData.lng ?? '51.574965'),
     },
+    hasMap: settingsData.location?.neshanUrl || settingsData.neshanUrl || 'https://nshn.ir/957bZUiLNx9C5s',
     openingHoursSpecification: [
       {
         '@type': 'OpeningHoursSpecification',

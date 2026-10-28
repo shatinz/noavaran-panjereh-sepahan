@@ -8,22 +8,32 @@ interface ContactMapProps {
   address?: string;
   lat?: number;
   lng?: number;
+  neshanUrl?: string;
+  baladUrl?: string;
+  googleMapsUrl?: string;
 }
 
 export function ContactMap({
   address = "اصفهان، خیابان امام خمینی، خیابان بسیج، کوچه ۱۳۵، کوچه فردوسی (بهار)، پلاک ۱۰۰",
-  lat = 32.7161,
-  lng = 51.5942,
+  lat = 32.713257,
+  lng = 51.574965,
+  neshanUrl: customNeshanUrl,
+  baladUrl: customBaladUrl,
+  googleMapsUrl: customGoogleMapsUrl,
 }: ContactMapProps) {
   const { dict, dir, isRTL } = useLanguage();
 
   // Navigation application URLs
-  const neshanUrl = `https://neshan.org/maps/@${lat},${lng},16z,0p`;
-  const baladUrl = `https://balad.ir/location?latitude=${lat}&longitude=${lng}`;
-  const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`;
+  const neshanUrl =
+    customNeshanUrl ||
+    (Math.abs(lat - 32.713257) < 0.0001 && Math.abs(lng - 51.574965) < 0.0001
+      ? 'https://nshn.ir/957bZUiLNx9C5s'
+      : `https://neshan.org/maps/@${lat},${lng},16z,0p`);
+  const baladUrl = customBaladUrl || `https://balad.ir/location?latitude=${lat}&longitude=${lng}`;
+  const googleMapsUrl = customGoogleMapsUrl || `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`;
 
   // OpenStreetMap embed URL with bounded box centered on factory
-  const delta = 0.008;
+  const delta = 0.005;
   const osmEmbedUrl = `https://www.openstreetmap.org/export/embed.html?bbox=${lng - delta}%2C${lat - delta}%2C${lng + delta}%2C${lat + delta}&layer=mapnik&marker=${lat}%2C${lng}`;
 
   return (

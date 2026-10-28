@@ -121,10 +121,13 @@ export function ContactClient({ settingsData }: ContactClientProps) {
             </div>
 
             {/* Interactive Factory Location & Navigation Map */}
-            <ContactMap 
+            <ContactMap
               address={settingsData.officialCompanyAddress || settingsData.factoryAddress}
-              lat={32.7161}
-              lng={51.5942}
+              lat={settingsData.location?.lat ?? settingsData.lat ?? 32.713257}
+              lng={settingsData.location?.lng ?? settingsData.lng ?? 51.574965}
+              neshanUrl={settingsData.location?.neshanUrl ?? settingsData.neshanUrl}
+              baladUrl={settingsData.location?.baladUrl ?? settingsData.baladUrl}
+              googleMapsUrl={settingsData.location?.googleMapsUrl ?? settingsData.googleMapsUrl}
             />
           </div>
         </div>
