@@ -1,6 +1,6 @@
 import React from 'react';
 import { notFound } from 'next/navigation';
-import { getArticleBySlug, getArticles, getSettings } from '@/lib/db';
+import { getArticleBySlug, getSettings } from '@/lib/db';
 import { getLocalMediaFallback, withBasePath } from '@/lib/media';
 import { ArticleDetailClient } from './ArticleDetailClient';
 
@@ -9,6 +9,10 @@ interface Props {
 }
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://noavaranpanjereh.com';
+
+export const dynamic = 'force-dynamic';
+export const dynamicParams = true;
+export const revalidate = 0;
 
 const toIsoDate = (persianDateStr: string) => {
   const map: Record<string, string> = {
@@ -48,11 +52,6 @@ export async function generateMetadata({ params }: Props) {
       images: [fullImgUrl],
     },
   };
-}
-
-export async function generateStaticParams() {
-  const articles = await getArticles();
-  return articles.map((a) => ({ slug: a.slug }));
 }
 
 export default async function ArticleDetailPage({ params }: Props) {

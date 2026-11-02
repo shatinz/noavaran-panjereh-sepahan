@@ -5,6 +5,9 @@ import { ArticlesListClient } from './ArticlesListClient';
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://noavaranpanjereh.com';
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export const metadata: Metadata = {
   title: 'دانشنامه و مقالات تخصصی مهندسی نما و پنجره | نوآوران پنجره سپاهان',
   description: 'مقالات علمی، استانداردهای ملی ساختمان، عایق‌بندی صوتی و حرارتی، مقایسه ترمال‌بریک با UPVC و راهنمای انتخاب شیشه و نمای کرتین‌وال.',

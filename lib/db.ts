@@ -283,41 +283,86 @@ export async function deleteProject(id: string): Promise<boolean> {
 }
 
 // ARTICLES
+function normalizeArticleSlug(value: string): string {
+  let decoded = value;
+  try {
+    decoded = decodeURIComponent(value);
+  } catch {
+    // Keep literal percent characters when the value is not URI-encoded.
+  }
+  return decoded.normalize('NFC').trim();
+}
+
+function revalidateArticleRoutes(...slugs: Array<string | undefined>): void {
+  try {
+    revalidatePath('/articles');
+    for (const slug of Array.from(new Set(slugs.filter((value): value is string => !!value)))) {
+      revalidatePath('/articles/' + slug);
+    }
+  } catch (error) {
+    // The file write remains authoritative; a later request will render fresh
+    // because both article routes are force-dynamic.
+    console.warn('Could not invalidate article routes:', error);
+  }
+}
+
 export async function getArticles(): Promise<ArticleItem[]> {
-  const data = readJsonFile<ArticleItem[]>('articles.json', []);
-  return data;
+  return readJsonFile<ArticleItem[]>('articles.json', []);
 }
 
 export async function getArticleBySlug(slug: string): Promise<ArticleItem | null> {
   const list = await getArticles();
-  return list.find(a => a.slug === slug || a.id === slug) || null;
+  const requested = normalizeArticleSlug(slug);
+  return list.find(a =>
+    normalizeArticleSlug(a.slug) === requested || a.id === slug
+  ) || null;
 }
 
 export async function createArticle(article: Omit<ArticleItem, 'id'>): Promise<ArticleItem> {
   const list = await getArticles();
   const newItem: ArticleItem = {
     ...article,
-    id: `art-${Date.now()}`
+    slug: normalizeArticleSlug(article.slug),
+    id: 'art-' + Date.now()
   };
   list.unshift(newItem);
-  writeJsonFile('articles.json', list);
+  if (!writeJsonFile('articles.json', list)) {
+    throw new Error('Could not persist article data');
+  }
+  revalidateArticleRoutes(newItem.slug);
   return newItem;
 }
 
 export async function updateArticle(id: string, updates: Partial<ArticleItem>): Promise<ArticleItem | null> {
   const list = await getArticles();
-  const index = list.findIndex(a => a.id === id || a.slug === id);
+  const index = list.findIndex(a =>
+    a.id === id || normalizeArticleSlug(a.slug) === normalizeArticleSlug(id)
+  );
   if (index === -1) return null;
-  list[index] = { ...list[index], ...updates };
-  writeJsonFile('articles.json', list);
+  const previousSlug = list[index].slug;
+  list[index] = {
+    ...list[index],
+    ...updates,
+    ...(updates.slug ? { slug: normalizeArticleSlug(updates.slug) } : {}),
+  };
+  if (!writeJsonFile('articles.json', list)) {
+    throw new Error('Could not persist article data');
+  }
+  revalidateArticleRoutes(previousSlug, list[index].slug);
   return list[index];
 }
 
 export async function deleteArticle(id: string): Promise<boolean> {
   const list = await getArticles();
-  const filtered = list.filter(a => a.id !== id && a.slug !== id);
-  if (filtered.length === list.length) return false;
-  writeJsonFile('articles.json', filtered);
+  const article = list.find(a =>
+    a.id === id || normalizeArticleSlug(a.slug) === normalizeArticleSlug(id)
+  );
+  if (!article) return false;
+  const filtered = list.filter(a => a.id !== article.id);
+  if (!writeJsonFile('articles.json', filtered)) {
+    throw new Error('Could not persist article data');
+  }
+  revalidateArticleRoutes(article.slug);
   return true;
 }
 
