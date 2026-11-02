@@ -7,6 +7,7 @@ import { Reveal } from "../ui/Reveal";
 import { ChevronDown } from "lucide-react";
 import { withBasePath } from "@/lib/media";
 import { useLanguage } from "@/lib/i18n/context";
+import { TS143InteractiveScene } from "./TS143InteractiveScene";
 
 export function Hero({ establishedYear, factoryArea: factoryAreaRaw, projectCount }: { establishedYear: number; factoryArea: string; projectCount: number }) {
   const sectionRef = useRef<HTMLElement>(null);
@@ -190,7 +191,7 @@ export function Hero({ establishedYear, factoryArea: factoryAreaRaw, projectCoun
   return (
     <section
       ref={sectionRef}
-      className="relative h-[100svh] min-h-[580px] md:min-h-[720px] w-full flex items-center justify-center overflow-hidden"
+      className="relative min-h-[100svh] w-full flex flex-col items-center justify-start overflow-x-clip overflow-y-visible pt-12 sm:pt-16 md:pt-20 pb-16 sm:pb-24"
       dir={dir}
     >
       {/* Background Image: High-resolution architectural building with slow depth parallax */}
@@ -338,7 +339,7 @@ export function Hero({ establishedYear, factoryArea: factoryAreaRaw, projectCoun
             </div>
           </div>
 
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-10 sm:mb-14">
             <Button variant="primary" href="/contact" className="w-full sm:w-auto text-lg px-10 py-4 shadow-xl rounded-lg">
               {t('hero.ctaConsultation')}
             </Button>
@@ -347,12 +348,17 @@ export function Hero({ establishedYear, factoryArea: factoryAreaRaw, projectCoun
             </Button>
           </div>
         </Reveal>
+
+        {/* TS143 Lift & Slide Architectural 3D Showcase Banner */}
+        <div className="w-full max-w-5xl mx-auto mt-4 sm:mt-6">
+          <TS143InteractiveScene />
+        </div>
       </div>
 
       {/* Accessible Scroll Indicator */}
       <a
         href="#services"
-        className="absolute bottom-8 sm:bottom-12 left-1/2 -translate-x-1/2 flex items-center justify-center w-12 h-12 rounded-full bg-black/40 border border-white/10 opacity-80 hover:opacity-100 transition-all hover:bg-black/60 focus-visible z-20"
+        className="relative mt-8 sm:mt-12 flex items-center justify-center w-12 h-12 rounded-full bg-black/40 border border-white/10 opacity-80 hover:opacity-100 transition-all hover:bg-black/60 focus-visible z-20"
         aria-label={t('hero.scrollAria')}
       >
         <ChevronDown className="w-6 h-6 text-signal-500 animate-bounce" />

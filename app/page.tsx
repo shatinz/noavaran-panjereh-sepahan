@@ -62,7 +62,7 @@ export default async function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-transparent overflow-hidden">
+    <div className="min-h-screen bg-transparent overflow-x-clip">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }}
