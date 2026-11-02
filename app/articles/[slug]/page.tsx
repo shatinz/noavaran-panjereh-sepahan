@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { getArticleBySlug, getArticles } from '@/lib/db';
+import { getArticleBySlug } from '@/lib/db';
 import { Calendar, User, ChevronRight, Tag, ArrowRight, Share2, BookOpen } from 'lucide-react';
 
 interface Props {
@@ -10,12 +10,9 @@ interface Props {
   };
 }
 
-export async function generateStaticParams() {
-  const articles = await getArticles();
-  return articles.map((a) => ({
-    slug: a.slug,
-  }));
-}
+export const dynamic = 'force-dynamic';
+export const dynamicParams = true;
+export const revalidate = 0;
 
 export default async function ArticleDetailPage({ params }: Props) {
   const article = await getArticleBySlug(params.slug);

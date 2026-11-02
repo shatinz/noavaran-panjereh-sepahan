@@ -3,6 +3,9 @@ import Link from 'next/link';
 import { getArticles } from '@/lib/db';
 import { BookOpen, Calendar, ArrowLeft, Tag } from 'lucide-react';
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export const metadata = {
   title: 'دانشنامه و مقالات تخصصی مهندسی نما و پنجره | نوآوران پنجره سپاهان',
   description: 'مقالات علمی و کاربردی درباره مزایای پنجره دوجداره، استانداردهای عایق صوتی و حرارتی، مهار پل‌های حرارتی و تکنولوژی‌های نماهای شیشه‌ای.',
