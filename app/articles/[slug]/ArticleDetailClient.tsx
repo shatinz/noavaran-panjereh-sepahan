@@ -64,7 +64,7 @@ export function ArticleDetailClient({ article, settings, imgSrc, galleryImages =
 
           <div className="bg-ink-950 border border-ink-800 rounded-xl p-6 md:p-12 metal-shadow">
             <div className={`prose prose-invert prose-lg max-w-none font-vazir leading-loose text-steel-300 ${isRTL ? 'text-justify' : 'text-left'} prose-headings:font-black prose-headings:text-white prose-headings:font-vazir ${isRTL ? 'prose-h2:border-r-4 prose-h2:pr-4' : 'prose-h2:border-l-4 prose-h2:pl-4'} prose-h2:border-signal-500 prose-h2:mb-6 prose-p:mb-6 prose-strong:text-white prose-li:text-steel-300 prose-a:text-signal-500`}>
-              <div dangerouslySetInnerHTML={{ __html: locArt.content }} />
+              <div dangerouslySetInnerHTML={{ __html: locArt.content }} className="whitespace-pre-wrap" />
             </div>
 
             {locArt.tags && locArt.tags.length > 0 && (

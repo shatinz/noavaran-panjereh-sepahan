@@ -16,8 +16,57 @@ export default function AdminArticlesPage() {
   const [catModalOpen, setCatModalOpen] = useState(false);
   const [editingArticle, setEditingArticle] = useState<ArticleItem | null>(null);
   const [contentUploading, setContentUploading] = useState(false);
-  const [cursorPos, setCursorPos] = useState<number | null>(null);
   const contentFileInputRef = useRef<HTMLInputElement>(null);
+  const contentEditorRef = useRef<HTMLDivElement>(null);
+  const savedContentRangeRef = useRef<Range | null>(null);
+
+  useEffect(() => {
+    if (modalOpen && contentEditorRef.current) {
+      contentEditorRef.current.innerHTML = form.content || '';
+      savedContentRangeRef.current = null;
+    }
+  }, [modalOpen, editingArticle?.id]);
+
+  const saveContentSelection = () => {
+    const editor = contentEditorRef.current;
+    const selection = window.getSelection();
+    if (!editor || !selection || selection.rangeCount === 0) return;
+    const range = selection.getRangeAt(0);
+    if (editor.contains(range.commonAncestorContainer)) savedContentRangeRef.current = range.cloneRange();
+  };
+
+  const restoreContentSelection = () => {
+    const editor = contentEditorRef.current;
+    if (!editor) return null;
+    editor.focus();
+    const selection = window.getSelection();
+    const range = savedContentRangeRef.current;
+    if (selection && range && editor.contains(range.commonAncestorContainer)) {
+      selection.removeAllRanges();
+      selection.addRange(range);
+      return range;
+    }
+    const endRange = document.createRange();
+    endRange.selectNodeContents(editor);
+    endRange.collapse(false);
+    selection?.removeAllRanges();
+    selection?.addRange(endRange);
+    return endRange;
+  };
+
+  const runEditorCommand = (command: string, value?: string) => {
+    restoreContentSelection();
+    document.execCommand(command, false, value);
+    saveContentSelection();
+    if (contentEditorRef.current) setForm((prev) => ({ ...prev, content: contentEditorRef.current?.innerHTML || '' }));
+  };
+
+  const editorToolbarButton = (label: string, command: string, value?: string) => (
+    <button key={command + (value || '')} type="button" onMouseDown={(event) => event.preventDefault()}
+      onClick={() => runEditorCommand(command, value)}
+      className="min-w-9 h-8 px-2 rounded-lg border border-charcoal-700 bg-charcoal-800 hover:bg-charcoal-700 text-titanium-200 font-semibold text-xs"
+      title={label} aria-label={label}>{label}</button>
+  );
 
   const [form, setForm] = useState({
     title: '',
@@ -109,22 +158,39 @@ export default function AdminArticlesPage() {
       });
       const data = await res.json();
       if (res.ok && data.url) {
-        const imageTag = `\n\n<figure class="my-6 text-center"><img src="${data.url}" alt="${form.title || 'تصویر مقاله'}" class="rounded-xl mx-auto max-h-96 object-contain shadow-lg" /><figcaption class="text-xs text-steel-400 mt-2">تصویر: ${form.title || 'توضیحات تصویر'}</figcaption></figure>\n\n`;
-        setForm((prev) => {
-          const pos = cursorPos;
-          if (pos !== null && pos >= 0 && pos <= prev.content.length) {
-            const before = prev.content.slice(0, pos);
-            const after = prev.content.slice(pos);
-            return {
-              ...prev,
-              content: `${before}${imageTag}${after}`,
-            };
-          }
-          return {
-            ...prev,
-            content: prev.content ? `${prev.content}${imageTag}` : imageTag.trim(),
-          };
-        });
+        const editor = contentEditorRef.current;
+        if (editor) {
+          const range = restoreContentSelection();
+          const figure = document.createElement('figure');
+          figure.className = 'my-6 text-center';
+          const image = document.createElement('img');
+          image.src = data.url;
+          image.alt = form.title || 'تصویر مقاله';
+          image.className = 'rounded-xl mx-auto max-h-96 object-contain shadow-lg';
+          image.style.maxWidth = '100%';
+          figure.appendChild(image);
+          const caption = document.createElement('figcaption');
+          caption.className = 'text-xs text-steel-400 mt-2';
+          caption.textContent = 'تصویر: ' + (form.title || 'توضیحات تصویر');
+          figure.appendChild(caption);
+          if (range) {
+            range.deleteContents();
+            range.insertNode(figure);
+            const spacer = document.createElement('p');
+            spacer.appendChild(document.createElement('br'));
+            figure.parentNode?.insertBefore(spacer, figure.nextSibling);
+            const nextRange = document.createRange();
+            nextRange.setStart(spacer, 0);
+            nextRange.collapse(true);
+            const selection = window.getSelection();
+            selection?.removeAllRanges();
+            selection?.addRange(nextRange);
+            savedContentRangeRef.current = nextRange.cloneRange();
+          } else editor.appendChild(figure);
+          setForm((prev) => ({ ...prev, content: editor.innerHTML }));
+        } else {
+          setForm((prev) => ({ ...prev, content: prev.content + '<figure><img src="' + data.url + '" alt="تصویر مقاله" /></figure>' }));
+        }
       } else {
         alert(data.error || 'خطا در بارگذاری تصویر');
       }
@@ -176,6 +242,7 @@ export default function AdminArticlesPage() {
     updatedContent = updatedContent.replace(/\n{3,}/g, '\n\n').trim();
 
     setForm((prev) => ({ ...prev, content: updatedContent }));
+    if (contentEditorRef.current) contentEditorRef.current.innerHTML = updatedContent;
 
     // Delete the file from the server if it was locally uploaded to /uploads/
     if (targetUrl.startsWith('/uploads/')) {
@@ -201,6 +268,11 @@ export default function AdminArticlesPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    const articleHtml = contentEditorRef.current?.innerHTML ?? form.content;
+    if (!contentEditorRef.current?.innerText.trim()) {
+      alert('لطفاً متن مقاله را وارد کنید.');
+      return;
+    }
     if (!form.image || !form.image.trim()) {
       alert('لطفاً تصویر شاخص مقاله را آپلود کرده یا آدرس آن را وارد نمایید.');
       return;
@@ -222,6 +294,7 @@ export default function AdminArticlesPage() {
 
     const payload = {
       ...form,
+      content: articleHtml,
       images: dedupedGallery,
       tags: form.tags.split(',').map((t) => t.trim()).filter(Boolean),
     };
@@ -234,6 +307,7 @@ export default function AdminArticlesPage() {
           body: JSON.stringify({ id: editingArticle.id, ...payload }),
         });
         const updated = await res.json();
+        if (!res.ok) throw new Error(updated.error || 'ذخیره مقاله انجام نشد');
         setArticles(articles.map((a) => (a.id === editingArticle.id ? updated : a)));
       } else {
         const res = await fetch('/api/admin/articles', {
@@ -245,6 +319,7 @@ export default function AdminArticlesPage() {
           }),
         });
         const created = await res.json();
+        if (!res.ok) throw new Error(created.error || 'ایجاد مقاله انجام نشد');
         setArticles([created, ...articles]);
       }
       setModalOpen(false);
@@ -494,17 +569,37 @@ export default function AdminArticlesPage() {
                     />
                   </div>
                 </div>
-                <textarea
-                  rows={8}
-                  required
-                  value={form.content}
-                  onChange={(e) => setForm({ ...form, content: e.target.value })}
-                  onSelect={(e) => setCursorPos((e.target as HTMLTextAreaElement).selectionStart)}
-                  onKeyUp={(e) => setCursorPos((e.target as HTMLTextAreaElement).selectionStart)}
-                  onClick={(e) => setCursorPos((e.target as HTMLTextAreaElement).selectionStart)}
-                  placeholder="متن مقاله را اینجا بنویسید یا با استفاده از دکمه بالا تصویر درج نمایید..."
-                  className="w-full p-2.5 rounded-xl bg-charcoal-850 border border-charcoal-700 text-white leading-relaxed focus:border-bronze-500 focus:outline-none"
-                />
+                <div className="flex flex-wrap gap-1.5 p-2 rounded-t-xl bg-charcoal-900 border border-charcoal-700 border-b-0">
+                  {editorToolbarButton('B', 'bold')}
+                  {editorToolbarButton('I', 'italic')}
+                  {editorToolbarButton('U', 'underline')}
+                  {editorToolbarButton('S', 'strikeThrough')}
+                  {editorToolbarButton('H2', 'formatBlock', 'h2')}
+                  {editorToolbarButton('H3', 'formatBlock', 'h3')}
+                  {editorToolbarButton('¶', 'formatBlock', 'p')}
+                  {editorToolbarButton('❝', 'formatBlock', 'blockquote')}
+                  {editorToolbarButton('—', 'insertHorizontalRule')}
+                  {editorToolbarButton('• List', 'insertUnorderedList')}
+                  {editorToolbarButton('1. List', 'insertOrderedList')}
+                  {editorToolbarButton('↤', 'justifyRight')}
+                  {editorToolbarButton('↔', 'justifyCenter')}
+                  {editorToolbarButton('↦', 'justifyLeft')}
+                  {editorToolbarButton('↶', 'undo')}
+                  {editorToolbarButton('↷', 'redo')}
+                  <button type="button" onMouseDown={(event) => event.preventDefault()} onClick={() => {
+                    const url = window.prompt('آدرس لینک را وارد کنید:');
+                    if (url) runEditorCommand('createLink', url);
+                  }} className="h-8 px-2 rounded-lg border border-charcoal-700 bg-charcoal-800 hover:bg-charcoal-700 text-titanium-200 text-xs">لینک</button>
+                  <button type="button" onMouseDown={(event) => event.preventDefault()} onClick={() => runEditorCommand('removeFormat')}
+                    className="h-8 px-2 rounded-lg border border-charcoal-700 bg-charcoal-800 hover:bg-charcoal-700 text-titanium-200 text-xs">پاک‌کردن قالب</button>
+                </div>
+                <p className="text-[11px] text-titanium-500 mt-2 mb-1">متن را مستقیم ویرایش کنید؛ برای درج تصویر، نشانگر را در محل موردنظر قرار دهید. قالب‌بندی و فاصله خطوط در صفحه مقاله نیز حفظ می‌شود.</p>
+                <div ref={contentEditorRef} contentEditable suppressContentEditableWarning role="textbox"
+                  aria-label="متن کامل مقاله" aria-multiline="true" dir="auto"
+                  onInput={(event) => { setForm((prev) => ({ ...prev, content: event.currentTarget.innerHTML })); saveContentSelection(); }}
+                  onKeyUp={saveContentSelection} onMouseUp={saveContentSelection} onClick={saveContentSelection} onBlur={saveContentSelection}
+                  className="w-full min-h-[320px] max-h-[65vh] overflow-y-auto p-4 rounded-b-xl bg-charcoal-850 border border-charcoal-700 text-white leading-8 focus:border-bronze-500 focus:outline-none [&_h2]:text-xl [&_h2]:font-bold [&_h2]:my-4 [&_h3]:text-lg [&_h3]:font-bold [&_h3]:my-3 [&_p]:my-3 [&_ul]:list-disc [&_ul]:pr-6 [&_ol]:list-decimal [&_ol]:pr-6 [&_a]:text-bronze-400 [&_img]:max-w-full [&_img]:h-auto whitespace-pre-wrap"
+                  data-placeholder="متن مقاله را اینجا بنویسید..." />
 
                 {/* List of embedded images with direct delete option */}
                 {contentImages.length > 0 && (
