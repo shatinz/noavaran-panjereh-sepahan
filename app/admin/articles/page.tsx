@@ -42,9 +42,13 @@ export default function AdminArticlesPage() {
     const selection = window.getSelection();
     const range = savedContentRangeRef.current;
     if (selection && range && editor.contains(range.commonAncestorContainer)) {
-      selection.removeAllRanges();
-      selection.addRange(range);
-      return range;
+      try {
+        selection.removeAllRanges();
+        selection.addRange(range.cloneRange());
+        return range;
+      } catch (error) {
+        savedContentRangeRef.current = null;
+      }
     }
     const endRange = document.createRange();
     endRange.selectNodeContents(editor);
@@ -55,10 +59,18 @@ export default function AdminArticlesPage() {
   };
 
   const runEditorCommand = (command: string, value?: string) => {
-    restoreContentSelection();
-    document.execCommand(command, false, value);
-    saveContentSelection();
-    if (contentEditorRef.current) setForm((prev) => ({ ...prev, content: contentEditorRef.current?.innerHTML || '' }));
+    const editor = contentEditorRef.current;
+    if (!editor) return;
+    try {
+      restoreContentSelection();
+      editor.focus();
+      document.execCommand(command, false, value);
+      saveContentSelection();
+      const html = editor.innerHTML;
+      setForm((prev) => ({ ...prev, content: html }));
+    } catch (error) {
+      console.error('Article formatting command failed:', command, error);
+    }
   };
 
   const editorToolbarButton = (label: string, command: string, value?: string) => (
@@ -569,36 +581,61 @@ export default function AdminArticlesPage() {
                     />
                   </div>
                 </div>
-                <div className="flex flex-wrap gap-1.5 p-2 rounded-t-xl bg-charcoal-900 border border-charcoal-700 border-b-0">
-                  {editorToolbarButton('B', 'bold')}
-                  {editorToolbarButton('I', 'italic')}
-                  {editorToolbarButton('U', 'underline')}
-                  {editorToolbarButton('S', 'strikeThrough')}
-                  {editorToolbarButton('H2', 'formatBlock', 'h2')}
-                  {editorToolbarButton('H3', 'formatBlock', 'h3')}
-                  {editorToolbarButton('¶', 'formatBlock', 'p')}
-                  {editorToolbarButton('❝', 'formatBlock', 'blockquote')}
-                  {editorToolbarButton('—', 'insertHorizontalRule')}
-                  {editorToolbarButton('• List', 'insertUnorderedList')}
-                  {editorToolbarButton('1. List', 'insertOrderedList')}
-                  {editorToolbarButton('↤', 'justifyRight')}
-                  {editorToolbarButton('↔', 'justifyCenter')}
-                  {editorToolbarButton('↦', 'justifyLeft')}
-                  {editorToolbarButton('↶', 'undo')}
-                  {editorToolbarButton('↷', 'redo')}
-                  <button type="button" onMouseDown={(event) => event.preventDefault()} onClick={() => {
-                    const url = window.prompt('آدرس لینک را وارد کنید:');
-                    if (url) runEditorCommand('createLink', url);
-                  }} className="h-8 px-2 rounded-lg border border-charcoal-700 bg-charcoal-800 hover:bg-charcoal-700 text-titanium-200 text-xs">لینک</button>
-                  <button type="button" onMouseDown={(event) => event.preventDefault()} onClick={() => runEditorCommand('removeFormat')}
-                    className="h-8 px-2 rounded-lg border border-charcoal-700 bg-charcoal-800 hover:bg-charcoal-700 text-titanium-200 text-xs">پاک‌کردن قالب</button>
+                <div className="rounded-t-xl border border-charcoal-700 bg-charcoal-900 p-3 space-y-3">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span className="text-[11px] text-titanium-500 font-semibold ml-1">سبک متن</span>
+                    <button type="button" onMouseDown={(event) => event.preventDefault()} onClick={() => runEditorCommand('formatBlock', 'p')}
+                      title="متن عادی" aria-label="متن عادی" className="h-9 px-3 rounded-lg border border-charcoal-600 bg-charcoal-800 text-titanium-200 hover:bg-charcoal-700 text-xs">متن عادی</button>
+                    <button type="button" onMouseDown={(event) => event.preventDefault()} onClick={() => runEditorCommand('formatBlock', 'h1')}
+                      title="عنوان اصلی — بزرگ‌ترین تیتر مقاله" aria-label="عنوان ۱" className="h-9 px-3 rounded-lg border border-bronze-500/50 bg-bronze-500/15 text-bronze-300 hover:bg-bronze-500/25 text-sm font-bold">عنوان ۱</button>
+                    <button type="button" onMouseDown={(event) => event.preventDefault()} onClick={() => runEditorCommand('formatBlock', 'h2')}
+                      title="عنوان بخش — برای تیترهای اصلی داخل مقاله" aria-label="عنوان ۲" className="h-9 px-3 rounded-lg border border-charcoal-600 bg-charcoal-800 text-white hover:bg-charcoal-700 text-base font-bold">عنوان ۲</button>
+                    <button type="button" onMouseDown={(event) => event.preventDefault()} onClick={() => runEditorCommand('formatBlock', 'h3')}
+                      title="زیرعنوان — برای بخش‌های کوچک‌تر" aria-label="عنوان ۳" className="h-9 px-3 rounded-lg border border-charcoal-600 bg-charcoal-800 text-titanium-200 hover:bg-charcoal-700 text-sm font-semibold">عنوان ۳</button>
+                    <button type="button" onMouseDown={(event) => event.preventDefault()} onClick={() => runEditorCommand('formatBlock', 'blockquote')}
+                      title="نقل‌قول" aria-label="نقل قول" className="h-9 px-3 rounded-lg border border-charcoal-600 bg-charcoal-800 text-titanium-200 hover:bg-charcoal-700 text-xs">❝ نقل‌قول</button>
+                  </div>
+                  <div className="h-px bg-charcoal-700" />
+                  <div className="flex flex-wrap items-center gap-1.5">
+                    <span className="text-[11px] text-titanium-500 font-semibold ml-1">قالب‌بندی</span>
+                    {editorToolbarButton('B ضخیم', 'bold')}
+                    {editorToolbarButton('I مورب', 'italic')}
+                    {editorToolbarButton('U زیرخط', 'underline')}
+                    {editorToolbarButton('S خط‌خورده', 'strikeThrough')}
+                    <span className="mx-1 h-6 w-px bg-charcoal-700" />
+                    {editorToolbarButton('• فهرست', 'insertUnorderedList')}
+                    {editorToolbarButton('1. شماره‌دار', 'insertOrderedList')}
+                    {editorToolbarButton('⇥ تورفتگی', 'indent')}
+                    {editorToolbarButton('⇤ کاهش تورفتگی', 'outdent')}
+                    <span className="mx-1 h-6 w-px bg-charcoal-700" />
+                    {editorToolbarButton('راست‌چین', 'justifyRight')}
+                    {editorToolbarButton('وسط‌چین', 'justifyCenter')}
+                    {editorToolbarButton('چپ‌چین', 'justifyLeft')}
+                  </div>
+                  <div className="flex flex-wrap items-center gap-1.5">
+                    <span className="text-[11px] text-titanium-500 font-semibold ml-1">ابزارهای بیشتر</span>
+                    <button type="button" onMouseDown={(event) => event.preventDefault()} onClick={() => {
+                      const url = window.prompt('آدرس کامل لینک را وارد کنید:');
+                      if (url) runEditorCommand('createLink', url);
+                    }} title="افزودن لینک به متن انتخاب‌شده" className="h-8 px-2.5 rounded-lg border border-charcoal-600 bg-charcoal-800 hover:bg-charcoal-700 text-titanium-200 text-xs">افزودن لینک</button>
+                    {editorToolbarButton('حذف لینک', 'unlink')}
+                    {editorToolbarButton('خط جداکننده', 'insertHorizontalRule')}
+                    {editorToolbarButton('پاک‌کردن قالب', 'removeFormat')}
+                    <span className="mx-1 h-6 w-px bg-charcoal-700" />
+                    {editorToolbarButton('↶ بازگشت', 'undo')}
+                    {editorToolbarButton('↷ انجام دوباره', 'redo')}
+                  </div>
                 </div>
                 <p className="text-[11px] text-titanium-500 mt-2 mb-1">متن را مستقیم ویرایش کنید؛ برای درج تصویر، نشانگر را در محل موردنظر قرار دهید. قالب‌بندی و فاصله خطوط در صفحه مقاله نیز حفظ می‌شود.</p>
                 <div ref={contentEditorRef} contentEditable suppressContentEditableWarning role="textbox"
                   aria-label="متن کامل مقاله" aria-multiline="true" dir="auto"
-                  onInput={(event) => { setForm((prev) => ({ ...prev, content: event.currentTarget.innerHTML })); saveContentSelection(); }}
+                  onInput={(event) => {
+                    const html = event.currentTarget.innerHTML;
+                    setForm((prev) => ({ ...prev, content: html }));
+                    saveContentSelection();
+                  }}
                   onKeyUp={saveContentSelection} onMouseUp={saveContentSelection} onClick={saveContentSelection} onBlur={saveContentSelection}
-                  className="w-full min-h-[320px] max-h-[65vh] overflow-y-auto p-4 rounded-b-xl bg-charcoal-850 border border-charcoal-700 text-white leading-8 focus:border-bronze-500 focus:outline-none [&_h2]:text-xl [&_h2]:font-bold [&_h2]:my-4 [&_h3]:text-lg [&_h3]:font-bold [&_h3]:my-3 [&_p]:my-3 [&_ul]:list-disc [&_ul]:pr-6 [&_ol]:list-decimal [&_ol]:pr-6 [&_a]:text-bronze-400 [&_img]:max-w-full [&_img]:h-auto whitespace-pre-wrap"
+                  className="w-full min-h-[360px] max-h-[65vh] overflow-y-auto p-5 rounded-b-xl bg-charcoal-850 border border-charcoal-700 text-white leading-8 focus:border-bronze-500 focus:outline-none whitespace-pre-wrap [&_h1]:text-3xl [&_h1]:font-extrabold [&_h1]:my-6 [&_h2]:text-2xl [&_h2]:font-bold [&_h2]:my-5 [&_h3]:text-xl [&_h3]:font-semibold [&_h3]:my-4 [&_p]:my-3 [&_blockquote]:border-r-4 [&_blockquote]:border-bronze-500 [&_blockquote]:pr-4 [&_blockquote]:my-4 [&_blockquote]:text-titanium-300 [&_ul]:list-disc [&_ul]:pr-6 [&_ul]:my-3 [&_ol]:list-decimal [&_ol]:pr-6 [&_ol]:my-3 [&_a]:text-bronze-400 [&_a]:underline [&_img]:max-w-full [&_img]:h-auto [&_figure]:my-6"
                   data-placeholder="متن مقاله را اینجا بنویسید..." />
 
                 {/* List of embedded images with direct delete option */}
