@@ -226,9 +226,9 @@ function readSeedJsonFile<T>(filename: string, fallback: T): T {
   return fallback;
 }
 
-// Runtime admin edits remain authoritative. When an older runtime record
-// predates the optional gallery field, inherit only that new seed field.
-// An explicit runtime images array (including an empty one) is preserved.
+// Runtime admin edits remain authoritative. Older project records used an
+// empty images array as a schema placeholder, so inherit a non-empty seed
+// gallery when runtime has no images; any non-empty runtime gallery wins.
 function mergeMissingSeedImages<T extends { id?: string; slug?: string; images?: string[] }>(
   filename: string,
   records: T[]
@@ -243,10 +243,10 @@ function mergeMissingSeedImages<T extends { id?: string; slug?: string; images?:
   }
 
   return records.map((item) => {
-    if (Object.prototype.hasOwnProperty.call(item, 'images')) return item;
+    if (Array.isArray(item.images) && item.images.length > 0) return item;
     const seedItem = (item.id && seedByIdOrSlug.get(item.id)) ||
       (item.slug && seedByIdOrSlug.get(item.slug));
-    return seedItem && Array.isArray(seedItem.images)
+    return seedItem && Array.isArray(seedItem.images) && seedItem.images.length > 0
       ? { ...seedItem, ...item, images: seedItem.images }
       : item;
   });
