@@ -27,6 +27,7 @@ export default function AdminNav() {
     { href: '/admin/articles', label: 'مدیریت مقالات', icon: FileText },
     { href: '/admin/projects', label: 'مدیریت پروژه‌ها', icon: Image },
     { href: '/admin/materials', label: 'سیستم‌ها و متریال', icon: Layers },
+    { href: '/admin/services', label: 'خدمات مهندسی', icon: Building2 },
     { href: '/admin/videos', label: 'ویدیوهای آموزشی', icon: Video },
     { href: '/admin/settings', label: 'اطلاعات تماس و شرکت', icon: Settings },
   ];

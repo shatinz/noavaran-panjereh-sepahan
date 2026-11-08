@@ -6,10 +6,11 @@ import Image from 'next/image';
 import { ArticleItem, CategoryItem } from '@/lib/db';
 import { PageHero } from '@/components/ui/PageHero';
 import { Breadcrumbs } from '@/components/ui/Breadcrumbs';
-import { Calendar, ArrowLeft, ArrowRight } from 'lucide-react';
+import { Calendar, ArrowLeft, ArrowRight, Maximize2 } from 'lucide-react';
 import { getLocalMediaFallback, withBasePath } from '@/lib/media';
 import { useLanguage } from '@/lib/i18n/context';
 import { getLocalizedArticle } from '@/lib/i18n/entities';
+import { ImageLightbox } from '@/components/ui/Gallery';
 
 interface ArticlesListClientProps {
   articles: ArticleItem[];
@@ -19,6 +20,11 @@ interface ArticlesListClientProps {
 export function ArticlesListClient({ articles, categories = [] }: ArticlesListClientProps) {
   const { dict, locale, dir, isRTL } = useLanguage();
   const [activeCategory, setActiveCategory] = useState<string>('all');
+  const [lightboxData, setLightboxData] = useState<{ images: string[]; title: string; index: number | null }>({
+    images: [],
+    title: '',
+    index: null,
+  });
   const Arrow = isRTL ? ArrowLeft : ArrowRight;
 
   const filters = [
@@ -135,6 +141,24 @@ export function ArticlesListClient({ articles, categories = [] }: ArticlesListCl
                   <div className={`absolute top-3 ${isRTL ? 'right-3' : 'left-3'} px-2.5 py-1 bg-signal-500 text-white text-[10px] font-bold rounded-lg border border-signal-500`}>
                     {locArt.category}
                   </div>
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      const allImgs = [a.image, ...(a.images || [])].filter(Boolean);
+                      setLightboxData({
+                        images: allImgs.length > 0 ? allImgs : [imgSrc],
+                        title: locArt.title,
+                        index: 0,
+                      });
+                    }}
+                    className={`absolute bottom-3 ${isRTL ? 'left-3' : 'right-3'} p-2 rounded-lg bg-ink-950/80 hover:bg-signal-500 text-white backdrop-blur border border-white/10 opacity-80 md:opacity-0 md:group-hover:opacity-100 focus:opacity-100 transition-all z-10 hover:scale-110 cursor-zoom-in`}
+                    aria-label={locale === 'en' ? 'Zoom image' : (locale === 'ar' ? 'تكبير الصورة' : 'بزرگنمایی تصویر')}
+                    title={locale === 'en' ? 'Zoom image' : (locale === 'ar' ? 'تكبير الصورة' : 'بزرگنمایی تصویر')}
+                  >
+                    <Maximize2 className="w-4 h-4" />
+                  </button>
                 </div>
 
                 <div className="p-5 flex flex-col flex-grow">
@@ -159,6 +183,14 @@ export function ArticlesListClient({ articles, categories = [] }: ArticlesListCl
           })}
         </div>
       </div>
+
+      <ImageLightbox
+        images={lightboxData.images}
+        title={lightboxData.title}
+        index={lightboxData.index}
+        onClose={() => setLightboxData((prev) => ({ ...prev, index: null }))}
+        onIndexChange={(idx) => setLightboxData((prev) => ({ ...prev, index: idx }))}
+      />
     </div>
   );
 }

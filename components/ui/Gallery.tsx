@@ -1,11 +1,11 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import Image from 'next/image';
 import { X, ChevronRight, ChevronLeft } from 'lucide-react';
 import { withBasePath } from '@/lib/media';
 
-function dedupeUrls(urls: string[]): string[] {
+export function dedupeUrls(urls: string[]): string[] {
   if (!urls || !Array.isArray(urls)) return [];
   const seen = new Set<string>();
   const result: string[] = [];
@@ -20,34 +20,133 @@ function dedupeUrls(urls: string[]): string[] {
   return result;
 }
 
-export function Gallery({ images, title }: { images: string[], title: string }) {
-  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
-  const touchStartXRef = useRef<number | null>(null);
-  const uniqueImages = dedupeUrls(images);
+export interface ImageLightboxProps {
+  images: string[];
+  title: string;
+  index: number | null;
+  onClose: () => void;
+  onIndexChange?: (newIndex: number) => void;
+}
 
-  // Keyboard navigation for lightbox
+export function ImageLightbox({
+  images,
+  title,
+  index,
+  onClose,
+  onIndexChange,
+}: ImageLightboxProps) {
+  const [internalIndex, setInternalIndex] = useState<number | null>(index);
+  const touchStartXRef = useRef<number | null>(null);
+  const closeButtonRef = useRef<HTMLButtonElement | null>(null);
+  const prevButtonRef = useRef<HTMLButtonElement | null>(null);
+  const nextButtonRef = useRef<HTMLButtonElement | null>(null);
+  const dialogRef = useRef<HTMLDivElement | null>(null);
+  const prevFocusedElementRef = useRef<HTMLElement | null>(null);
+
+  const uniqueImages = dedupeUrls(images);
+  const currentIndex = index !== undefined && onIndexChange ? index : internalIndex;
+
+  const setIndex = useCallback(
+    (newIdx: number | null) => {
+      if (newIdx === null) {
+        onClose();
+      } else {
+        if (onIndexChange) {
+          onIndexChange(newIdx);
+        } else {
+          setInternalIndex(newIdx);
+        }
+      }
+    },
+    [onClose, onIndexChange]
+  );
+
   useEffect(() => {
-    if (lightboxIndex === null) return;
+    setInternalIndex(index);
+  }, [index]);
+
+  // Focus and scroll management
+  useEffect(() => {
+    if (currentIndex === null) return;
+
+    prevFocusedElementRef.current = document.activeElement as HTMLElement;
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+
+    // Focus close button for accessibility
+    const timer = setTimeout(() => {
+      closeButtonRef.current?.focus();
+    }, 50);
+
+    return () => {
+      clearTimeout(timer);
+      document.body.style.overflow = originalOverflow;
+      prevFocusedElementRef.current?.focus();
+    };
+  }, [currentIndex]);
+
+  // Keyboard navigation & Focus Trap
+  useEffect(() => {
+    if (currentIndex === null || uniqueImages.length === 0) return;
 
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
-        setLightboxIndex(null);
-      } else if (e.key === 'ArrowLeft') {
-        setLightboxIndex((prev) =>
-          prev === null ? null : prev === 0 ? uniqueImages.length - 1 : prev - 1
-        );
-      } else if (e.key === 'ArrowRight') {
-        setLightboxIndex((prev) =>
-          prev === null ? null : prev === uniqueImages.length - 1 ? 0 : prev + 1
-        );
+        e.preventDefault();
+        onClose();
+        return;
+      }
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        setIndex(currentIndex === 0 ? uniqueImages.length - 1 : currentIndex - 1);
+        return;
+      }
+      if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        setIndex(currentIndex === uniqueImages.length - 1 ? 0 : currentIndex + 1);
+        return;
+      }
+      if (e.key === 'Tab') {
+        const controls = [
+          closeButtonRef.current,
+          prevButtonRef.current,
+          nextButtonRef.current,
+        ].filter((btn): btn is HTMLButtonElement => Boolean(btn));
+
+        if (controls.length === 0) {
+          e.preventDefault();
+          return;
+        }
+
+        if (controls.length === 1) {
+          e.preventDefault();
+          controls[0].focus();
+          return;
+        }
+
+        const activeElement = document.activeElement as HTMLElement | null;
+        const activeIdx = controls.indexOf(activeElement as HTMLButtonElement);
+
+        if (e.shiftKey) {
+          // Backward tab: if on first control or not inside controls, wrap to last
+          if (activeIdx <= 0) {
+            e.preventDefault();
+            controls[controls.length - 1].focus();
+          }
+        } else {
+          // Forward tab: if on last control or not inside controls, wrap to first
+          if (activeIdx === -1 || activeIdx >= controls.length - 1) {
+            e.preventDefault();
+            controls[0].focus();
+          }
+        }
       }
     };
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [lightboxIndex, uniqueImages.length]);
+  }, [currentIndex, uniqueImages.length, onClose, setIndex]);
 
-  if (!uniqueImages || uniqueImages.length === 0) return null;
+  if (currentIndex === null || uniqueImages.length === 0) return null;
 
   const handleTouchStart = (e: React.TouchEvent) => {
     touchStartXRef.current = e.touches[0].clientX;
@@ -62,17 +161,100 @@ export function Gallery({ images, title }: { images: string[], title: string }) 
     if (Math.abs(diff) > 40 && uniqueImages.length > 1) {
       if (diff > 0) {
         // Swipe right -> Previous
-        setLightboxIndex((prev) =>
-          prev === null ? null : prev === 0 ? uniqueImages.length - 1 : prev - 1
-        );
+        setIndex(currentIndex === 0 ? uniqueImages.length - 1 : currentIndex - 1);
       } else {
         // Swipe left -> Next
-        setLightboxIndex((prev) =>
-          prev === null ? null : prev === uniqueImages.length - 1 ? 0 : prev + 1
-        );
+        setIndex(currentIndex === uniqueImages.length - 1 ? 0 : currentIndex + 1);
       }
     }
   };
+
+  const handleBackdropClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (e.target === e.currentTarget) {
+      onClose();
+    }
+  };
+
+  const currentImageSrc = uniqueImages[currentIndex] || uniqueImages[0];
+
+  return (
+    <div
+      ref={dialogRef}
+      className="fixed inset-0 z-50 bg-[#0a0002]/95 backdrop-blur-md flex items-center justify-center select-none"
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
+      onClick={handleBackdropClick}
+      role="dialog"
+      aria-modal="true"
+      aria-label={title}
+    >
+      {/* Close button */}
+      <button
+        ref={closeButtonRef}
+        type="button"
+        onClick={onClose}
+        className="absolute top-6 right-6 w-12 h-12 flex items-center justify-center rounded-full bg-ink-900/90 text-white hover:bg-signal-500 transition-colors z-20 focus:outline-none focus:ring-2 focus:ring-signal-500 shadow-lg"
+        aria-label="بستن / Close"
+      >
+        <X className="w-6 h-6" />
+      </button>
+
+      {/* Counter Badge */}
+      {uniqueImages.length > 1 && (
+        <div className="absolute top-6 left-6 px-3.5 py-1.5 rounded-full bg-ink-900/80 border border-ink-800 text-xs text-steel-300 font-mono z-20 backdrop-blur">
+          {currentIndex + 1} / {uniqueImages.length}
+        </div>
+      )}
+
+      {/* Previous button */}
+      {uniqueImages.length > 1 && (
+        <button
+          ref={prevButtonRef}
+          type="button"
+          onClick={() => setIndex(currentIndex === 0 ? uniqueImages.length - 1 : currentIndex - 1)}
+          className="absolute left-4 md:left-6 top-1/2 -translate-y-1/2 w-12 h-12 flex items-center justify-center rounded-full bg-ink-900/90 text-white hover:bg-signal-500 transition-colors z-20 focus:outline-none focus:ring-2 focus:ring-signal-500 shadow-lg"
+          aria-label="قبلی / Previous"
+        >
+          <ChevronLeft className="w-6 h-6" />
+        </button>
+      )}
+
+      {/* Image Container */}
+      <div
+        className="relative w-full max-w-6xl h-[75vh] md:h-[85vh] p-2 sm:p-4 flex items-center justify-center"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <Image
+          src={withBasePath(currentImageSrc)}
+          alt={`${title} - ${currentIndex + 1}`}
+          fill
+          className="object-contain"
+          sizes="100vw"
+          priority
+        />
+      </div>
+
+      {/* Next button */}
+      {uniqueImages.length > 1 && (
+        <button
+          ref={nextButtonRef}
+          type="button"
+          onClick={() => setIndex(currentIndex === uniqueImages.length - 1 ? 0 : currentIndex + 1)}
+          className="absolute right-4 md:right-6 top-1/2 -translate-y-1/2 w-12 h-12 flex items-center justify-center rounded-full bg-ink-900/90 text-white hover:bg-signal-500 transition-colors z-20 focus:outline-none focus:ring-2 focus:ring-signal-500 shadow-lg"
+          aria-label="بعدی / Next"
+        >
+          <ChevronRight className="w-6 h-6" />
+        </button>
+      )}
+    </div>
+  );
+}
+
+export function Gallery({ images, title }: { images: string[]; title: string }) {
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+  const uniqueImages = dedupeUrls(images);
+
+  if (!uniqueImages || uniqueImages.length === 0) return null;
 
   return (
     <>
@@ -82,7 +264,7 @@ export function Gallery({ images, title }: { images: string[], title: string }) 
             key={idx}
             type="button"
             onClick={() => setLightboxIndex(idx)}
-            className="relative aspect-square rounded-xl overflow-hidden group border border-ink-800 metal-shadow focus:outline-none focus:ring-2 focus:ring-signal-500"
+            className="relative aspect-square rounded-xl overflow-hidden group border border-ink-800 metal-shadow focus:outline-none focus:ring-2 focus:ring-signal-500 cursor-zoom-in"
             aria-label={`${title} - ${idx + 1}`}
           >
             <Image
@@ -97,64 +279,13 @@ export function Gallery({ images, title }: { images: string[], title: string }) 
         ))}
       </div>
 
-      {lightboxIndex !== null && (
-        <div
-          className="fixed inset-0 z-50 bg-[#0a0002]/95 backdrop-blur-sm flex items-center justify-center select-none"
-          onTouchStart={handleTouchStart}
-          onTouchEnd={handleTouchEnd}
-          role="dialog"
-          aria-modal="true"
-          aria-label={title}
-        >
-          {/* Close button */}
-          <button
-            type="button"
-            onClick={() => setLightboxIndex(null)}
-            className="absolute top-6 right-6 w-12 h-12 flex items-center justify-center rounded-full bg-ink-900 text-white hover:bg-signal-500 transition-colors z-10 focus:outline-none focus:ring-2 focus:ring-signal-500"
-            aria-label="بستن / Close"
-          >
-            <X className="w-6 h-6" />
-          </button>
-
-          {/* Counter Badge */}
-          <div className="absolute top-6 left-6 px-3 py-1 rounded-full bg-ink-900/80 border border-ink-800 text-xs text-steel-300 font-mono z-10">
-            {lightboxIndex + 1} / {uniqueImages.length}
-          </div>
-
-          {uniqueImages.length > 1 && (
-            <button
-              type="button"
-              onClick={() => setLightboxIndex((prev) => (prev! === 0 ? uniqueImages.length - 1 : prev! - 1))}
-              className="absolute left-4 md:left-6 top-1/2 -translate-y-1/2 w-12 h-12 flex items-center justify-center rounded-full bg-ink-900/90 text-white hover:bg-signal-500 transition-colors z-10 focus:outline-none focus:ring-2 focus:ring-signal-500"
-              aria-label="قبلی / Previous"
-            >
-              <ChevronLeft className="w-6 h-6" />
-            </button>
-          )}
-
-          <div className="relative w-full max-w-5xl aspect-video p-4">
-            <Image
-              src={withBasePath(uniqueImages[lightboxIndex])}
-              alt={`${title} - ${lightboxIndex + 1}`}
-              fill
-              className="object-contain"
-              sizes="100vw"
-              priority
-            />
-          </div>
-
-          {uniqueImages.length > 1 && (
-            <button
-              type="button"
-              onClick={() => setLightboxIndex((prev) => (prev! === uniqueImages.length - 1 ? 0 : prev! + 1))}
-              className="absolute right-4 md:right-6 top-1/2 -translate-y-1/2 w-12 h-12 flex items-center justify-center rounded-full bg-ink-900/90 text-white hover:bg-signal-500 transition-colors z-10 focus:outline-none focus:ring-2 focus:ring-signal-500"
-              aria-label="بعدی / Next"
-            >
-              <ChevronRight className="w-6 h-6" />
-            </button>
-          )}
-        </div>
-      )}
+      <ImageLightbox
+        images={uniqueImages}
+        title={title}
+        index={lightboxIndex}
+        onClose={() => setLightboxIndex(null)}
+        onIndexChange={setLightboxIndex}
+      />
     </>
   );
 }

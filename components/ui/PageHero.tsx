@@ -1,17 +1,45 @@
 import React from 'react';
+import { Maximize2 } from 'lucide-react';
 import { withBasePath } from '@/lib/media';
 
-export function PageHero({ title, subtitle, bgImage }: { title: string, subtitle?: string, bgImage?: string }) {
+export function PageHero({
+  title,
+  subtitle,
+  bgImage,
+  onZoom,
+  zoomLabel = 'بزرگنمایی تصویر',
+}: {
+  title: string;
+  subtitle?: string;
+  bgImage?: string;
+  onZoom?: () => void;
+  zoomLabel?: string;
+}) {
   return (
-    <div className={`relative w-full ${bgImage ? 'py-20 md:py-32' : 'py-16 md:py-24'} overflow-hidden border-b border-ink-800 bg-ink-950 flex flex-col items-center justify-center text-center`}>
+    <div
+      className={`relative w-full ${
+        bgImage ? 'py-20 md:py-32' : 'py-16 md:py-24'
+      } overflow-hidden border-b border-ink-800 bg-ink-950 flex flex-col items-center justify-center text-center`}
+    >
       {bgImage ? (
         <>
-          <div 
-            className="absolute inset-0 bg-cover bg-center opacity-70" 
-            style={{ backgroundImage: `url(${withBasePath(bgImage)})` }} 
+          <div
+            className="absolute inset-0 bg-cover bg-center opacity-70"
+            style={{ backgroundImage: `url(${withBasePath(bgImage)})` }}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-ink-950 via-ink-950/60 to-ink-950/80 pointer-events-none" />
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_rgba(171,0,23,0.18)_0%,_transparent_70%)] pointer-events-none" />
+          {onZoom && (
+            <button
+              type="button"
+              onClick={onZoom}
+              className="absolute bottom-4 right-4 z-20 px-3 py-1.5 rounded-lg bg-ink-950/80 hover:bg-signal-500 text-white backdrop-blur border border-white/10 text-xs font-vazir flex items-center gap-1.5 transition-all shadow-lg cursor-zoom-in"
+              aria-label={zoomLabel}
+            >
+              <Maximize2 className="w-3.5 h-3.5" />
+              <span>{zoomLabel}</span>
+            </button>
+          )}
         </>
       ) : (
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(171,0,23,0.3)_0%,_transparent_70%)] pointer-events-none" />

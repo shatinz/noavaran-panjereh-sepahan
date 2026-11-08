@@ -64,13 +64,13 @@ export default function AdminVideosPage() {
   const handleOpenEdit = (v: VideoItem) => {
     setEditingVideo(v);
     setForm({
-      title: v.title,
+      title: v.title || '',
       category: v.category,
       platform: v.platform,
       videoUrl: v.videoUrl,
       duration: v.duration || '',
       thumbnail: v.thumbnail || '',
-      description: v.description,
+      description: v.description || '',
     });
     setModalOpen(true);
   };
@@ -142,6 +142,9 @@ export default function AdminVideosPage() {
           body: JSON.stringify({ id: editingVideo.id, ...form }),
         });
         const updated = await res.json();
+        if (!res.ok || !updated?.id) {
+          throw new Error(updated?.error || 'ذخیره تغییرات ویدیو ناموفق بود');
+        }
         setVideos(videos.map((v) => (v.id === editingVideo.id ? updated : v)));
       } else {
         const res = await fetch('/api/admin/videos', {
@@ -150,11 +153,14 @@ export default function AdminVideosPage() {
           body: JSON.stringify(form),
         });
         const created = await res.json();
+        if (!res.ok || !created?.id) {
+          throw new Error(created?.error || 'ایجاد ویدیو ناموفق بود');
+        }
         setVideos([created, ...videos]);
       }
       setModalOpen(false);
     } catch (e) {
-      alert('خطا در ذخیره ویدیو');
+      alert(e instanceof Error ? e.message : 'خطا در ذخیره ویدیو');
     }
   };
 
@@ -209,8 +215,13 @@ export default function AdminVideosPage() {
                 ) : (
                   videos.map((v) => (
                     <tr key={v.id} className="hover:bg-charcoal-850/50 transition-colors">
-                      <td className="py-3 px-4 font-semibold text-white max-w-xs truncate">
-                        {v.title}
+                      <td className="py-3 px-4 max-w-xs">
+                        <div className="font-semibold text-white truncate">{v.title}</div>
+                        {v.description && (
+                          <div className="text-[11px] text-titanium-400 truncate mt-0.5" title={v.description}>
+                            {v.description}
+                          </div>
+                        )}
                       </td>
                       <td className="py-3 px-4">
                         <span

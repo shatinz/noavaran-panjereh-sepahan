@@ -43,12 +43,23 @@ async function resolveCover(url: string, platform: 'aparat' | 'youtube' | 'direc
 export async function POST(request: Request) {
   try {
     const body = await request.json();
+    if (!body || typeof body !== 'object' || Array.isArray(body)) {
+      return NextResponse.json({ error: 'بدنه درخواست نامعتبر است' }, { status: 400 });
+    }
+    if (typeof body.title !== 'string' || !body.title.trim()) {
+      return NextResponse.json({ error: 'عنوان ویدیو الزامی است' }, { status: 400 });
+    }
+    if (body.description !== undefined && typeof body.description !== 'string') {
+      return NextResponse.json({ error: 'توضیحات ویدیو نامعتبر است' }, { status: 400 });
+    }
     const platform = body.platform || 'aparat';
     const info = extractVideoInfo(body.videoUrl || '', platform);
     const resolvedThumbnail = await resolveCover(body.videoUrl || '', platform, body.thumbnail);
 
     const newVideo = {
       ...body,
+      title: (body.title || '').trim(),
+      description: (body.description || '').trim(),
       videoId: info.videoId || body.videoId,
       thumbnail: resolvedThumbnail,
     };
@@ -61,7 +72,26 @@ export async function POST(request: Request) {
 
 export async function PUT(request: Request) {
   try {
-    const { id, ...updates } = await request.json();
+    const body = await request.json();
+    if (!body || typeof body !== 'object' || Array.isArray(body)) {
+      return NextResponse.json({ error: 'بدنه درخواست نامعتبر است' }, { status: 400 });
+    }
+    const { id, ...updates } = body;
+    if (!id || typeof id !== 'string' || !id.trim()) {
+      return NextResponse.json({ error: 'شناسه ویدیو الزامی است' }, { status: 400 });
+    }
+    if (updates.title !== undefined) {
+      if (typeof updates.title !== 'string' || !updates.title.trim()) {
+        return NextResponse.json({ error: 'عنوان ویدیو نامعتبر است' }, { status: 400 });
+      }
+      updates.title = updates.title.trim();
+    }
+    if (updates.description !== undefined) {
+      if (typeof updates.description !== 'string') {
+        return NextResponse.json({ error: 'توضیحات ویدیو نامعتبر است' }, { status: 400 });
+      }
+      updates.description = updates.description.trim();
+    }
     if (updates.videoUrl) {
       const platform = updates.platform || 'aparat';
       const info = extractVideoInfo(updates.videoUrl, platform);

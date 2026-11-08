@@ -11,6 +11,9 @@ import { FaqSection } from "@/components/home/FaqSection";
 import { CtaBand } from "@/components/home/CtaBand";
 import { getProjects, getSettings } from "@/lib/db";
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export const metadata: Metadata = {
   title: "نوآوران پنجره | کارخانه تولید پنجره دوجداره ترمال‌بریک و کرتین‌وال",
   description: "کارخانه نوآوران پنجره (شرکت نوآوران پنجره سپاهان)؛ طراحی محاسباتی و تولید تخصصی انواع درب و پنجره دوجداره آلومینیوم ترمال‌بریک، نمای شیشه‌ای کرتین‌وال لامل و جام‌بالکنی در سراسر ایران.",

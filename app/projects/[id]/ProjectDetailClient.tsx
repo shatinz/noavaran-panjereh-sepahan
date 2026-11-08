@@ -1,10 +1,10 @@
 "use client";
 
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { PageHero } from '@/components/ui/PageHero';
 import { Breadcrumbs } from '@/components/ui/Breadcrumbs';
-import { Gallery } from '@/components/ui/Gallery';
+import { Gallery, ImageLightbox } from '@/components/ui/Gallery';
 import { MapPin, Layers, ShieldCheck, Phone, MessageSquare, Calendar, Building2, HardHat } from 'lucide-react';
 import { telHref } from '@/lib/phone';
 import { useLanguage } from '@/lib/i18n/context';
@@ -19,6 +19,7 @@ interface ProjectDetailClientProps {
 
 export function ProjectDetailClient({ project, settings, galleryImages }: ProjectDetailClientProps) {
   const { dict, locale, dir, isRTL } = useLanguage();
+  const [heroLightboxIndex, setHeroLightboxIndex] = useState<number | null>(null);
   const loc = getLocalizedProject(project, locale);
 
   return (
@@ -27,11 +28,13 @@ export function ProjectDetailClient({ project, settings, galleryImages }: Projec
         { label: dict.nav.projects, href: '/projects' },
         { label: loc.title }
       ]} />
-      
-      <PageHero 
+
+      <PageHero
         title={loc.title}
         subtitle={loc.category}
         bgImage={project.image}
+        onZoom={() => setHeroLightboxIndex(0)}
+        zoomLabel={locale === 'en' ? 'Zoom Photo' : (locale === 'ar' ? 'تكبير الصورة' : 'بزرگنمایی تصویر')}
       />
 
       <div className={`w-full max-w-[1440px] mx-auto px-4 md:px-8 py-16 md:py-24 space-y-12 ${isRTL ? 'text-right' : 'text-left'}`}>
@@ -156,6 +159,14 @@ export function ProjectDetailClient({ project, settings, galleryImages }: Projec
           </div>
         </div>
       </div>
+
+      <ImageLightbox
+        images={galleryImages.length > 0 ? galleryImages : (project.image ? [project.image] : [])}
+        title={loc.title}
+        index={heroLightboxIndex}
+        onClose={() => setHeroLightboxIndex(null)}
+        onIndexChange={setHeroLightboxIndex}
+      />
     </div>
   );
 }

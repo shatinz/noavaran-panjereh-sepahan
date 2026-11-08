@@ -21,7 +21,10 @@
     "executor": "شرکت نوآوران پنجره سپاهان",
     "executorEn": "Noavaran Panjereh Sepahan",
     "executorAr": "شركة نوآوران پنجره سباهان",
-    "images": []
+    "images": [
+      "/projects/proj-1.webp",
+      "/projects/proj-2.webp"
+    ]
   },
   {
     "id": "proj-2",

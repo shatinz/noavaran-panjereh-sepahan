@@ -24,8 +24,8 @@ export function VideosClient({ videos }: { videos: VideoItem[] }) {
 
   const filtered = videos.filter(v => {
     const matchCat = activeCategory === 'all' || v.category === activeCategory;
-    const matchSearch = v.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                        v.description.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchSearch = (v.title || '').toLowerCase().includes(searchQuery.toLowerCase()) ||
+                        (v.description || '').toLowerCase().includes(searchQuery.toLowerCase());
     return matchCat && matchSearch;
   });
 
@@ -110,9 +110,17 @@ export function VideosClient({ videos }: { videos: VideoItem[] }) {
                   <h3 className="text-base font-black text-white font-vazir mb-2 group-hover:text-signal-500 transition-colors">
                     {v.title}
                   </h3>
-                  <p className="text-xs text-steel-400 font-vazir leading-relaxed line-clamp-2 mt-auto">
-                    {v.description}
-                  </p>
+                  {v.description?.trim() ? (
+                    <p className="text-xs text-steel-400 font-vazir leading-relaxed line-clamp-2 mt-auto">
+                      {v.description.trim()}
+                    </p>
+                  ) : (
+                    <p className="text-xs text-steel-500/60 font-vazir italic leading-relaxed line-clamp-2 mt-auto">
+                      {locale === 'en'
+                        ? 'Description not provided.'
+                        : (locale === 'ar' ? 'لم يتم تقديم وصف.' : 'توضیحی ثبت نشده است.')}
+                    </p>
+                  )}
                 </div>
               </button>
             );
@@ -169,12 +177,31 @@ export function VideosClient({ videos }: { videos: VideoItem[] }) {
               </div>
 
               <div className={`p-6 md:p-8 bg-ink-950 ${isRTL ? 'text-right' : 'text-left'} space-y-4`}>
-                <div className="inline-block px-3 py-1 bg-signal-500/10 text-signal-500 text-xs font-bold rounded-lg border border-signal-500/20">
-                  {activeVideo.category}
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="px-3 py-1 bg-signal-500/10 text-signal-500 text-xs font-bold rounded-lg border border-signal-500/20">
+                    {activeVideo.category}
+                  </span>
+                  {activeVideo.duration && (
+                    <span className="px-2.5 py-1 bg-ink-900 text-steel-400 text-xs font-mono rounded-lg border border-ink-800 flex items-center gap-1">
+                      <Clock className="w-3.5 h-3.5 text-signal-500" />
+                      {activeVideo.duration}
+                    </span>
+                  )}
                 </div>
-                <p className="text-sm text-steel-300 font-vazir leading-relaxed max-w-4xl">
-                  {activeVideo.description}
-                </p>
+                <h4 className="text-lg font-black text-white font-vazir pt-1">
+                  {activeVideo.title}
+                </h4>
+                {activeVideo.description?.trim() ? (
+                  <p className="text-sm text-steel-300 font-vazir leading-relaxed max-w-4xl whitespace-pre-line">
+                    {activeVideo.description.trim()}
+                  </p>
+                ) : (
+                  <p className="text-sm text-steel-500/60 font-vazir italic leading-relaxed max-w-4xl">
+                    {locale === 'en'
+                      ? 'Description not provided.'
+                      : (locale === 'ar' ? 'لم يتم تقديم وصف لهذا الفيديو.' : 'توضیحی برای این ویدیو ثبت نشده است.')}
+                  </p>
+                )}
               </div>
             </div>
           </div>

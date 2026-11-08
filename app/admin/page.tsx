@@ -1,6 +1,6 @@
 import React, { Suspense } from 'react';
 import Link from 'next/link';
-import { getArticles, getProjects, getVideos, getSettings, getConsultations, getMaterials } from '@/lib/db';
+import { getArticles, getProjects, getVideos, getSettings, getConsultations, getMaterials, getServices } from '@/lib/db';
 import { getAnalyticsSummary } from '@/lib/analytics-store';
 import AnalyticsPanel from '@/components/admin/AnalyticsPanel';
 import SeoPanel, { SeoPanelFallback } from '@/components/admin/SeoPanel';
@@ -13,6 +13,7 @@ import {
   ArrowLeft,
   MessageSquare,
   Layers,
+  Building2,
 } from 'lucide-react';
 
 export const metadata = {
@@ -22,13 +23,14 @@ export const metadata = {
 export const dynamic = 'force-dynamic';
 
 export default async function AdminDashboardPage() {
-  const [articles, projects, videos, settings, consultations, materials, analytics] = await Promise.all([
+  const [articles, projects, videos, settings, consultations, materials, services, analytics] = await Promise.all([
     getArticles(),
     getProjects(),
     getVideos(),
     getSettings(),
     getConsultations(),
     getMaterials(),
+    getServices(),
     getAnalyticsSummary(),
   ]);
 
@@ -75,8 +77,8 @@ export default async function AdminDashboardPage() {
         </Suspense>
 
         {/* Content Management Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          <div className="p-6 rounded-2xl bg-charcoal-900 border border-charcoal-800 space-y-2">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+          <div className="p-5 rounded-2xl bg-charcoal-900 border border-charcoal-800 space-y-2">
             <div className="flex items-center justify-between text-titanium-400">
               <span className="text-xs font-medium">سیستم‌ها و متریال</span>
               <Layers className="w-5 h-5 text-signal-400" />
@@ -87,7 +89,18 @@ export default async function AdminDashboardPage() {
             </Link>
           </div>
 
-          <div className="p-6 rounded-2xl bg-charcoal-900 border border-charcoal-800 space-y-2">
+          <div className="p-5 rounded-2xl bg-charcoal-900 border border-charcoal-800 space-y-2">
+            <div className="flex items-center justify-between text-titanium-400">
+              <span className="text-xs font-medium">خدمات مهندسی</span>
+              <Building2 className="w-5 h-5 text-bronze-400" />
+            </div>
+            <div className="text-3xl font-extrabold text-white font-mono">{services.length}</div>
+            <Link href="/admin/services" className="text-[11px] text-bronze-400 hover:underline inline-block pt-1">
+              مدیریت و ترتیب خدمات ←
+            </Link>
+          </div>
+
+          <div className="p-5 rounded-2xl bg-charcoal-900 border border-charcoal-800 space-y-2">
             <div className="flex items-center justify-between text-titanium-400">
               <span className="text-xs font-medium">پروژه‌های شاخص</span>
               <Image className="w-5 h-5 text-emerald-400" />
@@ -98,7 +111,7 @@ export default async function AdminDashboardPage() {
             </Link>
           </div>
 
-          <div className="p-6 rounded-2xl bg-charcoal-900 border border-charcoal-800 space-y-2">
+          <div className="p-5 rounded-2xl bg-charcoal-900 border border-charcoal-800 space-y-2">
             <div className="flex items-center justify-between text-titanium-400">
               <span className="text-xs font-medium">ویدیوهای آموزشی</span>
               <Video className="w-5 h-5 text-sky-400" />
@@ -109,14 +122,14 @@ export default async function AdminDashboardPage() {
             </Link>
           </div>
 
-          <div className="p-6 rounded-2xl bg-charcoal-900 border border-charcoal-800 space-y-2">
+          <div className="p-5 rounded-2xl bg-charcoal-900 border border-charcoal-800 space-y-2">
             <div className="flex items-center justify-between text-titanium-400">
               <span className="text-xs font-medium">اطلاعات شرکت و امنیت</span>
               <Settings className="w-5 h-5 text-amber-400" />
             </div>
             <div className="text-sm font-bold text-white font-mono truncate">{settings.phoneLabel}</div>
             <Link href="/admin/settings" className="text-[11px] text-amber-400 hover:underline inline-block pt-1">
-              تنظیمات تماس و تغییر رمز عبور ←
+              تنظیمات تماس و رمز عبور ←
             </Link>
           </div>
         </div>

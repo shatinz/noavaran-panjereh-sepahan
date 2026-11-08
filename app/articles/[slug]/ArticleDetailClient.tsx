@@ -1,10 +1,10 @@
 "use client";
 
-import React from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import { Breadcrumbs } from '@/components/ui/Breadcrumbs';
-import { Gallery } from '@/components/ui/Gallery';
-import { Calendar, User, Tag, ShieldCheck, Phone } from 'lucide-react';
+import { Gallery, ImageLightbox } from '@/components/ui/Gallery';
+import { Calendar, User, Tag, ShieldCheck, Phone, Maximize2 } from 'lucide-react';
 import { telHref } from '@/lib/phone';
 import { useLanguage } from '@/lib/i18n/context';
 import { getLocalizedArticle } from '@/lib/i18n/entities';
@@ -19,7 +19,9 @@ interface ArticleDetailClientProps {
 
 export function ArticleDetailClient({ article, settings, imgSrc, galleryImages = [] }: ArticleDetailClientProps) {
   const { dict, locale, dir, isRTL } = useLanguage();
+  const [coverLightboxIndex, setCoverLightboxIndex] = useState<number | null>(null);
   const locArt = getLocalizedArticle(article, locale);
+  const allImages = galleryImages.length > 0 ? galleryImages : [imgSrc];
 
   return (
     <div dir={dir}>
@@ -52,14 +54,31 @@ export function ArticleDetailClient({ article, settings, imgSrc, galleryImages =
             </div>
           </header>
 
-          <div className="relative aspect-video w-full bg-ink-900 rounded-xl overflow-hidden metal-shadow border border-ink-800">
+          <div
+            onClick={() => setCoverLightboxIndex(0)}
+            className="relative aspect-video w-full bg-ink-900 rounded-xl overflow-hidden metal-shadow border border-ink-800 group cursor-zoom-in"
+            role="button"
+            tabIndex={0}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                setCoverLightboxIndex(0);
+              }
+            }}
+            aria-label={locale === 'en' ? 'Click to zoom cover image' : (locale === 'ar' ? 'انقر لتكبير صورة الغلاف' : 'کلیک برای بزرگنمایی تصویر شاخص')}
+          >
             <Image
               src={imgSrc}
               alt={locArt.title}
               fill
               sizes="(min-width: 1024px) 896px, 100vw"
-              className="object-cover"
+              className="object-cover group-hover:scale-105 transition-transform duration-500"
             />
+            <div className="absolute inset-0 bg-ink-950/0 group-hover:bg-ink-950/20 transition-colors" />
+            <div className={`absolute bottom-3 ${isRTL ? 'left-3' : 'right-3'} px-3 py-1.5 rounded-lg bg-ink-950/80 hover:bg-signal-500 text-white backdrop-blur border border-white/10 opacity-90 md:opacity-0 md:group-hover:opacity-100 transition-all flex items-center gap-1.5 text-xs font-vazir shadow-lg`}>
+              <Maximize2 className="w-3.5 h-3.5" />
+              <span>{locale === 'en' ? 'Zoom Photo' : (locale === 'ar' ? 'تكبير الصورة' : 'بزرگنمایی تصویر')}</span>
+            </div>
           </div>
 
           <div className="bg-ink-950 border border-ink-800 rounded-xl p-6 md:p-12 metal-shadow">
@@ -109,6 +128,14 @@ export function ArticleDetailClient({ article, settings, imgSrc, galleryImages =
 
         </div>
       </div>
+
+      <ImageLightbox
+        images={allImages}
+        title={locArt.title}
+        index={coverLightboxIndex}
+        onClose={() => setCoverLightboxIndex(null)}
+        onIndexChange={setCoverLightboxIndex}
+      />
     </div>
   );
 }

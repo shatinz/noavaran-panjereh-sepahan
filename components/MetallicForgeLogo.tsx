@@ -183,7 +183,6 @@ export function MetallicForgeLogo({
             className="object-contain"
             sizes={`${size}px`}
             unoptimized
-            priority
           />
         </div>
 

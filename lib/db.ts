@@ -195,8 +195,9 @@ const dataDir = path.join(process.cwd(), 'data');
 //   data/<name>.json                  seed content, tracked in git
 //   data/runtime/content/<name>.json  copy written by the admin panel, git-ignored
 // Reads prefer the runtime copy, so `git reset --hard` deploys no longer wipe
-// admin edits. To push new seed content for a collection that was already
-// edited in the panel, delete its runtime copy.
+// admin edits. Articles/projects inherit only newly added seed gallery images
+// when an older runtime record has no images field; all other runtime edits win.
+// To push other seed changes into an edited collection, delete its runtime copy.
 const contentDir = path.join(dataDir, 'runtime', 'content');
 
 function readJsonFile<T>(filename: string, fallback: T): T {
@@ -213,17 +214,57 @@ function readJsonFile<T>(filename: string, fallback: T): T {
   return fallback;
 }
 
+function readSeedJsonFile<T>(filename: string, fallback: T): T {
+  try {
+    const filePath = path.join(dataDir, filename);
+    if (fs.existsSync(filePath)) {
+      return JSON.parse(fs.readFileSync(filePath, 'utf-8')) as T;
+    }
+  } catch (error) {
+    console.error(`Error reading seed ${filename}:`, error);
+  }
+  return fallback;
+}
+
+// Runtime admin edits remain authoritative. When an older runtime record
+// predates the optional gallery field, inherit only that new seed field.
+// An explicit runtime images array (including an empty one) is preserved.
+function mergeMissingSeedImages<T extends { id?: string; slug?: string; images?: string[] }>(
+  filename: string,
+  records: T[]
+): T[] {
+  if (!fs.existsSync(path.join(contentDir, filename))) return records;
+
+  const seed = readSeedJsonFile<T[]>(filename, []);
+  const seedByIdOrSlug = new Map<string, T>();
+  for (const item of seed) {
+    if (item.id) seedByIdOrSlug.set(item.id, item);
+    if (item.slug) seedByIdOrSlug.set(item.slug, item);
+  }
+
+  return records.map((item) => {
+    if (Object.prototype.hasOwnProperty.call(item, 'images')) return item;
+    const seedItem = (item.id && seedByIdOrSlug.get(item.id)) ||
+      (item.slug && seedByIdOrSlug.get(item.slug));
+    return seedItem && Array.isArray(seedItem.images)
+      ? { ...seedItem, ...item, images: seedItem.images }
+      : item;
+  });
+}
+
 // Public pages are statically generated; purge them after content changes so
 // admin edits show up without a rebuild (leads are private, so they skip this).
 const PRIVATE_FILES = new Set(['consultations.json']);
 
 function writeJsonFile<T>(filename: string, data: T): boolean {
+  let tmpPath: string | null = null;
   try {
     fs.mkdirSync(contentDir, { recursive: true });
     const filePath = path.join(contentDir, filename);
-    const tmp = `${filePath}.${process.pid}.tmp`;
-    fs.writeFileSync(tmp, JSON.stringify(data, null, 2), 'utf-8');
-    fs.renameSync(tmp, filePath);
+    tmpPath = `${filePath}.${process.pid}.tmp`;
+    fs.writeFileSync(tmpPath, JSON.stringify(data, null, 2), 'utf-8');
+    fs.renameSync(tmpPath, filePath);
+    tmpPath = null;
     if (!PRIVATE_FILES.has(filename)) {
       try {
         revalidatePath('/', 'layout');
@@ -233,6 +274,13 @@ function writeJsonFile<T>(filename: string, data: T): boolean {
     }
     return true;
   } catch (error) {
+    if (tmpPath) {
+      try {
+        if (fs.existsSync(tmpPath)) fs.unlinkSync(tmpPath);
+      } catch {
+        // Preserve the original persistence error; a stale temp file is non-authoritative.
+      }
+    }
     console.error(`Error writing ${filename}:`, error);
     return false;
   }
@@ -245,13 +293,179 @@ export async function getServices(): Promise<ServiceItem[]> {
 
 export async function getServiceBySlug(slug: string): Promise<ServiceItem | null> {
   const services = await getServices();
-  return services.find(s => s.slug === slug) || null;
+  return services.find(s => s.slug === slug || s.id === slug) || null;
+}
+
+export async function createService(service: Omit<ServiceItem, 'id'> & { id?: string }): Promise<ServiceItem> {
+  const list = await getServices();
+  const rawTitle = typeof service.title === 'string' ? service.title.trim() : '';
+  if (!rawTitle) {
+    const err = new Error('عنوان خدمت الزامی است');
+    (err as any).statusCode = 400;
+    throw err;
+  }
+
+  const rawSlug = typeof service.slug === 'string' && service.slug.trim()
+    ? service.slug.trim()
+    : rawTitle;
+  const slug = rawSlug.toLowerCase().replace(/\s+/g, '-');
+
+  const rawId = typeof service.id === 'string' && service.id.trim() ? service.id.trim() : slug;
+  const id = rawId || `serv-${Date.now()}`;
+
+  // Check uniqueness of slug and id
+  if (list.some(s => s.slug === slug || s.id === id || s.id === slug || s.slug === id)) {
+    const err = new Error('اسلاگ یا شناسه خدمت تکراری است');
+    (err as any).statusCode = 400;
+    throw err;
+  }
+
+  const { featuresText: _ignoredFeaturesText, ...safeProps } = service as any;
+
+  const newItem: ServiceItem = {
+    ...safeProps,
+    title: rawTitle,
+    titleEn: typeof service.titleEn === 'string' ? service.titleEn.trim() : '',
+    summary: typeof service.summary === 'string' ? service.summary.trim() : '',
+    icon: typeof service.icon === 'string' ? service.icon.trim() : 'Maximize',
+    image: typeof service.image === 'string' ? service.image.trim() : '',
+    features: Array.isArray(service.features) ? service.features.map(f => String(f).trim()).filter(Boolean) : [],
+    subcategories: Array.isArray(service.subcategories) ? service.subcategories : [],
+    technicalSpecs: service.technicalSpecs && typeof service.technicalSpecs === 'object' && !Array.isArray(service.technicalSpecs) ? service.technicalSpecs : {},
+    id,
+    slug,
+  };
+  list.push(newItem);
+  if (!writeJsonFile('services.json', list)) {
+    throw new Error('Could not persist service data');
+  }
+  return newItem;
+}
+
+export async function updateService(id: string, updates: Partial<ServiceItem>): Promise<ServiceItem | null> {
+  if (!id || typeof id !== 'string') {
+    const err = new Error('شناسه خدمت نامعتبر است');
+    (err as any).statusCode = 400;
+    throw err;
+  }
+  const list = await getServices();
+  const index = list.findIndex(s => s.id === id || s.slug === id);
+  if (index === -1) return null;
+
+  const current = list[index];
+
+  // Disallow changing id
+  const { id: _ignoredId, featuresText: _ignoredFeaturesText, ...safeUpdates } = updates as any;
+
+  // Validate title if provided
+  if (safeUpdates.title !== undefined) {
+    if (typeof safeUpdates.title !== 'string' || !safeUpdates.title.trim()) {
+      const err = new Error('عنوان خدمت نامعتبر است');
+      (err as any).statusCode = 400;
+      throw err;
+    }
+    safeUpdates.title = safeUpdates.title.trim();
+  }
+
+  // Validate slug uniqueness and type if provided
+  if (safeUpdates.slug !== undefined) {
+    if (typeof safeUpdates.slug !== 'string' || !safeUpdates.slug.trim()) {
+      const err = new Error('اسلاگ خدمت نامعتبر است');
+      (err as any).statusCode = 400;
+      throw err;
+    }
+    const normalizedSlug = safeUpdates.slug.trim().toLowerCase().replace(/\s+/g, '-');
+    const conflict = list.some(s => s.id !== current.id && (s.slug === normalizedSlug || s.id === normalizedSlug));
+    if (conflict) {
+      const err = new Error('اسلاگ یا شناسه خدمت تکراری است');
+      (err as any).statusCode = 400;
+      throw err;
+    }
+    safeUpdates.slug = normalizedSlug;
+  }
+
+  if (safeUpdates.titleEn !== undefined) {
+    safeUpdates.titleEn = typeof safeUpdates.titleEn === 'string' ? safeUpdates.titleEn.trim() : '';
+  }
+  if (safeUpdates.summary !== undefined) {
+    safeUpdates.summary = typeof safeUpdates.summary === 'string' ? safeUpdates.summary.trim() : '';
+  }
+  if (safeUpdates.features !== undefined) {
+    safeUpdates.features = Array.isArray(safeUpdates.features)
+      ? safeUpdates.features.map((f: any) => String(f).trim()).filter(Boolean)
+      : [];
+  }
+  if (safeUpdates.subcategories !== undefined) {
+    safeUpdates.subcategories = Array.isArray(safeUpdates.subcategories) ? safeUpdates.subcategories : [];
+  }
+  if (safeUpdates.technicalSpecs !== undefined) {
+    safeUpdates.technicalSpecs = safeUpdates.technicalSpecs && typeof safeUpdates.technicalSpecs === 'object' && !Array.isArray(safeUpdates.technicalSpecs) ? safeUpdates.technicalSpecs : {};
+  }
+
+  list[index] = { ...current, ...safeUpdates, id: current.id };
+  if (!writeJsonFile('services.json', list)) {
+    throw new Error('Could not persist service updates');
+  }
+  return list[index];
+}
+
+export async function deleteService(id: string): Promise<boolean> {
+  if (!id || typeof id !== 'string') return false;
+  const list = await getServices();
+  const filtered = list.filter(s => s.id !== id && s.slug !== id);
+  if (filtered.length === list.length) return false;
+  if (!writeJsonFile('services.json', filtered)) {
+    throw new Error('Could not persist service deletion');
+  }
+  return true;
+}
+
+export async function reorderServices(orderedIds: string[]): Promise<ServiceItem[]> {
+  if (!Array.isArray(orderedIds) || orderedIds.length === 0 || !orderedIds.every(id => typeof id === 'string' && id.trim())) {
+    const err = new Error('آرایه شناسه‌های مرتب‌سازی نامعتبر است');
+    (err as any).statusCode = 400;
+    throw err;
+  }
+
+  const list = await getServices();
+  const byId = new Map(list.map((service) => [service.id, service]));
+  const seenIds = new Set<string>();
+
+  // Reordering is an explicit full permutation, not a partial move. Reject
+  // duplicates, unknown IDs, and omitted services instead of silently
+  // producing an order different from the admin's submitted order.
+  for (const id of orderedIds) {
+    if (!byId.has(id)) {
+      const err = new Error(`شناسه خدمت ناشناخته است: ${id}`);
+      (err as any).statusCode = 400;
+      throw err;
+    }
+    if (seenIds.has(id)) {
+      const err = new Error(`شناسه خدمت تکراری است: ${id}`);
+      (err as any).statusCode = 400;
+      throw err;
+    }
+    seenIds.add(id);
+  }
+
+  if (seenIds.size !== list.length) {
+    const err = new Error('ترتیب جدید باید شامل تمام خدمات موجود باشد');
+    (err as any).statusCode = 400;
+    throw err;
+  }
+
+  const result = orderedIds.map((id) => byId.get(id)!);
+
+  if (!writeJsonFile('services.json', result)) {
+    throw new Error('Could not persist reordered services');
+  }
+  return result;
 }
 
 // PROJECTS
 export async function getProjects(): Promise<ProjectItem[]> {
   const data = readJsonFile<ProjectItem[]>('projects.json', []);
-  return data;
+  return mergeMissingSeedImages<ProjectItem>('projects.json', data);
 }
 
 export async function createProject(project: Omit<ProjectItem, 'id'>): Promise<ProjectItem> {
@@ -307,7 +521,8 @@ function revalidateArticleRoutes(...slugs: Array<string | undefined>): void {
 }
 
 export async function getArticles(): Promise<ArticleItem[]> {
-  return readJsonFile<ArticleItem[]>('articles.json', []);
+  const data = readJsonFile<ArticleItem[]>('articles.json', []);
+  return mergeMissingSeedImages<ArticleItem>('articles.json', data);
 }
 
 export async function getArticleBySlug(slug: string): Promise<ArticleItem | null> {
@@ -379,7 +594,9 @@ export async function createVideo(video: Omit<VideoItem, 'id'>): Promise<VideoIt
     id: `vid-${Date.now()}`
   };
   list.unshift(newItem);
-  writeJsonFile('videos.json', list);
+  if (!writeJsonFile('videos.json', list)) {
+    throw new Error('Could not persist video data');
+  }
   return newItem;
 }
 
@@ -387,8 +604,10 @@ export async function updateVideo(id: string, updates: Partial<VideoItem>): Prom
   const list = await getVideos();
   const index = list.findIndex(v => v.id === id);
   if (index === -1) return null;
-  list[index] = { ...list[index], ...updates };
-  writeJsonFile('videos.json', list);
+  list[index] = { ...list[index], ...updates, id: list[index].id };
+  if (!writeJsonFile('videos.json', list)) {
+    throw new Error('Could not persist video updates');
+  }
   return list[index];
 }
 
@@ -396,7 +615,9 @@ export async function deleteVideo(id: string): Promise<boolean> {
   const list = await getVideos();
   const filtered = list.filter(v => v.id !== id);
   if (filtered.length === list.length) return false;
-  writeJsonFile('videos.json', filtered);
+  if (!writeJsonFile('videos.json', filtered)) {
+    throw new Error('Could not persist video deletion');
+  }
   return true;
 }
 
