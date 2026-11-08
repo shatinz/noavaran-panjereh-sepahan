@@ -43,67 +43,82 @@ jobs:
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/redblack'
     steps:
-      - name: Deploy via SSH
-        uses: appleboy/ssh-action@v1.2.0
+      - name: Deploy via OpenSSH
         env:
+          SERVER_HOST: ${{ secrets.SERVER_HOST }}
+          SERVER_USER: ${{ secrets.SERVER_USER }}
+          SERVER_SSH_KEY: ${{ secrets.SERVER_SSH_KEY }}
+          SERVER_PORT: ${{ secrets.SERVER_PORT || 22 }}
           GH_TOKEN: ${{ github.token }}
           ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
-        with:
-          host: ${{ secrets.SERVER_HOST }}
-          username: ${{ secrets.SERVER_USER }}
-          key: ${{ secrets.SERVER_SSH_KEY }}
-          port: ${{ secrets.SERVER_PORT || 22 }}
-          envs: GH_TOKEN,ADMIN_PASSWORD
-          timeout: 120s
-          command_timeout: 15m
-          script: |
-            set -e
-            echo "=== Syncing repository on server ==="
-            cd /var/www/noavaran
-            AUTH=$(printf 'x-access-token:%s' "$GH_TOKEN" | base64 -w0)
-            git -c http.extraheader="Authorization: Basic $AUTH" fetch origin redblack
-            unset AUTH
+        run: |
+          set -euo pipefail
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+          test -n "$SERVER_HOST"
+          test -n "$SERVER_USER"
+          test -n "$SERVER_SSH_KEY"
+          printf '%s\n' "$SERVER_SSH_KEY" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -T 15 -p "$SERVER_PORT" -H "$SERVER_HOST" >> ~/.ssh/known_hosts 2>/dev/null
+          chmod 600 ~/.ssh/known_hosts
 
-            echo "=== Preserving admin edits before reset ==="
-            # Admin data used to live in git-tracked files that the reset below wipes.
-            # The migration (taken from the new commit) moves it to data/runtime/ first.
-            git show origin/redblack:scripts/migrate_runtime_data.mjs > /tmp/migrate_runtime_data.mjs
-            node /tmp/migrate_runtime_data.mjs
-            rm -f /tmp/migrate_runtime_data.mjs
-            git reset --hard origin/redblack
+          GH_TOKEN_B64=$(printf '%s' "$GH_TOKEN" | base64 -w0)
+          ADMIN_PASSWORD_B64=$(printf '%s' "$ADMIN_PASSWORD" | base64 -w0)
 
-            echo "=== Ensuring server environment (.env is git-ignored) ==="
-            touch .env
-            chmod 600 .env
-            # make sure the file ends with a newline before appending
-            if [ -s .env ] && [ "$(tail -c1 .env | wc -l)" -eq 0 ]; then echo >> .env; fi
-            if ! grep -q '^ADMIN_SESSION_SECRET=' .env; then
-              echo "ADMIN_SESSION_SECRET=$(openssl rand -hex 32)" >> .env
-              echo "generated ADMIN_SESSION_SECRET"
-            fi
-            if [ -n "$ADMIN_PASSWORD" ] && ! grep -q '^ADMIN_PASSWORD=' .env; then
-              echo "ADMIN_PASSWORD=$ADMIN_PASSWORD" >> .env
-              echo "wrote ADMIN_PASSWORD from repository secret"
-            fi
+          ssh -i ~/.ssh/id_ed25519 -p "$SERVER_PORT" -o IdentitiesOnly=yes -o BatchMode=yes -o StrictHostKeyChecking=yes -o ConnectTimeout=30 -o ServerAliveInterval=15 -o ServerAliveCountMax=4 "$SERVER_USER@$SERVER_HOST" "GH_TOKEN_B64=$GH_TOKEN_B64 ADMIN_PASSWORD_B64=$ADMIN_PASSWORD_B64 bash -s" <<'REMOTE'
+          set -euo pipefail
+          GH_TOKEN=$(printf '%s' "$GH_TOKEN_B64" | base64 -d)
+          ADMIN_PASSWORD=$(printf '%s' "$ADMIN_PASSWORD_B64" | base64 -d)
+          export GH_TOKEN ADMIN_PASSWORD
+          unset GH_TOKEN_B64 ADMIN_PASSWORD_B64
 
-            echo "=== Installing dependencies ==="
-            pnpm install --no-frozen-lockfile
+          echo "=== Syncing repository on server ==="
+          cd /var/www/noavaran
+          AUTH=$(printf 'x-access-token:%s' "$GH_TOKEN" | base64 -w0)
+          git -c http.extraheader="Authorization: Basic $AUTH" fetch origin redblack
+          unset AUTH
 
-            echo "=== Building application ==="
-            export NODE_OPTIONS="--max-old-space-size=2048"
-            pnpm run build
+          echo "=== Preserving admin edits before reset ==="
+          # Admin data used to live in git-tracked files that the reset below wipes.
+          # The migration (taken from the new commit) moves it to data/runtime/ first.
+          git show origin/redblack:scripts/migrate_runtime_data.mjs > /tmp/migrate_runtime_data.mjs
+          node /tmp/migrate_runtime_data.mjs
+          rm -f /tmp/migrate_runtime_data.mjs
+          git reset --hard origin/redblack
 
-            echo "=== Reloading PM2 process ==="
-            pm2 restart ecosystem.config.cjs --update-env || pm2 start ecosystem.config.cjs
-            pm2 save
+          echo "=== Ensuring server environment (.env is git-ignored) ==="
+          touch .env
+          chmod 600 .env
+          if [ -s .env ] && [ "$(tail -c1 .env | wc -l)" -eq 0 ]; then echo >> .env; fi
+          if ! grep -q '^ADMIN_SESSION_SECRET=' .env; then
+            echo "ADMIN_SESSION_SECRET=$(openssl rand -hex 32)" >> .env
+            echo "generated ADMIN_SESSION_SECRET"
+          fi
+          if [ -n "$ADMIN_PASSWORD" ] && ! grep -q '^ADMIN_PASSWORD=' .env; then
+            echo "ADMIN_PASSWORD=$ADMIN_PASSWORD" >> .env
+            echo "wrote ADMIN_PASSWORD from repository secret"
+          fi
 
-            echo "=== Verifying Health Check ==="
-            ok=0
-            for i in 1 2 3 4 5 6 7 8 9 10; do
-              if curl -fsS http://127.0.0.1:3000/api/health > /tmp/noavaran_health.json; then ok=1; break; fi
-              sleep 3
-            done
-            cat /tmp/noavaran_health.json 2>/dev/null || true; echo
-            [ "$ok" -eq 1 ] || { echo "Health check failed (app not up or admin auth misconfigured)"; exit 1; }
-            curl -fsSI http://127.0.0.1:3000 > /dev/null || exit 1
-            echo "Deployment to Noavaran server completed successfully!"
+          echo "=== Installing dependencies ==="
+          pnpm install --no-frozen-lockfile
+
+          echo "=== Building application ==="
+          export NODE_OPTIONS="--max-old-space-size=2048"
+          pnpm run build
+
+          echo "=== Reloading PM2 process ==="
+          pm2 restart ecosystem.config.cjs --update-env || pm2 start ecosystem.config.cjs
+          pm2 save
+
+          echo "=== Verifying Health Check ==="
+          ok=0
+          for i in 1 2 3 4 5 6 7 8 9 10; do
+            if curl -fsS http://127.0.0.1:3000/api/health > /tmp/noavaran_health.json; then ok=1; break; fi
+            sleep 3
+          done
+          cat /tmp/noavaran_health.json 2>/dev/null || true; echo
+          [ "$ok" -eq 1 ] || { echo "Health check failed (app not up or admin auth misconfigured)"; exit 1; }
+          curl -fsSI http://127.0.0.1:3000 > /dev/null || exit 1
+          echo "Deployment to Noavaran server completed successfully!"
+          REMOTE
