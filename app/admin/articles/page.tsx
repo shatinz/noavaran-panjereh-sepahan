@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef, useMemo } from 'react';
 import AdminNav from '@/components/AdminNav';
 import { ArticleItem, CategoryItem } from '@/lib/db';
 import { Plus, Edit2, Trash2, X, Check, FileText, Upload, Image as ImageIcon, Loader2, ExternalLink, FolderTree } from 'lucide-react';
-import ImageUploadField from '@/components/admin/ImageUploadField';
+import ImageUploadField, { compressImageFile } from '@/components/admin/ImageUploadField';
 import MultiImageUpload from '@/components/admin/MultiImageUpload';
 import CategoryManagerModal from '@/components/admin/CategoryManagerModal';
 
@@ -155,18 +155,66 @@ export default function AdminArticlesPage() {
     setModalOpen(true);
   };
 
+  const applyFontFamily = (fontFamily: string) => {
+    const editor = contentEditorRef.current;
+    if (!editor) return;
+    try {
+      restoreContentSelection();
+      editor.focus();
+      if (!fontFamily) {
+        document.execCommand('fontName', false, 'inherit');
+      } else {
+        document.execCommand('fontName', false, fontFamily);
+      }
+      saveContentSelection();
+      const html = editor.innerHTML;
+      setForm((prev) => ({ ...prev, content: html }));
+    } catch (error) {
+      console.error('Article font command failed:', error);
+    }
+  };
+
+  const applyFontSize = (fontSize: string) => {
+    const editor = contentEditorRef.current;
+    if (!editor) return;
+    try {
+      restoreContentSelection();
+      editor.focus();
+      document.execCommand('fontSize', false, fontSize);
+      saveContentSelection();
+      const html = editor.innerHTML;
+      setForm((prev) => ({ ...prev, content: html }));
+    } catch (error) {
+      console.error('Article font size command failed:', error);
+    }
+  };
+
   const handleContentImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    const formData = new FormData();
-    formData.append('file', file);
+    if (file.size > 50 * 1024 * 1024) {
+      alert('حجم فایل انتخاب‌شده بیشتر از ۵۰ مگابایت است. لطفاً تصویری با حجم کمتر انتخاب کنید.');
+      return;
+    }
+
+    const allowedTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
+    if (!allowedTypes.includes(file.type)) {
+      alert('فرمت فایل نامعتبر است. لطفاً فقط تصاویر JPG، PNG، WebP یا GIF انتخاب نمایید.');
+      return;
+    }
 
     setContentUploading(true);
     try {
+      // Compress and optimize image client-side before sending
+      const readyFile = await compressImageFile(file);
+      const formData = new FormData();
+      formData.append('file', readyFile);
+
       const res = await fetch('/api/admin/upload', {
         method: 'POST',
         body: formData,
+        signal: AbortSignal.timeout(60000),
       });
       const data = await res.json();
       if (res.ok && data.url) {
@@ -178,7 +226,7 @@ export default function AdminArticlesPage() {
           const image = document.createElement('img');
           image.src = data.url;
           image.alt = form.title || 'تصویر مقاله';
-          image.className = 'rounded-xl mx-auto max-h-96 object-contain shadow-lg';
+          image.className = 'rounded-xl mx-auto max-h-96 object-contain shadow-lg cursor-zoom-in';
           image.style.maxWidth = '100%';
           figure.appendChild(image);
           const caption = document.createElement('figcaption');
@@ -206,9 +254,13 @@ export default function AdminArticlesPage() {
       } else {
         alert(data.error || 'خطا در بارگذاری تصویر');
       }
-    } catch (err) {
+    } catch (err: any) {
       console.error('Content image upload error:', err);
-      alert('خطا در ارتباط با سرور هنگام آپلود');
+      if (err?.name === 'TimeoutError' || err?.message?.includes('timeout')) {
+        alert('خطای وقفه در ارتباط با سرور: بارگذاری تصویر بیش از حد طول کشید.');
+      } else {
+        alert('خطا در ارتباط با سرور هنگام آپلود');
+      }
     } finally {
       setContentUploading(false);
       if (contentFileInputRef.current) contentFileInputRef.current.value = '';
@@ -594,6 +646,43 @@ export default function AdminArticlesPage() {
                       title="زیرعنوان — برای بخش‌های کوچک‌تر" aria-label="عنوان ۳" className="h-9 px-3 rounded-lg border border-charcoal-600 bg-charcoal-800 text-titanium-200 hover:bg-charcoal-700 text-sm font-semibold">عنوان ۳</button>
                     <button type="button" onMouseDown={(event) => event.preventDefault()} onClick={() => runEditorCommand('formatBlock', 'blockquote')}
                       title="نقل‌قول" aria-label="نقل قول" className="h-9 px-3 rounded-lg border border-charcoal-600 bg-charcoal-800 text-titanium-200 hover:bg-charcoal-700 text-xs">❝ نقل‌قول</button>
+
+                    <span className="mx-1 h-6 w-px bg-charcoal-700" />
+                    <span className="text-[11px] text-titanium-500 font-semibold ml-1">قلم (فونت)</span>
+                    <select
+                      onChange={(e) => {
+                        applyFontFamily(e.target.value);
+                        e.target.value = '';
+                      }}
+                      defaultValue=""
+                      className="h-8 px-2 rounded-lg border border-charcoal-600 bg-charcoal-800 text-titanium-200 text-xs focus:border-bronze-500 focus:outline-none"
+                      title="تغییر نوع قلم متن انتخاب‌شده"
+                    >
+                      <option value="" disabled>انتخاب قلم...</option>
+                      <option value="Vazirmatn">وزیرمتن (استاندارد)</option>
+                      <option value="Lalezar">لاله‌زار (تیتر نمایشی)</option>
+                      <option value="IRANYekan">ایران‌یکان</option>
+                      <option value="Tahoma">تاهوما (سیستمی)</option>
+                      <option value="B Titr">بی تیتر</option>
+                    </select>
+
+                    <span className="text-[11px] text-titanium-500 font-semibold mr-1 ml-1">اندازه قلم</span>
+                    <select
+                      onChange={(e) => {
+                        applyFontSize(e.target.value);
+                        e.target.value = '';
+                      }}
+                      defaultValue=""
+                      className="h-8 px-2 rounded-lg border border-charcoal-600 bg-charcoal-800 text-titanium-200 text-xs focus:border-bronze-500 focus:outline-none"
+                      title="تغییر اندازه قلم متن انتخاب‌شده"
+                    >
+                      <option value="" disabled>اندازه متن...</option>
+                      <option value="2">کوچک (۱۳px)</option>
+                      <option value="3">عادی (۱۶px)</option>
+                      <option value="4">متوسط (۱۸px)</option>
+                      <option value="5">بزرگ (۲۴px)</option>
+                      <option value="6">خیلی بزرگ (۳۲px)</option>
+                    </select>
                   </div>
                   <div className="h-px bg-charcoal-700" />
                   <div className="flex flex-wrap items-center gap-1.5">

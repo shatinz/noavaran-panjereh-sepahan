@@ -39,7 +39,7 @@ async function compressImageFile(file: File): Promise<File> {
     const objectUrl = URL.createObjectURL(file);
     img.onload = () => {
       URL.revokeObjectURL(objectUrl);
-      const maxDim = 1920;
+      const maxDim = 2560; // 2K+ clarity for high-resolution displays
       let { width, height } = img;
       if (width > maxDim || height > maxDim) {
         if (width > height) {
@@ -151,8 +151,8 @@ export default function MultiImageUpload({
         showToast(`فرمت فایل ${file.name} مجاز نیست.`, true);
         continue;
       }
-      if (file.size > 15 * 1024 * 1024) {
-        showToast(`حجم تصویر ${file.name} بیشتر از ۱۵ مگابایت است.`, true);
+      if (file.size > 50 * 1024 * 1024) {
+        showToast(`حجم تصویر ${file.name} بیشتر از ۵۰ مگابایت است.`, true);
         continue;
       }
       validFiles.push(file);

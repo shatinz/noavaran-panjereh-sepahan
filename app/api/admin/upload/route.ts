@@ -35,9 +35,9 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'هیچ فایلی ارسال نشده است.' }, { status: 400 });
     }
 
-    // Limit size to 10MB
-    if (file.size > 10 * 1024 * 1024) {
-      return NextResponse.json({ error: 'حجم تصویر نباید بیشتر از ۱۰ مگابایت باشد.' }, { status: 400 });
+    // Limit size to 50MB for high-resolution images
+    if (file.size > 50 * 1024 * 1024) {
+      return NextResponse.json({ error: 'حجم تصویر نباید بیشتر از ۵۰ مگابایت باشد.' }, { status: 400 });
     }
 
     const buffer = Buffer.from(await file.arrayBuffer());

@@ -62,6 +62,8 @@ const config: Config = {
         vazir: ["var(--font-vazir)", "Vazirmatn", "Tahoma", "Arial", "system-ui", "-apple-system", "sans-serif"],
         lalezar: ["var(--font-lalezar)", "Lalezar", "Vazirmatn", "Tahoma", "Arial", "system-ui", "-apple-system", "sans-serif"],
         inter: ["var(--font-inter)", "Inter", "system-ui", "-apple-system", "sans-serif"],
+        yekan: ["'IRANYekan'", "'Yekan'", "var(--font-vazir)", "Tahoma", "sans-serif"],
+        titr: ["'B Titr'", "'Titr'", "var(--font-vazir)", "Tahoma", "sans-serif"],
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',

@@ -13,14 +13,14 @@ interface ImageUploadFieldProps {
 }
 
 // Client-side image downscale / compression
-async function compressImageFile(file: File): Promise<File> {
+export async function compressImageFile(file: File): Promise<File> {
   if (file.type === 'image/gif' || file.size < 400 * 1024) return file;
   return new Promise((resolve) => {
     const img = new Image();
     const objectUrl = URL.createObjectURL(file);
     img.onload = () => {
       URL.revokeObjectURL(objectUrl);
-      const maxDim = 1920;
+      const maxDim = 2560; // 2K+ clarity for high-resolution displays
       let { width, height } = img;
       if (width > maxDim || height > maxDim) {
         if (width > height) {
@@ -108,9 +108,9 @@ export default function ImageUploadField({
       return;
     }
 
-    // Client-side file size verification (15MB)
-    if (file.size > 15 * 1024 * 1024) {
-      setErrorMessage('حجم تصویر بیشتر از ۱۵ مگابایت است. لطفاً تصویری با حجم کمتر انتخاب کنید.');
+    // Client-side file size verification (50MB)
+    if (file.size > 50 * 1024 * 1024) {
+      setErrorMessage('حجم تصویر بیشتر از ۵۰ مگابایت است. لطفاً تصویری با حجم کمتر انتخاب کنید.');
       return;
     }
 

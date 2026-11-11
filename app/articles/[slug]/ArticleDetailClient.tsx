@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import Image from 'next/image';
 import { Breadcrumbs } from '@/components/ui/Breadcrumbs';
 import { Gallery, ImageLightbox } from '@/components/ui/Gallery';
@@ -19,9 +19,70 @@ interface ArticleDetailClientProps {
 
 export function ArticleDetailClient({ article, settings, imgSrc, galleryImages = [] }: ArticleDetailClientProps) {
   const { dict, locale, dir, isRTL } = useLanguage();
-  const [coverLightboxIndex, setCoverLightboxIndex] = useState<number | null>(null);
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+  const [lightboxInitialZoom, setLightboxInitialZoom] = useState<boolean>(false);
   const locArt = getLocalizedArticle(article, locale);
-  const allImages = galleryImages.length > 0 ? galleryImages : [imgSrc];
+
+  // Extract all images embedded inside the article HTML content
+  const contentImages = useMemo(() => {
+    if (!locArt.content) return [];
+    const imgRegex = /<img[^>]+src=["']([^"']+)["'][^>]*>/gi;
+    const found: string[] = [];
+    let match;
+    while ((match = imgRegex.exec(locArt.content)) !== null) {
+      if (match[1] && !found.includes(match[1])) found.push(match[1]);
+    }
+    return found;
+  }, [locArt.content]);
+
+  // Combine cover image, gallery images, and article content images
+  const allImages = useMemo(() => {
+    const raw = [imgSrc, ...galleryImages, ...contentImages].filter(Boolean);
+    const seen = new Set<string>();
+    const res: string[] = [];
+    for (const u of raw) {
+      const clean = u.trim().split('?')[0].split('#')[0].toLowerCase();
+      if (!seen.has(clean)) {
+        seen.add(clean);
+        res.push(u.trim());
+      }
+    }
+    return res;
+  }, [imgSrc, galleryImages, contentImages]);
+
+  const openImageInLightbox = (src: string, zoom: boolean = false) => {
+    const cleanTarget = src.trim().split('?')[0].split('#')[0].toLowerCase();
+    const idx = allImages.findIndex(
+      (u) => u.trim().split('?')[0].split('#')[0].toLowerCase() === cleanTarget
+    );
+    setLightboxInitialZoom(zoom);
+    if (idx !== -1) {
+      setLightboxIndex(idx);
+    } else {
+      setLightboxIndex(0);
+    }
+  };
+
+  const handleContentClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    const target = e.target as HTMLElement;
+    if (target && target.tagName === 'IMG') {
+      const src = target.getAttribute('src');
+      if (src) {
+        openImageInLightbox(src, false);
+      }
+    }
+  };
+
+  const handleContentDoubleClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    const target = e.target as HTMLElement;
+    if (target && target.tagName === 'IMG') {
+      e.stopPropagation();
+      const src = target.getAttribute('src');
+      if (src) {
+        openImageInLightbox(src, true);
+      }
+    }
+  };
 
   return (
     <div dir={dir}>
@@ -55,17 +116,21 @@ export function ArticleDetailClient({ article, settings, imgSrc, galleryImages =
           </header>
 
           <div
-            onClick={() => setCoverLightboxIndex(0)}
+            onClick={() => openImageInLightbox(imgSrc, false)}
+            onDoubleClick={(e) => {
+              e.stopPropagation();
+              openImageInLightbox(imgSrc, true);
+            }}
             className="relative aspect-video w-full bg-ink-900 rounded-xl overflow-hidden metal-shadow border border-ink-800 group cursor-zoom-in"
             role="button"
             tabIndex={0}
             onKeyDown={(e) => {
               if (e.key === 'Enter' || e.key === ' ') {
                 e.preventDefault();
-                setCoverLightboxIndex(0);
+                openImageInLightbox(imgSrc, false);
               }
             }}
-            aria-label={locale === 'en' ? 'Click to zoom cover image' : (locale === 'ar' ? 'انقر لتكبير صورة الغلاف' : 'کلیک برای بزرگنمایی تصویر شاخص')}
+            aria-label={locale === 'en' ? 'Double click or click to zoom cover image' : (locale === 'ar' ? 'انقر أو انقر نقراً مزدوجاً لتكبير صورة الغلاف' : 'کلیک یا دوبار کلیک برای بزرگنمایی تصویر شاخص')}
           >
             <Image
               src={imgSrc}
@@ -77,12 +142,16 @@ export function ArticleDetailClient({ article, settings, imgSrc, galleryImages =
             <div className="absolute inset-0 bg-ink-950/0 group-hover:bg-ink-950/20 transition-colors" />
             <div className={`absolute bottom-3 ${isRTL ? 'left-3' : 'right-3'} px-3 py-1.5 rounded-lg bg-ink-950/80 hover:bg-signal-500 text-white backdrop-blur border border-white/10 opacity-90 md:opacity-0 md:group-hover:opacity-100 transition-all flex items-center gap-1.5 text-xs font-vazir shadow-lg`}>
               <Maximize2 className="w-3.5 h-3.5" />
-              <span>{locale === 'en' ? 'Zoom Photo' : (locale === 'ar' ? 'تكبير الصورة' : 'بزرگنمایی تصویر')}</span>
+              <span>{locale === 'en' ? 'Double-click to Zoom' : (locale === 'ar' ? 'انقر مرتين للتكبير' : 'دوبار کلیک برای بزرگنمایی')}</span>
             </div>
           </div>
 
           <div className="bg-ink-950 border border-ink-800 rounded-xl p-6 md:p-12 metal-shadow">
-            <div className={`prose prose-invert prose-lg max-w-none font-vazir leading-loose text-steel-300 ${isRTL ? 'text-justify' : 'text-left'} prose-headings:font-black prose-headings:text-white prose-headings:font-vazir ${isRTL ? 'prose-h2:border-r-4 prose-h2:pr-4' : 'prose-h2:border-l-4 prose-h2:pl-4'} prose-h2:border-signal-500 prose-h2:mb-6 prose-p:mb-6 prose-strong:text-white prose-li:text-steel-300 prose-a:text-signal-500`}>
+            <div
+              onClick={handleContentClick}
+              onDoubleClick={handleContentDoubleClick}
+              className={`article-prose prose prose-invert prose-lg max-w-none font-vazir leading-loose text-steel-300 ${isRTL ? 'text-justify' : 'text-left'} prose-headings:font-black prose-headings:text-white ${isRTL ? 'prose-h2:border-r-4 prose-h2:pr-4' : 'prose-h2:border-l-4 prose-h2:pl-4'} prose-h2:border-signal-500 prose-h2:mb-6 prose-p:mb-6 prose-strong:text-white prose-li:text-steel-300 prose-a:text-signal-500 [&_img]:cursor-zoom-in [&_img]:rounded-xl [&_img]:shadow-lg [&_img]:transition-transform [&_img]:duration-300 hover:[&_img]:scale-[1.01]`}
+            >
               <div dangerouslySetInnerHTML={{ __html: locArt.content }} className="whitespace-pre-wrap" />
             </div>
 
@@ -132,9 +201,13 @@ export function ArticleDetailClient({ article, settings, imgSrc, galleryImages =
       <ImageLightbox
         images={allImages}
         title={locArt.title}
-        index={coverLightboxIndex}
-        onClose={() => setCoverLightboxIndex(null)}
-        onIndexChange={setCoverLightboxIndex}
+        index={lightboxIndex}
+        initialZoom={lightboxInitialZoom}
+        onClose={() => {
+          setLightboxIndex(null);
+          setLightboxInitialZoom(false);
+        }}
+        onIndexChange={setLightboxIndex}
       />
     </div>
   );

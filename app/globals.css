@@ -221,3 +221,58 @@ body.video-modal-open .floating-contact-btn {
   pointer-events: none !important;
   z-index: -10 !important;
 }
+
+/* Custom and dynamic fonts preservation for article content */
+.article-prose {
+  font-family: var(--font-vazir), 'Vazirmatn', Tahoma, Arial, sans-serif;
+}
+
+.article-prose [style*="font-family"] {
+  font-family: inherit !important;
+}
+
+.article-prose font[face*="Vazirmatn"],
+.article-prose [style*="Vazirmatn"],
+.article-prose [style*="vazirmatn"],
+.font-vazir {
+  font-family: var(--font-vazir), 'Vazirmatn', Tahoma, Arial, sans-serif !important;
+}
+
+.article-prose font[face*="Lalezar"],
+.article-prose [style*="Lalezar"],
+.article-prose [style*="lalezar"],
+.font-lalezar {
+  font-family: var(--font-lalezar), 'Lalezar', cursive, Tahoma, Arial, sans-serif !important;
+}
+
+.article-prose font[face*="IRANYekan"],
+.article-prose [style*="IRANYekan"],
+.article-prose [style*="yekan"],
+.font-yekan {
+  font-family: 'IRANYekan', 'Yekan', var(--font-vazir), Tahoma, Arial, sans-serif !important;
+}
+
+.article-prose font[face*="Tahoma"],
+.article-prose [style*="Tahoma"],
+.article-prose [style*="tahoma"],
+.font-tahoma {
+  font-family: Tahoma, Arial, sans-serif !important;
+}
+
+.article-prose font[face*="Titr"],
+.article-prose [style*="Titr"],
+.article-prose [style*="titr"],
+.font-titr {
+  font-family: 'B Titr', 'Titr', var(--font-vazir), Tahoma, Arial, sans-serif !important;
+}
+
+/* Article images zoomable indicator */
+.article-prose img {
+  cursor: zoom-in;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.article-prose img:hover {
+  transform: scale(1.015);
+  box-shadow: 0 12px 30px -6px rgba(0, 0, 0, 0.6), 0 8px 16px -6px rgba(171, 0, 23, 0.3);
+}
